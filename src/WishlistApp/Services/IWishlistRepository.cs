@@ -1,0 +1,16 @@
+﻿using WishlistApp.Data.Models;
+
+namespace WishlistApp.Services;
+
+public interface IWishlistRepository
+{
+    Task<Wishlist> CreateWishlist(string name, CancellationToken cancellationToken);
+
+    Task<Wishlist?> RenameWishlist(int id, string name, CancellationToken cancellationToken);
+
+    Task<Wishlist?> GetWishlist(int id, CancellationToken cancellationToken);
+
+    Task<List<Wishlist>> GetAll(CancellationToken cancellationToken);
+
+    Task DeleteWishlist(int id, CancellationToken cancellationToken);
+}

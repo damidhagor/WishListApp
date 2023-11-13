@@ -1,0 +1,12 @@
+﻿namespace WishlistApp.Data.Models;
+
+public sealed class Wishlist
+{
+    public int Id { get; set; } = 0;
+
+    public string Name { get; set; } = "";
+
+    public List<WishlistItem> Items { get; set; } = [];
+
+    public List<WishlistShare> Shares { get; set; } = [];
+}

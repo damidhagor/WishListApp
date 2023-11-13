@@ -1,0 +1,52 @@
+﻿@page "/editwishlist"
+@using WishlistApp.Data.Models
+@attribute [StreamRendering(true)]
+
+<PageTitle>@Title</PageTitle>
+
+    <h2>@Title</h2>
+
+<div>
+    @if (Wishlist is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <p>
+            @* <label for="wishlistName">Wishlist Name:</label> *@
+            <input type="text" id="wishlistName" name="wishlistName" placeholder="Name" @bind="@Wishlist.Name">
+        </p>
+
+        <h3>Items</h3>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Url</th>
+                    <th>Is Bought</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Wishlist.Items)
+                {
+                    <tr>
+                        <td>@item.Url</td>
+                        <td>@item.IsBought</td>
+                    </tr>
+                }
+
+                <tr>
+                    <td>
+                        <label for="addUrlInput">Add New Item:</label>
+                        <input type="text" id="addUrlInput" placeholder="Url">
+                        @* <button type="button" @onclick="SaveWishlist">Add</button> *@
+                    </td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    }
+
+    @* <button type="button" @onclick="SaveWishlist">Save</button> *@
+</div>

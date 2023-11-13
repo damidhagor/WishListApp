@@ -1,0 +1,37 @@
+﻿@page "/"
+@attribute [RenderModeInteractiveServer]
+
+<PageTitle>Wishlists</PageTitle>
+
+<h2>Wishlists</h2>
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th># Items</th>
+                <th># Shares</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var list in Lists)
+            {
+                <tr>
+                    <td valign="baseline"><a href="/editwishlist?id=@list.Id">@list.Name</a></td>
+                    <td valign="baseline">@list.Items.Count</td>
+                    <td valign="baseline">@list.Shares.Count</td>
+                    <td valign="baseline">
+                        <button type="button" class="btn btn-outline-danger" @onclick="@(async () => await DeleteWishlist(list.Id))">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div>
+        <input valign="baseline" type="text" placeholder="Name" @bind="@NewWishlistName" @bind:event="oninput">
+        <button valign="baseline" type="button" class="btn btn-outline-primary" @onclick="CreateNewWishlist" disabled="@IsNewWishlistNameEmpty">Add</button>
+    </div>
+</div>
