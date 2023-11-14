@@ -64,4 +64,10 @@ public partial class Wishlists
             Lists = await Repository.GetAll(default);
         }
     }
+
+    public async Task RenameWishlist(int id, string name)
+    {
+        await Repository.RenameWishlist(id, name, default);
+        Lists = [.. Lists.OrderBy(l => l.Name)];
+    }
 }

@@ -1,0 +1,29 @@
+﻿<div>
+    @if (!IsInEditMode)
+    {
+        <div>
+            <span>@OriginalValue</span>
+            <button type="button" class="btn" @onclick="StartEdit">
+                <i class="bi bi-pen"></i>
+            </button>
+        </div>
+    }
+    else
+    {
+        <div>
+            <input type="text" @ref="Input" @bind="@Value" @bind:event="oninput" @onkeydown="OnKeyDown" disabled="@IsAcceptingValue">
+            @if (!IsAcceptingValue)
+            {
+                <button type="button" class="btn btn-close" @onclick="CancelEdit"/>
+            }
+            else
+            {
+                <div class="spinner-border spinner-border-sm text-primary ms-1" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+

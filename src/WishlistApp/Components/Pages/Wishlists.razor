@@ -1,5 +1,5 @@
 ﻿@page "/"
-@attribute [RenderModeInteractiveServer]
+@rendermode RenderMode.InteractiveServer
 
 <PageTitle>Wishlists</PageTitle>
 
@@ -9,6 +9,7 @@
     <table class="table">
         <thead>
             <tr>
+                <th>Name</th>
                 <th>Name</th>
                 <th># Items</th>
                 <th># Shares</th>
@@ -20,6 +21,7 @@
             {
                 <tr>
                     <td valign="baseline"><a href="/editwishlist?id=@list.Id">@list.Name</a></td>
+                    <td valign="baseline"><TextInputToggle OriginalValue="@list.Name" OnValueAccepted="@((name) => RenameWishlist(@list.Id, name))"/></td>
                     <td valign="baseline">@list.Items.Count</td>
                     <td valign="baseline">@list.Shares.Count</td>
                     <td valign="baseline">
