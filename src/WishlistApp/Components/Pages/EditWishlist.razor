@@ -1,10 +1,13 @@
 ﻿@page "/editwishlist"
-@using WishlistApp.Data.Models
-@attribute [StreamRendering(true)]
+@rendermode RenderMode.InteractiveServer
 
-<PageTitle>@Title</PageTitle>
+<PageTitle>@Wishlist?.Name</PageTitle>
 
-    <h2>@Title</h2>
+<h2>
+    <TextInputToggle Value="@Wishlist?.Name">
+        @Wishlist?.Name
+    </TextInputToggle>
+</h2>
 
 <div>
     @if (Wishlist is null)
@@ -13,13 +16,6 @@
     }
     else
     {
-        <p>
-            @* <label for="wishlistName">Wishlist Name:</label> *@
-            <input type="text" id="wishlistName" name="wishlistName" placeholder="Name" @bind="@Wishlist.Name">
-        </p>
-
-        <h3>Items</h3>
-
         <table class="table">
             <thead>
                 <tr>
@@ -40,13 +36,17 @@
                     <td>
                         <label for="addUrlInput">Add New Item:</label>
                         <input type="text" id="addUrlInput" placeholder="Url">
-                        @* <button type="button" @onclick="SaveWishlist">Add</button> *@
                     </td>
                     <td></td>
                 </tr>
             </tbody>
         </table>
-    }
 
-    @* <button type="button" @onclick="SaveWishlist">Save</button> *@
+        <div>
+            <input valign="baseline" type="text" placeholder="Url" @bind="@NewItemUrl" @bind:event="oninput">
+            <button valign="baseline" type="button" class="btn btn-outline-primary" @onclick="AddNewWishlistItem" disabled="@IsNewItemUrlEmpty">
+                <i class="bi bi-plus-lg" /> Add
+            </button>
+        </div>
+    }
 </div>

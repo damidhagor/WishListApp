@@ -8,35 +8,26 @@ namespace WishlistApp.Components.Pages;
 public partial class Wishlists
 {
     [Inject]
-    public IWishlistRepository Repository { get; set; }
+    private IWishlistRepository Repository { get; set; }
 
     [Inject]
-    public NavigationManager NavigationManager { get; set; }
+    private NavigationManager NavigationManager { get; set; }
 
     [Inject]
-    public IJSRuntime JSRuntime { get; set; }
+    private IJSRuntime JSRuntime { get; set; }
 
-    public List<Wishlist> Lists { get; set; } = [];
+    private List<Wishlist>? Lists { get; set; } = null;
 
-    private string _newWishlistName = "";
-    public string NewWishlistName
+    private string NewWishlistName { get; set; } = "";
+
+    private bool IsNewWishlistNameEmpty => string.IsNullOrWhiteSpace(NewWishlistName);
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        get => _newWishlistName;
-        set
+        if (firstRender)
         {
-            if (_newWishlistName != value)
-            {
-                _newWishlistName = value;
-                StateHasChanged();
-            }
+            await LoadWishlists(default);
         }
-    }
-
-    public bool IsNewWishlistNameEmpty => string.IsNullOrWhiteSpace(_newWishlistName);
-
-    protected override async Task OnInitializedAsync()
-    {
-        Lists = await Repository.GetAll(default);
     }
 
     public async void CreateNewWishlist()
@@ -68,6 +59,14 @@ public partial class Wishlists
     public async Task RenameWishlist(int id, string name)
     {
         await Repository.RenameWishlist(id, name, default);
-        Lists = [.. Lists.OrderBy(l => l.Name)];
+        await LoadWishlists(default);
+    }
+
+    private async Task LoadWishlists(CancellationToken cancellationToken)
+    {
+        Lists = null;
+        var lists = await Repository.GetAll(default);
+        Lists = [.. lists.OrderBy(l => l.Name)];
+        StateHasChanged();
     }
 }

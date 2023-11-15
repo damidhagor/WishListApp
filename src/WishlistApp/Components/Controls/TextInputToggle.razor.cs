@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
-namespace WishlistApp.Components;
+namespace WishlistApp.Components.Controls;
 
 public partial class TextInputToggle
 {

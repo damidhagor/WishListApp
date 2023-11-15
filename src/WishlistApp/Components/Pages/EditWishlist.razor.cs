@@ -7,20 +7,20 @@ namespace WishlistApp.Components.Pages;
 public partial class EditWishlist
 {
     [Inject]
-    public IWishlistRepository Repository { get; set; }
+    private IWishlistRepository Repository { get; set; }
 
     [Inject]
-    public NavigationManager NavigationManager { get; set; }
+    private NavigationManager NavigationManager { get; set; }
 
     [Parameter]
     [SupplyParameterFromQuery(Name = "id")]
     public int? WishlistId { get; set; }
 
-    public Wishlist? Wishlist { get; set; }
+    private Wishlist? Wishlist { get; set; }
 
-    public bool IsNewWishlist => WishlistId is null;
+    private string NewItemUrl { get; set; } = "";
 
-    public string Title => IsNewWishlist ? $"Create New Wishlist" : $"Edit {Wishlist?.Name ?? "Wishlist"}";
+    private bool IsNewItemUrlEmpty => string.IsNullOrWhiteSpace(NewItemUrl);
 
     protected override async Task OnInitializedAsync()
     {
@@ -29,17 +29,17 @@ public partial class EditWishlist
             Wishlist = await Repository.GetWishlist(WishlistId.Value, default);
             if (Wishlist is null)
             {
-                NavigationManager.NavigateTo("editwishlist");
+                NavigationManager.NavigateTo("/");
             }
         }
-
-        Wishlist = new();
+        else
+        {
+            Wishlist = new();
+        }
     }
 
-    public async Task SaveWishlist(CancellationToken cancellationToken = default)
+    private async void AddNewWishlistItem()
     {
 
     }
-
-    public async Task AddWishlistItem() { }
 }
