@@ -10,7 +10,6 @@
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Name</th>
                 <th># Items</th>
                 <th># Shares</th>
                 <th></th>
@@ -20,13 +19,16 @@
             @foreach (var list in Lists)
             {
                 <tr>
-                    <td valign="baseline"><a href="/editwishlist?id=@list.Id">@list.Name</a></td>
-                    <td valign="baseline"><TextInputToggle OriginalValue="@list.Name" OnValueAccepted="@((name) => RenameWishlist(@list.Id, name))"/></td>
+                    <td valign="baseline">
+                        <TextInputToggle Value="@list.Name" OnValueAccepted="@((name) => RenameWishlist(@list.Id, name))">
+                            <a href="editwishlist?id=@list.Id">@list.Name</a>
+                        </TextInputToggle>
+                    </td>
                     <td valign="baseline">@list.Items.Count</td>
                     <td valign="baseline">@list.Shares.Count</td>
                     <td valign="baseline">
                         <button type="button" class="btn btn-outline-danger" @onclick="@(async () => await DeleteWishlist(list.Id))">
-                            <i class="bi bi-trash3"></i> Delete
+                            <i class="bi bi-trash3" /> Delete
                         </button>
                     </td>
                 </tr>
@@ -37,7 +39,7 @@
     <div>
         <input valign="baseline" type="text" placeholder="Name" @bind="@NewWishlistName" @bind:event="oninput">
         <button valign="baseline" type="button" class="btn btn-outline-primary" @onclick="CreateNewWishlist" disabled="@IsNewWishlistNameEmpty">
-            <i class="bi bi-plus-lg"></i> Add
+            <i class="bi bi-plus-lg" /> Add
         </button>
     </div>
 </div>

@@ -5,36 +5,39 @@ namespace WishlistApp.Components;
 
 public partial class TextInputToggle
 {
-    private string Value { get; set; }
+    private string EditedValue { get; set; }
 
     private bool IsInEditMode { get; set; }
 
     private bool IsAcceptingValue { get; set; }
 
-    private bool ShouldFocusInputOnAfterRender { get; set; }
+    private bool ShouldFocusInputAfterRender { get; set; }
 
     private ElementReference Input { get; set; }
 
     [Parameter]
-    public string OriginalValue { get; set; }
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string Value { get; set; }
 
     [Parameter]
     public EventCallback<string> OnValueAccepted { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (ShouldFocusInputOnAfterRender)
+        if (ShouldFocusInputAfterRender)
         {
             await Input.FocusAsync();
-            ShouldFocusInputOnAfterRender = false;
+            ShouldFocusInputAfterRender = false;
         }
     }
 
     private void StartEdit()
     {
-        Value = OriginalValue;
+        EditedValue = Value;
         IsInEditMode = true;
-        ShouldFocusInputOnAfterRender = true;
+        ShouldFocusInputAfterRender = true;
     }
 
     private void CancelEdit()
@@ -51,7 +54,7 @@ public partial class TextInputToggle
 
             try
             {
-                await OnValueAccepted.InvokeAsync(Value);
+                await OnValueAccepted.InvokeAsync(EditedValue);
             }
             catch
             {
