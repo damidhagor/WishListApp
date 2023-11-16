@@ -3,7 +3,9 @@
 
 <PageTitle>Wishlists</PageTitle>
 
-<h2>Wishlists</h2>
+<h1>Wishlists</h1>
+
+<div class="border border-secondary"></div>
 
 <div>
     @if (Lists is null)
@@ -17,23 +19,23 @@
     }
     else
     {
-        <div class="list-group-flush list-group-hover border border-primary rounded-3 mb-4">
+        <div class="list-group-flush list-group-hover mb-4">
             @foreach (var list in Lists)
             {
                 <div class="list-group-item container-fluid">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h3>
+                            <h4>
                                 <span style="z-index: 100; position: relative">
                                     <TextInputToggle Value="@list.Name" OnValueAccepted="@((name) => RenameWishlist(@list.Id, name))">
                                         @list.Name
                                     </TextInputToggle>
                                 </span>
-                            </h3>
-                            <h4>
+                            </h4>
+                            <h5>
                                 <i class="bi bi-person-fill" /> @list.Shares.Count
                                 <i class="bi bi-hash" /> @list.Items.Count
-                            </h4>
+                            </h5>
                         </div>
 
                         <div class="col col-auto align-center" style="z-index: 100">
