@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using WishlistApp.Data.Models;
 
 namespace WishlistApp.Data;
 
-internal sealed class WishlistDbContext(DbContextOptions options) : DbContext(options)
+internal sealed class WishlistDbContext(DbContextOptions options) : IdentityDbContext<WishlistUser>(options)
 {
     public DbSet<Wishlist> Wishlists { get; set; }
 
@@ -13,6 +14,8 @@ internal sealed class WishlistDbContext(DbContextOptions options) : DbContext(op
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        base.OnModelCreating(builder);
+
         builder.Entity<Wishlist>()
             .HasKey(e => e.Id);
         builder.Entity<Wishlist>()

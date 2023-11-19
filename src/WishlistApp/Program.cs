@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WishlistApp.Components;
 using WishlistApp.Data;
+using WishlistApp.Data.Models;
 using WishlistApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,7 +18,10 @@ builder.Services.AddDbContext<WishlistDbContext>((serviceProvider, options) =>
     options.UseNpgsql(connectionString);
 });
 
-builder.Services.AddScoped<IWishlistRepository,  WishlistRepository>();
+builder.Services.AddIdentity<WishlistUser, IdentityRole>()
+    .AddEntityFrameworkStores<WishlistDbContext>();
+
+builder.Services.AddScoped<IWishlistRepository, WishlistRepository>();
 
 var app = builder.Build();
 
@@ -25,6 +30,9 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
 }
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseStaticFiles();
 app.UseAntiforgery();
