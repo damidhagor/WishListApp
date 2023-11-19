@@ -25,7 +25,11 @@ internal sealed class WishlistRepository(WishlistDbContext wishlistDbContext) : 
         Guard.IsGreaterThan(id, -1, nameof(id));
         Guard.IsNotNullOrWhiteSpace(name, nameof(name));
 
-        var wishlist = await _context.Wishlists.FirstOrDefaultAsync(w => w.Id == id, cancellationToken);
+        var wishlist = await _context.Wishlists
+            .Include(w => w.Items)
+            .Include(w => w.Shares)
+            .FirstOrDefaultAsync(w => w.Id == id, cancellationToken);
+
         if (wishlist is not null)
         {
             wishlist.Name = name;
@@ -39,14 +43,20 @@ internal sealed class WishlistRepository(WishlistDbContext wishlistDbContext) : 
     {
         Guard.IsGreaterThan(id, -1, nameof(id));
 
-        var wishlist = await _context.Wishlists.FirstOrDefaultAsync(w => w.Id == id, cancellationToken);
+        var wishlist = await _context.Wishlists
+            .Include(w => w.Items)
+            .Include(w => w.Shares)
+            .FirstOrDefaultAsync(w => w.Id == id, cancellationToken);
 
         return wishlist;
     }
 
     public async Task<List<Wishlist>> GetAll(CancellationToken cancellationToken)
     {
-        return await _context.Wishlists.ToListAsync(cancellationToken);
+        return await _context.Wishlists
+            .Include(w => w.Items)
+            .Include(w => w.Shares)
+            .ToListAsync(cancellationToken);
     }
 
     public async Task DeleteWishlist(int id, CancellationToken cancellationToken)
@@ -63,5 +73,54 @@ internal sealed class WishlistRepository(WishlistDbContext wishlistDbContext) : 
 
             await _context.SaveChangesAsync(cancellationToken);
         }
+    }
+
+    public async Task<Wishlist?> AddWishlistItem(int wishlistId, string url, CancellationToken cancellationToken)
+    {
+        Guard.IsGreaterThan(wishlistId, -1, nameof(wishlistId));
+        Guard.IsNotNullOrWhiteSpace(url, nameof(url));
+
+        var wishlist = await _context.Wishlists
+            .Include(w => w.Items)
+            .Include(w => w.Shares)
+            .FirstOrDefaultAsync(w => w.Id == wishlistId, cancellationToken);
+
+        if (wishlist is not null)
+        {
+            var newItem = new WishlistItem
+            {
+                WishlistId = wishlistId,
+                Wishlist = wishlist,
+                Url = url,
+            };
+
+            _context.WishlistItems.Add(newItem);
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        return wishlist;
+    }
+
+    public async Task<Wishlist?> DeleteWishlistItem(int wishlistId, int wishlistItemId, CancellationToken cancellationToken)
+    {
+        Guard.IsGreaterThan(wishlistId, -1, nameof(wishlistId));
+        Guard.IsGreaterThan(wishlistItemId, -1, nameof(wishlistItemId));
+
+        var wishlist = await _context.Wishlists
+            .Include(w => w.Items)
+            .Include(w => w.Shares)
+            .FirstOrDefaultAsync(w => w.Id == wishlistId, cancellationToken);
+
+        if (wishlist is not null)
+        {
+            var item = wishlist.Items.FirstOrDefault(i => i.Id == wishlistItemId);
+            if (item is not null)
+            {
+                wishlist.Items.Remove(item);
+                await _context.SaveChangesAsync(cancellationToken);
+            }
+        }
+
+        return wishlist;
     }
 }

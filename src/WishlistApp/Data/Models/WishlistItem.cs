@@ -2,7 +2,7 @@
 
 public sealed class WishlistItem
 {
-    public required int Id { get; init; }
+    public int Id { get; init; } = 0;
 
     public required int WishlistId { get; init; }
 
