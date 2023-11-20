@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using WishlistApp.Components;
 using WishlistApp.Components.Account;
 using WishlistApp.Data;
+using WishlistApp.Extensions;
 using WishlistApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,6 +27,7 @@ builder.Services.AddAuthentication(options =>
     .AddIdentityCookies();
 
 builder.Services.AddIdentityCore<WishlistUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<WishlistRole>()
     .AddEntityFrameworkStores<WishlistDbContext>()
     .AddSignInManager()
     .AddDefaultTokenProviders();
@@ -49,5 +51,7 @@ app.MapRazorComponents<App>()
 
 // Add additional endpoints required by the Identity /Account Razor components.
 app.MapAdditionalIdentityEndpoints();
+
+await app.SeedAdminUserAndRole();
 
 app.Run();
