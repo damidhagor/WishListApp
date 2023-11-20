@@ -12,7 +12,7 @@ using WishlistApp.Data;
 namespace WishlistApp.Data.Migrations
 {
     [DbContext(typeof(WishlistDbContext))]
-    [Migration("20231119231237_Initial")]
+    [Migration("20231120190702_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
