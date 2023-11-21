@@ -13,24 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-builder.Services.AddCascadingAuthenticationState();
-builder.Services.AddScoped<IdentityUserAccessor>();
-builder.Services.AddScoped<IdentityRedirectManager>();
-builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
-builder.Services.AddSingleton<IEmailSender<WishlistUser>, IdentityNoOpEmailSender>();
-
-builder.Services.AddAuthentication(options =>
-    {
-        options.DefaultScheme = IdentityConstants.ApplicationScheme;
-        options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-    })
-    .AddIdentityCookies();
-
-builder.Services.AddIdentityCore<WishlistUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddRoles<WishlistRole>()
-    .AddEntityFrameworkStores<WishlistDbContext>()
-    .AddSignInManager()
-    .AddDefaultTokenProviders();
+builder.Services.AddWishlistIdentity();
 
 builder.Services.AddDbContext<WishlistDbContext>((serviceProvider, options) =>
 {
