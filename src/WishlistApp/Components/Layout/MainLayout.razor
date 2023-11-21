@@ -1,17 +1,27 @@
 ﻿@inherits LayoutComponentBase
 
 <div class="page">
-    <AuthorizeView Roles="Admin">
-        <div class="sidebar">
-            <NavMenu />
-        </div>
-    </AuthorizeView>
-
     <main>
         <AuthorizeView Roles="Admin">
-            <div class="top-row px-4">
-                <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-            </div>
+            <nav class="navbar bg-body">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="/">Wishlist App</a>
+
+                    <div class="d-flex">
+                        <NavLink class="nav-link" href="Account/Manage">
+                            <i class="bi bi-person-fill navbar-icon"></i> @context.User.Identity?.Name
+                        </NavLink>
+
+                        <form action="Account/Logout" method="post">
+                            <AntiforgeryToken />
+                            <input type="hidden" name="ReturnUrl" value="Account/Login" />
+                            <button type="submit" class="btn btn-outline-primary">
+                                <i class="bi bi-box-arrow-left navbar-icon"></i> Logout
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </nav>
         </AuthorizeView>
 
         <article class="content px-4">
