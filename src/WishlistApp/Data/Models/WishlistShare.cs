@@ -2,7 +2,7 @@
 
 public sealed class WishlistShare
 {
-    public required int Id { get; init; }
+    public int Id { get; init; } = 0;
 
     public required int WishlistId { get; init; }
 
@@ -13,4 +13,6 @@ public sealed class WishlistShare
     public required string AccessKey { get; init; }
 
     public List<WishlistItem> BoughtItems { get; set; } = [];
+
+    public bool IsDeleted { get; set; }
 }
