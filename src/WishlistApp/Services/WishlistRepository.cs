@@ -1,13 +1,13 @@
 ﻿using CommunityToolkit.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using WishlistApp.Data;
-using WishlistApp.Data.Models;
 
 namespace WishlistApp.Services;
 
-internal sealed class WishlistRepository(WishlistDbContext wishlistDbContext) : IWishlistRepository
+internal sealed class WishlistRepository(WishlistDbContext wishlistDbContext, IAccessKeyGenerator accessKeyGenerator) : IWishlistRepository
 {
     private readonly WishlistDbContext _context = wishlistDbContext;
+    private readonly IAccessKeyGenerator _accessKeyGenerator = accessKeyGenerator;
 
     public async Task<Wishlist> CreateWishlist(string name, CancellationToken cancellationToken)
     {
@@ -117,6 +117,57 @@ internal sealed class WishlistRepository(WishlistDbContext wishlistDbContext) : 
             if (item is not null)
             {
                 wishlist.Items.Remove(item);
+                await _context.SaveChangesAsync(cancellationToken);
+            }
+        }
+
+        return wishlist;
+    }
+
+    public async Task<Wishlist?> AddWishlistShare(int wishlistId, string name, CancellationToken cancellationToken)
+    {
+        Guard.IsGreaterThan(wishlistId, -1, nameof(wishlistId));
+        Guard.IsNotNullOrWhiteSpace(name, nameof(name));
+
+        var wishlist = await _context.Wishlists
+            .Include(w => w.Items)
+            .Include(w => w.Shares)
+            .FirstOrDefaultAsync(w => w.Id == wishlistId, cancellationToken);
+
+        if (wishlist is not null)
+        {
+            var accessKey = _accessKeyGenerator.GenerateAccessKey(16);
+            var newShare = new WishlistShare
+            {
+                WishlistId = wishlistId,
+                Wishlist = wishlist,
+                Name = name,
+                AccessKey = accessKey
+            };
+
+            _context.WishlistShares.Add(newShare);
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        return wishlist;
+    }
+
+    public async Task<Wishlist?> DeleteWishlistShare(int wishlistId, int wishlistShareId, CancellationToken cancellationToken)
+    {
+        Guard.IsGreaterThan(wishlistId, -1, nameof(wishlistId));
+        Guard.IsGreaterThan(wishlistShareId, -1, nameof(wishlistShareId));
+
+        var wishlist = await _context.Wishlists
+            .Include(w => w.Items)
+            .Include(w => w.Shares)
+            .FirstOrDefaultAsync(w => w.Id == wishlistId, cancellationToken);
+
+        if (wishlist is not null)
+        {
+            var share = wishlist.Shares.FirstOrDefault(i => i.Id == wishlistShareId);
+            if (share is not null)
+            {
+                share.IsDeleted = true;
                 await _context.SaveChangesAsync(cancellationToken);
             }
         }

@@ -1,8 +1,5 @@
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WishlistApp.Components;
-using WishlistApp.Components.Account;
 using WishlistApp.Data;
 using WishlistApp.Extensions;
 using WishlistApp.Services;
@@ -23,6 +20,7 @@ builder.Services.AddDbContext<WishlistDbContext>((serviceProvider, options) =>
 });
 
 builder.Services.AddScoped<IWishlistRepository, WishlistRepository>();
+builder.Services.AddTransient<IAccessKeyGenerator, AccessKeyGenerator>();
 
 var app = builder.Build();
 

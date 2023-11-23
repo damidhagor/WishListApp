@@ -1,6 +1,4 @@
-﻿using WishlistApp.Data.Models;
-
-namespace WishlistApp.Services;
+﻿namespace WishlistApp.Services;
 
 public interface IWishlistRepository
 {
@@ -17,4 +15,8 @@ public interface IWishlistRepository
     Task<Wishlist?> AddWishlistItem(int wishlistId, string url, CancellationToken cancellationToken);
 
     Task<Wishlist?> DeleteWishlistItem(int wishlistId, int wishlistItemId, CancellationToken cancellationToken);
+
+    Task<Wishlist?> AddWishlistShare(int wishlistId, string name, CancellationToken cancellationToken);
+
+    Task<Wishlist?> DeleteWishlistShare(int wishlistId, int wishlistShareId, CancellationToken cancellationToken);
 }
