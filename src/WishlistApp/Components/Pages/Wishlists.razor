@@ -33,7 +33,7 @@
                                 </span>
                             </h4>
                             <h5>
-                                <i class="bi bi-person-fill" /> @list.Shares.Count
+                                <i class="bi bi-person-fill" /> @list.Shares.Where(s => !s.IsDeleted).Count()
                                 <i class="bi bi-hash" /> @list.Items.Count
                             </h5>
                         </div>
@@ -44,7 +44,7 @@
                             </button>
                         </div>
 
-                    <a href="editwishlist?id=@list.Id" class="stretched-link"></a>
+                        <a href="editwishlist?id=@list.Id" class="stretched-link"></a>
                     </div>
                 </div>
             }

@@ -3,14 +3,6 @@
 
 <PageTitle>@Wishlist?.Name</PageTitle>
 
-<h1>
-    <TextInputToggle Value="@Wishlist?.Name">
-        @Wishlist?.Name
-    </TextInputToggle>
-</h1>
-
-<div class="border border-secondary"></div>
-
 <div>
     @if (Wishlist is null)
     {
@@ -23,42 +15,103 @@
     }
     else
     {
-        <div class="list-group-flush list-group-hover mb-4">
-            @foreach (var item in Wishlist.Items)
-            {
-                <div class="list-group-item container-fluid">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h4>
-                                <a href="@item.Url" class="stretched-link" target="_blank" rel="noopener noreferrer">@item.Url</a>
-                            </h4>
-                            <h5>
-                                Loaded Site Content
-                            </h5>
-                        </div>
+        <h1>
+            <TextInputToggle Value="@Wishlist.Name">
+                @Wishlist.Name
+            </TextInputToggle>
+        </h1>
 
-                        <div class="col col-auto align-center" style="z-index: 100">
-                            <div class="mb-2">
-                                <input class="form-check-input" type="checkbox" @bind:get="item.IsBought" @bind:set="((value) => SetIsBought(item, value))" id="isBoughtCheck-@item.Id">
-                                <label class="form-check-label" for="isBoughtCheck-@item.Id">
-                                    Is Bought
-                                </label>
+        <div class="border border-secondary"></div>
+
+        <div class="mt-4 mb-4">
+            <div class="list-group-flush list-group-hover mb-4">
+                @foreach (var item in Wishlist.Items)
+                {
+                    <div class="list-group-item container-fluid">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h4>
+                                    <a href="@item.Url" class="stretched-link" target="_blank" rel="noopener noreferrer">@item.Url</a>
+                                </h4>
+                                <h5>
+                                    Loaded Site Content
+                                </h5>
                             </div>
 
-                            <button type="button" class="btn btn-outline-danger" @onclick="@(async () => await DeleteWishlistItem(item.Id))">
-                                <i class="bi bi-trash3" /> Delete
-                            </button>
+                            <div class="col col-auto" style="z-index: 100">
+                                <button type="button" class="btn btn-outline-danger mb-2" @onclick="@(async () => await DeleteWishlistItem(item.Id))">
+                                    <i class="bi bi-trash3" /> Delete
+                                </button>
+
+                                <div>
+                                    @if (item.IsBought)
+                                    {
+                                        <div class="badge text-bg-primary">Bought</div>
+                                    }
+                                    else
+                                    {
+                                        <div class="badge bg-secondary text-bg-success">Not Bought</div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div>
+                <input valign="baseline" type="text" placeholder="Url" @bind="@NewItemUrl" @bind:event="oninput">
+                <button valign="baseline" type="button" class="btn btn-outline-primary" @onclick="async () => await AddNewWishlistItem()" disabled="@IsNewItemUrlEmpty">
+                    <i class="bi bi-plus-lg" /> Add
+                </button>
+            </div>
+        </div>
+
+        <div class="border border-secondary"></div>
+
+        <div class="mt-4 mb-4">
+            @if (Wishlist.Shares.Count > 0)
+            {
+                <div class="list-group-flush list-group-hover mb-4">
+                    @foreach (var share in Wishlist.Shares.Where(s => !s.IsDeleted))
+                    {
+                        <div class="list-group-item container-fluid">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h4>@share.Name</h4>
+
+                                    <h5>
+                                        @share.AccessKey
+                                    </h5>
+                                </div>
+
+                                <div class="col col-auto align-center" style="z-index: 100">
+                                    <button type="button" class="btn btn-outline-danger" @onclick="@(async () => await DeleteWishlistShare(share.Id))">
+                                        <i class="bi bi-trash3" /> Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="list-group-flush mb-4">
+                    <div class="list-group-item container-fluid">
+                        <div class="row align-items-center">
+                            <h5>The list is not yet shared with anybody.</h5>
                         </div>
                     </div>
                 </div>
             }
-        </div>
 
-        <div>
-            <input valign="baseline" type="text" placeholder="Url" @bind="@NewItemUrl" @bind:event="oninput">
-            <button valign="baseline" type="button" class="btn btn-outline-primary" @onclick="async () => await AddNewWishlistItem()" disabled="@IsNewItemUrlEmpty">
-                <i class="bi bi-plus-lg" /> Add
-            </button>
+            <div>
+                <input valign="baseline" type="text" placeholder="Name" @bind="@NewShareName" @bind:event="oninput">
+                <button valign="baseline" type="button" class="btn btn-outline-primary" @onclick="async () => await AddNewWishlistShare()" disabled="@IsNewShareNameEmpty">
+                    <i class="bi bi-share" /> Share
+                </button>
+            </div>
         </div>
     }
 </div>

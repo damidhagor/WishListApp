@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using WishlistApp.Data.Models;
 using WishlistApp.Services;
 
 namespace WishlistApp.Components.Pages;
@@ -24,7 +23,11 @@ public partial class EditWishlist
 
     private string NewItemUrl { get; set; } = "";
 
+    private string NewShareName { get; set; } = "";
+
     private bool IsNewItemUrlEmpty => string.IsNullOrWhiteSpace(NewItemUrl);
+
+    private bool IsNewShareNameEmpty => string.IsNullOrWhiteSpace(NewShareName);
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -66,6 +69,7 @@ public partial class EditWishlist
         if (newWishlist is not null)
         {
             Wishlist = newWishlist;
+            NewItemUrl = "";
         }
     }
 
@@ -76,7 +80,7 @@ public partial class EditWishlist
             return;
         }
 
-        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Do you want to delete the wishlist?");
+        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Do you want to delete the item from the wishlist?");
         if (confirmed)
         {
             var wishlist = await Repository.DeleteWishlistItem(Wishlist.Id, itemId, default);
@@ -92,5 +96,42 @@ public partial class EditWishlist
     private void SetIsBought(WishlistItem item, bool isBought)
     {
         item.BoughtByWishlistShareId = isBought ? 2 : null;
+    }
+
+    private async Task AddNewWishlistShare()
+    {
+        if (string.IsNullOrWhiteSpace(NewShareName)
+            || Wishlist is null)
+        {
+            return;
+        }
+
+        var newWishlist = await Repository.AddWishlistShare(Wishlist.Id, NewShareName, default);
+
+        if (newWishlist is not null)
+        {
+            Wishlist = newWishlist;
+            NewShareName = "";
+        }
+    }
+
+    private async Task DeleteWishlistShare(int shareId)
+    {
+        if (Wishlist is null)
+        {
+            return;
+        }
+
+        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Do you want to delete the share for the wishlist?");
+        if (confirmed)
+        {
+            var wishlist = await Repository.DeleteWishlistShare(Wishlist.Id, shareId, default);
+
+            if (wishlist is not null)
+            {
+                Wishlist = wishlist;
+                StateHasChanged();
+            }
+        }
     }
 }
