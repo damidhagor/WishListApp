@@ -16,7 +16,7 @@
     else
     {
         <h1>
-            <TextInputToggle Value="@Wishlist.Name">
+            <TextInputToggle Value="@Wishlist.Name" OnValueAccepted="@((name) => RenameWishlist(@Wishlist.Id, name))">
                 @Wishlist.Name
             </TextInputToggle>
         </h1>

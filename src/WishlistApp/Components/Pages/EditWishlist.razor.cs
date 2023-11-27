@@ -56,6 +56,16 @@ public partial class EditWishlist
         StateHasChanged();
     }
 
+    private async Task RenameWishlist(int id, string name)
+    {
+        var newWishlist = await Repository.RenameWishlist(id, name, default);
+
+        if (newWishlist is not null)
+        {
+            Wishlist = newWishlist;
+        }
+    }
+
     private async Task AddNewWishlistItem()
     {
         if (string.IsNullOrWhiteSpace(NewItemUrl)
