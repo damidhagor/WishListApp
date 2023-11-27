@@ -15,6 +15,9 @@ public partial class EditWishlist
     [Inject]
     private IJSRuntime JSRuntime { get; set; }
 
+    [Inject]
+    private IAccessKeyGenerator AccessKeyGenerator { get; set; }
+
     [Parameter]
     [SupplyParameterFromQuery(Name = "id")]
     public int? WishlistId { get; set; }
@@ -143,5 +146,10 @@ public partial class EditWishlist
                 StateHasChanged();
             }
         }
+    }
+
+    private async Task CopyToClipboard(string content)
+    {
+        await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", content);
     }
 }
