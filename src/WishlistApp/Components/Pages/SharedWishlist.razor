@@ -1,0 +1,11 @@
+﻿@page "/w/{accessKey}"
+@attribute [Authorize(Policy = "WishlistSharePolicy")]
+
+<PageTitle>Wishlist</PageTitle>
+
+<h1>YOU DID IT!!</h1>
+
+@code {
+    [Parameter]
+    public string AccessKey { get; set; } = "";
+}
