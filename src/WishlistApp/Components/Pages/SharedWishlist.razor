@@ -1,11 +1,6 @@
 ﻿@page "/w/{accessKey}"
-@attribute [Authorize(Policy = "WishlistSharePolicy")]
+@attribute [Authorize(Policy = Authentication.WishlistShareAuthenticationConstants.PolicyName)]
 
 <PageTitle>Wishlist</PageTitle>
 
 <h1>YOU DID IT!!</h1>
-
-@code {
-    [Parameter]
-    public string AccessKey { get; set; } = "";
-}

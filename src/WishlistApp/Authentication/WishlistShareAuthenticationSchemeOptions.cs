@@ -2,7 +2,4 @@
 
 namespace WishlistApp.Authentication;
 
-internal sealed class WishlistShareAuthenticationSchemeOptions : AuthenticationSchemeOptions
-{
-    public string? AccessKeyRouteValueKey { get; set; }
-}
+internal sealed class WishlistShareAuthenticationSchemeOptions : AuthenticationSchemeOptions { }

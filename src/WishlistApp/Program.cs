@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using WishlistApp.Authentication;
 using WishlistApp.Components;
 using WishlistApp.Data;
 using WishlistApp.Extensions;
@@ -11,19 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-builder.Services.AddAuthentication(WishlistShareAuthenticationSchemeHandler.SchemeName)
-    .AddScheme<WishlistShareAuthenticationSchemeOptions, WishlistShareAuthenticationSchemeHandler>(
-        WishlistShareAuthenticationSchemeHandler.SchemeName,
-        options => options.AccessKeyRouteValueKey = "accessKey");
-
-builder.Services.AddAuthorization(c =>
-{
-    c.AddPolicy(
-        "WishlistSharePolicy",
-        policy => policy
-            .RequireClaim("AccessKey")
-            .AddAuthenticationSchemes(WishlistShareAuthenticationSchemeHandler.SchemeName));
-});
+builder.Services.AddWishlistShareAuthentication();
 
 builder.Services.AddWishlistIdentity();
 

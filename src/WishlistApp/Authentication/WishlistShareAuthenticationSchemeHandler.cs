@@ -4,42 +4,57 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using WishlistApp.Data;
+using Constants = WishlistApp.Authentication.WishlistShareAuthenticationConstants;
 
 namespace WishlistApp.Authentication;
 
 internal sealed class WishlistShareAuthenticationSchemeHandler(
     IOptionsMonitor<WishlistShareAuthenticationSchemeOptions> options,
-    ILoggerFactory logger,
+    ILoggerFactory loggerFactory,
     UrlEncoder encoder,
     WishlistDbContext dbContext)
-    : AuthenticationHandler<WishlistShareAuthenticationSchemeOptions>(options, logger, encoder)
+    : AuthenticationHandler<WishlistShareAuthenticationSchemeOptions>(options, loggerFactory, encoder)
 {
-    public const string SchemeName = "WishlistShare";
-
     private readonly WishlistDbContext _dbContext = dbContext;
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        if (!string.IsNullOrWhiteSpace(Options.AccessKeyRouteValueKey)
-            && Context.Request.RouteValues.TryGetValue("accessKey", out var accessKeyValue)
-            && accessKeyValue is string accessKey)
+        try
         {
-            var wishlistShare = await _dbContext.WishlistShares.FirstOrDefaultAsync(s => s.AccessKey == accessKey, Context.RequestAborted);
-
-            if (wishlistShare is not null)
+            if (Context.Request.RouteValues.TryGetValue(Constants.AccessKeyRouteValueKey, out var accessKeyValue)
+                && accessKeyValue is string accessKey)
             {
-                var claims = new[] { new Claim("AccessKey", accessKey) };
+                var wishlistShare = await _dbContext.WishlistShares.FirstOrDefaultAsync(s => s.AccessKey == accessKey, Context.RequestAborted);
 
-                var identity = new ClaimsIdentity(claims, SchemeName);
-
-                var principal = new ClaimsPrincipal(identity);
-
-                var ticket = new AuthenticationTicket(principal, SchemeName);
-
-                return AuthenticateResult.Success(ticket);
+                if (wishlistShare is not null)
+                {
+                    var ticket = CreateAuthenticationTicket(wishlistShare);
+                    return AuthenticateResult.Success(ticket);
+                }
             }
+        }
+        catch (Exception e)
+        {
+            Logger.LogError(e, "Authentication failed.");
+            return AuthenticateResult.Fail(e);
         }
 
         return AuthenticateResult.NoResult();
+    }
+
+    private AuthenticationTicket CreateAuthenticationTicket(WishlistShare wishlistShare)
+    {
+        var claims = new[]
+        {
+            new Claim(ClaimTypes.Name, wishlistShare.Name),
+            new Claim(ClaimTypes.Role, Constants.WishlistShareRole),
+            new Claim(Constants.WishlistShareIdClaim, wishlistShare.Id.ToString())
+        };
+
+        var identity = new ClaimsIdentity(claims, Constants.AuthenticationSchemeName);
+
+        var principal = new ClaimsPrincipal(identity);
+
+        return new AuthenticationTicket(principal, Constants.AuthenticationSchemeName);
     }
 }
