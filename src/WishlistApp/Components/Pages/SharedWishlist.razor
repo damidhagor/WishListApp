@@ -1,6 +1,42 @@
 ﻿@page "/w/{accessKey}"
 @attribute [Authorize(Policy = Authentication.WishlistShareAuthenticationConstants.PolicyName)]
 
-<PageTitle>Wishlist</PageTitle>
+<PageTitle>@Wishlist?.Name</PageTitle>
 
-<h1>YOU DID IT!!</h1>
+<div>
+    @if (Wishlist is null)
+    {
+        <div>
+            <div class="spinner-border spinner-border-sm text-primary ms-1" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            Loading Wishlist ...
+        </div>
+    }
+    else
+    {
+        <h1>@Wishlist.Name</h1>
+
+        <div class="border border-secondary"></div>
+
+        <div class="mt-4 mb-4">
+            <div class="list-group-flush list-group-hover mb-4">
+                @foreach (var item in Wishlist.Items)
+                {
+                    <div class="list-group-item container-fluid">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h4>
+                                    <a href="@item.Url" class="stretched-link" target="_blank" rel="noopener noreferrer">@item.Url</a>
+                                </h4>
+                                <h5>
+                                    Loaded Site Content
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
