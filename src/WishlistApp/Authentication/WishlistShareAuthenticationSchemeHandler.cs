@@ -1,9 +1,8 @@
 ﻿using System.Security.Claims;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using WishlistApp.Data;
+using WishlistApp.Services;
 using Constants = WishlistApp.Authentication.WishlistShareAuthenticationConstants;
 
 namespace WishlistApp.Authentication;
@@ -12,10 +11,10 @@ internal sealed class WishlistShareAuthenticationSchemeHandler(
     IOptionsMonitor<WishlistShareAuthenticationSchemeOptions> options,
     ILoggerFactory loggerFactory,
     UrlEncoder encoder,
-    WishlistDbContext dbContext)
+    IWishlistRepository repository)
     : AuthenticationHandler<WishlistShareAuthenticationSchemeOptions>(options, loggerFactory, encoder)
 {
-    private readonly WishlistDbContext _dbContext = dbContext;
+    private readonly IWishlistRepository _repository = repository;
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
@@ -24,7 +23,7 @@ internal sealed class WishlistShareAuthenticationSchemeHandler(
             if (Context.Request.RouteValues.TryGetValue(Constants.AccessKeyRouteValueKey, out var accessKeyValue)
                 && accessKeyValue is string accessKey)
             {
-                var wishlistShare = await _dbContext.WishlistShares.FirstOrDefaultAsync(s => s.AccessKey == accessKey, Context.RequestAborted);
+                var wishlistShare = await _repository.GetWishlistShareByAccessKey(accessKey, Context.RequestAborted);
 
                 if (wishlistShare is not null)
                 {

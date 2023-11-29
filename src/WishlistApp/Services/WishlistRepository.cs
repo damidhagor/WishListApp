@@ -174,4 +174,20 @@ internal sealed class WishlistRepository(WishlistDbContext wishlistDbContext, IA
 
         return wishlist;
     }
+
+    public async Task<WishlistShare?> GetWishlistShareByAccessKey(string accessKey, CancellationToken cancellationToken)
+    {
+        Guard.IsNotNullOrWhiteSpace(accessKey, nameof(accessKey));
+
+        return await _context.WishlistShares
+            .FirstOrDefaultAsync(s => s.AccessKey == accessKey, cancellationToken);
+    }
+
+    public async Task<WishlistShare?> GetWishlistShareById(int id, CancellationToken cancellationToken)
+    {
+        Guard.IsGreaterThan(id, -1, nameof(id));
+
+        return await _context.WishlistShares
+            .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
+    }
 }
