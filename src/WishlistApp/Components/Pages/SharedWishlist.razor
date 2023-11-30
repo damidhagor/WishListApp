@@ -23,18 +23,7 @@
             <div class="list-group-flush list-group-hover mb-4">
                 @foreach (var item in Wishlist.Items)
                 {
-                    <div class="list-group-item container-fluid">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h4>
-                                    <a href="@item.Url" class="stretched-link" target="_blank" rel="noopener noreferrer">@item.Url</a>
-                                </h4>
-                                <h5>
-                                    Loaded Site Content
-                                </h5>
-                            </div>
-                        </div>
-                    </div>
+                   <WishlistItem Item="@item" />
                 }
             </div>
         </div>

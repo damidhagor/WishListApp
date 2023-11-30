@@ -106,11 +106,6 @@ public partial class EditWishlist
         }
     }
 
-    private void SetIsBought(WishlistItem item, bool isBought)
-    {
-        item.BoughtByWishlistShareId = isBought ? 2 : null;
-    }
-
     private async Task AddNewWishlistShare()
     {
         if (string.IsNullOrWhiteSpace(NewShareName)
