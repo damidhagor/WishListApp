@@ -22,7 +22,7 @@ public partial class EditWishlist
     [SupplyParameterFromQuery(Name = "id")]
     public int? WishlistId { get; set; }
 
-    private Wishlist? Wishlist { get; set; }
+    private WishlistDto? Wishlist { get; set; }
 
     private string NewItemUrl { get; set; } = "";
 

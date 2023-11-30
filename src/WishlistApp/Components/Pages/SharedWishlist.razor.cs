@@ -19,9 +19,9 @@ public partial class SharedWishlist
     [Parameter]
     public string AccessKey { get; set; } = "";
 
-    private WishlistShare? WishlistShare { get; set; }
+    private WishlistShareDto? WishlistShare { get; set; }
 
-    private Wishlist? Wishlist { get; set; }
+    private WishlistDto? Wishlist { get; set; }
 
 
     protected override async Task OnInitializedAsync()

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using WishlistApp.Authentication;
 using WishlistApp.Components.Account;
 using WishlistApp.Data;
+using WishlistApp.Data.Models;
 using Constants = WishlistApp.Authentication.WishlistShareAuthenticationConstants;
 
 namespace WishlistApp.Extensions;

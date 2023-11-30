@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using WishlistApp.Data.Models;
 
 namespace WishlistApp.Components.Account;
 

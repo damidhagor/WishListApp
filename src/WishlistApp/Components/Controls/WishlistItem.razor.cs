@@ -5,7 +5,7 @@ namespace WishlistApp.Components.Controls;
 public partial class WishlistItem
 {
     [Parameter]
-    public Data.Models.WishlistItem? Item { get; set; }
+    public WishlistItemDto? Item { get; set; }
 
     [Parameter]
     public bool IsEditable { get; set; }

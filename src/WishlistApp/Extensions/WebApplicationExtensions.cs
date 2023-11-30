@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
+using WishlistApp.Data.Models;
 
 namespace WishlistApp.Extensions;
 

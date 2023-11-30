@@ -44,7 +44,7 @@
                                 </button>
 
                                 <div>
-                                    @if (item.IsBought)
+                                    @if (item.BoughtByWishlistShareId is not null)
                                     {
                                         <div class="badge text-bg-primary">Bought</div>
                                     }
@@ -70,7 +70,7 @@
         <div class="border border-secondary"></div>
 
         <div class="mt-4 mb-4">
-            @if (Wishlist.Shares.Count > 0)
+            @if (Wishlist.Shares.Length > 0)
             {
                 <div class="list-group-flush list-group-hover mb-4">
                     @foreach (var share in Wishlist.Shares.Where(s => !s.IsDeleted))

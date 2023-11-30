@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using WishlistApp.Components.Account.Pages;
 using WishlistApp.Components.Account.Pages.Manage;
+using WishlistApp.Data.Models;
 
 namespace Microsoft.AspNetCore.Routing;
 internal static class IdentityComponentsEndpointRouteBuilderExtensions

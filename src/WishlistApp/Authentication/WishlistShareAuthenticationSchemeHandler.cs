@@ -41,7 +41,7 @@ internal sealed class WishlistShareAuthenticationSchemeHandler(
         return AuthenticateResult.NoResult();
     }
 
-    private AuthenticationTicket CreateAuthenticationTicket(WishlistShare wishlistShare)
+    private AuthenticationTicket CreateAuthenticationTicket(WishlistShareDto wishlistShare)
     {
         var claims = new[]
         {

@@ -16,7 +16,7 @@ public partial class Wishlists
     [Inject]
     private IJSRuntime JSRuntime { get; set; }
 
-    private List<Wishlist>? Lists { get; set; } = null;
+    private List<WishlistDto>? Lists { get; set; } = null;
 
     private string NewWishlistName { get; set; } = "";
 

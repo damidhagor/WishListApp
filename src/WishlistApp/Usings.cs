@@ -1,1 +1,1 @@
-﻿global using WishlistApp.Data.Models;
+﻿global using WishlistApp.Dtos;
