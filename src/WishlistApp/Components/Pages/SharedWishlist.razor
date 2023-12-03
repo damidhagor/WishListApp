@@ -20,12 +20,10 @@
         <div class="border border-secondary"></div>
 
         <div class="mt-4 mb-4">
-            <div class="list-group-flush list-group-hover mb-4">
-                @foreach (var item in Wishlist.Items)
-                {
-                   <WishlistItem Item="@item" />
-                }
-            </div>
+            @foreach (var item in Wishlist.Items)
+            {
+                <WishlistItem Item="@item" />
+            }
         </div>
     }
 </div>

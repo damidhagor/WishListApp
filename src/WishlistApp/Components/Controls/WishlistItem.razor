@@ -1,70 +1,63 @@
 ﻿@inherits ComponentBase
+@rendermode RenderMode.InteractiveServer
 
 @if (Item is not null)
 {
-    <div class="card border-success mb-3">
-        <div class="row g-0">
-            <div class="border-end border-success col-md-4">
-                <img src="https://www.shop4tesla.com/cdn/shop/products/logo-embleme-in-schwarz-fur-das-tesla-model-y-195398.jpg?format=webp&pad_color=ffffff&v=1671027874&width=1946" class="img-fluid rounded-start">
-            </div>
 
-            <div class="col-md-8">
-                <h5 class="card-header bg-transparent border-success"><a href="@Item.Url">@Item.Url</a></h5>
-
-                <div class="card-body">
-                    <div class="card-title"><a href="@Item.Url">@Item.Url</a></div>
-
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-
-                    <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    @* <div class="list-group-item container-fluid rounded-2">
-        <div class="row">
-            @if (Item.IsBought)
+    <div class="d-flex m-2 overflow-hidden rounded-2 border border-black border-1" style="height: 200px;">
+        <div class="d-flex flex-column w-25 overflow-hidden border-black border-end">
+            @if (IsProductInformationLoading)
             {
-                <div class="col col-auto">
-                    <i class="bi bi-bag-fill" />
+                <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
                 </div>
             }
             else
             {
-                <div class="col col-auto bg-warning d-flex align-items-center justify-content-center rounded-start-2">
-                    <i class="bi bi-bag" />
+                <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-center">
+                    <img src="@ImageUrl" class="h-100 w-auto">
                 </div>
             }
+        </div>
 
-            <div class="col">
-                <h4>
-                    <a href="@Item.Url" class="stretched-link" target="_blank" rel="noopener noreferrer">@Item.Url</a>
-                </h4>
-                <h5>
-                    Loaded Site Content
+        <div class="d-flex flex-column w-75">
+            <div class="d-flex flex-row ps-2 pt-2 pe-2 border-bottom border-black">
+                <h5 class="">
+                    <a href="@Item.Url">@Name</a>
                 </h5>
+
+                <div class="ms-auto align-self-baseline">
+                    9,95€
+                </div>
             </div>
 
-            <div class="col col-auto" style="z-index: 100">
-                @if (IsEditable)
-                {
-                    <button type="button" class="btn btn-outline-danger mb-2" @onclick="@(async () => await DeleteWishlistItem(item.Id))">
-                        <i class="bi bi-trash3" /> Delete
-                    </button>
-                }
+            <div class="d-flex flex-row flex-grow-1 overflow-y-auto ms-2 mt-2 mb-2">
+                @Description
+            </div>
 
-                <div>
-                    @if (Item.IsBought)
-                    {
-                        <div class="badge text-bg-primary">Bought</div>
-                    }
-                    else
-                    {
-                        <div class="badge bg-secondary text-bg-success">Not Bought</div>
-                    }
+            <div class="d-flex flex-row justify-content-end align-content-baseline border-top border-black p-2">
+                <button type="button" class="btn btn-outline-danger">
+                    <i class="bi bi-trash" /> Remove
+                </button>
+
+                <button type="button" class="btn btn-primary">
+                    <i class="bi bi-bag" /> Mark As Bought
+                </button>
+
+                <div class="d-flex rounded-2 ps-4 pe-4 text-bg-success">
+                    <span class="text-white align-self-center">
+                        <i class="bi bi-bag-fill" /> Bought
+                    </span>
+                </div>
+
+                <div class="d-flex rounded-2 ps-4 pe-4 text-bg-success">
+                    <span class="text-white align-self-center">
+                        <i class="bi bi-bag-fill" /> Bought By You
+                    </span>
                 </div>
             </div>
         </div>
-    </div> *@
+    </div>
 }
