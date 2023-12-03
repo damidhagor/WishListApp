@@ -16,4 +16,8 @@
 		</PackageReference>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\WishlistApp.ProductCrawling\WishlistApp.ProductCrawling.csproj" />
+	</ItemGroup>
+
 </Project>

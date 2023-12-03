@@ -1,0 +1,1 @@
+﻿global using WishlistApp.ProductCrawling.Models;
