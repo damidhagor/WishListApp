@@ -23,7 +23,11 @@
         <div class="mt-4 mb-4">
             @foreach (var item in Wishlist.Items)
             {
-                <WishlistItem Item="@item" />
+                <WishlistItem Item="@item"
+                    IsEditable="@false"
+                    Share="@WishlistShare"
+                    ItemBought="@(async (item) => await OnItemBought(item))"
+                    ItemUnbought="@(async (item) => await OnItemUnbought(item))" />
             }
         </div>
     }

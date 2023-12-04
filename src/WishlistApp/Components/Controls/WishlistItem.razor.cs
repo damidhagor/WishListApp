@@ -12,7 +12,16 @@ public partial class WishlistItem
     public WishlistItemDto? Item { get; set; }
 
     [Parameter]
+    public WishlistShareDto? Share { get; set; }
+
+    [Parameter]
     public bool IsEditable { get; set; }
+
+    [Parameter]
+    public EventCallback<WishlistItemDto> ItemBought { get; set; }
+
+    [Parameter]
+    public EventCallback<WishlistItemDto> ItemUnbought { get; set; }
 
     protected bool IsProductInformationLoading { get; set; }
 

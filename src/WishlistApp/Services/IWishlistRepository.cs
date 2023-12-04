@@ -16,6 +16,10 @@ public interface IWishlistRepository
 
     Task<WishlistDto?> DeleteWishlistItem(int wishlistId, int wishlistItemId, CancellationToken cancellationToken);
 
+    Task<WishlistDto?> BuyWishlistItem(int wishlistId, int wishlistItemId, int wishlistShareId, CancellationToken cancellationToken);
+
+    Task<WishlistDto?> UnbuyWishlistItem(int wishlistId, int wishlistItemId, int wishlistShareId, CancellationToken cancellationToken);
+
     Task<WishlistDto?> AddWishlistShare(int wishlistId, string name, CancellationToken cancellationToken);
 
     Task<WishlistDto?> DeleteWishlistShare(int wishlistId, int wishlistShareId, CancellationToken cancellationToken);

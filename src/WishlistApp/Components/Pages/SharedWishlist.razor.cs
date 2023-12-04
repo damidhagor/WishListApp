@@ -50,4 +50,14 @@ public partial class SharedWishlist
             return;
         }
     }
+
+    private async Task OnItemBought(WishlistItemDto itemDto)
+    {
+        Wishlist = await Repository.BuyWishlistItem(itemDto.WishlistId, itemDto.Id, WishlistShare!.Id, default);
+    }
+
+    private async Task OnItemUnbought(WishlistItemDto itemDto)
+    {
+        Wishlist = await Repository.UnbuyWishlistItem(itemDto.WishlistId, itemDto.Id, WishlistShare!.Id, default);
+    }
 }
