@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
-using WishlistApp.Authentication;
 using WishlistApp.Components.Account;
 using WishlistApp.Data;
 using WishlistApp.Data.Models;
-using Constants = WishlistApp.Authentication.WishlistShareAuthenticationConstants;
 
 namespace WishlistApp.Extensions;
 
@@ -30,24 +28,6 @@ internal static class ServiceCollectionExtensions
             .AddEntityFrameworkStores<WishlistDbContext>()
             .AddSignInManager()
             .AddDefaultTokenProviders();
-
-        return services;
-    }
-
-    public static IServiceCollection AddWishlistShareAuthentication(this IServiceCollection services)
-    {
-        services.AddAuthentication(Constants.AuthenticationSchemeName)
-            .AddScheme<WishlistShareAuthenticationSchemeOptions, WishlistShareAuthenticationSchemeHandler>(
-                Constants.AuthenticationSchemeName,
-                null);
-
-        services.AddAuthorizationBuilder()
-            .AddPolicy(
-                Constants.PolicyName,
-                policy => policy
-                    .RequireRole(Constants.WishlistShareRole)
-                    .RequireClaim(Constants.WishlistShareIdClaim)
-                    .AddAuthenticationSchemes(Constants.AuthenticationSchemeName));
 
         return services;
     }

@@ -13,8 +13,6 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddHttpClient();
 
-builder.Services.AddWishlistShareAuthentication();
-
 builder.Services.AddWishlistIdentity();
 
 builder.Services.AddDbContext<WishlistDbContext>((serviceProvider, options) =>

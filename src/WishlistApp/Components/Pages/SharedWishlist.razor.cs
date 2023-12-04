@@ -1,15 +1,10 @@
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
 using WishlistApp.Services;
-using Constants = WishlistApp.Authentication.WishlistShareAuthenticationConstants;
 
 namespace WishlistApp.Components.Pages;
 
 public partial class SharedWishlist
 {
-    [CascadingParameter]
-    public Task<AuthenticationState> AuthenticationStateTask { get; set; } = default!;
-
     [Inject]
     private IWishlistRepository Repository { get; set; } = default!;
 
@@ -24,7 +19,7 @@ public partial class SharedWishlist
     private WishlistDto? Wishlist { get; set; }
 
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
         await LoadAndValidateWishlistShare(default);
         await LoadWishlist(default);
@@ -32,13 +27,9 @@ public partial class SharedWishlist
 
     private async Task LoadAndValidateWishlistShare(CancellationToken cancellationToken)
     {
-        var state = await AuthenticationStateTask;
-
-        var wishlistShareIdValue = state.User.Claims.FirstOrDefault(c => c.Type == Constants.WishlistShareIdClaim)?.Value;
-
-        if (int.TryParse(wishlistShareIdValue, out var wishlistShareId))
+        if (!string.IsNullOrWhiteSpace(AccessKey))
         {
-            WishlistShare = await Repository.GetWishlistShareById(wishlistShareId, cancellationToken);
+            WishlistShare = await Repository.GetWishlistShareByAccessKey(AccessKey, cancellationToken);
         }
 
         if (WishlistShare is null)

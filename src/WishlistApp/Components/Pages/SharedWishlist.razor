@@ -1,5 +1,6 @@
 ﻿@page "/w/{accessKey}"
-@attribute [Authorize(Policy = Authentication.WishlistShareAuthenticationConstants.PolicyName)]
+@rendermode @(new InteractiveServerRenderMode(false))
+@attribute [AllowAnonymous]
 
 <PageTitle>@Wishlist?.Name</PageTitle>
 
