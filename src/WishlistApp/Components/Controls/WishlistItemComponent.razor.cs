@@ -3,7 +3,7 @@ using WishlistApp.ProductCrawling.Services;
 
 namespace WishlistApp.Components.Controls;
 
-public partial class WishlistItem
+public partial class WishlistItemComponent
 {
     [Inject]
     private IProductCrawlerService _productCrawler { get; set; } = default!;
@@ -13,9 +13,6 @@ public partial class WishlistItem
 
     [Parameter]
     public WishlistShareDto? Share { get; set; }
-
-    [Parameter]
-    public bool IsEditable { get; set; }
 
     [Parameter]
     public EventCallback<WishlistItemDto> ItemBought { get; set; }

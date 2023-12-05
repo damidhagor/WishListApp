@@ -1,0 +1,62 @@
+﻿@inherits ComponentBase
+@rendermode @(new InteractiveServerRenderMode(false))
+
+@if (Wishlist is null)
+{
+    <h1> Unbekannte Wunschliste </h1>
+
+    <div class="border border-secondary"></div>
+
+    <h3 class="m-2 ms-4">
+        <i class="bi bi-exclamation-triangle" />
+        Diese Wunschliste existiert nicht.
+        <i class="bi bi-exclamation-triangle" />
+    </h3>
+}
+else
+{
+    <AuthorizeView Roles="Admin">
+        <Authorized>
+            <h1>
+                <TextInputToggle Value="@Wishlist.Name" OnValueAccepted="@(name => RenameWishlist(name))">
+                    @Wishlist.Name
+                </TextInputToggle>
+            </h1>
+        </Authorized>
+        <NotAuthorized>
+            <h1>@Wishlist.Name</h1>
+        </NotAuthorized>
+    </AuthorizeView>
+
+    <div class="border border-secondary"></div>
+
+    @if (Wishlist.Items.Length == 0)
+    {
+        <h3 class="m-2 ms-4">
+            <i class="bi bi-exclamation-circle" />
+            Die Wunschliste hat noch keine Einträge.
+            <i class="bi bi-exclamation-circle" />
+        </h3>
+    }
+    else
+    {
+        <div class="mt-4 mb-4">
+            @foreach (var item in Wishlist.Items)
+            {
+                <WishlistItemComponent Item="@item"
+                                       Share="@WishlistShare"
+                                       ItemBought="@(async (item) => await OnItemBought(item))"
+                                       ItemUnbought="@(async (item) => await OnItemUnbought(item))" />
+            }
+        </div>
+    }
+
+    <AuthorizeView Roles="Admin">
+        <div class="d-flex">
+            <input class="me-2 col-4" valign="baseline" type="text" placeholder="Url" @bind="@_newItemUrl" @bind:event="oninput">
+            <button valign="baseline" type="button" class="btn btn-outline-primary" @onclick="AddNewWishlistItem" disabled="@_isNewItemUrlEmpty">
+                <i class="bi bi-plus-lg" /> Hinzufügen
+            </button>
+        </div>
+    </AuthorizeView>
+}
