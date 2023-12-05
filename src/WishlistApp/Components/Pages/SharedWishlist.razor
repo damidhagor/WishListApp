@@ -16,19 +16,10 @@
     }
     else
     {
-        <h1>@Wishlist.Name</h1>
+        <WishlistComponent Wishlist="@Wishlist" />
 
-        <div class="border border-secondary"></div>
+        <div class="border border-secondary mt-4 mb-4"></div>
 
-        <div class="mt-4 mb-4">
-            @foreach (var item in Wishlist.Items)
-            {
-                <WishlistItemComponent Item="@item"
-                    IsEditable="@false"
-                    Share="@WishlistShare"
-                    ItemBought="@(async (item) => await OnItemBought(item))"
-                    ItemUnbought="@(async (item) => await OnItemUnbought(item))" />
-            }
-        </div>
+        <WishlistShareComponent Wishlist="@Wishlist" />
     }
 </div>
