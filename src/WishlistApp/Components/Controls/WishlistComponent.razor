@@ -18,9 +18,9 @@ else
     <AuthorizeView Roles="Admin">
         <Authorized>
             <h1>
-                <TextInputToggle Value="@Wishlist.Name" OnValueAccepted="@(name => RenameWishlist(name))">
+                <TextInputToggleComponent Value="@Wishlist.Name" OnValueAccepted="@(name => RenameWishlist(name))">
                     @Wishlist.Name
-                </TextInputToggle>
+                </TextInputToggleComponent>
             </h1>
         </Authorized>
         <NotAuthorized>

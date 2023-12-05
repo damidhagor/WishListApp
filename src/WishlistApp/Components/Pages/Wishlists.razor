@@ -27,9 +27,9 @@
                         <div class="col">
                             <h4>
                                 <span style="z-index: 100; position: relative">
-                                    <TextInputToggle Value="@list.Name" OnValueAccepted="@((name) => RenameWishlist(@list.Id, name))">
+                                    <TextInputToggleComponent Value="@list.Name" OnValueAccepted="@((name) => RenameWishlist(@list.Id, name))">
                                         @list.Name
-                                    </TextInputToggle>
+                                    </TextInputToggleComponent>
                                 </span>
                             </h4>
                             <h5>
