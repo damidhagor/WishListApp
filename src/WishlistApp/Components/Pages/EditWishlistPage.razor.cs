@@ -3,7 +3,7 @@ using WishlistApp.Services;
 
 namespace WishlistApp.Components.Pages;
 
-public partial class EditWishlist
+public partial class EditWishlistPage
 {
     [Inject]
     private IWishlistRepository Repository { get; set; }
