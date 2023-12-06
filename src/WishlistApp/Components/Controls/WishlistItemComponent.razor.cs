@@ -28,6 +28,8 @@ public partial class WishlistItemComponent
 
     private string? ImageUrl { get; set; }
 
+    private string? Price { get; set; }
+
     protected override async Task OnParametersSetAsync()
     {
         await LoadItemInformation(default);
@@ -45,9 +47,10 @@ public partial class WishlistItemComponent
             IsProductInformationLoading = true;
             var result = await _productCrawler.CrawlProduct(new Uri(Item.Url), cancellationToken);
 
-            Name = result.Title ?? Item.Url;
+            Name = string.IsNullOrWhiteSpace(result.Title) ? Item.Url : result.Title;
             Description = result.Description;
             ImageUrl = result.ImageUrl;
+            Price = $"{result.Price}{result.Currency}";
         }
         catch (Exception e)
         {
