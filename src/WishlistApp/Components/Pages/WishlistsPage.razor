@@ -4,7 +4,6 @@
 <PageTitle>Wishlists</PageTitle>
 
 <h1>Wishlists</h1>
-
 <div class="border border-secondary"></div>
 
 <div>
@@ -19,41 +18,36 @@
     }
     else
     {
-        <div class="list-group-flush list-group-hover mb-4">
+        <div class="mt-4 mb-4">
             @foreach (var list in Lists)
             {
-                <div class="list-group-item container-fluid">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h4>
-                                <span style="z-index: 100; position: relative">
-                                    <TextInputToggleComponent Value="@list.Name" OnValueAccepted="@((name) => RenameWishlist(@list.Id, name))">
-                                        @list.Name
-                                    </TextInputToggleComponent>
-                                </span>
-                            </h4>
-                            <h5>
-                                <i class="bi bi-person-fill" /> @list.Shares.Where(s => !s.IsDeleted).Count()
-                                <i class="bi bi-hash" /> @list.Items.Length
-                            </h5>
-                        </div>
+                <div class="d-flex flex-row m-2 align-items-center p-2 rounded-2 border border-secondary border-1" style="position: relative">
+                    <div class="flex-column">
+                        <h4 style="z-index: 100; position: relative">
+                            <TextInputToggleComponent Value="@list.Name" OnValueAccepted="@((name) => RenameWishlist(@list.Id, name))">
+                                @list.Name
+                            </TextInputToggleComponent>
+                        </h4>
 
-                        <div class="col col-auto align-center" style="z-index: 100">
-                            <button type="button" class="btn btn-outline-danger" @onclick="@(async () => await DeleteWishlist(list.Id))">
-                                <i class="bi bi-trash3" /> Delete
-                            </button>
-                        </div>
-
-                        <a href="editwishlist?id=@list.Id" class="stretched-link"></a>
+                        <h5>
+                            <i class="bi bi-person-fill" /> @list.Shares.Where(s => !s.IsDeleted).Count()
+                            <i class="bi bi-hash" /> @list.Items.Length
+                        </h5>
                     </div>
+
+                    <button type="button" class="btn btn-outline-danger ms-auto" style="z-index: 100" @onclick="@(async () => await DeleteWishlist(list.Id))">
+                        <i class="bi bi-trash3" /> Löschen
+                    </button>
+
+                    <a href="editwishlist?id=@list.Id" class="stretched-link"></a>
                 </div>
             }
         </div>
 
-        <div>
-            <input valign="baseline" type="text" placeholder="Name" @bind="@NewWishlistName" @bind:event="oninput">
-            <button valign="baseline" type="button" class="btn btn-outline-primary" @onclick="CreateNewWishlist" disabled="@IsNewWishlistNameEmpty">
-                <i class="bi bi-plus-lg" /> Add
+        <div class="d-flex">
+            <input class="me-2 col-4" valign="baseline" type="text" placeholder="Name" @bind="@_newWishlistName" @bind:event="oninput">
+            <button valign="baseline" type="button" class="btn btn-outline-primary" @onclick="CreateNewWishlist" disabled="@_isNewWishlistNameEmpty">
+                <i class="bi bi-plus-lg" /> Hinzufügen
             </button>
         </div>
     }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using WishlistApp.Data.Models;
 using WishlistApp.Services;
 
 namespace WishlistApp.Components.Pages;
@@ -18,9 +17,9 @@ public partial class WishlistsPage
 
     private List<WishlistDto>? Lists { get; set; } = null;
 
-    private string NewWishlistName { get; set; } = "";
+    private string _newWishlistName = "";
 
-    private bool IsNewWishlistNameEmpty => string.IsNullOrWhiteSpace(NewWishlistName);
+    private bool _isNewWishlistNameEmpty => string.IsNullOrWhiteSpace(_newWishlistName);
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -32,12 +31,12 @@ public partial class WishlistsPage
 
     public async void CreateNewWishlist()
     {
-        if (string.IsNullOrWhiteSpace(NewWishlistName))
+        if (string.IsNullOrWhiteSpace(_newWishlistName))
         {
             return;
         }
 
-        var wishlist = await Repository.CreateWishlist(NewWishlistName, default);
+        var wishlist = await Repository.CreateWishlist(_newWishlistName, default);
         NavigationManager.NavigateTo($"editwishlist?id={wishlist.Id}");
     }
 
