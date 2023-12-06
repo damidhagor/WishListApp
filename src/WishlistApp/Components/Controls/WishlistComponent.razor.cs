@@ -14,7 +14,14 @@ public partial class WishlistComponent
     [Parameter]
     public WishlistShareDto? WishlistShare { get; set; }
 
+    private IEnumerable<WishlistItemDto> _filteredItems =>
+        Wishlist is not null
+        ? Wishlist.Items.Where(i => !_hideBoughtItems || (_hideBoughtItems && i.BoughtByWishlistShareId is null))
+        : [];
+
     private string _newItemUrl = "";
+
+    private bool _hideBoughtItems = true;
 
     private bool _isNewItemUrlEmpty => string.IsNullOrWhiteSpace(_newItemUrl);
 

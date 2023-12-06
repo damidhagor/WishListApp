@@ -41,7 +41,7 @@ else
     else
     {
         <div class="mt-4 mb-4">
-            @foreach (var item in Wishlist.Items)
+            @foreach (var item in _filteredItems)
             {
                 <WishlistItemComponent Item="@item"
                                        Share="@WishlistShare"
@@ -52,11 +52,18 @@ else
     }
 
     <AuthorizeView Roles="Admin">
-        <div class="d-flex">
+        <div class="d-flex align-content-center">
             <input class="me-2 col-4" valign="baseline" type="text" placeholder="Url" @bind="@_newItemUrl" @bind:event="oninput">
             <button valign="baseline" type="button" class="btn btn-outline-primary" @onclick="AddNewWishlistItem" disabled="@_isNewItemUrlEmpty">
                 <i class="bi bi-plus-lg" /> Hinzufügen
             </button>
+
+            <h5 class="d-flex align-items-center form-check form-switch ms-auto">
+                <input class="form-check-input me-2 mb-1" type="checkbox" @bind="_hideBoughtItems" id="hideBoughtItemsCheckBox">
+                <label for="hideBoughtItemsCheckBox">
+                    Gekaufte Elemente Ausblenden
+                </label>
+            </h5>
         </div>
     </AuthorizeView>
 }
