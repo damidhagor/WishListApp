@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
 using WishlistApp.Services;
 
@@ -6,16 +7,19 @@ namespace WishlistApp.Components.Pages;
 
 public partial class WishlistsPage
 {
-    [Inject]
-    private IWishlistRepository Repository { get; set; }
+    [CascadingParameter]
+    public Task<AuthenticationState>? AuthStateTask { get; set; }
 
     [Inject]
-    private NavigationManager NavigationManager { get; set; }
+    private NavigationManager NavigationManager { get; set; } = default!;
 
     [Inject]
-    private IJSRuntime JSRuntime { get; set; }
+    private IJSRuntime JSRuntime { get; set; } = default!;
 
-    private List<WishlistDto>? Lists { get; set; } = null;
+    [Inject]
+    private IWishlistRepository Repository { get; set; } = default!;
+
+    private List<WishlistDto>? _lists;
 
     private string _newWishlistName = "";
 
@@ -29,7 +33,15 @@ public partial class WishlistsPage
         }
     }
 
-    public async void CreateNewWishlist()
+    private async Task LoadWishlists(CancellationToken cancellationToken)
+    {
+        _lists = null;
+        var lists = await Repository.GetAll(default);
+        _lists = [.. lists.OrderBy(l => l.Name)];
+        StateHasChanged();
+    }
+
+    private async Task CreateNewWishlist()
     {
         if (string.IsNullOrWhiteSpace(_newWishlistName))
         {
@@ -40,32 +52,24 @@ public partial class WishlistsPage
         NavigationManager.NavigateTo($"editwishlist?id={wishlist.Id}");
     }
 
-    public void OpenWishlist(int id)
+    private void OpenWishlistAsync(int id)
     {
         NavigationManager.NavigateTo($"editwishlist?id={id}");
     }
 
-    public async Task DeleteWishlist(int id)
+    private async Task DeleteWishlist(int id)
     {
         bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Do you want to delete the wishlist?");
         if (confirmed)
         {
             await Repository.DeleteWishlist(id, default);
-            Lists = await Repository.GetAll(default);
+            _lists = await Repository.GetAll(default);
         }
     }
 
-    public async Task RenameWishlist(int id, string name)
+    private async Task RenameWishlist(int id, string name)
     {
         await Repository.RenameWishlist(id, name, default);
         await LoadWishlists(default);
-    }
-
-    private async Task LoadWishlists(CancellationToken cancellationToken)
-    {
-        Lists = null;
-        var lists = await Repository.GetAll(default);
-        Lists = [.. lists.OrderBy(l => l.Name)];
-        StateHasChanged();
     }
 }
