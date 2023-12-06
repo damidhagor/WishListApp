@@ -18,37 +18,17 @@ internal sealed class DefaultProductInformationParser : BaseProductInformationPa
 
         var imageUrlSecure = GetValue(head, "<meta property=\"og:image:secure_url\" content=\"", "\"");
 
-        var price = GetValue(head, "<meta property=\"og:price:amount\" content=\"", "\"");
-        var currency = GetValue(head, "<meta property=\"og:price:currency\" content=\"", "\"");
+        var price = GetValue(head, "<meta property=\"product:price:amount\" content=\"", "\"");
+        var priceOG = GetValue(head, "<meta property=\"og:price:amount\" content=\"", "\"");
+
+        var currency = GetValue(head, "<meta property=\"product:price:currency\" content=\"", "\"");
+        var currencyOG = GetValue(head, "<meta property=\"og:price:currency\" content=\"", "\"");
 
         return new(
             titleOG.Length == 0 ? title.ToString() : titleOG.ToString(),
             descriptionOG.Length == 0 ? description.ToString() : descriptionOG.ToString(),
             imageUrlSecure.Length == 0 ? imageUrl.ToString() : imageUrlSecure.ToString(),
-            price.ToString(),
-            currency.ToString());
-    }
-}
-
-internal abstract class BaseProductInformationParser : IProductInformationParser
-{
-    public abstract string Host { get; }
-
-    public abstract ProductInformation ParseProductInformation(string html);
-
-    protected ReadOnlySpan<char> GetValue(ReadOnlySpan<char> input, string startToken, string endToken)
-    {
-        var valueStart = input.IndexOf(startToken);
-        if (valueStart == -1)
-        {
-            return [];
-        }
-
-        valueStart += startToken.Length;
-        var valueEnd = valueStart + input[valueStart..].IndexOf(endToken);
-
-        return valueEnd == -1
-            ? []
-            : input[valueStart..valueEnd].Trim();
+            priceOG.Length == 0 ? price.ToString() : priceOG.ToString(),
+            currencyOG.Length == 0 ? currency.ToString() : currencyOG.ToString());
     }
 }

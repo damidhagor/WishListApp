@@ -9,11 +9,19 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddProductCrawler(this IServiceCollection services)
     {
         services.AddTransient<IProductInformationParser, DefaultProductInformationParser>();
+        services.AddTransient<IProductInformationParser, AmazonProductInformationParser>();
         services.AddSingleton<IProductCrawlerService, ProductCrawlerService>();
 
         services.AddHttpClient(Constants.ProductCrawlerHttClientName, client =>
         {
             client.DefaultRequestHeaders.Add("User-Agent", Constants.CrawlerUserAgent);
+        })
+        .ConfigurePrimaryHttpMessageHandler(() =>
+        {
+            return new HttpClientHandler()
+            {
+                AutomaticDecompression = System.Net.DecompressionMethods.All
+            };
         });
 
         return services;
