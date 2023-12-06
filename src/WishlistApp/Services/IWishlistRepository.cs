@@ -2,7 +2,7 @@
 
 public interface IWishlistRepository
 {
-    Task<WishlistDto> CreateWishlist(string name, CancellationToken cancellationToken);
+    Task<WishlistDto> CreateWishlist(string name, string ownerIdentifier, CancellationToken cancellationToken);
 
     Task<WishlistDto?> RenameWishlist(int id, string name, CancellationToken cancellationToken);
 

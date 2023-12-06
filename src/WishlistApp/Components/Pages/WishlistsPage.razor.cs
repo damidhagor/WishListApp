@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
 using WishlistApp.Services;
@@ -8,7 +9,7 @@ namespace WishlistApp.Components.Pages;
 public partial class WishlistsPage
 {
     [CascadingParameter]
-    public Task<AuthenticationState>? AuthStateTask { get; set; }
+    public Task<AuthenticationState>? AuthenticationStateTask { get; set; }
 
     [Inject]
     private NavigationManager NavigationManager { get; set; } = default!;
@@ -43,12 +44,23 @@ public partial class WishlistsPage
 
     private async Task CreateNewWishlist()
     {
-        if (string.IsNullOrWhiteSpace(_newWishlistName))
+        if (string.IsNullOrWhiteSpace(_newWishlistName)
+            || AuthenticationStateTask is null)
         {
             return;
         }
 
-        var wishlist = await Repository.CreateWishlist(_newWishlistName, default);
+        var authenticationState = await AuthenticationStateTask;
+
+        var identifier = authenticationState.User.Claims
+            .FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)
+            ?.Value;
+        if (string.IsNullOrWhiteSpace(identifier))
+        {
+            return;
+        }
+
+        var wishlist = await Repository.CreateWishlist(_newWishlistName, identifier, default);
         NavigationManager.NavigateTo($"editwishlist?id={wishlist.Id}");
     }
 

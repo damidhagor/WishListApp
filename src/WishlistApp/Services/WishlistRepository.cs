@@ -10,11 +10,11 @@ internal sealed class WishlistRepository(WishlistDbContext wishlistDbContext, IA
     private readonly WishlistDbContext _context = wishlistDbContext;
     private readonly IAccessKeyGenerator _accessKeyGenerator = accessKeyGenerator;
 
-    public async Task<WishlistDto> CreateWishlist(string name, CancellationToken cancellationToken)
+    public async Task<WishlistDto> CreateWishlist(string name, string ownerIdentifier, CancellationToken cancellationToken)
     {
         Guard.IsNotNullOrWhiteSpace(name, nameof(name));
 
-        var wishlist = new Wishlist { Name = name };
+        var wishlist = new Wishlist { Name = name, OwnerIdentifier = ownerIdentifier };
         _context.Wishlists.Add(wishlist);
 
         await _context.SaveChangesAsync(cancellationToken);
