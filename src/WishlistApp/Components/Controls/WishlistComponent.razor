@@ -15,18 +15,25 @@
 }
 else
 {
-    <AuthorizeView Roles="Admin">
-        <Authorized>
-            <h1>
-                <TextInputToggleComponent Value="@Wishlist.Name" OnValueAccepted="@(name => RenameWishlist(name))">
+    <div class="d-flex align-items-center">
+        <h1>
+            <AuthorizeView Roles="Admin">
+                <Authorized>
+                    <TextInputToggleComponent Value="@Wishlist.Name" OnValueAccepted="@(name => RenameWishlist(name))">
+                        @Wishlist.Name
+                    </TextInputToggleComponent>
+                </Authorized>
+                <NotAuthorized>
                     @Wishlist.Name
-                </TextInputToggleComponent>
-            </h1>
-        </Authorized>
-        <NotAuthorized>
-            <h1>@Wishlist.Name</h1>
-        </NotAuthorized>
-    </AuthorizeView>
+                </NotAuthorized>
+            </AuthorizeView>
+        </h1>
+
+        @if (WishlistShare is not null)
+        {
+            <h2 class="ms-auto">Hallo @WishlistShare.Name</h2>
+        }
+    </div>
 
     <div class="border border-secondary"></div>
 
@@ -52,19 +59,19 @@ else
         </div>
     }
 
-    <AuthorizeView Roles="Admin">
-        <div class="d-flex align-content-center">
+    <div class="d-flex align-content-center">
+        <AuthorizeView Roles="Admin">
             <input class="me-2 col-4" valign="baseline" type="text" placeholder="Url" @bind="@_newItemUrl" @bind:event="oninput">
             <button valign="baseline" type="button" class="btn btn-outline-primary" @onclick="AddNewWishlistItem" disabled="@_isNewItemUrlEmpty">
                 <i class="bi bi-plus-lg" /> Hinzufügen
             </button>
+        </AuthorizeView>
 
-            <h5 class="d-flex align-items-center form-check form-switch ms-auto">
-                <input class="form-check-input me-2 mb-1" type="checkbox" @bind="_hideBoughtItems" id="hideBoughtItemsCheckBox">
-                <label for="hideBoughtItemsCheckBox">
-                    Gekaufte Elemente Ausblenden
-                </label>
-            </h5>
-        </div>
-    </AuthorizeView>
+        <h5 class="d-flex align-items-center form-check form-switch ms-auto">
+            <input class="form-check-input me-2 mb-1" type="checkbox" @bind="_hideBoughtItems" id="hideBoughtItemsCheckBox">
+            <label for="hideBoughtItemsCheckBox">
+                Gekaufte Elemente Ausblenden
+            </label>
+        </h5>
+    </div>
 }
