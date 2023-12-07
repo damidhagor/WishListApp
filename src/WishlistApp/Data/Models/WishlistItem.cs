@@ -10,8 +10,6 @@ public sealed class WishlistItem
 
     public required string Url { get; init; }
 
-    public int Order { get; init; } = int.MaxValue;
-
     public int? BoughtByWishlistShareId { get; set; }
 
     public WishlistShare? BoughtByWishlistShare { get; set; }

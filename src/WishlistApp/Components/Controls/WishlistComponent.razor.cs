@@ -22,8 +22,7 @@ public partial class WishlistComponent
         Wishlist is not null
         ? Wishlist.Items
             .Where(i => !_hideBoughtItems || (_hideBoughtItems && i.BoughtByWishlistShareId is null))
-            .OrderBy(i=>i.Order)    
-            .ThenBy(i => i.BoughtByWishlistShareId is null
+            .OrderBy(i => i.BoughtByWishlistShareId is null
                             ? 0
                             : i.BoughtByWishlistShareId is not null && i.BoughtByWishlistShareId == WishlistShare?.Id
                                 ? 1

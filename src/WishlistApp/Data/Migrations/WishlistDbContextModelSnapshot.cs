@@ -161,9 +161,6 @@ namespace WishlistApp.Data.Migrations
                     b.Property<int?>("BoughtByWishlistShareId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Order")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Url")
                         .IsRequired()
                         .HasMaxLength(500)
