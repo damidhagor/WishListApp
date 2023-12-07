@@ -71,7 +71,7 @@ public partial class WishlistsPage
 
     private async Task DeleteWishlist(int id)
     {
-        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Do you want to delete the wishlist?");
+        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Möchten Sie die Wunschliste löschen?");
         if (confirmed)
         {
             await Repository.DeleteWishlist(id, default);
