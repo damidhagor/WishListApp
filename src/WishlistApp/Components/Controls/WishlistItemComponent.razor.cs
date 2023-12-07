@@ -20,6 +20,9 @@ public partial class WishlistItemComponent
     [Parameter]
     public EventCallback<WishlistItemDto> ItemUnbought { get; set; }
 
+    [Parameter]
+    public EventCallback<WishlistItemDto> ItemDeleted { get; set; }
+
     protected bool IsProductInformationLoading { get; set; }
 
     protected string? Name { get; set; }

@@ -1,10 +1,14 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using WishlistApp.Services;
 
 namespace WishlistApp.Components.Controls;
 
 public partial class WishlistComponent
 {
+    [Inject]
+    private IJSRuntime JSRuntime { get; set; } = default!;
+
     [Inject]
     private IWishlistRepository Repository { get; set; } = default!;
 
@@ -33,6 +37,15 @@ public partial class WishlistComponent
     private async Task OnItemUnbought(WishlistItemDto itemDto)
     {
         Wishlist = await Repository.UnbuyWishlistItem(itemDto.WishlistId, itemDto.Id, WishlistShare!.Id, default);
+    }
+
+    private async Task OnItemDeleted(WishlistItemDto itemDto)
+    {
+        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Möchten Sie den Eintrag von der Wunschliste entfernen?");
+        if (confirmed)
+        {
+            Wishlist = await Repository.DeleteWishlistItem(itemDto.WishlistId, itemDto.Id, default);
+        }
     }
 
     private async Task RenameWishlist(string name)

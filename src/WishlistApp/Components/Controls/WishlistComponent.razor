@@ -46,7 +46,8 @@ else
                 <WishlistItemComponent Item="@item"
                                        Share="@WishlistShare"
                                        ItemBought="@(async (item) => await OnItemBought(item))"
-                                       ItemUnbought="@(async (item) => await OnItemUnbought(item))" />
+                                       ItemUnbought="@(async (item) => await OnItemUnbought(item))"
+                                       ItemDeleted="@(async (item) => await OnItemDeleted(item))" />
             }
         </div>
     }
