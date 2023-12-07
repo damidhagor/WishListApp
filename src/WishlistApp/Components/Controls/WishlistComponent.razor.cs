@@ -20,7 +20,14 @@ public partial class WishlistComponent
 
     private IEnumerable<WishlistItemDto> _filteredItems =>
         Wishlist is not null
-        ? Wishlist.Items.Where(i => !_hideBoughtItems || (_hideBoughtItems && i.BoughtByWishlistShareId is null))
+        ? Wishlist.Items
+            .Where(i => !_hideBoughtItems || (_hideBoughtItems && i.BoughtByWishlistShareId is null))
+            .OrderBy(i=>i.Order)    
+            .ThenBy(i => i.BoughtByWishlistShareId is null
+                            ? 0
+                            : i.BoughtByWishlistShareId is not null && i.BoughtByWishlistShareId == WishlistShare?.Id
+                                ? 1
+                                : 2)
         : [];
 
     private string _newItemUrl = "";
@@ -41,7 +48,7 @@ public partial class WishlistComponent
 
     private async Task OnItemDeleted(WishlistItemDto itemDto)
     {
-        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "MÃ¶chten Sie den Eintrag von der Wunschliste entfernen?");
+        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Möchten Sie den Eintrag von der Wunschliste entfernen?");
         if (confirmed)
         {
             Wishlist = await Repository.DeleteWishlistItem(itemDto.WishlistId, itemDto.Id, default);

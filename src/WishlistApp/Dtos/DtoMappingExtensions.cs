@@ -20,6 +20,7 @@ public static class DtoMappingExtensions
             Id = item.Id,
             WishlistId = item.WishlistId,
             Url = item.Url,
+            Order = item.Order,
             BoughtByWishlistShareId = item.BoughtByWishlistShareId
         };
 
