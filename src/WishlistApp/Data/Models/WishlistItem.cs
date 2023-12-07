@@ -10,6 +10,8 @@ public sealed class WishlistItem
 
     public required string Url { get; init; }
 
+    public WishlistItemPriority Priority { get; init; }
+
     public int? BoughtByWishlistShareId { get; set; }
 
     public WishlistShare? BoughtByWishlistShare { get; set; }

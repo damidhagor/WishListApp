@@ -19,6 +19,7 @@ public static class DtoMappingExtensions
         {
             Id = item.Id,
             WishlistId = item.WishlistId,
+            Priority = item.Priority.ToDto(),
             Url = item.Url,
             BoughtByWishlistShareId = item.BoughtByWishlistShareId
         };
@@ -38,4 +39,14 @@ public static class DtoMappingExtensions
 
     public static IEnumerable<WishlistShareDto> ToDtos(this IEnumerable<Data.Models.WishlistShare> shares)
         => shares.Select(s => s.ToDto());
+
+    public static WishlistItemPriorityDto ToDto(this Data.Models.WishlistItemPriority priority)
+        => new((int)priority, priority switch
+        {
+            Data.Models.WishlistItemPriority.Low => "Nicht unbedingt",
+            Data.Models.WishlistItemPriority.Medium => "Hätte ich gerne",
+            Data.Models.WishlistItemPriority.High => "Hätte ich sehr gerne",
+            Data.Models.WishlistItemPriority.VeryHigh => "Muss ich haben",
+            _ => "Unbekannt"
+        });
 }

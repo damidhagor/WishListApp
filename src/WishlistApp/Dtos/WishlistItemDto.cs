@@ -8,5 +8,7 @@ public sealed class WishlistItemDto
 
     public required string Url { get; init; }
 
+    public required WishlistItemPriorityDto Priority { get; init; }
+
     public int? BoughtByWishlistShareId { get; set; }
 }
