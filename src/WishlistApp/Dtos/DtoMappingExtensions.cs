@@ -41,7 +41,7 @@ public static class DtoMappingExtensions
         => shares.Select(s => s.ToDto());
 
     public static WishlistItemPriorityDto ToDto(this Data.Models.WishlistItemPriority priority)
-        => new((int)priority, priority switch
+        => new(priority, priority switch
         {
             Data.Models.WishlistItemPriority.Low => "Nicht unbedingt",
             Data.Models.WishlistItemPriority.Medium => "Hätte ich gerne",

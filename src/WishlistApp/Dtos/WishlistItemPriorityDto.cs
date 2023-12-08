@@ -1,3 +1,5 @@
-﻿namespace WishlistApp.Dtos;
+﻿using WishlistApp.Data.Models;
 
-public sealed record WishlistItemPriorityDto(int Priority, string Name);
+namespace WishlistApp.Dtos;
+
+public sealed record WishlistItemPriorityDto(WishlistItemPriority Priority, string Name);
