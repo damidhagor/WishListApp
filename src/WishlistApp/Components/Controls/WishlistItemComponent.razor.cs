@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components;
+using WishlistApp.Data.Models;
 using WishlistApp.ProductCrawling.Services;
 
 namespace WishlistApp.Components.Controls;
@@ -23,6 +24,9 @@ public partial class WishlistItemComponent
     [Parameter]
     public EventCallback<WishlistItemDto> ItemDeleted { get; set; }
 
+    [Parameter]
+    public EventCallback<WishlistItemPriority> PriorityChanged { get; set; }
+
     protected bool IsProductInformationLoading { get; set; }
 
     protected string? Name { get; set; }
@@ -32,6 +36,15 @@ public partial class WishlistItemComponent
     private string? ImageUrl { get; set; }
 
     private string? Price { get; set; }
+
+    private WishlistItemPriorityDto[] Priorities { get; set; } =
+        [
+            WishlistItemPriority.Unknown.ToDto(),
+            WishlistItemPriority.Low.ToDto(),
+            WishlistItemPriority.Medium.ToDto(),
+            WishlistItemPriority.High.ToDto(),
+            WishlistItemPriority.VeryHigh.ToDto()
+        ];
 
     protected override async Task OnParametersSetAsync()
     {

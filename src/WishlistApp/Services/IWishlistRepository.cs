@@ -1,4 +1,6 @@
-﻿namespace WishlistApp.Services;
+﻿using WishlistApp.Data.Models;
+
+namespace WishlistApp.Services;
 
 public interface IWishlistRepository
 {
@@ -19,6 +21,8 @@ public interface IWishlistRepository
     Task<WishlistDto?> BuyWishlistItem(int wishlistId, int wishlistItemId, int wishlistShareId, CancellationToken cancellationToken);
 
     Task<WishlistDto?> UnbuyWishlistItem(int wishlistId, int wishlistItemId, int wishlistShareId, CancellationToken cancellationToken);
+
+    Task<WishlistDto?> SetWishlistItemPriority(int wishlistId, int wishlistItemId, WishlistItemPriority priority, CancellationToken cancellationToken);
 
     Task<WishlistDto?> AddWishlistShare(int wishlistId, string name, CancellationToken cancellationToken);
 

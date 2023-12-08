@@ -54,7 +54,8 @@ else
                                        Share="@WishlistShare"
                                        ItemBought="@(async (item) => await OnItemBought(item))"
                                        ItemUnbought="@(async (item) => await OnItemUnbought(item))"
-                                       ItemDeleted="@(async (item) => await OnItemDeleted(item))" />
+                                       ItemDeleted="@(async (item) => await OnItemDeleted(item))"
+                                       PriorityChanged="@(async (priority) => await OnItemPriorityChanged(item, priority))" />
             }
         </div>
     }

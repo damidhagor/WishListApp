@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using WishlistApp.Data.Models;
 using WishlistApp.Services;
 
 namespace WishlistApp.Components.Controls;
@@ -27,6 +28,7 @@ public partial class WishlistComponent
                             : i.BoughtByWishlistShareId is not null && i.BoughtByWishlistShareId == WishlistShare?.Id
                                 ? 1
                                 : 2)
+            .ThenByDescending(i => i.Priority.Priority)
         : [];
 
     private string _newItemUrl = "";
@@ -43,6 +45,11 @@ public partial class WishlistComponent
     private async Task OnItemUnbought(WishlistItemDto itemDto)
     {
         Wishlist = await Repository.UnbuyWishlistItem(itemDto.WishlistId, itemDto.Id, WishlistShare!.Id, default);
+    }
+
+    private async Task OnItemPriorityChanged(WishlistItemDto itemDto, WishlistItemPriority priority)
+    {
+        Wishlist = await Repository.SetWishlistItemPriority(itemDto.WishlistId, itemDto.Id, priority, default);
     }
 
     private async Task OnItemDeleted(WishlistItemDto itemDto)
