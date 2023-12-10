@@ -16,8 +16,11 @@ public partial class WishlistComponent
     [Parameter, EditorRequired]
     public WishlistDto? Wishlist { get; set; }
 
-    [Parameter]
+    [Parameter, EditorRequired]
     public WishlistShareDto? WishlistShare { get; set; }
+
+    [Parameter, EditorRequired]
+    public WishlistUserDto? WishlistUser { get; set; }
 
     private IEnumerable<WishlistItemDto> _filteredItems =>
         Wishlist is not null

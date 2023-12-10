@@ -1,6 +1,4 @@
-﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using WishlistApp.Services;
 
@@ -8,9 +6,6 @@ namespace WishlistApp.Components.Pages;
 
 public partial class WishlistsPage
 {
-    [CascadingParameter]
-    public Task<AuthenticationState>? AuthenticationStateTask { get; set; }
-
     [Inject]
     private NavigationManager NavigationManager { get; set; } = default!;
 
@@ -18,9 +13,12 @@ public partial class WishlistsPage
     private IJSRuntime JSRuntime { get; set; } = default!;
 
     [Inject]
+    private IUserService UserService { get; set; } = default!;
+
+    [Inject]
     private IWishlistRepository Repository { get; set; } = default!;
 
-    private string? _userIdentifier;
+    private WishlistUserDto? _user;
 
     private List<WishlistDto>? _lists;
 
@@ -32,22 +30,9 @@ public partial class WishlistsPage
     {
         if (firstRender)
         {
-            await LoadAuthenticationState(default);
+            _user = await UserService.GetLoggedInWishlistUser();
             await LoadWishlists(default);
         }
-    }
-
-    private async Task LoadAuthenticationState(CancellationToken cancellationToken)
-    {
-        if (AuthenticationStateTask is null)
-        {
-            return;
-        }
-
-        var authenticationState = await AuthenticationStateTask;
-        _userIdentifier = authenticationState.User.Claims
-            .FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)
-            ?.Value;
     }
 
     private async Task LoadWishlists(CancellationToken cancellationToken)
@@ -61,12 +46,12 @@ public partial class WishlistsPage
     private async Task CreateNewWishlist()
     {
         if (string.IsNullOrWhiteSpace(_newWishlistName)
-            || string.IsNullOrWhiteSpace(_userIdentifier))
+            || _user is null)
         {
             return;
         }
 
-        var wishlist = await Repository.CreateWishlist(_newWishlistName, _userIdentifier, default);
+        var wishlist = await Repository.CreateWishlist(_newWishlistName, _user.Identifier, default);
         NavigationManager.NavigateTo($"editwishlist?id={wishlist.Id}");
     }
 

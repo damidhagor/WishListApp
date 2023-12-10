@@ -1,21 +1,19 @@
-using System.Security.Claims;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
 using WishlistApp.Services;
 
 namespace WishlistApp.Components.Pages;
 
 public partial class WishlistPage
 {
-    [CascadingParameter]
-    public Task<AuthenticationState>? AuthenticationStateTask { get; set; }
-
     [Parameter]
     [SupplyParameterFromQuery(Name = "id")]
     public int? WishlistId { get; set; }
 
     [Parameter]
     public string AccessKey { get; set; } = "";
+
+    [Inject]
+    private IUserService UserService { get; set; } = default!;
 
     [Inject]
     private IWishlistRepository Repository { get; set; } = default!;
@@ -25,38 +23,21 @@ public partial class WishlistPage
 
     private WishlistShareDto? _wishlistShare;
 
-    private string? _userIdentifier;
+    private WishlistUserDto? _user;
 
     private WishlistDto? _wishlist;
 
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadWishlistShare(default);
-        await LoadUserIdentifier(default);
-
-        await LoadWishlistAndValidateAccess(default);
-    }
-
-    private async Task LoadWishlistShare(CancellationToken cancellationToken)
-    {
         if (!string.IsNullOrWhiteSpace(AccessKey))
         {
-            _wishlistShare = await Repository.GetWishlistShareByAccessKey(AccessKey, cancellationToken);
-        }
-    }
-
-    private async Task LoadUserIdentifier(CancellationToken cancellationToken)
-    {
-        if (AuthenticationStateTask is null)
-        {
-            return;
+            _wishlistShare = await Repository.GetWishlistShareByAccessKey(AccessKey, default);
         }
 
-        var authenticationState = await AuthenticationStateTask;
-        _userIdentifier = authenticationState.User.Claims
-            .FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)
-            ?.Value;
+        _user = await UserService.GetLoggedInWishlistUser();
+
+        await LoadWishlistAndValidateAccess(default);
     }
 
     private async Task LoadWishlistAndValidateAccess(CancellationToken cancellationToken)
@@ -73,8 +54,8 @@ public partial class WishlistPage
             return;
         }
 
-        var validOwner = !string.IsNullOrWhiteSpace(_userIdentifier)
-            && wishlist.OwnerIdentifier == _userIdentifier;
+        var validOwner = _user is not null
+            && wishlist.OwnerIdentifier == _user.Identifier;
 
         var validShare = _wishlistShare is not null
             && wishlist.Id == _wishlistShare.WishlistId;
@@ -82,6 +63,7 @@ public partial class WishlistPage
         if (!validOwner && !validShare)
         {
             NavigationManager.NavigateTo("/");
+            return;
         }
 
         _wishlist = wishlist;
