@@ -6,6 +6,7 @@ public static class DtoMappingExtensions
         => new()
         {
             Id = wishlist.Id,
+            OwnerIdentifier = wishlist.OwnerIdentifier,
             Name = wishlist.Name,
             Items = wishlist.Items.ToDtos().ToArray(),
             Shares = wishlist.Shares.ToDtos().ToArray()

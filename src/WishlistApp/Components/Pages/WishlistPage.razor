@@ -1,10 +1,12 @@
 ﻿@page "/editwishlist"
+@page "/w/{accessKey}"
 @rendermode @(new InteractiveServerRenderMode(false))
+@attribute [AllowAnonymous]
 
-<PageTitle>@Wishlist?.Name</PageTitle>
+<PageTitle>@_wishlist?.Name</PageTitle>
 
 <div>
-    @if (Wishlist is null)
+    @if (_wishlist is null)
     {
         <div>
             <div class="spinner-border spinner-border-sm text-primary ms-1" role="status">
@@ -15,10 +17,10 @@
     }
     else
     {
-        <WishlistComponent Wishlist="@Wishlist" />
+        <WishlistComponent Wishlist="@_wishlist" WishlistShare="@_wishlistShare" />
 
         <div class="border border-secondary mt-4 mb-4"></div>
 
-        <WishlistShareComponent Wishlist="@Wishlist" />
+        <WishlistShareComponent Wishlist="@_wishlist" />
     }
 </div>

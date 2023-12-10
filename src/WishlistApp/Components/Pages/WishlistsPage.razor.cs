@@ -20,6 +20,8 @@ public partial class WishlistsPage
     [Inject]
     private IWishlistRepository Repository { get; set; } = default!;
 
+    private string? _userIdentifier;
+
     private List<WishlistDto>? _lists;
 
     private string _newWishlistName = "";
@@ -30,8 +32,22 @@ public partial class WishlistsPage
     {
         if (firstRender)
         {
+            await LoadAuthenticationState(default);
             await LoadWishlists(default);
         }
+    }
+
+    private async Task LoadAuthenticationState(CancellationToken cancellationToken)
+    {
+        if (AuthenticationStateTask is null)
+        {
+            return;
+        }
+
+        var authenticationState = await AuthenticationStateTask;
+        _userIdentifier = authenticationState.User.Claims
+            .FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)
+            ?.Value;
     }
 
     private async Task LoadWishlists(CancellationToken cancellationToken)
@@ -45,22 +61,12 @@ public partial class WishlistsPage
     private async Task CreateNewWishlist()
     {
         if (string.IsNullOrWhiteSpace(_newWishlistName)
-            || AuthenticationStateTask is null)
+            || string.IsNullOrWhiteSpace(_userIdentifier))
         {
             return;
         }
 
-        var authenticationState = await AuthenticationStateTask;
-
-        var identifier = authenticationState.User.Claims
-            .FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)
-            ?.Value;
-        if (string.IsNullOrWhiteSpace(identifier))
-        {
-            return;
-        }
-
-        var wishlist = await Repository.CreateWishlist(_newWishlistName, identifier, default);
+        var wishlist = await Repository.CreateWishlist(_newWishlistName, _userIdentifier, default);
         NavigationManager.NavigateTo($"editwishlist?id={wishlist.Id}");
     }
 
