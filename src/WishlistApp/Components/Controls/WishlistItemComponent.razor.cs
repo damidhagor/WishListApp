@@ -9,11 +9,17 @@ public partial class WishlistItemComponent
     [Inject]
     private IProductCrawlerService _productCrawler { get; set; } = default!;
 
-    [Parameter]
+    [Parameter, EditorRequired]
     public WishlistItemDto? Item { get; set; }
 
-    [Parameter]
+    [Parameter, EditorRequired]
     public WishlistShareDto? Share { get; set; }
+
+    [Parameter, EditorRequired]
+    public bool DisplayOwnerControls { get; set; }
+
+    [Parameter, EditorRequired]
+    public bool DisplayBuyInformation { get; set; }
 
     [Parameter]
     public EventCallback<WishlistItemDto> ItemBought { get; set; }

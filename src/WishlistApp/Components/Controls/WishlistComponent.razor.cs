@@ -22,23 +22,24 @@ public partial class WishlistComponent
     [Parameter, EditorRequired]
     public WishlistUserDto? WishlistUser { get; set; }
 
-    private IEnumerable<WishlistItemDto> _filteredItems =>
-        Wishlist is not null
-        ? Wishlist.Items
-            .Where(i => !_hideBoughtItems || (_hideBoughtItems && i.BoughtByWishlistShareId is null))
-            .OrderBy(i => i.BoughtByWishlistShareId is null
-                            ? 0
-                            : i.BoughtByWishlistShareId is not null && i.BoughtByWishlistShareId == WishlistShare?.Id
-                                ? 1
-                                : 2)
-            .ThenByDescending(i => i.Priority.Priority)
-        : [];
-
     private string _newItemUrl = "";
 
-    private bool _hideBoughtItems = true;
-
     private bool _isNewItemUrlEmpty => string.IsNullOrWhiteSpace(_newItemUrl);
+
+    private bool _viewedByOwner => WishlistUser is not null && WishlistUser.Identifier == Wishlist?.OwnerIdentifier;
+
+    private bool _showBuyInformation => !_viewedByOwner || (_viewedByOwner && !_hideBuyInformation);
+
+    private bool _hideBoughtItems;
+
+    private bool _hideBuyInformation;
+
+    protected override void OnInitialized()
+    {
+        _hideBoughtItems = !_viewedByOwner;
+        _hideBuyInformation = _viewedByOwner;
+    }
+
 
     private async Task OnItemBought(WishlistItemDto itemDto)
     {
@@ -93,5 +94,28 @@ public partial class WishlistComponent
             Wishlist = newWishlist;
             _newItemUrl = "";
         }
+    }
+
+    private IEnumerable<WishlistItemDto> GetFilteredWishlistItems()
+    {
+        if (Wishlist is null || Wishlist.Items.Length == 0)
+        {
+            return [];
+        }
+
+        var filteredItems = _hideBoughtItems
+            ? Wishlist.Items.Where(i => i.BoughtByWishlistShareId is null)
+            : Wishlist.Items;
+
+        filteredItems = _hideBuyInformation
+            ? filteredItems.OrderByDescending(i => i.Priority.Priority) // Don't order by buy-information if owner is viewing
+            : filteredItems.OrderBy(i => i.BoughtByWishlistShareId is null
+                            ? 0 // 1st: Unbought items
+                            : i.BoughtByWishlistShareId is not null && i.BoughtByWishlistShareId == WishlistShare?.Id
+                                ? 1 // 2nd: Items bought by currently viewing share
+                                : 2) // 3rd: Items bought by other shares
+            .ThenByDescending(i => i.Priority.Priority);
+
+        return filteredItems;
     }
 }

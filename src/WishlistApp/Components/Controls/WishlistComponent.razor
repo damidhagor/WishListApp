@@ -17,16 +17,16 @@ else
 {
     <div class="d-flex align-items-center">
         <h1>
-            <AuthorizeView Roles="Admin">
-                <Authorized>
-                    <TextInputToggleComponent Value="@Wishlist.Name" OnValueAccepted="@(name => RenameWishlist(name))">
-                        @Wishlist.Name
-                    </TextInputToggleComponent>
-                </Authorized>
-                <NotAuthorized>
+            @if (_viewedByOwner)
+            {
+                <TextInputToggleComponent Value="@Wishlist.Name" OnValueAccepted="@(name => RenameWishlist(name))">
                     @Wishlist.Name
-                </NotAuthorized>
-            </AuthorizeView>
+                </TextInputToggleComponent>
+            }
+            else
+            {
+                @Wishlist.Name
+            }
         </h1>
 
         @if (WishlistShare is not null)
@@ -48,10 +48,12 @@ else
     else
     {
         <div class="d-flex flex-column mt-4 mb-4 gap-2">
-            @foreach (var item in _filteredItems)
+            @foreach (var item in GetFilteredWishlistItems())
             {
                 <WishlistItemComponent Item="@item"
                                        Share="@WishlistShare"
+                                       DisplayOwnerControls="@_viewedByOwner"
+                                       DisplayBuyInformation="@(!_hideBuyInformation)"
                                        ItemBought="@(async (item) => await OnItemBought(item))"
                                        ItemUnbought="@(async (item) => await OnItemUnbought(item))"
                                        ItemDeleted="@(async (item) => await OnItemDeleted(item))"
@@ -60,19 +62,32 @@ else
         </div>
     }
 
-    <div class="d-flex align-content-center">
-        <AuthorizeView Roles="Admin">
-            <input class="me-2 col-4" valign="baseline" type="text" placeholder="Url" @bind="@_newItemUrl" @bind:event="oninput">
-            <button valign="baseline" type="button" class="btn btn-outline-primary" @onclick="AddNewWishlistItem" disabled="@_isNewItemUrlEmpty">
+    <div class="d-flex align-content-center align-top">
+        @if (_viewedByOwner)
+        {
+            <input class="me-2 col-4" type="text" placeholder="Url" @bind="@_newItemUrl" @bind:event="oninput">
+            <button type="button" class="btn btn-outline-primary" @onclick="AddNewWishlistItem" disabled="@_isNewItemUrlEmpty">
                 <i class="bi bi-plus-lg" /> Hinzufügen
             </button>
-        </AuthorizeView>
+        }
 
-        <h5 class="d-flex align-items-center form-check form-switch ms-auto">
-            <input class="form-check-input me-2 mb-1" type="checkbox" @bind="_hideBoughtItems" id="hideBoughtItemsCheckBox">
-            <label for="hideBoughtItemsCheckBox">
-                Gekaufte Produkte Ausblenden
-            </label>
-        </h5>
+        <div class="d-flex flex-column justify-content-start ms-auto">
+            <h5 class="d-flex align-items-center form-check form-switch">
+                <input class="form-check-input me-2 mb-1" type="checkbox" @bind="_hideBoughtItems" id="hideBoughtItemsCheckBox">
+                <label for="hideBoughtItemsCheckBox">
+                    Gekaufte Produkte Ausblenden
+                </label>
+            </h5>
+
+            @if (_viewedByOwner)
+            {
+                <h5 class="d-flex align-items-center form-check form-switch">
+                    <input class="form-check-input me-2 mb-1" type="checkbox" @bind="_hideBuyInformation" id="hideBuyInformationCheckBox">
+                    <label for="hideBuyInformationCheckBox">
+                        Kaufinformationen ausblenden
+                    </label>
+                </h5>
+            }
+        </div>
     </div>
 }
