@@ -2,4 +2,4 @@
 
 namespace WishlistApp.Data.Models;
 
-internal sealed class WishlistRole : IdentityRole { }
+public sealed class WishlistUser : IdentityUser { }

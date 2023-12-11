@@ -4,7 +4,7 @@ using WishlistApp.Data.Models;
 
 namespace WishlistApp.Data;
 
-internal sealed class WishlistDbContext(DbContextOptions options) : IdentityDbContext<WishlistUser, WishlistRole, string>(options)
+public sealed class WishlistDbContext(DbContextOptions options) : IdentityDbContext<WishlistUser, WishlistRole, string>(options)
 {
     public DbSet<Wishlist> Wishlists { get; set; }
 
