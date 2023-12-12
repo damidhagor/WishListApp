@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WishlistApp.ProductCrawling
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WishlistApp.Data", "WishlistApp.Data\WishlistApp.Data.csproj", "{4F86C138-C3A3-4C18-B631-3CAB7733C9C9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WishlistApp.Cli", "WishlistApp.Cli\WishlistApp.Cli.csproj", "{071C5BA1-F044-4774-970C-0FBF44E08318}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{4F86C138-C3A3-4C18-B631-3CAB7733C9C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F86C138-C3A3-4C18-B631-3CAB7733C9C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F86C138-C3A3-4C18-B631-3CAB7733C9C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{071C5BA1-F044-4774-970C-0FBF44E08318}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{071C5BA1-F044-4774-970C-0FBF44E08318}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{071C5BA1-F044-4774-970C-0FBF44E08318}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{071C5BA1-F044-4774-970C-0FBF44E08318}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
