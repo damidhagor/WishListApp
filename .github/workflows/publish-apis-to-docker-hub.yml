@@ -25,3 +25,22 @@ jobs:
         file: WishlistApp/Dockerfile
         tags: ${{ secrets.DOCKER_HUB_USERNAME }}/musiccollection:wishlist-app-${{ github.run_id }}, ${{ secrets.DOCKER_HUB_USERNAME }}/musiccollection:wishlist-app-latest
         push: true
+        
+  build-wishlist-cli:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+    - name: Docker Login
+      uses: docker/login-action@v3.0.0
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+    - name: Build and Push Docker Image
+      uses: docker/build-push-action@v5.0.0
+      with:
+        context: "{{defaultContext}}:src"
+        file: WishlistApp.Cli/Dockerfile
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/musiccollection:wishlist-cli-${{ github.run_id }}, ${{ secrets.DOCKER_HUB_USERNAME }}/musiccollection:wishlist-cli-latest
+        push: true
