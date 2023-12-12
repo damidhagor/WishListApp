@@ -90,4 +90,11 @@ else
             }
         </div>
     </div>
+
+    @if (_viewedByOwner)
+    {
+        <div class="border border-secondary mt-4 mb-4"></div>
+
+        <WishlistShareComponent Wishlist="@Wishlist" />
+    }
 }
