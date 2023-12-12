@@ -52,9 +52,10 @@ internal sealed class WishlistRepository(WishlistDbContext wishlistDbContext, IA
         return wishlist?.ToDto();
     }
 
-    public async Task<List<WishlistDto>> GetAll(CancellationToken cancellationToken)
+    public async Task<List<WishlistDto>> GetAll(string ownerIdentifier, CancellationToken cancellationToken)
     {
         var wishlists = await _context.Wishlists
+            .Where(w => w.OwnerIdentifier == ownerIdentifier)
             .Include(w => w.Items)
             .Include(w => w.Shares)
             .ToArrayAsync(cancellationToken);

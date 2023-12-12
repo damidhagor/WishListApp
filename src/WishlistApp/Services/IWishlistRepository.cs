@@ -10,7 +10,7 @@ public interface IWishlistRepository
 
     Task<WishlistDto?> GetWishlist(int id, CancellationToken cancellationToken);
 
-    Task<List<WishlistDto>> GetAll(CancellationToken cancellationToken);
+    Task<List<WishlistDto>> GetAll(string ownerIdentifier, CancellationToken cancellationToken);
 
     Task DeleteWishlist(int id, CancellationToken cancellationToken);
 

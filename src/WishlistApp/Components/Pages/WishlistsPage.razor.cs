@@ -38,7 +38,13 @@ public partial class WishlistsPage
     private async Task LoadWishlists(CancellationToken cancellationToken)
     {
         _lists = null;
-        var lists = await Repository.GetAll(default);
+
+        if (_user is null)
+        {
+            return;
+        }
+
+        var lists = await Repository.GetAll(_user.Identifier, cancellationToken);
         _lists = [.. lists.OrderBy(l => l.Name)];
         StateHasChanged();
     }
@@ -66,7 +72,7 @@ public partial class WishlistsPage
         if (confirmed)
         {
             await Repository.DeleteWishlist(id, default);
-            _lists = await Repository.GetAll(default);
+            await LoadWishlists(default);
         }
     }
 
