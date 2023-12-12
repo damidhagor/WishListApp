@@ -6,26 +6,33 @@
             <div class="container-fluid justify-content-start">
                 <span class="navbar-brand">Wishlist App</span>
 
-                <AuthorizeView Roles="Admin">
-                    <a class="nav-link align-self-center me-4" href="/">
-                        <i class="bi bi-list navbar-icon"></i> Wunschlisten
-                    </a>
-                </AuthorizeView>
+                <AuthorizeView>
+                    <Authorized>
+                        <a class="nav-link align-self-center me-4" href="/">
+                            <i class="bi bi-list navbar-icon"></i> Meine Wunschlisten
+                        </a>
 
-                <AuthorizeView Roles="Admin">
-                    <div class="d-flex ms-auto">
-                        <NavLink class="nav-link align-self-center me-4" href="Account/Manage">
-                            <i class="bi bi-person-fill navbar-icon"></i> @context.User.Identity?.Name
-                        </NavLink>
+                        <div class="d-flex ms-auto">
+                            <NavLink class="nav-link align-self-center me-4" href="Account/Manage">
+                                <i class="bi bi-person-fill navbar-icon"></i> @context.User.Identity?.Name
+                            </NavLink>
 
-                        <form action="Account/Logout" method="post">
-                            <AntiforgeryToken />
-                            <input type="hidden" name="ReturnUrl" value="Account/Login" />
-                            <button type="submit" class="btn btn-outline-light">
-                                <i class="bi bi-box-arrow-left navbar-icon"></i> Logout
-                            </button>
-                        </form>
-                    </div>
+                            <form action="Account/Logout" method="post">
+                                <AntiforgeryToken />
+                                <input type="hidden" name="ReturnUrl" value="Account/Login" />
+                                <button type="submit" class="btn btn-outline-light">
+                                    <i class="bi bi-box-arrow-left navbar-icon"></i> Logout
+                                </button>
+                            </form>
+                        </div>
+                    </Authorized>
+                    <NotAuthorized>
+                        <div class="d-flex ms-auto">
+                            <a href="Account/Login" class="btn btn-outline-light">
+                                <i class="bi bi-box-arrow-in-right navbar-icon"></i> Login
+                            </a>
+                        </div>
+                    </NotAuthorized>
                 </AuthorizeView>
             </div>
         </nav>
