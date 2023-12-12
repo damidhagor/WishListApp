@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using WishlistApp.Data.Models;
 
 namespace WishlistApp.Extensions;
@@ -20,17 +19,12 @@ internal static class WebApplicationExtensions
 
         var username = app.Configuration.GetValue<string>("AdminUser:Username") ?? throw new ArgumentNullException("username", "Admin user name is needed");
         var password = app.Configuration.GetValue<string>("AdminUser:Password") ?? throw new ArgumentNullException("password", "Admin password is needed");
-        var expectedRoles = app.Configuration.GetSection("AdminUser:Roles").Get<string[]>() ?? [];
-        var expectedClaims = app.Configuration.GetSection("AdminUser:Claims").Get<Dictionary<string, string>>() ?? [];
 
-        foreach (var expectedRole in expectedRoles)
+        var adminRole = await roleManager.FindByNameAsync("Admin");
+        if (adminRole is null)
         {
-            var role = await roleManager.FindByNameAsync(expectedRole);
-            if (role is null)
-            {
-                role = new() { Name = expectedRole };
-                await roleManager.CreateAsync(role);
-            }
+            adminRole = new() { Name = "Admin" };
+            await roleManager.CreateAsync(adminRole);
         }
 
         var adminUser = await userManager.FindByNameAsync(username);
@@ -48,13 +42,11 @@ internal static class WebApplicationExtensions
             await userManager.AddPasswordAsync(adminUser, password);
         }
 
-        var existingRoles = await userManager.GetRolesAsync(adminUser);
-        await userManager.RemoveFromRolesAsync(adminUser, existingRoles);
-        await userManager.AddToRolesAsync(adminUser, expectedRoles);
-
-        var existingClaims = await userManager.GetClaimsAsync(adminUser);
-        await userManager.RemoveClaimsAsync(adminUser, existingClaims);
-        await userManager.AddClaimsAsync(adminUser, expectedClaims.Select(kvp => new Claim(kvp.Key, kvp.Value)));
+        var isInAdminRole = await userManager.IsInRoleAsync(adminUser, "Admin");
+        if (!isInAdminRole)
+        {
+            await userManager.AddToRoleAsync(adminUser, "Admin");
+        }
 
         return app;
     }
