@@ -2,4 +2,6 @@
 
 namespace WishlistApp.Dtos;
 
-public sealed record WishlistItemPriorityDto(WishlistItemPriority Priority, string Name);
+public sealed record WishlistItemPriorityDto(
+    WishlistItemPriority Priority,
+    string Name);

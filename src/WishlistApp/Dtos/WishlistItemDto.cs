@@ -1,14 +1,12 @@
 ﻿namespace WishlistApp.Dtos;
 
-public sealed class WishlistItemDto
-{
-    public required int Id { get; init; }
-
-    public required int WishlistId { get; init; }
-
-    public required string Url { get; init; }
-
-    public required WishlistItemPriorityDto Priority { get; set; }
-
-    public int? BoughtByWishlistShareId { get; set; }
-}
+public sealed record WishlistItemDto(
+    int Id,
+    int WishlistId,
+    string Url,
+    string? Name,
+    string? Description,
+    string? Note,
+    string? Price,
+    WishlistItemPriorityDto Priority,
+    int? BoughtByWishlistShareId);

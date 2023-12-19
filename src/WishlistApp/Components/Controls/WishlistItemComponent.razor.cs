@@ -39,6 +39,8 @@ public partial class WishlistItemComponent
 
     private string? Description { get; set; }
 
+    private string? Note { get; set; }
+
     private string? ImageUrl { get; set; }
 
     private string? Price { get; set; }
@@ -64,15 +66,20 @@ public partial class WishlistItemComponent
             return;
         }
 
+        Name = string.IsNullOrWhiteSpace(Item.Name) ? Item.Url : Item.Name;
+        Description = Item.Description;
+        Note = Item.Note;
+        Price = Item.Price;
+
         try
         {
             IsProductInformationLoading = true;
             var result = await _productCrawler.CrawlProduct(new Uri(Item.Url), cancellationToken);
 
             Name = string.IsNullOrWhiteSpace(result.Title) ? Item.Url : result.Title;
-            Description = result.Description;
+            Description = string.IsNullOrWhiteSpace(result.Description) ? Item.Description : result.Description;
             ImageUrl = result.ImageUrl;
-            Price = $"{result.Price}{result.Currency}";
+            Price = string.IsNullOrWhiteSpace(result.Price) ? Item.Price : $"{result.Price}{result.Currency}";
         }
         catch (Exception e)
         {
