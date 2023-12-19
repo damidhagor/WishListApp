@@ -19,7 +19,8 @@ public sealed class WishlistItem
     [MaxLength(500)]
     public string? Description { get; set; }
 
-    public float? Price { get; set; }
+    [MaxLength(20)]
+    public string? Price { get; set; }
 
     [MaxLength(500)]
     public string? Note { get; set; }
