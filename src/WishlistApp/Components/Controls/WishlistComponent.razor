@@ -29,10 +29,39 @@ else
             }
         </h1>
 
-        @if (WishlistShare is not null)
-        {
-            <h2 class="ms-auto">Hallo @WishlistShare.Name</h2>
-        }
+        <div class="d-flex flex-row ms-auto">
+            @if (WishlistShare is not null)
+            {
+                <h2>Hallo @WishlistShare.Name</h2>
+            }
+
+            <div class="dropdown ms-2">
+                <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                    <i class="bi bi-sliders" />
+                </button>
+
+                <div class="dropdown-menu" style="min-width: 300px;">
+                    <div class="d-flex flex-column p-2">
+                        <div class="d-flex align-items-center form-check form-switch">
+                            <input class="form-check-input me-2 mb-1" type="checkbox" @bind="_hideBoughtItems" id="hideBoughtItemsCheckBox">
+                            <label for="hideBoughtItemsCheckBox">
+                                Gekaufte Produkte Ausblenden
+                            </label>
+                        </div>
+
+                        @if (_viewedByOwner)
+                        {
+                            <div class="d-flex align-items-center form-check form-switch">
+                                <input class="form-check-input me-2 mb-1" type="checkbox" @bind="_hideBuyInformation" id="hideBuyInformationCheckBox">
+                                <label for="hideBuyInformationCheckBox">
+                                    Kaufinformationen ausblenden
+                                </label>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="border border-secondary"></div>
@@ -70,25 +99,6 @@ else
                 <i class="bi bi-plus-lg" /> Hinzufügen
             </button>
         }
-
-        <div class="d-flex flex-column justify-content-start ms-auto">
-            <h5 class="d-flex align-items-center form-check form-switch">
-                <input class="form-check-input me-2 mb-1" type="checkbox" @bind="_hideBoughtItems" id="hideBoughtItemsCheckBox">
-                <label for="hideBoughtItemsCheckBox">
-                    Gekaufte Produkte Ausblenden
-                </label>
-            </h5>
-
-            @if (_viewedByOwner)
-            {
-                <h5 class="d-flex align-items-center form-check form-switch">
-                    <input class="form-check-input me-2 mb-1" type="checkbox" @bind="_hideBuyInformation" id="hideBuyInformationCheckBox">
-                    <label for="hideBuyInformationCheckBox">
-                        Kaufinformationen ausblenden
-                    </label>
-                </h5>
-            }
-        </div>
     </div>
 
     @if (_viewedByOwner)
