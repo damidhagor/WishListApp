@@ -96,6 +96,22 @@ public partial class WishlistComponent
         }
     }
 
+    private async Task DeleteBoughtWishlistItems()
+    {
+        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Möchten Sie alle gekauften Einträge von der Wunschliste entfernen?");
+        if (!confirmed || Wishlist is null)
+        {
+            return;
+        }
+
+        var wishlistItemIds = Wishlist.Items
+            .Where(i => i.BoughtByWishlistShareId is not null)
+            .Select(i => i.Id)
+            .ToArray();
+
+        Wishlist = await Repository.DeleteWishlistItems(Wishlist.Id, wishlistItemIds, default);
+    }
+
     private IEnumerable<WishlistItemDto> GetFilteredWishlistItems()
     {
         if (Wishlist is null || Wishlist.Items.Length == 0)
