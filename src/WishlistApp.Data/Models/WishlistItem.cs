@@ -1,4 +1,6 @@
-﻿namespace WishlistApp.Data.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WishlistApp.Data.Models;
 
 public sealed class WishlistItem
 {
@@ -8,7 +10,19 @@ public sealed class WishlistItem
 
     public required Wishlist Wishlist { get; init; }
 
+    [MaxLength(500)]
     public required string Url { get; init; }
+
+    [MaxLength(500)]
+    public string? Name { get; set; }
+
+    [MaxLength(500)]
+    public string? Description { get; set; }
+
+    public float? Price { get; set; }
+
+    [MaxLength(500)]
+    public string? Note { get; set; }
 
     public WishlistItemPriority Priority { get; set; }
 
