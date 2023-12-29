@@ -54,6 +54,9 @@
                     <button type="button" class="btn btn-outline-danger" onclick="@(async () => await ItemDeleted.InvokeAsync(Item))">
                         <i class="bi bi-trash" /> Löschen
                     </button>
+
+                    <WishlistItemEditModalButtonComponent />
+                    <WishlistItemEditModalDialogComponent WishlistItem="@Item" />
                 }
                 else
                 {

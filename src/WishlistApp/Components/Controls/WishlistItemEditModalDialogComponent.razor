@@ -1,0 +1,49 @@
+﻿@inherits ComponentBase
+@rendermode @(new InteractiveServerRenderMode(false))
+
+<div class="modal modal-lg fade" id="wishlistItemEditModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Bearbeiten</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            @if (WishlistItem is not null)
+            {
+                <div class="modal-body">
+                    <div class="d-flex flex-column gap-y-2">
+                        <h5 class=" mb-4">
+                            <a href="@WishlistItem.Url" target="_blank">
+                                Produktseite öffnen
+                                <i class="bi bi-box-arrow-up-right ms-2"/>
+                            </a>
+                        </h5>
+
+                        <h5>Name</h5>
+                        <input type="text" class="mb-4" @bind="_name">
+
+                        <h5>Beschreibung</h5>
+                        <input type="text" class="mb-4" @bind="_description">
+
+                        <h5>Bemerkung</h5>
+                        <input type="text" class="mb-4" @bind="_note">
+
+                        <h5>Preis</h5>
+                        <input type="text" @bind="_price">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary">
+                        <i class="bi bi-arrow-clockwise" /> Produktinformationen abrufen
+                    </button>
+
+                    <button type="button" class="btn btn-primary">
+                        <i class="bi bi-floppy" /> Speichern
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
