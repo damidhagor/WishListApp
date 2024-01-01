@@ -31,6 +31,9 @@ public partial class WishlistItemComponent
     public EventCallback<WishlistItemDto> ItemDeleted { get; set; }
 
     [Parameter]
+    public EventCallback<WishlistItemDto> ItemUpdated { get; set; }
+
+    [Parameter]
     public EventCallback<WishlistItemPriority> PriorityChanged { get; set; }
 
     protected bool IsProductInformationLoading { get; set; }
@@ -61,6 +64,7 @@ public partial class WishlistItemComponent
 
     private async Task LoadItemInformation(CancellationToken cancellationToken)
     {
+        return;
         if (Item is null)
         {
             return;

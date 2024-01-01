@@ -92,6 +92,7 @@ else
                                        ItemBought="@(async (item) => await OnItemBought(item))"
                                        ItemUnbought="@(async (item) => await OnItemUnbought(item))"
                                        ItemDeleted="@(async (item) => await OnItemDeleted(item))"
+                                       ItemUpdated="OnItemUpdated"
                                        PriorityChanged="@(async (priority) => await OnItemPriorityChanged(item, priority))" />
             }
         </div>

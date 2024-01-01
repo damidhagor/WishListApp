@@ -55,8 +55,8 @@
                         <i class="bi bi-trash" /> Löschen
                     </button>
 
-                    <WishlistItemEditModalButtonComponent />
-                    <WishlistItemEditModalDialogComponent WishlistItem="@Item" />
+                    <WishlistItemEditModalButtonComponent ModalId="@(Item.Id.ToString())" />
+                    <WishlistItemEditModalDialogComponent ModalId="@(Item.Id.ToString())" WishlistItem="@Item" ItemUpdated="ItemUpdated" />
                 }
                 else
                 {

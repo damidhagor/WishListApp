@@ -105,6 +105,34 @@ internal sealed class WishlistRepository(WishlistDbContext wishlistDbContext, IA
         return wishlist?.ToDto();
     }
 
+    public async Task<WishlistDto?> UpdateWishlistItem(int wishlistId, WishlistItemDto wishlistItemDto, CancellationToken cancellationToken)
+    {
+        Guard.IsGreaterThan(wishlistId, -1, nameof(wishlistId));
+        Guard.IsNotNull(wishlistItemDto, nameof(wishlistItemDto));
+
+        var wishlist = await _context.Wishlists
+            .Include(w => w.Items)
+            .Include(w => w.Shares)
+            .FirstOrDefaultAsync(w => w.Id == wishlistId, cancellationToken);
+
+        if (wishlist is not null)
+        {
+            var item = wishlist.Items.FirstOrDefault(i => i.Id == wishlistItemDto.Id);
+            if (item is not null)
+            {
+                item.Name = wishlistItemDto.Name;
+                item.Description = wishlistItemDto.Description;
+                item.Note = wishlistItemDto.Note;
+                item.Price = wishlistItemDto.Price;
+                item.Priority = wishlistItemDto.Priority.Priority;
+
+                await _context.SaveChangesAsync(cancellationToken);
+            }
+        }
+
+        return wishlist?.ToDto();
+    }
+
     public async Task<WishlistDto?> DeleteWishlistItem(int wishlistId, int wishlistItemId, CancellationToken cancellationToken)
     {
         Guard.IsGreaterThan(wishlistId, -1, nameof(wishlistId));

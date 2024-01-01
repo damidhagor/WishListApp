@@ -65,6 +65,11 @@ public partial class WishlistComponent
         }
     }
 
+    private async Task OnItemUpdated(WishlistItemDto itemDto)
+    {
+        Wishlist = await Repository.UpdateWishlistItem(itemDto.WishlistId, itemDto, default);
+    }
+
     private async Task RenameWishlist(string name)
     {
         if (Wishlist is null)
