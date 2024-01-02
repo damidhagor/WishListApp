@@ -13,9 +13,6 @@ public partial class WishlistItemEditModalDialogComponent
     [Parameter, EditorRequired]
     public WishlistItemDto? WishlistItem { get; set; }
 
-    [Parameter, EditorRequired]
-    public string? ModalId { get; set; }
-
     [Parameter]
     public EventCallback<WishlistItemDto> ItemUpdated { get; set; }
 
