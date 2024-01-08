@@ -48,15 +48,6 @@ public partial class WishlistItemComponent
 
     private string? Price { get; set; }
 
-    private WishlistItemPriorityDto[] Priorities { get; set; } =
-        [
-            WishlistItemPriority.Unknown.ToDto(),
-            WishlistItemPriority.Low.ToDto(),
-            WishlistItemPriority.Medium.ToDto(),
-            WishlistItemPriority.High.ToDto(),
-            WishlistItemPriority.VeryHigh.ToDto()
-        ];
-
     protected override async Task OnParametersSetAsync()
     {
         await LoadItemInformation(default);

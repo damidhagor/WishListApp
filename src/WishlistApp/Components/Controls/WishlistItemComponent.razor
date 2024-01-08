@@ -39,16 +39,8 @@
             <div class="d-flex flex-row gap-2 justify-content-end align-content-baseline border-top border-secondary p-2">
                 @if (DisplayOwnerControls)
                 {
-                    <div class="dropdown me-auto">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            @Item.Priority.Name
-                        </button>
-                        <ul class="dropdown-menu">
-                            @foreach (var priority in Priorities)
-                            {
-                                <li><button type="button" class="dropdown-item" onclick="@(async () => await PriorityChanged.InvokeAsync(priority.Priority))">@priority.Name</button></li>
-                            }
-                        </ul>
+                    <div class="me-auto">
+                        <WishlistItemPriorityDropdownComponent WishlistItem="Item" PriorityChanged="PriorityChanged" />
                     </div>
 
                     <button type="button" class="btn btn-outline-danger" onclick="@(async () => await ItemDeleted.InvokeAsync(Item))">

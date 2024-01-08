@@ -13,24 +13,27 @@
             {
                 <div class="modal-body">
                     <div class="d-flex flex-column gap-y-2">
-                        <h5 class=" mb-4">
+                        <h5>
                             <a href="@WishlistItem.Url" target="_blank">
                                 Produktseite öffnen
                                 <i class="bi bi-box-arrow-up-right ms-2"/>
                             </a>
                         </h5>
 
-                        <h5>Name</h5>
-                        <input type="text" class="mb-4" @bind="_name">
+                        <h5 class="mt-4">Name</h5>
+                        <input type="text" @bind="_name">
 
-                        <h5>Beschreibung</h5>
-                        <input type="text" class="mb-4" @bind="_description">
+                        <h5 class="mt-4">Beschreibung</h5>
+                        <input type="text" @bind="_description">
 
-                        <h5>Bemerkung</h5>
-                        <input type="text" class="mb-4" @bind="_note">
+                        <h5 class="mt-4">Bemerkung</h5>
+                        <input type="text" @bind="_note">
 
-                        <h5>Preis</h5>
+                        <h5 class="mt-4">Preis</h5>
                         <input type="text" @bind="_price">
+
+                        <h5 class="mt-4">Priorität</h5>
+                        <WishlistItemPriorityDropdownComponent WishlistItem="WishlistItem" PriorityChanged="OnPriorityChanged" />
                     </div>
                 </div>
 
@@ -39,7 +42,7 @@
                         <i class="bi bi-arrow-clockwise" /> Produktinformationen abrufen
                     </button>
 
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @onclick="OnItemUpdated">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @onclick="SaveWishlistItem">
                         <i class="bi bi-floppy" /> Speichern
                     </button>
                 </div>

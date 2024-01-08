@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
+using WishlistApp.Data.Models;
 using WishlistApp.ProductCrawling.Services;
-using WishlistApp.Services;
 
 namespace WishlistApp.Components.Controls;
 
@@ -45,7 +44,7 @@ public partial class WishlistItemEditModalDialogComponent
             : $"{info.Price}{info.Currency}";
     }
 
-    private async Task OnItemUpdated()
+    private async Task SaveWishlistItem()
     {
         if (WishlistItem is null)
         {
@@ -58,5 +57,15 @@ public partial class WishlistItemEditModalDialogComponent
             Description = _description,
             Price = _price
         });
+    }
+
+    private void OnPriorityChanged(WishlistItemPriority priority)
+    {
+        if (WishlistItem is null)
+        {
+            return;
+        }
+
+        WishlistItem = WishlistItem with { Priority = priority.ToDto() };
     }
 }
