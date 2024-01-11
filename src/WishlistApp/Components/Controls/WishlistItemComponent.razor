@@ -46,9 +46,10 @@
                     <button type="button" class="btn btn-outline-danger" onclick="@(async () => await ItemDeleted.InvokeAsync(Item))">
                         <i class="bi bi-trash" /> Löschen
                     </button>
-
-                    <WishlistItemEditModalButtonComponent WishlistItem="Item" />
-                    <WishlistItemEditModalDialogComponent WishlistItem="Item" ItemUpdated="ItemUpdated" />
+                    
+                    <button type="button" class="btn btn-outline-light" onclick="@(async () => await OpenWishlistItemEditModal(Item))">
+                        <i class="bi bi-pen" /> Bearbeiten
+                    </button>
                 }
                 else
                 {
@@ -91,5 +92,7 @@
                 }
             </div>
         </div>
+        
+        <WishlistItemEditModalComponent @ref="_wishlistItemEditModal" ItemUpdated="ItemUpdated" />
     </div>
 }

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using WishlistApp.Data.Models;
 using WishlistApp.ProductCrawling.Services;
 
@@ -48,9 +49,16 @@ public partial class WishlistItemComponent
 
     private string? Price { get; set; }
 
+    private WishlistItemEditModalComponent _wishlistItemEditModal = default!;
+
     protected override async Task OnParametersSetAsync()
     {
         await LoadItemInformation(default);
+    }
+
+    private async Task OpenWishlistItemEditModal(WishlistItemDto wishlistItemDto)
+    {
+        await _wishlistItemEditModal.Open(wishlistItemDto);
     }
 
     private async Task LoadItemInformation(CancellationToken cancellationToken)
