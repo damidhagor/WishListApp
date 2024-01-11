@@ -34,6 +34,8 @@ public partial class WishlistComponent
 
     private bool _hideBuyInformation;
 
+    private WishlistSharesModalDialogComponent _wishlistShareModal = default!;
+
     protected override void OnInitialized()
     {
         _hideBoughtItems = !_viewedByOwner;
@@ -115,6 +117,30 @@ public partial class WishlistComponent
             .ToArray();
 
         Wishlist = await Repository.DeleteWishlistItems(Wishlist.Id, wishlistItemIds, default);
+    }
+
+    private async Task AddWishlistShare(string wishlistShareName)
+    {
+        if (string.IsNullOrWhiteSpace(wishlistShareName) || Wishlist is null)
+        {
+            return;
+        }
+
+        Wishlist = await Repository.AddWishlistShare(Wishlist.Id, wishlistShareName, default);
+    }
+
+    private async Task DeleteWishlistShare(WishlistShareDto? wishlistShare)
+    {
+        if (Wishlist is null || wishlistShare is null)
+        {
+            return;
+        }
+
+        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", $"Möchten Sie die Freigabe \"{wishlistShare.Name}\" löschen?");
+        if (confirmed)
+        {
+            Wishlist = await Repository.DeleteWishlistShare(Wishlist.Id, wishlistShare.Id, default);
+        }
     }
 
     private IEnumerable<WishlistItemDto> GetFilteredWishlistItems()

@@ -57,8 +57,10 @@ else
                                     Kaufinformationen ausblenden
                                 </label>
                             </div>
-
-                            <WishlistSharesModalButtonComponent />
+                            
+                            <button type="button" class="btn btn-outline-light" onclick="@(async () => await _wishlistShareModal.Open())">
+                                <i class="bi bi-person fill" /> Freigaben
+                            </button>
 
                             <button type="button" class="btn btn-outline-danger" @onclick="DeleteBoughtWishlistItems">
                                 <i class="bi bi-trash" /> Gekaufte Produkte löschen
@@ -108,5 +110,8 @@ else
         }
     </div>
 
-    <WishlistSharesModalDialogComponent Wishlist="@Wishlist" />
+    <WishlistSharesModalDialogComponent @ref="_wishlistShareModal"
+        Shares="@Wishlist.Shares"
+        ShareAdded="@(async shareName => await AddWishlistShare(shareName))"
+        ShareDeleted="@(async share => await DeleteWishlistShare(share))"/>
 }
