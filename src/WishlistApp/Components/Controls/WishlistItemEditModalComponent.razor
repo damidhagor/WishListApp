@@ -32,8 +32,16 @@
     </Body>
 
     <Footer>
-        <button type="button" class="btn btn-secondary" @onclick="LoadCrawledProductInformation">
-            <i class="bi bi-arrow-clockwise" /> Produktinformationen abrufen
+        <button type="button" class="btn btn-secondary" @onclick="LoadCrawledProductInformation" disabled="@_isLoading">
+            @if (_isLoading)
+            {
+                <span class="spinner-border spinner-border-sm"></span>
+            }
+            else
+            {
+                <i class="bi bi-arrow-clockwise" />
+            }
+            Produktinformationen abrufen
         </button>
 
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @onclick="SaveWishlistItem">

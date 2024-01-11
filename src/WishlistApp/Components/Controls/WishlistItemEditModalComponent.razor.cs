@@ -20,6 +20,8 @@ public partial class WishlistItemEditModalComponent
     private string _note = "";
     private string _price = "";
 
+    private bool _isLoading = false;
+
     public async Task Open(WishlistItemDto wishlistItemDto)
     {
         _wishlistItem = wishlistItemDto;
@@ -39,13 +41,22 @@ public partial class WishlistItemEditModalComponent
             return;
         }
 
-        var info = await ProductCrawlerService.CrawlProduct(new Uri(_wishlistItem.Url), default);
+        try
+        {
+            _isLoading = true;
 
-        _name = string.IsNullOrWhiteSpace(info.Title) ? _name : info.Title;
-        _description = string.IsNullOrWhiteSpace(info.Description) ? _description : info.Description;
-        _price = string.IsNullOrWhiteSpace(info.Price) && string.IsNullOrWhiteSpace(info.Currency)
-            ? _price
-            : $"{info.Price}{info.Currency}";
+            var info = await ProductCrawlerService.CrawlProduct(new Uri(_wishlistItem.Url), default);
+            await Task.Delay(5_000);
+            _name = string.IsNullOrWhiteSpace(info.Title) ? _name : info.Title;
+            _description = string.IsNullOrWhiteSpace(info.Description) ? _description : info.Description;
+            _price = string.IsNullOrWhiteSpace(info.Price) && string.IsNullOrWhiteSpace(info.Currency)
+                ? _price
+                : $"{info.Price}{info.Currency}";
+        }
+        finally
+        {
+            _isLoading = false;
+        }
     }
 
     private async Task SaveWishlistItem()
