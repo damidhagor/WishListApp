@@ -1,9 +1,8 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using WishlistApp.Data.Models;
 using WishlistApp.Services;
 
-namespace WishlistApp.Components.Controls;
+namespace WishlistApp.Components.Wishlist;
 
 public partial class WishlistComponent
 {
@@ -28,13 +27,13 @@ public partial class WishlistComponent
 
     private bool _viewedByOwner => WishlistUser is not null && WishlistUser.Identifier == Wishlist?.OwnerIdentifier;
 
-    private bool _showBuyInformation => !_viewedByOwner || (_viewedByOwner && !_hideBuyInformation);
+    private bool _showBuyInformation => !_viewedByOwner || _viewedByOwner && !_hideBuyInformation;
 
     private bool _hideBoughtItems;
 
     private bool _hideBuyInformation;
 
-    private WishlistSharesModalDialogComponent _wishlistShareModal = default!;
+    private SharesModalComponent _shareModal = default!;
 
     protected override void OnInitialized()
     {
@@ -53,9 +52,9 @@ public partial class WishlistComponent
         Wishlist = await Repository.UnbuyWishlistItem(itemDto.WishlistId, itemDto.Id, WishlistShare!.Id, default);
     }
 
-    private async Task OnItemPriorityChanged(WishlistItemDto itemDto, WishlistItemPriority priority)
+    private async Task OnItemPriorityChanged(WishlistItemDto itemDto, WishlistItemPriorityDto priority)
     {
-        Wishlist = await Repository.SetWishlistItemPriority(itemDto.WishlistId, itemDto.Id, priority, default);
+        Wishlist = await Repository.SetWishlistItemPriority(itemDto.WishlistId, itemDto.Id, priority.Priority, default);
     }
 
     private async Task OnItemDeleted(WishlistItemDto itemDto)

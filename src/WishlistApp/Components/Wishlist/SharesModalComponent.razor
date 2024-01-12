@@ -18,7 +18,7 @@
                    .Where(s => !s.IsDeleted)
                    .OrderBy(s => s.Name))
                 {
-                    <WishlistShareComponent Share="@share" ShareDeleted="@(deletedShare => DeleteWishlistShare(deletedShare))" />
+                    <ShareComponent Share="@share" ShareDeleted="@(deletedShare => DeleteWishlistShare(deletedShare))" />
                 }
             </div>
         }

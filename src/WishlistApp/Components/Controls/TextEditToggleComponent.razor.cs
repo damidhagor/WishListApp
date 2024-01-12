@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components.Web;
 
 namespace WishlistApp.Components.Controls;
 
-public partial class TextInputToggleComponent
+public partial class TextEditToggleComponent
 {
     private string EditedValue { get; set; }
 

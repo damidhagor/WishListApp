@@ -1,11 +1,10 @@
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using WishlistApp.Data.Models;
 using WishlistApp.ProductCrawling.Services;
 
-namespace WishlistApp.Components.Controls;
+namespace WishlistApp.Components.Wishlist;
 
-public partial class WishlistItemComponent
+public partial class ItemComponent
 {
     [Inject]
     private IProductCrawlerService _productCrawler { get; set; } = default!;
@@ -35,7 +34,7 @@ public partial class WishlistItemComponent
     public EventCallback<WishlistItemDto> ItemUpdated { get; set; }
 
     [Parameter]
-    public EventCallback<WishlistItemPriority> PriorityChanged { get; set; }
+    public EventCallback<WishlistItemPriorityDto> PriorityChanged { get; set; }
 
     protected bool IsProductInformationLoading { get; set; }
 
@@ -49,7 +48,16 @@ public partial class WishlistItemComponent
 
     private string? Price { get; set; }
 
-    private WishlistItemEditModalComponent _wishlistItemEditModal = default!;
+    private ItemEditModalComponent _itemEditModal = default!;
+
+    private readonly WishlistItemPriorityDto[] _priorities =
+        [
+            WishlistItemPriority.Unknown.ToDto(),
+            WishlistItemPriority.Low.ToDto(),
+            WishlistItemPriority.Medium.ToDto(),
+            WishlistItemPriority.High.ToDto(),
+            WishlistItemPriority.VeryHigh.ToDto()
+        ];
 
     protected override async Task OnParametersSetAsync()
     {
@@ -58,7 +66,7 @@ public partial class WishlistItemComponent
 
     private async Task OpenWishlistItemEditModal(WishlistItemDto wishlistItemDto)
     {
-        await _wishlistItemEditModal.Open(wishlistItemDto);
+        await _itemEditModal.Open(wishlistItemDto);
     }
 
     private async Task LoadItemInformation(CancellationToken cancellationToken)

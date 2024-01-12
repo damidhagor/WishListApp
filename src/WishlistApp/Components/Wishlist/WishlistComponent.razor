@@ -19,9 +19,9 @@ else
         <h1>
             @if (_viewedByOwner)
             {
-                <TextInputToggleComponent Value="@Wishlist.Name" OnValueAccepted="@(name => RenameWishlist(name))">
+                <TextEditToggleComponent Value="@Wishlist.Name" OnValueAccepted="@(name => RenameWishlist(name))">
                     @Wishlist.Name
-                </TextInputToggleComponent>
+                </TextEditToggleComponent>
             }
             else
             {
@@ -58,7 +58,7 @@ else
                                 </label>
                             </div>
                             
-                            <button type="button" class="btn btn-outline-light" onclick="@(async () => await _wishlistShareModal.Open())">
+                            <button type="button" class="btn btn-outline-light" onclick="@(async () => await _shareModal.Open())">
                                 <i class="bi bi-person fill" /> Freigaben
                             </button>
 
@@ -87,15 +87,15 @@ else
         <div class="d-flex flex-column mt-4 mb-4 gap-2">
             @foreach (var item in GetFilteredWishlistItems())
             {
-                <WishlistItemComponent Item="@item"
-                                       Share="@WishlistShare"
-                                       DisplayOwnerControls="@_viewedByOwner"
-                                       DisplayBuyInformation="@(!_hideBuyInformation)"
-                                       ItemBought="@(async (item) => await OnItemBought(item))"
-                                       ItemUnbought="@(async (item) => await OnItemUnbought(item))"
-                                       ItemDeleted="@(async (item) => await OnItemDeleted(item))"
-                                       ItemUpdated="OnItemUpdated"
-                                       PriorityChanged="@(async (priority) => await OnItemPriorityChanged(item, priority))" />
+                <ItemComponent Item="@item"
+                               Share="@WishlistShare"
+                               DisplayOwnerControls="@_viewedByOwner"
+                               DisplayBuyInformation="@(!_hideBuyInformation)"
+                               ItemBought="@(async (item) => await OnItemBought(item))"
+                               ItemUnbought="@(async (item) => await OnItemUnbought(item))"
+                               ItemDeleted="@(async (item) => await OnItemDeleted(item))"
+                               ItemUpdated="OnItemUpdated"
+                               PriorityChanged="@(async (priority) => await OnItemPriorityChanged(item, priority))" />
             }
         </div>
     }
@@ -110,7 +110,7 @@ else
         }
     </div>
 
-    <WishlistSharesModalDialogComponent @ref="_wishlistShareModal"
+    <SharesModalComponent @ref="_shareModal"
         Shares="@Wishlist.Shares"
         ShareAdded="@(async shareName => await AddWishlistShare(shareName))"
         ShareDeleted="@(async share => await DeleteWishlistShare(share))"/>

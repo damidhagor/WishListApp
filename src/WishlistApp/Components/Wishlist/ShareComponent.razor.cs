@@ -2,9 +2,9 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using WishlistApp.Services;
 
-namespace WishlistApp.Components.Controls;
+namespace WishlistApp.Components.Wishlist;
 
-public partial class WishlistShareComponent
+public partial class ShareComponent
 {
     [Inject]
     private IJSRuntime JSRuntime { get; set; } = default!;

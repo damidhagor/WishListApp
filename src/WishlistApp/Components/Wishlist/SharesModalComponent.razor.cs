@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Components;
+using WishlistApp.Components.Controls;
 
-namespace WishlistApp.Components.Controls;
+namespace WishlistApp.Components.Wishlist;
 
-public partial class WishlistSharesModalDialogComponent
+public partial class SharesModalComponent
 {
     [Parameter, EditorRequired]
     public WishlistShareDto[] Shares { get; set; } = [];

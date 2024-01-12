@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Components;
+using WishlistApp.Components.Controls;
 using WishlistApp.Data.Models;
 using WishlistApp.ProductCrawling.Services;
 
-namespace WishlistApp.Components.Controls;
+namespace WishlistApp.Components.Wishlist;
 
-public partial class WishlistItemEditModalComponent
+public partial class ItemEditModalComponent
 {
     [Inject]
     private IProductCrawlerService ProductCrawlerService { get; set; } = default!;
@@ -19,8 +20,18 @@ public partial class WishlistItemEditModalComponent
     private string _description = "";
     private string _note = "";
     private string _price = "";
+    private WishlistItemPriorityDto _priority = WishlistItemPriority.Unknown.ToDto();
 
     private bool _isLoading = false;
+
+    private readonly WishlistItemPriorityDto[] _priorities =
+        [
+            WishlistItemPriority.Unknown.ToDto(),
+            WishlistItemPriority.Low.ToDto(),
+            WishlistItemPriority.Medium.ToDto(),
+            WishlistItemPriority.High.ToDto(),
+            WishlistItemPriority.VeryHigh.ToDto()
+        ];
 
     public async Task Open(WishlistItemDto wishlistItemDto)
     {
@@ -29,6 +40,7 @@ public partial class WishlistItemEditModalComponent
         _description = _wishlistItem?.Description ?? "";
         _note = _wishlistItem?.Note ?? "";
         _price = _wishlistItem?.Price ?? "";
+        _priority = _wishlistItem?.Priority ?? _priorities[0];
         StateHasChanged();
 
         await _modal.Open();
@@ -71,17 +83,8 @@ public partial class WishlistItemEditModalComponent
             Name = _name,
             Description = _description,
             Note = _note,
-            Price = _price
+            Price = _price,
+            Priority = _priority
         });
-    }
-
-    private void OnPriorityChanged(WishlistItemPriority priority)
-    {
-        if (_wishlistItem is null)
-        {
-            return;
-        }
-
-        _wishlistItem = _wishlistItem with { Priority = priority.ToDto() };
     }
 }

@@ -24,9 +24,9 @@
                 <div class="d-flex flex-row m-2 align-items-center p-2 rounded-2 border border-secondary border-1" style="position: relative">
                     <div class="flex-column">
                         <h4 style="z-index: 100; position: relative">
-                            <TextInputToggleComponent Value="@list.Name" OnValueAccepted="@((name) => RenameWishlist(@list.Id, name))">
+                            <TextEditToggleComponent Value="@list.Name" OnValueAccepted="@((name) => RenameWishlist(@list.Id, name))">
                                 @list.Name
-                            </TextInputToggleComponent>
+                            </TextEditToggleComponent>
                         </h4>
 
                         <h5>
