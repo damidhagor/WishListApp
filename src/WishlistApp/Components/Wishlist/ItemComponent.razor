@@ -24,16 +24,16 @@
         <div class="d-flex flex-column w-75">
             <div class="d-flex flex-row ps-2 pt-2 pe-2 gap-2 border-bottom border-secondary align-items-baseline">
                 <h5 class="">
-                    <a href="@Item.Url" target="_blank">@Name</a>
+                    <a href="@Item.Url" target="_blank">@(string.IsNullOrWhiteSpace(Item.Name) ? Item.Url : Item.Name)</a>
                 </h5>
 
                 <div class="align-self-baseline ms-auto">
-                    @Price
+                    @Item.Price
                 </div>
             </div>
 
             <div class="d-flex flex-row flex-grow-1 overflow-y-auto ms-2 mt-2 mb-2">
-                @Description
+                @Item.Description
             </div>
 
             <div class="d-flex flex-row gap-2 justify-content-end align-content-baseline border-top border-secondary p-2">
@@ -71,7 +71,7 @@
                 {
                     @if (Share is not null && Item.BoughtByWishlistShareId is null)
                     {
-                        <button type="button" class="btn btn-primary" onclick="@(async () => await ItemBought.InvokeAsync(Item))">
+                        <button type="button" class="btn btn-outline-primary" onclick="@(async () => await ItemBought.InvokeAsync(Item))">
                             <i class="bi bi-bag" /> Als gekauft markieren
                         </button>
                     }

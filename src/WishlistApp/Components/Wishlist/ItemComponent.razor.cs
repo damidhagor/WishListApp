@@ -38,15 +38,7 @@ public partial class ItemComponent
 
     protected bool IsProductInformationLoading { get; set; }
 
-    protected string? Name { get; set; }
-
-    private string? Description { get; set; }
-
-    private string? Note { get; set; }
-
     private string? ImageUrl { get; set; }
-
-    private string? Price { get; set; }
 
     private ItemEditModalComponent _itemEditModal = default!;
 
@@ -71,26 +63,17 @@ public partial class ItemComponent
 
     private async Task LoadItemInformation(CancellationToken cancellationToken)
     {
-        return;
         if (Item is null)
         {
             return;
         }
-
-        Name = string.IsNullOrWhiteSpace(Item.Name) ? Item.Url : Item.Name;
-        Description = Item.Description;
-        Note = Item.Note;
-        Price = Item.Price;
 
         try
         {
             IsProductInformationLoading = true;
             var result = await _productCrawler.CrawlProduct(new Uri(Item.Url), cancellationToken);
 
-            Name = string.IsNullOrWhiteSpace(result.Title) ? Item.Url : result.Title;
-            Description = string.IsNullOrWhiteSpace(result.Description) ? Item.Description : result.Description;
             ImageUrl = result.ImageUrl;
-            Price = string.IsNullOrWhiteSpace(result.Price) ? Item.Price : $"{result.Price}{result.Currency}";
         }
         catch (Exception e)
         {
