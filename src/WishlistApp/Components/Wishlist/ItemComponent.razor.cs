@@ -42,15 +42,6 @@ public partial class ItemComponent
 
     private ItemEditModalComponent _itemEditModal = default!;
 
-    private readonly WishlistItemPriorityDto[] _priorities =
-        [
-            WishlistItemPriority.Unknown.ToDto(),
-            WishlistItemPriority.Low.ToDto(),
-            WishlistItemPriority.Medium.ToDto(),
-            WishlistItemPriority.High.ToDto(),
-            WishlistItemPriority.VeryHigh.ToDto()
-        ];
-
     protected override async Task OnParametersSetAsync()
     {
         await LoadItemInformation(default);

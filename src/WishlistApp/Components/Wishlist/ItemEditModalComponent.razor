@@ -26,7 +26,7 @@
                 <input type="text" @bind="_price">
 
                 <h5 class="mt-4">Priorität</h5>
-                <DropdownComponent T="WishlistItemPriorityDto" Items="_priorities" SelectedItem="_priority" SelectedItemChanged="@(priority => _priority = priority)">
+                <DropdownComponent T="WishlistItemPriorityDto" Items="Constants.WishlistItemPriorities" SelectedItem="_priority" SelectedItemChanged="@(priority => _priority = priority)">
                     <ItemTemplate>
                         @context?.Name
                     </ItemTemplate>

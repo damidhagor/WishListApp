@@ -24,15 +24,6 @@ public partial class ItemEditModalComponent
 
     private bool _isLoading = false;
 
-    private readonly WishlistItemPriorityDto[] _priorities =
-        [
-            WishlistItemPriority.Unknown.ToDto(),
-            WishlistItemPriority.Low.ToDto(),
-            WishlistItemPriority.Medium.ToDto(),
-            WishlistItemPriority.High.ToDto(),
-            WishlistItemPriority.VeryHigh.ToDto()
-        ];
-
     public async Task Open(WishlistItemDto wishlistItemDto)
     {
         _wishlistItem = wishlistItemDto;
@@ -40,7 +31,7 @@ public partial class ItemEditModalComponent
         _description = _wishlistItem?.Description ?? "";
         _note = _wishlistItem?.Note ?? "";
         _price = _wishlistItem?.Price ?? "";
-        _priority = _wishlistItem?.Priority ?? _priorities[0];
+        _priority = _wishlistItem?.Priority ?? Constants.WishlistItemPriorities[0];
         StateHasChanged();
 
         await _modal.Open();

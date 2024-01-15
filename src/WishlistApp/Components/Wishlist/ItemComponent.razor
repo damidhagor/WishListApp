@@ -40,7 +40,7 @@
                 @if (DisplayOwnerControls)
                 {
                     <div class="me-auto">
-                        <DropdownComponent T="WishlistItemPriorityDto" Items="_priorities" SelectedItem="Item.Priority" SelectedItemChanged="PriorityChanged">
+                        <DropdownComponent T="WishlistItemPriorityDto" Items="Constants.WishlistItemPriorities" SelectedItem="Item.Priority" SelectedItemChanged="PriorityChanged">
                             <ItemTemplate>
                                 @context?.Name
                             </ItemTemplate>
