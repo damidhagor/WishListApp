@@ -4,9 +4,9 @@ public interface IWishlistShareRepository
 {
     Task<WishlistShareDto?> AddWishlistShare(int wishlistId, string name, CancellationToken cancellationToken);
 
-    Task<bool> DeleteWishlistShare(int wishlistShareId, CancellationToken cancellationToken);
+    Task<bool> DeleteWishlistShare(int shareId, CancellationToken cancellationToken);
 
     Task<WishlistShareDto?> GetWishlistShareByAccessKey(string accessKey, CancellationToken cancellationToken);
 
-    Task<WishlistShareDto?> GetWishlistShareById(int id, CancellationToken cancellationToken);
+    Task<WishlistShareDto?> GetWishlistShareById(int shareId, CancellationToken cancellationToken);
 }

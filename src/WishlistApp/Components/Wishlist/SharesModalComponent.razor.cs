@@ -6,7 +6,7 @@ namespace WishlistApp.Components.Wishlist;
 public partial class SharesModalComponent : IRecipient<WishlistUpdated>
 {
     [Inject]
-    private IMessenger Messenger { get; set; } = default!;
+    private IMessenger _messenger { get; set; } = default!;
 
     [CascadingParameter]
     public WishlistViewModel ViewModel { get; set; } = default!;
@@ -20,7 +20,7 @@ public partial class SharesModalComponent : IRecipient<WishlistUpdated>
 
     public void Receive(WishlistUpdated message) => StateHasChanged();
 
-    protected override void OnInitialized() => Messenger.RegisterAll(this);
+    protected override void OnInitialized() => _messenger.RegisterAll(this);
 
     private async Task AddNewWishlistShare()
     {

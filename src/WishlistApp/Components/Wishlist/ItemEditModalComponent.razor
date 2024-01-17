@@ -3,11 +3,11 @@
 
 <ModalComponent @ref="_modal" Title="Bearbeiten">
     <Body>
-        @if (_wishlistItem is not null)
+        @if (_item is not null)
         {
             <div class="d-flex flex-column gap-y-2">
                 <h5>
-                    <a href="@_wishlistItem.Url" target="_blank">
+                    <a href="@_item.Url" target="_blank">
                         Produktseite öffnen
                         <i class="bi bi-box-arrow-up-right ms-2" />
                     </a>

@@ -7,10 +7,10 @@ namespace WishlistApp.Components.Wishlist;
 public partial class ShareComponent
 {
     [Inject]
-    private IJSRuntime JSRuntime { get; set; } = default!;
+    private IJSRuntime _jsRuntime { get; set; } = default!;
 
     [Inject]
-    private IAccessKeyGenerator AccessKeyGenerator { get; set; } = default!;
+    private IAccessKeyGenerator _accessKeyGenerator { get; set; } = default!;
 
     [CascadingParameter]
     public WishlistShareDto Share { get; set; } = default!;
@@ -18,13 +18,13 @@ public partial class ShareComponent
     [CascadingParameter]
     public WishlistViewModel ViewModel { get; set; } = default!;
 
-    private string Url => AccessKeyGenerator.GenerateWishlistShareUrl(Share.AccessKey);
+    private string Url => _accessKeyGenerator.GenerateWishlistShareUrl(Share.AccessKey);
 
-    private async Task CopyShareUrlToClipboard() => await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", Url);
+    private async Task CopyShareUrlToClipboard() => await _jsRuntime.InvokeVoidAsync("navigator.clipboard.writeText", Url);
 
     private async Task DeleteShare()
     {
-        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", $"Möchten Sie die Freigabe \"{Share.Name}\" löschen?");
+        bool confirmed = await _jsRuntime.InvokeAsync<bool>("confirm", $"Möchten Sie die Freigabe \"{Share.Name}\" löschen?");
         if (confirmed)
         {
             await ViewModel.DeleteWishlistShare(Share, default);

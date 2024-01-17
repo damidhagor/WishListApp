@@ -6,10 +6,10 @@ namespace WishlistApp.Components.Wishlist;
 public partial class WishlistComponent : IRecipient<WishlistUpdated>
 {
     [Inject]
-    private IJSRuntime JSRuntime { get; set; } = default!;
+    private IJSRuntime _jsRuntime { get; set; } = default!;
 
     [Inject]
-    private IMessenger Messenger { get; set; } = default!;
+    private IMessenger _messenger { get; set; } = default!;
 
     [Parameter]
     public int? WishlistId { get; set; }
@@ -30,7 +30,7 @@ public partial class WishlistComponent : IRecipient<WishlistUpdated>
 
     protected override void OnInitialized()
     {
-        Messenger.RegisterAll(this);
+        _messenger.RegisterAll(this);
     }
 
     private async Task RenameWishlist(string name) => await ViewModel.RenameWishlist(name, default);
@@ -39,7 +39,7 @@ public partial class WishlistComponent : IRecipient<WishlistUpdated>
 
     private async Task DeleteBoughtWishlistItems()
     {
-        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Möchten Sie alle gekauften Einträge von der Wunschliste entfernen?");
+        bool confirmed = await _jsRuntime.InvokeAsync<bool>("confirm", "Möchten Sie alle gekauften Einträge von der Wunschliste entfernen?");
         if (confirmed)
         {
             await ViewModel.DeleteBoughtWishlistItems(default);
@@ -54,14 +54,14 @@ public partial class WishlistComponent : IRecipient<WishlistUpdated>
         }
 
         var filteredItems = ViewModel.HideBoughtItems
-            ? ViewModel.Wishlist.Items.Where(i => i.BoughtByWishlistShareId is null)
+            ? ViewModel.Wishlist.Items.Where(i => i.BuyerShareId is null)
             : ViewModel.Wishlist.Items;
 
         filteredItems = ViewModel.HideBuyInformation
             ? filteredItems.OrderByDescending(i => i.Priority.Priority) // Don't order by buy-information if owner is viewing
-            : filteredItems.OrderBy(i => i.BoughtByWishlistShareId is null
+            : filteredItems.OrderBy(i => i.BuyerShareId is null
                             ? 0 // 1st: Unbought items
-                            : i.BoughtByWishlistShareId is not null && i.BoughtByWishlistShareId == ViewModel.LoggedInShare?.Id
+                            : i.BuyerShareId is not null && i.BuyerShareId == ViewModel.LoggedInShare?.Id
                                 ? 1 // 2nd: Items bought by currently viewing share
                                 : 2) // 3rd: Items bought by other shares
             .ThenByDescending(i => i.Priority.Priority);

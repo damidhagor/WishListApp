@@ -5,6 +5,24 @@ namespace WishlistApp.Components.Pages;
 
 public partial class WishlistPage : IRecipient<WishlistUpdated>
 {
+    [Inject]
+    private IUserService _userService { get; set; } = default!;
+
+    [Inject]
+    private IWishlistRepository _wishlistRepository { get; set; } = default!;
+
+    [Inject]
+    private IWishlistItemRepository _itemRepository { get; set; } = default!;
+
+    [Inject]
+    private IWishlistShareRepository _shareRepository { get; set; } = default!;
+
+    [Inject]
+    private NavigationManager _navigationManager { get; set; } = default!;
+
+    [Inject]
+    private IMessenger _messenger { get; set; } = default!;
+
     [Parameter]
     [SupplyParameterFromQuery(Name = "id")]
     public int? WishlistId { get; set; }
@@ -12,36 +30,18 @@ public partial class WishlistPage : IRecipient<WishlistUpdated>
     [Parameter]
     public string AccessKey { get; set; } = "";
 
-    [Inject]
-    private IUserService UserService { get; set; } = default!;
-
-    [Inject]
-    private IWishlistRepository WishlistRepository { get; set; } = default!;
-
-    [Inject]
-    private IWishlistItemRepository ItemRepository { get; set; } = default!;
-
-    [Inject]
-    private IWishlistShareRepository ShareRepository { get; set; } = default!;
-
-    [Inject]
-    private NavigationManager NavigationManager { get; set; } = default!;
-
-    [Inject]
-    private IMessenger Messenger { get; set; } = default!;
-
     private WishlistViewModel? _viewModel;
 
 
     protected override async Task OnInitializedAsync()
     {
-        Messenger.RegisterAll(this);
+        _messenger.RegisterAll(this);
 
         var share = !string.IsNullOrWhiteSpace(AccessKey)
-            ? await ShareRepository.GetWishlistShareByAccessKey(AccessKey, default)
+            ? await _shareRepository.GetWishlistShareByAccessKey(AccessKey, default)
             : null;
 
-        var user = await UserService.GetLoggedInWishlistUser();
+        var user = await _userService.GetLoggedInWishlistUser();
 
         await LoadWishlistAndValidateAccess(user, share, default);
     }
@@ -51,12 +51,12 @@ public partial class WishlistPage : IRecipient<WishlistUpdated>
         var wishlistId = share?.WishlistId ?? WishlistId;
 
         var wishlist = wishlistId is not null
-            ? await WishlistRepository.GetWishlist(wishlistId.Value, cancellationToken)
+            ? await _wishlistRepository.GetWishlist(wishlistId.Value, cancellationToken)
             : null;
 
         if (wishlist is null)
         {
-            NavigationManager.NavigateTo("/not-found");
+            _navigationManager.NavigateTo("/not-found");
             return;
         }
 
@@ -68,11 +68,11 @@ public partial class WishlistPage : IRecipient<WishlistUpdated>
 
         if (!validOwner && !validShare)
         {
-            NavigationManager.NavigateTo("/");
+            _navigationManager.NavigateTo("/");
             return;
         }
 
-        _viewModel = new WishlistViewModel(WishlistRepository, ItemRepository, ShareRepository, NavigationManager, Messenger, wishlist, user, share);
+        _viewModel = new WishlistViewModel(_wishlistRepository, _itemRepository, _shareRepository, _navigationManager, _messenger, wishlist, user, share);
     }
 
     public void Receive(WishlistUpdated message) => StateHasChanged();

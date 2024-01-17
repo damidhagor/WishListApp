@@ -7,7 +7,7 @@
 <div class="border border-secondary"></div>
 
 <div>
-    @if (_lists is null)
+    @if (_wishlists is null)
     {
         <div>
             <div class="spinner-border spinner-border-sm text-primary ms-1" role="status">
@@ -19,27 +19,27 @@
     else
     {
         <div class="mt-4 mb-4">
-            @foreach (var list in _lists)
+            @foreach (var wishlist in _wishlists)
             {
                 <div class="d-flex flex-row m-2 align-items-center p-2 rounded-2 border border-secondary border-1" style="position: relative">
                     <div class="flex-column">
                         <h4 style="z-index: 100; position: relative">
-                            <TextEditToggleComponent Value="@list.Name" OnValueAccepted="@((name) => RenameWishlist(@list.Id, name))">
-                                @list.Name
+                            <TextEditToggleComponent Value="@wishlist.Name" OnValueAccepted="@((name) => RenameWishlist(wishlist.Id, name))">
+                                @wishlist.Name
                             </TextEditToggleComponent>
                         </h4>
 
                         <h5>
-                            <i class="bi bi-person-fill" /> @list.Shares.Where(s => !s.IsDeleted).Count()
-                            <i class="bi bi-hash" /> @list.Items.Length
+                            <i class="bi bi-person-fill" /> @wishlist.Shares.Where(s => !s.IsDeleted).Count()
+                            <i class="bi bi-hash" /> @wishlist.Items.Length
                         </h5>
                     </div>
 
-                    <button type="button" class="btn btn-outline-danger ms-auto" style="z-index: 100" @onclick="@(async () => await DeleteWishlist(list.Id))">
+                    <button type="button" class="btn btn-outline-danger ms-auto" style="z-index: 100" @onclick="@(async () => await DeleteWishlist(wishlist.Id))">
                         <i class="bi bi-trash3" /> Löschen
                     </button>
 
-                    <a href="editwishlist?id=@list.Id" class="stretched-link"></a>
+                    <a href="editwishlist?id=@wishlist.Id" class="stretched-link"></a>
                 </div>
             }
         </div>

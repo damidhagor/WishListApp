@@ -20,15 +20,15 @@ internal sealed class WishlistRepository(WishlistDbContext wishlistDbContext) : 
         return wishlist.ToDto();
     }
 
-    public async Task<WishlistDto?> RenameWishlist(int id, string name, CancellationToken cancellationToken)
+    public async Task<WishlistDto?> RenameWishlist(int wishlistId, string name, CancellationToken cancellationToken)
     {
-        Guard.IsGreaterThan(id, -1, nameof(id));
+        Guard.IsGreaterThan(wishlistId, -1, nameof(wishlistId));
         Guard.IsNotNullOrWhiteSpace(name, nameof(name));
 
         var wishlist = await _context.Wishlists
             .Include(w => w.Items)
             .Include(w => w.Shares)
-            .FirstOrDefaultAsync(w => w.Id == id, cancellationToken);
+            .FirstOrDefaultAsync(w => w.Id == wishlistId, cancellationToken);
 
         if (wishlist is not null)
         {
@@ -40,14 +40,14 @@ internal sealed class WishlistRepository(WishlistDbContext wishlistDbContext) : 
         return null;
     }
 
-    public async Task<WishlistDto?> GetWishlist(int id, CancellationToken cancellationToken)
+    public async Task<WishlistDto?> GetWishlist(int wishlistId, CancellationToken cancellationToken)
     {
-        Guard.IsGreaterThan(id, -1, nameof(id));
+        Guard.IsGreaterThan(wishlistId, -1, nameof(wishlistId));
 
         var wishlist = await _context.Wishlists
             .Include(w => w.Items)
             .Include(w => w.Shares)
-            .FirstOrDefaultAsync(w => w.Id == id, cancellationToken);
+            .FirstOrDefaultAsync(w => w.Id == wishlistId, cancellationToken);
 
         return wishlist?.ToDto();
     }
@@ -63,11 +63,11 @@ internal sealed class WishlistRepository(WishlistDbContext wishlistDbContext) : 
         return wishlists.ToDtos().ToList();
     }
 
-    public async Task<bool> DeleteWishlist(int id, CancellationToken cancellationToken)
+    public async Task<bool> DeleteWishlist(int wishlistId, CancellationToken cancellationToken)
     {
-        Guard.IsGreaterThan(id, -1, nameof(id));
+        Guard.IsGreaterThan(wishlistId, -1, nameof(wishlistId));
 
-        var wishlist = await _context.Wishlists.FirstOrDefaultAsync(w => w.Id == id, cancellationToken);
+        var wishlist = await _context.Wishlists.FirstOrDefaultAsync(w => w.Id == wishlistId, cancellationToken);
 
         if (wishlist is not null)
         {

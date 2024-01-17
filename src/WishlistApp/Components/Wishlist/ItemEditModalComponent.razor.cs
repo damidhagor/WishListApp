@@ -6,14 +6,14 @@ namespace WishlistApp.Components.Wishlist;
 
 public partial class ItemEditModalComponent
 {
+    [Inject]
+    private IProductCrawlerService _productCrawlerService { get; set; } = default!;
+
     [CascadingParameter]
     public WishlistViewModel ViewModel { get; set; } = default!;
 
-    [Inject]
-    private IProductCrawlerService ProductCrawlerService { get; set; } = default!;
-
     private ModalComponent _modal = default!;
-    private WishlistItemDto? _wishlistItem;
+    private WishlistItemDto? _item;
 
     private string _name = "";
     private string _description = "";
@@ -23,14 +23,14 @@ public partial class ItemEditModalComponent
 
     private bool _isLoading = false;
 
-    public async Task Open(WishlistItemDto wishlistItemDto)
+    public async Task Open(WishlistItemDto item)
     {
-        _wishlistItem = wishlistItemDto;
-        _name = _wishlistItem?.Name ?? "";
-        _description = _wishlistItem?.Description ?? "";
-        _note = _wishlistItem?.Note ?? "";
-        _price = _wishlistItem?.Price ?? "";
-        _priority = _wishlistItem?.Priority ?? Constants.WishlistItemPriorities[0];
+        _item = item;
+        _name = _item?.Name ?? "";
+        _description = _item?.Description ?? "";
+        _note = _item?.Note ?? "";
+        _price = _item?.Price ?? "";
+        _priority = _item?.Priority ?? Constants.WishlistItemPriorities[0];
         StateHasChanged();
 
         await _modal.Open();
@@ -38,7 +38,7 @@ public partial class ItemEditModalComponent
 
     private async Task LoadCrawledProductInformation()
     {
-        if (_wishlistItem is null)
+        if (_item is null)
         {
             return;
         }
@@ -47,7 +47,7 @@ public partial class ItemEditModalComponent
         {
             _isLoading = true;
 
-            var info = await ProductCrawlerService.CrawlProduct(new Uri(_wishlistItem.Url), default);
+            var info = await _productCrawlerService.CrawlProduct(new Uri(_item.Url), default);
             await Task.Delay(5_000);
             _name = string.IsNullOrWhiteSpace(info.Title) ? _name : info.Title;
             _description = string.IsNullOrWhiteSpace(info.Description) ? _description : info.Description;
@@ -63,12 +63,12 @@ public partial class ItemEditModalComponent
 
     private async Task SaveWishlistItem()
     {
-        if (_wishlistItem is null)
+        if (_item is null)
         {
             return;
         }
 
-        var wishlistItem = _wishlistItem with
+        var updatedItem = _item with
         {
             Name = _name,
             Description = _description,
@@ -77,6 +77,6 @@ public partial class ItemEditModalComponent
             Priority = _priority
         };
 
-        await ViewModel.UpdateWishlistItem(wishlistItem, default);
+        await ViewModel.UpdateWishlistItem(updatedItem, default);
     }
 }

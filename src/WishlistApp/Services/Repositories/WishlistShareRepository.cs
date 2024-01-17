@@ -24,7 +24,7 @@ internal sealed class WishlistShareRepository(WishlistDbContext wishlistDbContex
         }
 
         var accessKey = _accessKeyGenerator.GenerateAccessKey(16);
-        var newShare = new WishlistShare
+        var share = new WishlistShare
         {
             WishlistId = wishlistId,
             Wishlist = wishlist,
@@ -32,15 +32,15 @@ internal sealed class WishlistShareRepository(WishlistDbContext wishlistDbContex
             AccessKey = accessKey
         };
 
-        _context.WishlistShares.Add(newShare);
+        _context.WishlistShares.Add(share);
         await _context.SaveChangesAsync(cancellationToken);
 
-        return newShare.ToDto();
+        return share.ToDto();
     }
 
-    public async Task<bool> DeleteWishlistShare(int wishlistShareId, CancellationToken cancellationToken)
+    public async Task<bool> DeleteWishlistShare(int shareId, CancellationToken cancellationToken)
     {
-        var share = _context.WishlistShares.FirstOrDefault(i => i.Id == wishlistShareId);
+        var share = _context.WishlistShares.FirstOrDefault(i => i.Id == shareId);
 
         if (share is not null)
         {
@@ -60,11 +60,11 @@ internal sealed class WishlistShareRepository(WishlistDbContext wishlistDbContex
         return share?.ToDto();
     }
 
-    public async Task<WishlistShareDto?> GetWishlistShareById(int id, CancellationToken cancellationToken)
+    public async Task<WishlistShareDto?> GetWishlistShareById(int shareId, CancellationToken cancellationToken)
     {
-        Guard.IsGreaterThan(id, -1, nameof(id));
+        Guard.IsGreaterThan(shareId, -1, nameof(shareId));
 
-        var share = await _context.WishlistShares.FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
+        var share = await _context.WishlistShares.FirstOrDefaultAsync(s => s.Id == shareId, cancellationToken);
         return share?.ToDto();
     }
 }

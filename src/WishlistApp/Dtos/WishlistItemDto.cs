@@ -9,4 +9,4 @@ public sealed record WishlistItemDto(
     string? Note,
     string? Price,
     WishlistItemPriorityDto Priority,
-    int? BoughtByWishlistShareId);
+    int? BuyerShareId);

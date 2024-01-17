@@ -1,6 +1,6 @@
 ﻿@inherits ComponentBase
 
-@if (!IsInEditMode)
+@if (!_isInEditMode)
 {
     <span>
         @ChildContent
@@ -13,8 +13,8 @@
 else
 {
     <span>
-        <input type="text" @ref="Input" @bind="@EditedValue" @bind:event="oninput" @onkeydown="OnKeyDown" disabled="@IsAcceptingValue">
-        @if (!IsAcceptingValue)
+        <input type="text" @ref="_input" @bind="@_editedValue" @bind:event="oninput" @onkeydown="OnKeyDown" disabled="@_isAcceptingValue">
+        @if (!_isAcceptingValue)
         {
             <button type="button" class="btn text-primary" @onclick="CancelEdit">
                 <i class="bi bi-x-lg" />

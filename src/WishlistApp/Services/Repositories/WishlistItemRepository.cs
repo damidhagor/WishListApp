@@ -21,34 +21,34 @@ internal sealed class WishlistItemRepository(WishlistDbContext wishlistDbContext
 
         if (wishlist is not null)
         {
-            var newItem = new WishlistItem
+            var item = new WishlistItem
             {
                 WishlistId = wishlistId,
                 Wishlist = wishlist,
                 Url = url,
             };
 
-            _context.WishlistItems.Add(newItem);
+            _context.WishlistItems.Add(item);
             await _context.SaveChangesAsync(cancellationToken);
-            return newItem.ToDto();
+            return item.ToDto();
         }
 
         return null;
     }
 
-    public async Task<WishlistItemDto?> UpdateWishlistItem(WishlistItemDto wishlistItemDto, CancellationToken cancellationToken)
+    public async Task<WishlistItemDto?> UpdateWishlistItem(WishlistItemDto updatedItem, CancellationToken cancellationToken)
     {
-        Guard.IsNotNull(wishlistItemDto, nameof(wishlistItemDto));
+        Guard.IsNotNull(updatedItem, nameof(updatedItem));
 
-        var item = await _context.WishlistItems.FirstOrDefaultAsync(i => i.Id == wishlistItemDto.Id, cancellationToken);
+        var item = await _context.WishlistItems.FirstOrDefaultAsync(i => i.Id == updatedItem.Id, cancellationToken);
 
         if (item is not null)
         {
-            item.Name = wishlistItemDto.Name;
-            item.Description = wishlistItemDto.Description;
-            item.Note = wishlistItemDto.Note;
-            item.Price = wishlistItemDto.Price;
-            item.Priority = wishlistItemDto.Priority.Priority;
+            item.Name = updatedItem.Name;
+            item.Description = updatedItem.Description;
+            item.Note = updatedItem.Note;
+            item.Price = updatedItem.Price;
+            item.Priority = updatedItem.Priority.Priority;
 
             await _context.SaveChangesAsync(cancellationToken);
             return item.ToDto();
@@ -57,11 +57,11 @@ internal sealed class WishlistItemRepository(WishlistDbContext wishlistDbContext
         return null;
     }
 
-    public async Task<bool> DeleteWishlistItem(int wishlistItemId, CancellationToken cancellationToken)
+    public async Task<bool> DeleteWishlistItem(int itemid, CancellationToken cancellationToken)
     {
-        Guard.IsGreaterThan(wishlistItemId, -1, nameof(wishlistItemId));
+        Guard.IsGreaterThan(itemid, -1, nameof(itemid));
 
-        var item = await _context.WishlistItems.FirstOrDefaultAsync(i => i.Id == wishlistItemId, cancellationToken);
+        var item = await _context.WishlistItems.FirstOrDefaultAsync(i => i.Id == itemid, cancellationToken);
 
         if (item is not null)
         {
@@ -85,16 +85,16 @@ internal sealed class WishlistItemRepository(WishlistDbContext wishlistDbContext
         await _context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<WishlistItemDto?> BuyWishlistItem(int wishlistItemId, int wishlistShareId, CancellationToken cancellationToken)
+    public async Task<WishlistItemDto?> BuyWishlistItem(int itemId, int shareId, CancellationToken cancellationToken)
     {
-        Guard.IsGreaterThan(wishlistItemId, -1, nameof(wishlistItemId));
-        Guard.IsGreaterThan(wishlistShareId, -1, nameof(wishlistShareId));
+        Guard.IsGreaterThan(itemId, -1, nameof(itemId));
+        Guard.IsGreaterThan(shareId, -1, nameof(shareId));
 
-        var item = await _context.WishlistItems.FirstOrDefaultAsync(i => i.Id == wishlistItemId, cancellationToken);
+        var item = await _context.WishlistItems.FirstOrDefaultAsync(i => i.Id == itemId, cancellationToken);
 
         if (item is not null)
         {
-            item.BoughtByWishlistShareId = wishlistShareId;
+            item.BoughtByWishlistShareId = shareId;
             await _context.SaveChangesAsync(cancellationToken);
             return item.ToDto();
         }
@@ -102,11 +102,11 @@ internal sealed class WishlistItemRepository(WishlistDbContext wishlistDbContext
         return null;
     }
 
-    public async Task<WishlistItemDto?> UnbuyWishlistItem(int wishlistItemId, CancellationToken cancellationToken)
+    public async Task<WishlistItemDto?> UnbuyWishlistItem(int itemId, CancellationToken cancellationToken)
     {
-        Guard.IsGreaterThan(wishlistItemId, -1, nameof(wishlistItemId));
+        Guard.IsGreaterThan(itemId, -1, nameof(itemId));
 
-        var item = await _context.WishlistItems.FirstOrDefaultAsync(i => i.Id == wishlistItemId, cancellationToken);
+        var item = await _context.WishlistItems.FirstOrDefaultAsync(i => i.Id == itemId, cancellationToken);
 
         if (item is not null)
         {
@@ -118,11 +118,11 @@ internal sealed class WishlistItemRepository(WishlistDbContext wishlistDbContext
         return null;
     }
 
-    public async Task<WishlistItemDto?> SetWishlistItemPriority(int wishlistItemId, WishlistItemPriorityDto priority, CancellationToken cancellationToken)
+    public async Task<WishlistItemDto?> SetWishlistItemPriority(int itemId, WishlistItemPriorityDto priority, CancellationToken cancellationToken)
     {
-        Guard.IsGreaterThan(wishlistItemId, -1, nameof(wishlistItemId));
+        Guard.IsGreaterThan(itemId, -1, nameof(itemId));
 
-        var item = await _context.WishlistItems.FirstOrDefaultAsync(i => i.Id == wishlistItemId, cancellationToken);
+        var item = await _context.WishlistItems.FirstOrDefaultAsync(i => i.Id == itemId, cancellationToken);
 
         if (item is not null)
         {

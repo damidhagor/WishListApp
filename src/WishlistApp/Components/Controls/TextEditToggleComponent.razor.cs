@@ -5,15 +5,15 @@ namespace WishlistApp.Components.Controls;
 
 public partial class TextEditToggleComponent
 {
-    private string EditedValue { get; set; }
+    private string _editedValue;
 
-    private bool IsInEditMode { get; set; }
+    private bool _isInEditMode;
 
-    private bool IsAcceptingValue { get; set; }
+    private bool _isAcceptingValue;
 
-    private bool ShouldFocusInputAfterRender { get; set; }
+    private bool _shouldFocusInputAfterRender;
 
-    private ElementReference Input { get; set; }
+    private ElementReference _input;
 
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
@@ -26,35 +26,35 @@ public partial class TextEditToggleComponent
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (ShouldFocusInputAfterRender)
+        if (_shouldFocusInputAfterRender)
         {
-            await Input.FocusAsync();
-            ShouldFocusInputAfterRender = false;
+            await _input.FocusAsync();
+            _shouldFocusInputAfterRender = false;
         }
     }
 
     private void StartEdit()
     {
-        EditedValue = Value;
-        IsInEditMode = true;
-        ShouldFocusInputAfterRender = true;
+        _editedValue = Value;
+        _isInEditMode = true;
+        _shouldFocusInputAfterRender = true;
     }
 
     private void CancelEdit()
     {
-        IsInEditMode = false;
+        _isInEditMode = false;
     }
 
     private async Task OnKeyDown(KeyboardEventArgs e)
     {
         if (e.Code is "Enter" or "NumpadEnter")
         {
-            IsAcceptingValue = true;
+            _isAcceptingValue = true;
             bool acceptedSuccessfully = true;
 
             try
             {
-                await OnValueAccepted.InvokeAsync(EditedValue);
+                await OnValueAccepted.InvokeAsync(_editedValue);
             }
             catch
             {
@@ -63,10 +63,10 @@ public partial class TextEditToggleComponent
 
             if (acceptedSuccessfully)
             {
-                IsInEditMode = false;
+                _isInEditMode = false;
             }
 
-            IsAcceptingValue = false;
+            _isAcceptingValue = false;
         }
         else if (e.Code is "Escape")
         {
