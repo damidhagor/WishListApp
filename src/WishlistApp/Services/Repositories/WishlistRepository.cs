@@ -72,8 +72,8 @@ internal sealed class WishlistRepository(WishlistDbContext wishlistDbContext) : 
         if (wishlist is not null)
         {
             _context.Wishlists.Remove(wishlist);
-            _context.WishlistItems.RemoveRange(wishlist.Items);
-            _context.WishlistShares.RemoveRange(wishlist.Shares);
+            _context.Items.RemoveRange(wishlist.Items);
+            _context.Shares.RemoveRange(wishlist.Shares);
 
             await _context.SaveChangesAsync(cancellationToken);
             return true;

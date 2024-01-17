@@ -8,9 +8,9 @@ public sealed class WishlistDbContext(DbContextOptions options) : IdentityDbCont
 {
     public DbSet<Wishlist> Wishlists { get; set; }
 
-    public DbSet<WishlistItem> WishlistItems { get; set; }
+    public DbSet<WishlistItem> Items { get; set; }
 
-    public DbSet<WishlistShare> WishlistShares { get; set; }
+    public DbSet<WishlistShare> Shares { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -34,9 +34,9 @@ public sealed class WishlistDbContext(DbContextOptions options) : IdentityDbCont
             .WithMany(e => e.Items)
             .HasForeignKey(e => e.WishlistId);
         builder.Entity<WishlistItem>()
-            .HasOne(e => e.BoughtByWishlistShare)
+            .HasOne(e => e.BuyerShare)
             .WithMany(e => e.BoughtItems)
-            .HasForeignKey(e => e.BoughtByWishlistShareId);
+            .HasForeignKey(e => e.BuyerShareId);
 
         builder.Entity<WishlistShare>()
             .HasKey(e => e.Id);

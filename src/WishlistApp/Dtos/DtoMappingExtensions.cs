@@ -23,7 +23,7 @@ public static class DtoMappingExtensions
             item.Note,
             item.Price,
             item.Priority.ToDto(),
-            item.BoughtByWishlistShareId);
+            item.BuyerShareId);
 
     public static IEnumerable<WishlistItemDto> ToDtos(this IEnumerable<Data.Models.WishlistItem> items)
         => items.Select(i => i.ToDto());
