@@ -3,7 +3,7 @@ using WishlistApp.Services;
 
 namespace WishlistApp.Components.Pages;
 
-public partial class WishlistPage
+public partial class WishlistPage : IRecipient<WishlistUpdated>
 {
     [Parameter]
     [SupplyParameterFromQuery(Name = "id")]
@@ -16,36 +16,42 @@ public partial class WishlistPage
     private IUserService UserService { get; set; } = default!;
 
     [Inject]
-    private IWishlistRepository Repository { get; set; } = default!;
+    private IWishlistRepository WishlistRepository { get; set; } = default!;
+
+    [Inject]
+    private IWishlistItemRepository ItemRepository { get; set; } = default!;
+
+    [Inject]
+    private IWishlistShareRepository ShareRepository { get; set; } = default!;
 
     [Inject]
     private NavigationManager NavigationManager { get; set; } = default!;
 
-    private WishlistShareDto? _wishlistShare;
+    [Inject]
+    private IMessenger Messenger { get; set; } = default!;
 
-    private WishlistUserDto? _user;
-
-    private WishlistDto? _wishlist;
+    private WishlistViewModel? _viewModel;
 
 
     protected override async Task OnInitializedAsync()
     {
-        if (!string.IsNullOrWhiteSpace(AccessKey))
-        {
-            _wishlistShare = await Repository.GetWishlistShareByAccessKey(AccessKey, default);
-        }
+        Messenger.RegisterAll(this);
 
-        _user = await UserService.GetLoggedInWishlistUser();
+        var share = !string.IsNullOrWhiteSpace(AccessKey)
+            ? await ShareRepository.GetWishlistShareByAccessKey(AccessKey, default)
+            : null;
 
-        await LoadWishlistAndValidateAccess(default);
+        var user = await UserService.GetLoggedInWishlistUser();
+
+        await LoadWishlistAndValidateAccess(user, share, default);
     }
 
-    private async Task LoadWishlistAndValidateAccess(CancellationToken cancellationToken)
+    private async Task LoadWishlistAndValidateAccess(WishlistUserDto? user, WishlistShareDto? share, CancellationToken cancellationToken)
     {
-        var wishlistId = _wishlistShare?.WishlistId ?? WishlistId;
+        var wishlistId = share?.WishlistId ?? WishlistId;
 
         var wishlist = wishlistId is not null
-            ? await Repository.GetWishlist(wishlistId.Value, cancellationToken)
+            ? await WishlistRepository.GetWishlist(wishlistId.Value, cancellationToken)
             : null;
 
         if (wishlist is null)
@@ -54,11 +60,11 @@ public partial class WishlistPage
             return;
         }
 
-        var validOwner = _user is not null
-            && wishlist.OwnerIdentifier == _user.Identifier;
+        var validOwner = user is not null
+            && wishlist.OwnerIdentifier == user.Identifier;
 
-        var validShare = _wishlistShare is not null
-            && wishlist.Id == _wishlistShare.WishlistId;
+        var validShare = share is not null
+            && wishlist.Id == share.WishlistId;
 
         if (!validOwner && !validShare)
         {
@@ -66,6 +72,8 @@ public partial class WishlistPage
             return;
         }
 
-        _wishlist = wishlist;
+        _viewModel = new WishlistViewModel(WishlistRepository, ItemRepository, ShareRepository, NavigationManager, Messenger, wishlist, user, share);
     }
+
+    public void Receive(WishlistUpdated message) => StateHasChanged();
 }

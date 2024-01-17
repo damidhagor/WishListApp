@@ -1,17 +1,16 @@
 using Microsoft.AspNetCore.Components;
 using WishlistApp.Components.Controls;
-using WishlistApp.Data.Models;
 using WishlistApp.ProductCrawling.Services;
 
 namespace WishlistApp.Components.Wishlist;
 
 public partial class ItemEditModalComponent
 {
+    [CascadingParameter]
+    public WishlistViewModel ViewModel { get; set; } = default!;
+
     [Inject]
     private IProductCrawlerService ProductCrawlerService { get; set; } = default!;
-
-    [Parameter]
-    public EventCallback<WishlistItemDto> ItemUpdated { get; set; }
 
     private ModalComponent _modal = default!;
     private WishlistItemDto? _wishlistItem;
@@ -20,7 +19,7 @@ public partial class ItemEditModalComponent
     private string _description = "";
     private string _note = "";
     private string _price = "";
-    private WishlistItemPriorityDto _priority = WishlistItemPriority.Unknown.ToDto();
+    private WishlistItemPriorityDto _priority = Constants.WishlistItemPriorities[0];
 
     private bool _isLoading = false;
 
@@ -69,13 +68,15 @@ public partial class ItemEditModalComponent
             return;
         }
 
-        await ItemUpdated.InvokeAsync(_wishlistItem with
+        var wishlistItem = _wishlistItem with
         {
             Name = _name,
             Description = _description,
             Note = _note,
             Price = _price,
             Priority = _priority
-        });
+        };
+
+        await ViewModel.UpdateWishlistItem(wishlistItem, default);
     }
 }

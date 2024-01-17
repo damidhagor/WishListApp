@@ -23,8 +23,13 @@ builder.Services.AddDbContext<WishlistDbContext>((serviceProvider, options) =>
 });
 
 builder.Services.AddScoped<IWishlistRepository, WishlistRepository>();
+builder.Services.AddScoped<IWishlistItemRepository, WishlistItemRepository>();
+builder.Services.AddScoped<IWishlistShareRepository, WishlistShareRepository>();
+
 builder.Services.AddTransient<IAccessKeyGenerator, AccessKeyGenerator>();
 builder.Services.AddScoped<IUserService, UserService>();
+
+builder.Services.AddScoped<IMessenger, WeakReferenceMessenger>();
 
 builder.Services.AddProductCrawler();
 

@@ -12,21 +12,22 @@ public partial class ShareComponent
     [Inject]
     private IAccessKeyGenerator AccessKeyGenerator { get; set; } = default!;
 
-    [Parameter, EditorRequired]
-    public WishlistShareDto? Share { get; set; }
+    [CascadingParameter]
+    public WishlistShareDto Share { get; set; } = default!;
 
-    [Parameter]
-    public EventCallback<WishlistShareDto> ShareDeleted { get; set; }
+    [CascadingParameter]
+    public WishlistViewModel ViewModel { get; set; } = default!;
 
-    private string Url => Share is not null ? AccessKeyGenerator.GenerateWishlistShareUrl(Share.AccessKey) : "";
+    private string Url => AccessKeyGenerator.GenerateWishlistShareUrl(Share.AccessKey);
 
-    private async Task CopyShareUrlToClipboard()
+    private async Task CopyShareUrlToClipboard() => await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", Url);
+
+    private async Task DeleteShare()
     {
-        if (Share is null)
+        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", $"Möchten Sie die Freigabe \"{Share.Name}\" löschen?");
+        if (confirmed)
         {
-            return;
+            await ViewModel.DeleteWishlistShare(Share, default);
         }
-
-        await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", Url);
     }
 }

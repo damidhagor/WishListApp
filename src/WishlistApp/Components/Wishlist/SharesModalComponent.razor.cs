@@ -3,16 +3,13 @@ using WishlistApp.Components.Controls;
 
 namespace WishlistApp.Components.Wishlist;
 
-public partial class SharesModalComponent
+public partial class SharesModalComponent : IRecipient<WishlistUpdated>
 {
-    [Parameter, EditorRequired]
-    public WishlistShareDto[] Shares { get; set; } = [];
+    [Inject]
+    private IMessenger Messenger { get; set; } = default!;
 
-    [Parameter]
-    public EventCallback<string> ShareAdded { get; set; }
-
-    [Parameter]
-    public EventCallback<WishlistShareDto> ShareDeleted { get; set; }
+    [CascadingParameter]
+    public WishlistViewModel ViewModel { get; set; } = default!;
 
     private ModalComponent _modal = default!;
     private string _newShareName = "";
@@ -21,24 +18,13 @@ public partial class SharesModalComponent
 
     public async Task Open() => await _modal.Open();
 
+    public void Receive(WishlistUpdated message) => StateHasChanged();
+
+    protected override void OnInitialized() => Messenger.RegisterAll(this);
+
     private async Task AddNewWishlistShare()
     {
-        if (string.IsNullOrWhiteSpace(_newShareName))
-        {
-            return;
-        }
-
-        await ShareAdded.InvokeAsync(_newShareName);
+        await ViewModel.AddWishlistShare(_newShareName, default);
         _newShareName = "";
-    }
-
-    private async Task DeleteWishlistShare(WishlistShareDto? wishlistShare)
-    {
-        if (wishlistShare is null)
-        {
-            return;
-        }
-
-        await ShareDeleted.InvokeAsync(wishlistShare);
     }
 }

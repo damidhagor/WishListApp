@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Components;
-using WishlistApp.Data.Models;
+using Microsoft.JSInterop;
 using WishlistApp.ProductCrawling.Services;
 
 namespace WishlistApp.Components.Wishlist;
@@ -7,38 +7,27 @@ namespace WishlistApp.Components.Wishlist;
 public partial class ItemComponent
 {
     [Inject]
+    private IJSRuntime _jsRuntime { get; set; } = default!;
+
+    [Inject]
     private IProductCrawlerService _productCrawler { get; set; } = default!;
 
-    [Parameter, EditorRequired]
-    public WishlistItemDto? Item { get; set; }
+    [CascadingParameter]
+    public WishlistItemDto Item { get; set; } = default!;
 
-    [Parameter, EditorRequired]
-    public WishlistShareDto? Share { get; set; }
-
-    [Parameter, EditorRequired]
-    public bool DisplayOwnerControls { get; set; }
-
-    [Parameter, EditorRequired]
-    public bool DisplayBuyInformation { get; set; }
-
-    [Parameter]
-    public EventCallback<WishlistItemDto> ItemBought { get; set; }
-
-    [Parameter]
-    public EventCallback<WishlistItemDto> ItemUnbought { get; set; }
-
-    [Parameter]
-    public EventCallback<WishlistItemDto> ItemDeleted { get; set; }
-
-    [Parameter]
-    public EventCallback<WishlistItemDto> ItemUpdated { get; set; }
-
-    [Parameter]
-    public EventCallback<WishlistItemPriorityDto> PriorityChanged { get; set; }
+    [CascadingParameter]
+    public WishlistViewModel ViewModel { get; set; } = default!;
 
     protected bool IsProductInformationLoading { get; set; }
 
     private string? ImageUrl { get; set; }
+
+    private bool _itemCanBeBought => ViewModel.LoggedInShare is not null && Item?.BoughtByWishlistShareId is null;
+
+    private bool _itemIsBoughtByOtherShare => (ViewModel.LoggedInShare is not null && Item?.BoughtByWishlistShareId != ViewModel.LoggedInShare.Id)
+                                           || (ViewModel.LoggedInShare is null && Item?.BoughtByWishlistShareId is not null);
+
+    private bool _itemIsBoughtByLoggedInShare => ViewModel.LoggedInShare is not null && Item?.BoughtByWishlistShareId == ViewModel.LoggedInShare.Id;
 
     private ItemEditModalComponent _itemEditModal = default!;
 
@@ -47,10 +36,7 @@ public partial class ItemComponent
         await LoadItemInformation(default);
     }
 
-    private async Task OpenWishlistItemEditModal(WishlistItemDto wishlistItemDto)
-    {
-        await _itemEditModal.Open(wishlistItemDto);
-    }
+    private async Task OpenWishlistItemEditModal() => await _itemEditModal.Open(Item);
 
     private async Task LoadItemInformation(CancellationToken cancellationToken)
     {
@@ -73,6 +59,21 @@ public partial class ItemComponent
         finally
         {
             IsProductInformationLoading = false;
+        }
+    }
+
+    private async Task BuyItem() => await ViewModel.BuyWishlistItem(Item, default);
+
+    private async Task UnbuyItem() => await ViewModel.UnbuyWishlistItem(Item, default);
+
+    private async Task SetItemPriority(WishlistItemPriorityDto priority) => await ViewModel.SetWishlistItemPriority(Item, priority, default);
+
+    private async Task DeleteItem()
+    {
+        bool confirmed = await _jsRuntime.InvokeAsync<bool>("confirm", "Möchten Sie den Eintrag von der Wunschliste entfernen?");
+        if (confirmed)
+        {
+            await ViewModel.DeleteWishlistItem(Item, default);
         }
     }
 }

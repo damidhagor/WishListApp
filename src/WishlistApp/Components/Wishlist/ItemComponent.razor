@@ -37,10 +37,10 @@
             </div>
 
             <div class="d-flex flex-row gap-2 justify-content-end align-content-baseline border-top border-secondary p-2">
-                @if (DisplayOwnerControls)
+                @if (ViewModel.ViewedByOwner)
                 {
                     <div class="me-auto">
-                        <DropdownComponent T="WishlistItemPriorityDto" Items="Constants.WishlistItemPriorities" SelectedItem="Item.Priority" SelectedItemChanged="PriorityChanged">
+                        <DropdownComponent T="WishlistItemPriorityDto" Items="Constants.WishlistItemPriorities" SelectedItem="Item.Priority" SelectedItemChanged="SetItemPriority">
                             <ItemTemplate>
                                 @context?.Name
                             </ItemTemplate>
@@ -50,11 +50,11 @@
                         </DropdownComponent>
                     </div>
 
-                    <button type="button" class="btn btn-outline-danger" onclick="@(async () => await ItemDeleted.InvokeAsync(Item))">
+                    <button type="button" class="btn btn-outline-danger" @onclick="DeleteItem">
                         <i class="bi bi-trash" /> Löschen
                     </button>
                     
-                    <button type="button" class="btn btn-outline-light" onclick="@(async () => await OpenWishlistItemEditModal(Item))">
+                    <button type="button" class="btn btn-outline-light" @onclick="OpenWishlistItemEditModal">
                         <i class="bi bi-pen" /> Bearbeiten
                     </button>
                 }
@@ -67,16 +67,15 @@
                     </div>
                 }
 
-                @if (DisplayBuyInformation)
+                @if (!ViewModel.HideBuyInformation)
                 {
-                    @if (Share is not null && Item.BoughtByWishlistShareId is null)
+                    @if (_itemCanBeBought)
                     {
-                        <button type="button" class="btn btn-outline-primary" onclick="@(async () => await ItemBought.InvokeAsync(Item))">
+                        <button type="button" class="btn btn-outline-primary" @onclick="BuyItem">
                             <i class="bi bi-bag" /> Als gekauft markieren
                         </button>
                     }
-                    else if ((Share is not null && Item.BoughtByWishlistShareId != Share.Id)
-                    || (Share is null && Item.BoughtByWishlistShareId is not null))
+                    else if (_itemIsBoughtByOtherShare)
                     {
                         <div class="d-flex rounded-2 p-2 text-bg-success">
                             <span class="text-white align-self-center">
@@ -84,9 +83,9 @@
                             </span>
                         </div>
                     }
-                    else if (Share is not null && Item.BoughtByWishlistShareId == Share.Id)
+                    else if (_itemIsBoughtByLoggedInShare)
                     {
-                        <button type="button" class="btn btn-outline-warning" onclick="@(async () => await ItemUnbought.InvokeAsync(Item))">
+                        <button type="button" class="btn btn-outline-warning" @onclick="UnbuyItem">
                             <i class="bi bi-bag" /> Als Ungekauft Markieren
                         </button>
 
@@ -100,6 +99,6 @@
             </div>
         </div>
         
-        <ItemEditModalComponent @ref="_itemEditModal" ItemUpdated="ItemUpdated" />
+        <ItemEditModalComponent @ref="_itemEditModal" />
     </div>
 }

@@ -3,10 +3,10 @@
 @rendermode RenderMode.InteractiveServer
 @attribute [AllowAnonymous]
 
-<PageTitle>@_wishlist?.Name</PageTitle>
+<PageTitle>@_viewModel?.Wishlist?.Name</PageTitle>
 
 <div>
-    @if (_wishlist is null)
+    @if (_viewModel?.Wishlist is null)
     {
         <div>
             <div class="spinner-border spinner-border-sm text-primary ms-1" role="status">
@@ -17,8 +17,8 @@
     }
     else
     {
-        <WishlistComponent Wishlist="@_wishlist"
-                           WishlistShare="@_wishlistShare"
-                           WishlistUser="@_user" />
+        <CascadingValue Value="_viewModel">
+            <WishlistComponent />
+        </CascadingValue>
     }
 </div>
