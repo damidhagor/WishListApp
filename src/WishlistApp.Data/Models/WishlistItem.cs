@@ -22,6 +22,8 @@ public sealed class WishlistItem
     [MaxLength(20)]
     public string? Price { get; set; }
 
+    public int Quantity { get; set; }
+
     [MaxLength(500)]
     public string? Note { get; set; }
 
