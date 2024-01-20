@@ -8,5 +8,6 @@ public sealed record WishlistItemDto(
     string? Description,
     string? Note,
     string? Price,
+    int Quantity,
     WishlistItemPriorityDto Priority,
     int? BuyerShareId);

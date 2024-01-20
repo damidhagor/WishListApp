@@ -22,6 +22,7 @@ public static class DtoMappingExtensions
             item.Description,
             item.Note,
             item.Price,
+            item.Quantity,
             item.Priority.ToDto(),
             item.BuyerShareId);
 

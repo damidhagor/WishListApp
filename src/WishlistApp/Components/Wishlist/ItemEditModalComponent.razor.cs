@@ -19,6 +19,7 @@ public partial class ItemEditModalComponent
     private string _description = "";
     private string _note = "";
     private string _price = "";
+    private int _quantity = 1;
     private WishlistItemPriorityDto _priority = Constants.WishlistItemPriorities[0];
 
     private bool _isLoading = false;
@@ -30,6 +31,7 @@ public partial class ItemEditModalComponent
         _description = _item?.Description ?? "";
         _note = _item?.Note ?? "";
         _price = _item?.Price ?? "";
+        _quantity = _item?.Quantity ?? 1;
         _priority = _item?.Priority ?? Constants.WishlistItemPriorities[0];
         StateHasChanged();
 
@@ -74,6 +76,7 @@ public partial class ItemEditModalComponent
             Description = _description,
             Note = _note,
             Price = _price,
+            Quantity = _quantity,
             Priority = _priority
         };
 

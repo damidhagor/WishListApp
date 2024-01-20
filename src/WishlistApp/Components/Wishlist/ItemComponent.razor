@@ -28,6 +28,10 @@
                 </h5>
 
                 <div class="align-self-baseline ms-auto">
+                    @Item.Quantity Stk.
+                </div>
+
+                <div class="align-self-baseline">
                     @Item.Price
                 </div>
             </div>
@@ -53,7 +57,7 @@
                     <button type="button" class="btn btn-outline-danger" @onclick="DeleteItem">
                         <i class="bi bi-trash" /> Löschen
                     </button>
-                    
+
                     <button type="button" class="btn btn-outline-light" @onclick="OpenWishlistItemEditModal">
                         <i class="bi bi-pen" /> Bearbeiten
                     </button>
@@ -98,7 +102,7 @@
                 }
             </div>
         </div>
-        
+
         <ItemEditModalComponent @ref="_itemEditModal" />
     </div>
 }

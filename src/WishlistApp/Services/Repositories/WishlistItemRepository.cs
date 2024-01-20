@@ -26,6 +26,7 @@ internal sealed class WishlistItemRepository(WishlistDbContext wishlistDbContext
                 WishlistId = wishlistId,
                 Wishlist = wishlist,
                 Url = url,
+                Quantity = 1
             };
 
             _context.Items.Add(item);
@@ -48,6 +49,7 @@ internal sealed class WishlistItemRepository(WishlistDbContext wishlistDbContext
             item.Description = updatedItem.Description;
             item.Note = updatedItem.Note;
             item.Price = updatedItem.Price;
+            item.Quantity = updatedItem.Quantity;
             item.Priority = updatedItem.Priority.Priority;
 
             await _context.SaveChangesAsync(cancellationToken);
