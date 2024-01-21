@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
-namespace WishlistApp.Components.Controls;
+namespace WishlistApp.Components.Controls.Modals;
 
 public partial class ModalComponent
 {

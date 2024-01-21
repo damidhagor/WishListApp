@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Components;
-using WishlistApp.Components.Controls;
+using WishlistApp.Components.Controls.Modals;
 
 namespace WishlistApp.Components.Wishlist;
 

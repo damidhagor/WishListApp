@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Components;
-using WishlistApp.Components.Controls;
+using WishlistApp.Components.Controls.Modals;
 using WishlistApp.ProductCrawling.Services;
 
 namespace WishlistApp.Components.Wishlist;
