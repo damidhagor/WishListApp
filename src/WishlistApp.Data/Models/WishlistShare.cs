@@ -12,7 +12,7 @@ public sealed class WishlistShare
 
     public required string AccessKey { get; init; }
 
-    public List<WishlistItem> BoughtItems { get; set; } = [];
+    public List<WishlistPurchase> Purchases { get; set; } = [];
 
     public bool IsDeleted { get; set; }
 }

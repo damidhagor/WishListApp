@@ -29,9 +29,5 @@ public sealed class WishlistItem
 
     public WishlistItemPriority Priority { get; set; }
 
-    public int? BuyerShareId { get; set; }
-
-    public WishlistShare? BuyerShare { get; set; }
-
-    public bool IsBought => BuyerShareId is not null;
+    public List<WishlistPurchase> Purchases { get; set; } = [];
 }

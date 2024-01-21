@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WishlistApp.Data;
@@ -11,9 +12,11 @@ using WishlistApp.Data;
 namespace WishlistApp.Data.Migrations
 {
     [DbContext(typeof(WishlistDbContext))]
-    partial class WishlistDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240121010536_AddWishlistPurchase")]
+    partial class AddWishlistPurchase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
