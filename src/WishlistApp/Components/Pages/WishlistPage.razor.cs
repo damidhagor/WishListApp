@@ -18,6 +18,9 @@ public partial class WishlistPage : IRecipient<WishlistUpdated>
     private IWishlistShareRepository _shareRepository { get; set; } = default!;
 
     [Inject]
+    private IWishlistPurchaseRepository _purchaseRepository { get; set; } = default!;
+
+    [Inject]
     private NavigationManager _navigationManager { get; set; } = default!;
 
     [Inject]
@@ -72,7 +75,16 @@ public partial class WishlistPage : IRecipient<WishlistUpdated>
             return;
         }
 
-        _viewModel = new WishlistViewModel(_wishlistRepository, _itemRepository, _shareRepository, _navigationManager, _messenger, wishlist, user, share);
+        _viewModel = new WishlistViewModel(
+            _wishlistRepository,
+            _itemRepository,
+            _shareRepository,
+            _purchaseRepository,
+            _navigationManager,
+            _messenger,
+            wishlist,
+            user,
+            share);
     }
 
     public void Receive(WishlistUpdated message) => StateHasChanged();

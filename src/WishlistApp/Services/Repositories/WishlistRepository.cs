@@ -25,10 +25,7 @@ internal sealed class WishlistRepository(WishlistDbContext wishlistDbContext) : 
         Guard.IsGreaterThan(wishlistId, -1, nameof(wishlistId));
         Guard.IsNotNullOrWhiteSpace(name, nameof(name));
 
-        var wishlist = await _context.Wishlists
-            .Include(w => w.Items)
-            .Include(w => w.Shares)
-            .FirstOrDefaultAsync(w => w.Id == wishlistId, cancellationToken);
+        var wishlist = await _context.Wishlists.FirstOrDefaultAsync(w => w.Id == wishlistId, cancellationToken);
 
         if (wishlist is not null)
         {
@@ -44,10 +41,7 @@ internal sealed class WishlistRepository(WishlistDbContext wishlistDbContext) : 
     {
         Guard.IsGreaterThan(wishlistId, -1, nameof(wishlistId));
 
-        var wishlist = await _context.Wishlists
-            .Include(w => w.Items)
-            .Include(w => w.Shares)
-            .FirstOrDefaultAsync(w => w.Id == wishlistId, cancellationToken);
+        var wishlist = await _context.Wishlists.FirstOrDefaultAsync(w => w.Id == wishlistId, cancellationToken);
 
         return wishlist?.ToDto();
     }
@@ -56,8 +50,6 @@ internal sealed class WishlistRepository(WishlistDbContext wishlistDbContext) : 
     {
         var wishlists = await _context.Wishlists
             .Where(w => w.OwnerIdentifier == ownerIdentifier)
-            .Include(w => w.Items)
-            .Include(w => w.Shares)
             .ToArrayAsync(cancellationToken);
 
         return wishlists.ToDtos().ToList();
@@ -72,9 +64,6 @@ internal sealed class WishlistRepository(WishlistDbContext wishlistDbContext) : 
         if (wishlist is not null)
         {
             _context.Wishlists.Remove(wishlist);
-            _context.Items.RemoveRange(wishlist.Items);
-            _context.Shares.RemoveRange(wishlist.Shares);
-
             await _context.SaveChangesAsync(cancellationToken);
             return true;
         }

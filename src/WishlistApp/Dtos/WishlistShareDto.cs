@@ -5,4 +5,5 @@ public sealed record WishlistShareDto(
     int WishlistId,
     string Name,
     string AccessKey,
+    WishlistPurchaseDto[] Purchases,
     bool IsDeleted);

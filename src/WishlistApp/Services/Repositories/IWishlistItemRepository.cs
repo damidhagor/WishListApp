@@ -8,11 +8,7 @@ public interface IWishlistItemRepository
 
     Task<bool> DeleteWishlistItem(int itemId, CancellationToken cancellationToken);
 
-    Task DeleteBoughtWishlistItems(int wishlistId, CancellationToken cancellationToken);
-
-    Task<WishlistItemDto?> BuyWishlistItem(int itemId, int shareId, CancellationToken cancellationToken);
-
-    Task<WishlistItemDto?> UnbuyWishlistItem(int itemId, CancellationToken cancellationToken);
+    Task DeletePurchasedWishlistItems(int wishlistId, CancellationToken cancellationToken);
 
     Task<WishlistItemDto?> SetWishlistItemPriority(int itemId, WishlistItemPriorityDto priority, CancellationToken cancellationToken);
 }

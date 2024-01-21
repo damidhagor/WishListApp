@@ -14,10 +14,7 @@ internal sealed class WishlistItemRepository(WishlistDbContext wishlistDbContext
         Guard.IsGreaterThan(wishlistId, -1, nameof(wishlistId));
         Guard.IsNotNullOrWhiteSpace(url, nameof(url));
 
-        var wishlist = await _context.Wishlists
-            .Include(w => w.Items)
-            .Include(w => w.Shares)
-            .FirstOrDefaultAsync(w => w.Id == wishlistId, cancellationToken);
+        var wishlist = await _context.Wishlists.FirstOrDefaultAsync(w => w.Id == wishlistId, cancellationToken);
 
         if (wishlist is not null)
         {
@@ -75,49 +72,16 @@ internal sealed class WishlistItemRepository(WishlistDbContext wishlistDbContext
         return false;
     }
 
-    public async Task DeleteBoughtWishlistItems(int wishlistId, CancellationToken cancellationToken)
+    public async Task DeletePurchasedWishlistItems(int wishlistId, CancellationToken cancellationToken)
     {
         Guard.IsGreaterThan(wishlistId, -1, nameof(wishlistId));
 
         var items = _context.Items
             .Where(i => i.WishlistId == wishlistId
-                     && i.BuyerShareId != null);
+                     && i.Purchases.Sum(b => b.Quantity) >= i.Quantity);
 
         _context.Items.RemoveRange(items);
         await _context.SaveChangesAsync(cancellationToken);
-    }
-
-    public async Task<WishlistItemDto?> BuyWishlistItem(int itemId, int shareId, CancellationToken cancellationToken)
-    {
-        Guard.IsGreaterThan(itemId, -1, nameof(itemId));
-        Guard.IsGreaterThan(shareId, -1, nameof(shareId));
-
-        var item = await _context.Items.FirstOrDefaultAsync(i => i.Id == itemId, cancellationToken);
-
-        if (item is not null)
-        {
-            item.BuyerShareId = shareId;
-            await _context.SaveChangesAsync(cancellationToken);
-            return item.ToDto();
-        }
-
-        return null;
-    }
-
-    public async Task<WishlistItemDto?> UnbuyWishlistItem(int itemId, CancellationToken cancellationToken)
-    {
-        Guard.IsGreaterThan(itemId, -1, nameof(itemId));
-
-        var item = await _context.Items.FirstOrDefaultAsync(i => i.Id == itemId, cancellationToken);
-
-        if (item is not null)
-        {
-            item.BuyerShareId = null;
-            await _context.SaveChangesAsync(cancellationToken);
-            return item.ToDto();
-        }
-
-        return null;
     }
 
     public async Task<WishlistItemDto?> SetWishlistItemPriority(int itemId, WishlistItemPriorityDto priority, CancellationToken cancellationToken)

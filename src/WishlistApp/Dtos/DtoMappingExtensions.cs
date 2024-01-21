@@ -24,7 +24,7 @@ public static class DtoMappingExtensions
             item.Price,
             item.Quantity,
             item.Priority.ToDto(),
-            item.BuyerShareId);
+            item.Purchases.ToDtos().ToArray());
 
     public static IEnumerable<WishlistItemDto> ToDtos(this IEnumerable<Data.Models.WishlistItem> items)
         => items.Select(i => i.ToDto());
@@ -35,10 +35,21 @@ public static class DtoMappingExtensions
             share.WishlistId,
             share.Name,
             share.AccessKey,
+            share.Purchases.ToDtos().ToArray(),
             share.IsDeleted);
 
     public static IEnumerable<WishlistShareDto> ToDtos(this IEnumerable<Data.Models.WishlistShare> shares)
         => shares.Select(s => s.ToDto());
+
+    public static WishlistPurchaseDto ToDto(this Data.Models.WishlistPurchase buy)
+        => new(
+            buy.Id,
+            buy.ItemId,
+            buy.ShareId,
+            buy.Quantity);
+
+    public static IEnumerable<WishlistPurchaseDto> ToDtos(this IEnumerable<Data.Models.WishlistPurchase> buys)
+        => buys.Select(b => b.ToDto());
 
     public static WishlistItemPriorityDto ToDto(this Data.Models.WishlistItemPriority priority)
         => new(priority, priority switch

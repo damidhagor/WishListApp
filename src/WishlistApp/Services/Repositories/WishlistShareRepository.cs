@@ -14,9 +14,7 @@ internal sealed class WishlistShareRepository(WishlistDbContext wishlistDbContex
     {
         Guard.IsNotNullOrWhiteSpace(name, nameof(name));
 
-        var wishlist = await _context.Wishlists
-            .Include(w => w.Shares)
-            .FirstOrDefaultAsync(w => w.Id == wishlistId, cancellationToken);
+        var wishlist = await _context.Wishlists.FirstOrDefaultAsync(w => w.Id == wishlistId, cancellationToken);
 
         if (wishlist is null)
         {

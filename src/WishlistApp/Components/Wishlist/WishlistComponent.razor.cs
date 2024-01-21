@@ -54,14 +54,14 @@ public partial class WishlistComponent : IRecipient<WishlistUpdated>
         }
 
         var filteredItems = ViewModel.HideBoughtItems
-            ? ViewModel.Wishlist.Items.Where(i => i.BuyerShareId is null)
+            ? ViewModel.Wishlist.Items.Where(i => i.RemainingQuantity > 0)
             : ViewModel.Wishlist.Items;
 
         filteredItems = ViewModel.HideBuyInformation
             ? filteredItems.OrderByDescending(i => i.Priority.Priority) // Don't order by buy-information if owner is viewing
-            : filteredItems.OrderBy(i => i.BuyerShareId is null
+            : filteredItems.OrderBy(i => i.RemainingQuantity > 0
                             ? 0 // 1st: Unbought items
-                            : i.BuyerShareId is not null && i.BuyerShareId == ViewModel.LoggedInShare?.Id
+                            : i.HasBeenPurchasedByShare(ViewModel.LoggedInShare)
                                 ? 1 // 2nd: Items bought by currently viewing share
                                 : 2) // 3rd: Items bought by other shares
             .ThenByDescending(i => i.Priority.Priority);

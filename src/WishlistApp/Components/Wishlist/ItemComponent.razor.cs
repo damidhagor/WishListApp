@@ -22,12 +22,11 @@ public partial class ItemComponent
 
     private string? ImageUrl { get; set; }
 
-    private bool _itemCanBeBought => ViewModel.LoggedInShare is not null && Item?.BuyerShareId is null;
+    private bool _itemCanBeBought => Item.CanBePurchasedByShare(ViewModel.LoggedInShare);
 
-    private bool _itemIsBoughtByOtherShare => (ViewModel.LoggedInShare is not null && Item?.BuyerShareId != ViewModel.LoggedInShare.Id)
-                                           || (ViewModel.LoggedInShare is null && Item?.BuyerShareId is not null);
+    private bool _itemIsBoughtByOtherShare => Item.Purchases.Length > 0;
 
-    private bool _itemIsBoughtByLoggedInShare => ViewModel.LoggedInShare is not null && Item?.BuyerShareId == ViewModel.LoggedInShare.Id;
+    private bool _itemIsBoughtByLoggedInShare => Item.HasBeenPurchasedByShare(ViewModel.LoggedInShare);
 
     private ItemEditModalComponent _itemEditModal = default!;
 

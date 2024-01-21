@@ -24,6 +24,12 @@ public sealed class WishlistDbContext(DbContextOptions options) : IdentityDbCont
             .Property(e => e.Name)
             .HasMaxLength(300)
             .IsRequired();
+        builder.Entity<Wishlist>()
+            .Navigation(e => e.Shares)
+            .AutoInclude();
+        builder.Entity<Wishlist>()
+            .Navigation(e => e.Items)
+            .AutoInclude();
 
         builder.Entity<WishlistItem>()
             .HasKey(e => e.Id);
@@ -35,6 +41,12 @@ public sealed class WishlistDbContext(DbContextOptions options) : IdentityDbCont
             .HasOne(e => e.Wishlist)
             .WithMany(e => e.Items)
             .HasForeignKey(e => e.WishlistId);
+        builder.Entity<WishlistItem>()
+            .Navigation(e => e.Wishlist)
+            .AutoInclude();
+        builder.Entity<WishlistItem>()
+            .Navigation(e => e.Purchases)
+            .AutoInclude();
 
         builder.Entity<WishlistPurchase>()
             .HasKey(e => e.Id);
@@ -46,6 +58,12 @@ public sealed class WishlistDbContext(DbContextOptions options) : IdentityDbCont
             .HasOne(e => e.Share)
             .WithMany(e => e.Purchases)
             .HasForeignKey(e => e.ShareId);
+        builder.Entity<WishlistPurchase>()
+            .Navigation(e => e.Item)
+            .AutoInclude();
+        builder.Entity<WishlistPurchase>()
+            .Navigation(e => e.Share)
+            .AutoInclude();
 
         builder.Entity<WishlistShare>()
             .HasKey(e => e.Id);
