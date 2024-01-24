@@ -38,11 +38,12 @@ public partial class WishlistComponent : IRecipient<WishlistUpdated>
 
     private async Task RenameWishlist(string name) => await ViewModel.RenameWishlist(name, default);
 
-    private async Task AddNewWishlistItem() => await ViewModel.AddWishlistItem(_newItemUrl, default);
-
-    private async Task AddNewWishlistItem2()
+    private async Task AddNewWishlistItem()
     {
-        await _inputModal.Open(title: "Eintrag hinzufügen", placeholderText: "Produkt Url");
+        await _inputModal.Open(
+            title: "Eintrag hinzufügen",
+            placeholderText: "Produkt Url",
+            inputCallback: (string url) => ViewModel.AddWishlistItem(url, default));
     }
 
     private async Task DeleteBoughtWishlistItems()
