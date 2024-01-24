@@ -24,7 +24,7 @@ public partial class WishlistComponent : IRecipient<WishlistUpdated>
 
     private SharesModalComponent _shareModal = default!;
 
-    private InputModalComponent _inputModal = default!;
+    private TextInputModalComponent _inputModal = default!;
 
     public void Receive(WishlistUpdated message)
     {

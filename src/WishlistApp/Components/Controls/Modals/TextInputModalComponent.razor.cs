@@ -1,6 +1,6 @@
 namespace WishlistApp.Components.Controls.Modals;
 
-public partial class InputModalComponent
+public partial class TextInputModalComponent
 {
     private ModalComponent _modal = default!;
 
