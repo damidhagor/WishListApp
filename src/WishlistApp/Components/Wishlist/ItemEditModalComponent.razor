@@ -1,7 +1,7 @@
 ﻿@inherits ComponentBase
 @rendermode @(new InteractiveServerRenderMode(false))
 
-<ModalComponent @ref="_modal" Title="Bearbeiten">
+<ModalComponent @ref="_modal" Title="Bearbeiten" Size="ModalComponent.ModalSize.Large">
     <Body>
         @if (_item is not null)
         {

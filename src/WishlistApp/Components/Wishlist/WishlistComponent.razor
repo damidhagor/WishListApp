@@ -57,7 +57,7 @@ else
                                     Kaufinformationen ausblenden
                                 </label>
                             </div>
-                            
+
                             <button type="button" class="btn btn-outline-light" @onclick="@(async () => await _shareModal.Open())">
                                 <i class="bi bi-person fill" /> Freigaben
                             </button>
@@ -101,8 +101,12 @@ else
             <button type="button" class="btn btn-outline-primary" @onclick="AddNewWishlistItem" disabled="@_isNewItemUrlEmpty">
                 <i class="bi bi-plus-lg" /> Hinzufügen
             </button>
+            <button type="button" class="btn btn-outline-primary" @onclick="AddNewWishlistItem2">
+                <i class="bi bi-plus-lg" /> Hinzufügen
+            </button>
         }
     </div>
 
     <SharesModalComponent @ref="_shareModal" />
+    <InputModalComponent @ref="_inputModal" />
 }

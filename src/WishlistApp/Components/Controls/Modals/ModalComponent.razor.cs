@@ -23,6 +23,11 @@ public partial class ModalComponent
     [Parameter]
     public RenderFragment? Footer { get; set; }
 
+    [Parameter]
+    public ModalSize Size { get; set; } = ModalSize.Default;
+
+    private string _sizeClass => GetSizeClass();
+
     public async Task Open()
     {
         await JSRuntime.InvokeVoidAsync("OpenModal", $"#{Id}");
@@ -31,5 +36,22 @@ public partial class ModalComponent
     public async Task Close()
     {
         await JSRuntime.InvokeVoidAsync("CloseModal", $"#{Id}");
+    }
+
+    private string GetSizeClass()
+        => Size switch
+        {
+            ModalSize.Small => "modal-sm",
+            ModalSize.Large => "modal-lg",
+            ModalSize.ExtraLarge => "modal-xl",
+            _ => ""
+        };
+
+    public enum ModalSize
+    {
+        Default,
+        Small,
+        Large,
+        ExtraLarge
     }
 }

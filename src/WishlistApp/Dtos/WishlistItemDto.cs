@@ -12,15 +12,15 @@ public sealed record WishlistItemDto(
     WishlistItemPriorityDto Priority,
     WishlistPurchaseDto[] Purchases)
 {
-    public int PurchasedQuantity => Purchases.Sum(b => b.Quantity);
+    public int PurchasedQuantity => Purchases.Sum(p => p.Quantity);
 
     public int RemainingQuantity => Math.Max(0, Quantity - PurchasedQuantity);
 
     public bool CanBePurchasedByShare(WishlistShareDto? share)
         => share is not null
-        && Purchases.All(b => b.ShareId != share.Id)
+        && Purchases.All(p => p.ShareId != share.Id)
         && RemainingQuantity > 0;
 
-    public bool HasBeenPurchasedByShare(WishlistShareDto? share)
-        => Purchases.Any(b => b.ShareId == share?.Id);
+    public int GetPurchasedQuantityByShare(WishlistShareDto? share)
+        => Purchases.Where(p => p.ShareId == share?.Id).Sum(b=>b.Quantity);
 }

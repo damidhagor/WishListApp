@@ -1,7 +1,7 @@
 ﻿@inherits ComponentBase
 @rendermode @(new InteractiveServerRenderMode(false))
 
-<ModalComponent @ref="_modal" Title="Freigaben">
+<ModalComponent @ref="_modal" Title="Freigaben" Size="ModalComponent.ModalSize.Large">
     <Body>
         @if (ViewModel.Wishlist.Shares.Length == 0)
         {
