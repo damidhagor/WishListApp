@@ -44,7 +44,7 @@ internal sealed class WishlistPurchaseRepository(WishlistDbContext wishlistDbCon
 
         if (purchase is not null)
         {
-            purchase.Quantity = Math.Max(0, purchase.Quantity - quantity);
+            purchase.Quantity = Math.Max(0, purchase.Quantity + quantity);
 
             if (purchase.Quantity <= 0)
             {
