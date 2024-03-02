@@ -42,8 +42,6 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
-app.MapAdditionalIdentityEndpoints();
-
-await app.SeedAdminUserAndRole();
+app.MapAccountEndpoints();
 
 app.Run();
