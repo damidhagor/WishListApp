@@ -24,7 +24,7 @@ jobs:
       with:
         context: "{{defaultContext}}:src"
         file: WishlistApp/Dockerfile
-        tags: wishlist-app/${{ github.run_id }}, wishlist-app/latest
+        tags: harbor.damidhagor.de/wishlist/wishlist-app:${{ github.run_id }}, harbor.damidhagor.de/wishlist/wishlist-app:latest
         push: true
         
   build-wishlist-cli:
@@ -44,5 +44,5 @@ jobs:
       with:
         context: "{{defaultContext}}:src"
         file: WishlistApp.Cli/Dockerfile
-        tags: wishlist-cli/${{ github.run_id }}, wishlist-cli/latest
+        tags: harbor.damidhagor.de/wishlist/wishlist-cli:${{ github.run_id }}, harbor.damidhagor.de/wishlist/wishlist-cli:latest
         push: true
