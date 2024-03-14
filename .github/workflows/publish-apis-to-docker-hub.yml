@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Publish To Harbor
 
 on:
   push:
@@ -13,17 +13,18 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
-    - name: Docker Login
+    - name: Harbor Login
       uses: docker/login-action@v3.0.0
       with:
-        username: ${{ secrets.DOCKER_HUB_USERNAME }}
-        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+        registry: harbor.damidhagor.de
+        username: ${{ secrets.HARBOR_USERNAME }}
+        password: ${{ secrets.HARBOR_ACCESS_TOKEN }}
     - name: Build and Push Docker Image
       uses: docker/build-push-action@v5.0.0
       with:
         context: "{{defaultContext}}:src"
         file: WishlistApp/Dockerfile
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/musiccollection:wishlist-app-${{ github.run_id }}, ${{ secrets.DOCKER_HUB_USERNAME }}/musiccollection:wishlist-app-latest
+        tags: wishlist-app/${{ github.run_id }}, wishlist-app/latest
         push: true
         
   build-wishlist-cli:
@@ -35,12 +36,13 @@ jobs:
     - name: Docker Login
       uses: docker/login-action@v3.0.0
       with:
-        username: ${{ secrets.DOCKER_HUB_USERNAME }}
-        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+        registry: harbor.damidhagor.de
+        username: ${{ secrets.HARBOR_USERNAME }}
+        password: ${{ secrets.HARBOR_ACCESS_TOKEN }}
     - name: Build and Push Docker Image
       uses: docker/build-push-action@v5.0.0
       with:
         context: "{{defaultContext}}:src"
         file: WishlistApp.Cli/Dockerfile
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/musiccollection:wishlist-cli-${{ github.run_id }}, ${{ secrets.DOCKER_HUB_USERNAME }}/musiccollection:wishlist-cli-latest
+        tags: wishlist-cli/${{ github.run_id }}, wishlist-cli/latest
         push: true
