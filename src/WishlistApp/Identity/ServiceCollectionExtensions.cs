@@ -50,8 +50,7 @@ internal static class ServiceCollectionExtensions
 
             options.Events.OnRedirectToIdentityProvider = context =>
             {
-                var applicationUrl = configuration.GetValue<string>("ApplicationUrl") ?? throw new ArgumentNullException();
-                context.ProtocolMessage.RedirectUri = applicationUrl;
+                context.ProtocolMessage.RedirectUri = context.ProtocolMessage.RedirectUri.Replace("http", "https");
                 return Task.CompletedTask;
             };
         });
