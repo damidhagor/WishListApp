@@ -1,5 +1,7 @@
 environment: dev
-hostname: 
-postgres-size: 
-wishlist-app-image: 
-wishlist-app-image-tag: 
+hostname:
+postgres:
+  size:
+app:
+  image:
+  tag:

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: wishlist-app
-        image: {{ .Values.wishlist-app-image }}:{{ .Values.wishlist-app-image-tag }}
+        image: {{ .Values.app.image }}:{{ .Values.app.tag }}
         imagePullPolicy: IfNotPresent
         env:
         - name: ConnectionStrings__SqlServer
