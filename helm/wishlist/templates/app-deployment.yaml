@@ -25,7 +25,7 @@ spec:
               name: postgres-secret
               key: connection-string
         - name: ApplicationUrl
-          value: https://{{ .Values.hostname }}
+          value: "https://{{ .Values.hostname }}"
         - name: IdentityOptions__Authority
           valueFrom:
             secretKeyRef:
