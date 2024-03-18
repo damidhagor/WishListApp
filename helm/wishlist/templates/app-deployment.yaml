@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wishlist-app
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: wishlist-app
+spec:
+  selector:
+    matchLabels:
+      app: wishlist-app
+  template:
+    metadata:
+      labels:
+        app: wishlist-app
+    spec:
+      containers:
+      - name: wishlist-app
+        image: "{{ .Values.app.image }}:{{ .Values.app.tag }}"
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: ConnectionStrings__SqlServer
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: connection-string
+        - name: ApplicationUrl
+          value: "https://{{ .Values.hostname }}"
+        - name: IdentityOptions__Authority
+          valueFrom:
+            secretKeyRef:
+              name: app-secret
+              key: identity-authority
+        - name: IdentityOptions__ClientId
+          valueFrom:
+            secretKeyRef:
+                name: app-secret
+                key: identity-client-id
+        - name: IdentityOptions__ClientSecret
+          valueFrom:
+            secretKeyRef:
+                name: app-secret
+                key: identity-client-secret
+        - name: IdentityOptions__Scopes
+          valueFrom:
+            secretKeyRef:
+                name: app-secret
+                key: identity-scopes
+      imagePullSecrets:
+      - name: harbor

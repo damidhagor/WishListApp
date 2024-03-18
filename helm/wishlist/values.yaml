@@ -1,0 +1,6 @@
+hostname:
+postgres:
+  size: 5Gi
+app:
+  image: harbor.damidhagor.de/wishlist/wishlist-app
+  tag: latest
