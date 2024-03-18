@@ -26,5 +26,25 @@ spec:
               key: connection-string
         - name: ApplicationUrl
           value: https://{{ .Values.hostname }}
+        - name: IdentityOptions__Authority
+          valueFrom:
+            secretKeyRef:
+              name: app-secret
+              key: identity-authority
+        - name: IdentityOptions__ClientId
+          valueFrom:
+            secretKeyRef:
+                name: app-secret
+                key: identity-client-id
+        - name: IdentityOptions__ClientSecret
+          valueFrom:
+            secretKeyRef:
+                name: app-secret
+                key: identity-client-secret
+        - name: IdentityOptions__Scopes
+          valueFrom:
+            secretKeyRef:
+                name: app-secret
+                key: identity-scopes
       imagePullSecrets:
       - name: harbor
