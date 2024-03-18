@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: wishlist-app
+  namespace: wishlist-{{ .Values.environment }}
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt"
+spec:
+  tls:
+  - hosts:
+    - {{ .Values.hostname }}
+    secretName: wishlist-app-cert
+  rules:
+  - host: {{ .Values.hostname }}
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: wishlist-app
+              port:
+                number: 8080

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wishlist-app
+  namespace: wishlist-{{ .Values.environment }}
+spec:
+  selector:
+    app: wishlist-app
+  ports:
+  - name: wishlist-app
+    protocol: TCP
+    port: 8080
+    targetPort: 8080

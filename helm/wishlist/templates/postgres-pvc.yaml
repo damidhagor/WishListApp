@@ -1,0 +1,14 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: postgres
+  namespace: wishlist-{{ .Values.environment }}
+  labels:
+    app: postgres
+spec:
+  storageClassName: microk8s-hostpath
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: -{{ .Values.postgres-size }}
