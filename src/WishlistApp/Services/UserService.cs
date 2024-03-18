@@ -20,9 +20,7 @@ internal sealed class UserService(AuthenticationStateProvider authenticationStat
             .FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)
             ?.Value;
 
-        var name = authenticationState.User.Claims
-            .FirstOrDefault(c => c.Type == ClaimTypes.Name)
-            ?.Value;
+        var name = authenticationState.User.Identity?.Name;
 
         if (string.IsNullOrWhiteSpace(identifier)
             || string.IsNullOrWhiteSpace(name))

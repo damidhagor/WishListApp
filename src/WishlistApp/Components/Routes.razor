@@ -1,11 +1,9 @@
-﻿@using WishlistApp.Components.Account.Shared
-<Router AppAssembly="@typeof(Program).Assembly">
+﻿<Router AppAssembly="@typeof(Program).Assembly">
     <Found Context="routeData">
         <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(Layout.MainLayout)">
             <NotAuthorized>
-                <RedirectToLogin />
+                You are not logged in.
             </NotAuthorized>
         </AuthorizeRouteView>
-        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
     </Found>
 </Router>

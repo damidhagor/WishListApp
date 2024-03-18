@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using WishlistApp.Components;
 using WishlistApp.Data;
-using WishlistApp.Extensions;
+using WishlistApp.Identity;
 using WishlistApp.ProductCrawling;
 using WishlistApp.Services;
 
@@ -13,7 +13,7 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddHttpClient();
 
-builder.Services.AddWishlistIdentity();
+builder.Services.AddIdentity(builder.Configuration);
 
 builder.Services.AddDbContext<WishlistDbContext>((serviceProvider, options) =>
 {
@@ -42,8 +42,6 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
-app.MapAdditionalIdentityEndpoints();
-
-await app.SeedAdminUserAndRole();
+app.UseIdentity();
 
 app.Run();

@@ -1,4 +1,6 @@
-﻿@inherits LayoutComponentBase
+﻿@using Microsoft.AspNetCore.Authentication
+@using WishlistApp.Identity.Components
+@inherits LayoutComponentBase
 
 <div class="page">
     <main>
@@ -11,29 +13,12 @@
                         <a class="nav-link align-self-center me-4" href="/">
                             <i class="bi bi-list navbar-icon"></i> Meine Wunschlisten
                         </a>
-
-                        <div class="d-flex ms-auto">
-                            <NavLink class="nav-link align-self-center me-4" href="Account/Manage">
-                                <i class="bi bi-person-fill navbar-icon"></i> @context.User.Identity?.Name
-                            </NavLink>
-
-                            <form action="Account/Logout" method="post">
-                                <AntiforgeryToken />
-                                <input type="hidden" name="ReturnUrl" value="Account/Login" />
-                                <button type="submit" class="btn btn-outline-light">
-                                    <i class="bi bi-box-arrow-left navbar-icon"></i> Logout
-                                </button>
-                            </form>
-                        </div>
                     </Authorized>
-                    <NotAuthorized>
-                        <div class="d-flex ms-auto">
-                            <a href="Account/Login" class="btn btn-outline-light">
-                                <i class="bi bi-box-arrow-in-right navbar-icon"></i> Login
-                            </a>
-                        </div>
-                    </NotAuthorized>
                 </AuthorizeView>
+
+                <div class="ms-auto">
+                    <IdentityHeader />
+                </div>
             </div>
         </nav>
 

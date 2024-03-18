@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using WishlistApp.Data.Models;
 
 namespace WishlistApp.Data;
 
-public sealed class WishlistDbContext(DbContextOptions options) : IdentityDbContext<WishlistUser, WishlistRole, string>(options)
+public sealed class WishlistDbContext(DbContextOptions options) : DbContext(options)
 {
     public DbSet<Wishlist> Wishlists { get; set; }
 
