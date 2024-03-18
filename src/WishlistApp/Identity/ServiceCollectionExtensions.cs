@@ -47,6 +47,13 @@ internal static class ServiceCollectionExtensions
                 RoleClaimType = "roles"
             };
             options.GetClaimsFromUserInfoEndpoint = true;
+
+            options.Events.OnRedirectToIdentityProvider = context =>
+            {
+                var applicationUrl = configuration.GetValue<string>("ApplicationUrl") ?? throw new ArgumentNullException();
+                context.ProtocolMessage.RedirectUri = applicationUrl;
+                return Task.CompletedTask;
+            };
         });
 
         services.AddAuthorization();
