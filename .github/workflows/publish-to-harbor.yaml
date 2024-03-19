@@ -68,29 +68,29 @@ jobs:
         tags: harbor.damidhagor.de/wishlist/wishlist-cli:${{ steps.version.outputs.version }}, harbor.damidhagor.de/wishlist/wishlist-cli:latest
         push: true
         
-  # publish-helm-chart:
-  #   runs-on: ubuntu-latest
-  #   needs: [build-wishlist-app, build-wishlist-cli]
+  publish-helm-chart:
+    runs-on: ubuntu-latest
+    needs: [build-wishlist-app, build-wishlist-cli]
 
-  #   steps:
-  #   - name: Create Version Number
-  #     id: version
-  #     run: |
-  #       if [ "${{ inputs.version }}" != '' ]; then
-  #         echo "::set-output name=version::${{ inputs.version }}"
-  #       else
-  #         echo "::set-output name=version::${{ github.run_id }}"
-  #       fi
-  #       echo "Version: ${{ steps.version.outputs.version }}"
-  #   - name: Checkout Repository
-  #     uses: actions/checkout@v3
-  #   - name: Helm Login
-  #     uses: docker/login-action@v3.0.0
-  #     with:
-  #       registry: harbor.damidhagor.de
-  #       username: ${{ secrets.HARBOR_USERNAME }}
-  #       password: ${{ secrets.HARBOR_ACCESS_TOKEN }}
-  #   - name: Publish Helm Chart
-  #     run: helm package src/WishlistApp.HelmChart -d src/WishlistApp.HelmChart
-  #   - name: Push Helm Chart
-  #     run: helm push src/WishlistApp.HelmChart harbor.damidhagor.de/wishlist
+    steps:
+    - name: Create Version Number
+      id: version
+      run: |
+        if [ "${{ inputs.version }}" != '' ]; then
+          echo "::set-output name=version::${{ inputs.version }}"
+        else
+          echo "::set-output name=version::${{ github.run_id }}"
+        fi
+        echo "Version: ${{ steps.version.outputs.version }}"
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+    - name: Replace Version in values.yaml
+      run: "sed -i \"s/tag: latest/tag: ${{ steps.version.outputs.version }}/g\" src/WishlistApp.HelmChart/values.yaml"
+    - name: Helm Setup
+      uses: azure/setup-helm@v4
+    - name: Helm Login
+      run: helm login harbor.damidhagor.de -u ${{ secrets.HARBOR_USERNAME }} -p ${{ secrets.HARBOR_ACCESS_TOKEN }}
+    - name: Helm Package
+      run: helm package src/WishlistApp.HelmChart --app-version "${{ steps.version.outputs.version }}"
+    - name: Helm Push
+      run: helm push src/WishlistApp.HelmChart oci://harbor.damidhagor.de/wishlist
