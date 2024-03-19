@@ -55,4 +55,5 @@ This is a helm chart for the Wishlist App.
 
 	```bash
 	helm install <RELEASE_NAME> <CHART_LOCATION> -n <NAMESPACE> --create-namespace --values=values.yaml
+    helm install <RELEASE_NAME> oci://harbor.damidhagor.de/wishlist/wishlist --version <TAG> -n <NAMESPACE> --values=<VALUES>.yaml
 	```
