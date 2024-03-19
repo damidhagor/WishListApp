@@ -24,10 +24,8 @@ jobs:
         else
           echo "version=${{ github.run_id }}" >> $GITHUB_OUTPUT;
         fi
-        echo "Input: ${{ inputs.version }}"
-        echo "Run-Id: ${{ github.run_id }}"
     - name: Checkout Repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Harbor Login
       uses: docker/login-action@v3.0.0
       with:
@@ -50,13 +48,12 @@ jobs:
       id: version
       run: |
         if [ "${{ inputs.version }}" != '' ]; then
-          echo "::set-output name=version::${{ inputs.version }}"
+          echo "version=${{ inputs.version }}" >> $GITHUB_OUTPUT;
         else
-          echo "::set-output name=version::${{ github.run_id }}"
+          echo "version=${{ github.run_id }}" >> $GITHUB_OUTPUT;
         fi
-        echo "Version: ${{ steps.version.outputs.version }}"
     - name: Checkout Repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Docker Login
       uses: docker/login-action@v3.0.0
       with:
