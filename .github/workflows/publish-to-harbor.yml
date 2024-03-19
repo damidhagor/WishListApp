@@ -2,11 +2,7 @@ name: Publish To Harbor
 
 on:
   push:
-    branches:
-      - main
-      - helm-chart
-    paths:
-      - 'src/**'
+    branches: [ main, helm-chart ]
   workflow_dispatch:
     inputs:
       version:
