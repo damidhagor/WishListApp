@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using WishlistApp.Identity.Services;
@@ -27,8 +28,6 @@ internal static class ServiceCollectionExtensions
         })
         .AddOpenIdConnect(options =>
         {
-            configuration.Bind(nameof(OpenIdConnectOptions), options);
-
             options.Authority = identityOptions.Authority;
             options.ClientId = identityOptions.ClientId;
             options.ClientSecret = identityOptions.ClientSecret;
@@ -50,7 +49,14 @@ internal static class ServiceCollectionExtensions
 
             options.Events.OnRedirectToIdentityProvider = context =>
             {
-                context.ProtocolMessage.RedirectUri = context.ProtocolMessage.RedirectUri.Replace("http", "https");
+                var options = context.HttpContext.RequestServices.GetRequiredService<IOptions<IdentityOptions>>()?.Value
+                    ?? throw new ArgumentNullException($"No {nameof(IdentityOptions)} were provided.");
+
+                if (options.RequireHttpsMetadata)
+                {
+                    context.ProtocolMessage.RedirectUri = context.ProtocolMessage.RedirectUri.Replace("http", "https");
+                }
+
                 return Task.CompletedTask;
             };
         });
