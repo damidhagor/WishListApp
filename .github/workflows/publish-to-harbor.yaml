@@ -84,7 +84,7 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v4
     - name: Replace Version in values.yaml
-      run: "sed -i \"s/tag: latest/tag: ${{ steps.version.outputs.version }}/g\" helm/wishlist/values.yaml"
+      run: "sed -i \"s/tag: \"latest\"/tag: \"${{ steps.version.outputs.version }}\"/g\" helm/wishlist/values.yaml"
     - name: Helm Setup
       uses: azure/setup-helm@v4
     - name: Helm Login

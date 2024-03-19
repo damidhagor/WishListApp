@@ -3,7 +3,7 @@ postgres:
   size: 5Gi
 app:
   image: harbor.damidhagor.de/wishlist/wishlist-app
-  tag: latest
+  tag: "latest"
 cli:
   image: harbor.damidhagor.de/wishlist/wishlist-cli
-  tag: latest
+  tag: "latest"
