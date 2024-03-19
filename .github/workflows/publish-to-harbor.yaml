@@ -77,20 +77,19 @@ jobs:
       id: version
       run: |
         if [ "${{ inputs.version }}" != '' ]; then
-          echo "::set-output name=version::${{ inputs.version }}"
+          echo "version=${{ inputs.version }}" >> $GITHUB_OUTPUT;
         else
-          echo "::set-output name=version::${{ github.run_id }}"
+          echo "version=${{ github.run_id }}" >> $GITHUB_OUTPUT;
         fi
-        echo "Version: ${{ steps.version.outputs.version }}"
     - name: Checkout Repository
       uses: actions/checkout@v4
     - name: Replace Version in values.yaml
-      run: "sed -i \"s/tag: latest/tag: ${{ steps.version.outputs.version }}/g\" src/WishlistApp.HelmChart/values.yaml"
+      run: "sed -i \"s/tag: latest/tag: ${{ steps.version.outputs.version }}/g\" helm/wishlist/values.yaml"
     - name: Helm Setup
       uses: azure/setup-helm@v4
     - name: Helm Login
-      run: helm login harbor.damidhagor.de -u ${{ secrets.HARBOR_USERNAME }} -p ${{ secrets.HARBOR_ACCESS_TOKEN }}
+      run: helm registry login harbor.damidhagor.de -u ${{ secrets.HARBOR_USERNAME }} -p ${{ secrets.HARBOR_ACCESS_TOKEN }}
     - name: Helm Package
-      run: helm package src/WishlistApp.HelmChart --app-version "${{ steps.version.outputs.version }}"
+      run: helm package helm/wishlist --app-version "${{ steps.version.outputs.version }}"
     - name: Helm Push
-      run: helm push src/WishlistApp.HelmChart oci://harbor.damidhagor.de/wishlist
+      run: ls -la && helm push wishlist-*.tgz oci://harbor.damidhagor.de/wishlist
