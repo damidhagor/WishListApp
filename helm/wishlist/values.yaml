@@ -1,7 +1,6 @@
-environment: dev
 hostname:
 postgres:
-  size:
+  size: 5Gi
 app:
-  image:
-  tag:
+  image: harbor.damidhagor.de/wishlist/wishlist-app
+  tag: latest
