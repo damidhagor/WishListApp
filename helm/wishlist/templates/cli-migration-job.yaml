@@ -8,7 +8,7 @@ spec:
     spec:
       containers:
       - name: wishlist-cli-migration
-        image: "{{ .Values.app.image }}:{{ .Values.app.tag }}"
+        image: "{{ .Values.cli.image }}:{{ .Values.cli.tag }}"
         imagePullPolicy: IfNotPresent
         command: ["dotnet", "WishlistApp.Cli.dll", "database", "apply-migrations", "-c", "$(connectionstring)"]
         env:
