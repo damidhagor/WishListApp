@@ -24,7 +24,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\WishlistApp.Data\WishlistApp.Data.csproj" />
+	  <ProjectReference Include="..\WishlistApp.Data.Sql\WishlistApp.Data.Sql.csproj" />
 	  <ProjectReference Include="..\WishlistApp.ProductCrawling\WishlistApp.ProductCrawling.csproj" />
 	</ItemGroup>
 

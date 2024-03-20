@@ -2,28 +2,28 @@
 
 #nullable disable
 
-namespace WishlistApp.Data.Migrations
+namespace WishlistApp.Data.Sql.Migrations
 {
     /// <inheritdoc />
-    public partial class AddWishlistItemPriority : Migration
+    public partial class AddShareIsDeleted : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "Priority",
-                table: "WishlistItems",
-                type: "integer",
+            migrationBuilder.AddColumn<bool>(
+                name: "IsDeleted",
+                table: "WishlistShares",
+                type: "boolean",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: false);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Priority",
-                table: "WishlistItems");
+                name: "IsDeleted",
+                table: "WishlistShares");
         }
     }
 }

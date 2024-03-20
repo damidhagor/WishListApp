@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using WishlistApp.Data;
+using WishlistApp.Data.Sql;
 
 #nullable disable
 
-namespace WishlistApp.Data.Migrations
+namespace WishlistApp.Data.Sql.Migrations
 {
     [DbContext(typeof(WishlistDbContext))]
-    [Migration("20231123215211_AddShareIsDeleted")]
-    partial class AddShareIsDeleted
+    [Migration("20231120215530_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -215,9 +215,6 @@ namespace WishlistApp.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(16)
                         .HasColumnType("character varying(16)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()

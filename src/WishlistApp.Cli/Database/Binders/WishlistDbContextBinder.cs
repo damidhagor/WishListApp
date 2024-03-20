@@ -1,7 +1,7 @@
 ﻿using System.CommandLine;
 using System.CommandLine.Binding;
 using Microsoft.EntityFrameworkCore;
-using WishlistApp.Data;
+using WishlistApp.Data.Sql;
 
 namespace WishlistApp.Cli.Database.Binders;
 

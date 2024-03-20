@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using WishlistApp.Components;
-using WishlistApp.Data;
+using WishlistApp.Data.Sql;
 using WishlistApp.Identity;
 using WishlistApp.ProductCrawling;
 using WishlistApp.Services;

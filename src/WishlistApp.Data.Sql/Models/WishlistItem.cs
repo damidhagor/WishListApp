@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WishlistApp.Data.Models;
+namespace WishlistApp.Data.Sql.Models;
 
 public sealed class WishlistItem
 {

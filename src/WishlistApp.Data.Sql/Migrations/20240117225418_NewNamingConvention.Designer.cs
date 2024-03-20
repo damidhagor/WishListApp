@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using WishlistApp.Data;
+using WishlistApp.Data.Sql;
 
 #nullable disable
 
-namespace WishlistApp.Data.Migrations
+namespace WishlistApp.Data.Sql.Migrations
 {
     [DbContext(typeof(WishlistDbContext))]
-    [Migration("20231206234916_AddWishlistOwner")]
-    partial class AddWishlistOwner
+    [Migration("20240117225418_NewNamingConvention")]
+    partial class NewNamingConvention
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -161,7 +161,26 @@ namespace WishlistApp.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("BoughtByWishlistShareId")
+                    b.Property<int?>("BuyerShareId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("Price")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<int>("Priority")
                         .HasColumnType("integer");
 
                     b.Property<string>("Url")
@@ -174,11 +193,11 @@ namespace WishlistApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BoughtByWishlistShareId");
+                    b.HasIndex("BuyerShareId");
 
                     b.HasIndex("WishlistId");
 
-                    b.ToTable("WishlistItems");
+                    b.ToTable("Items");
                 });
 
             modelBuilder.Entity("WishlistApp.Data.Models.WishlistRole", b =>
@@ -235,7 +254,7 @@ namespace WishlistApp.Data.Migrations
 
                     b.HasIndex("WishlistId");
 
-                    b.ToTable("WishlistShares");
+                    b.ToTable("Shares");
                 });
 
             modelBuilder.Entity("WishlistApp.Data.Models.WishlistUser", b =>
@@ -355,9 +374,9 @@ namespace WishlistApp.Data.Migrations
 
             modelBuilder.Entity("WishlistApp.Data.Models.WishlistItem", b =>
                 {
-                    b.HasOne("WishlistApp.Data.Models.WishlistShare", "BoughtByWishlistShare")
+                    b.HasOne("WishlistApp.Data.Models.WishlistShare", "BuyerShare")
                         .WithMany("BoughtItems")
-                        .HasForeignKey("BoughtByWishlistShareId");
+                        .HasForeignKey("BuyerShareId");
 
                     b.HasOne("WishlistApp.Data.Models.Wishlist", "Wishlist")
                         .WithMany("Items")
@@ -365,7 +384,7 @@ namespace WishlistApp.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("BoughtByWishlistShare");
+                    b.Navigation("BuyerShare");
 
                     b.Navigation("Wishlist");
                 });

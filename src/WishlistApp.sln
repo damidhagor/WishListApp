@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WishlistApp", "WishlistApp\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WishlistApp.ProductCrawling", "WishlistApp.ProductCrawling\WishlistApp.ProductCrawling.csproj", "{3975F8AB-60B3-4810-8C34-CD7700CF7FA4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WishlistApp.Data", "WishlistApp.Data\WishlistApp.Data.csproj", "{4F86C138-C3A3-4C18-B631-3CAB7733C9C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WishlistApp.Data.Sql", "WishlistApp.Data.Sql\WishlistApp.Data.Sql.csproj", "{4F86C138-C3A3-4C18-B631-3CAB7733C9C9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WishlistApp.Cli", "WishlistApp.Cli\WishlistApp.Cli.csproj", "{071C5BA1-F044-4774-970C-0FBF44E08318}"
 EndProject

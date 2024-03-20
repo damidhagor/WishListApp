@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using WishlistApp.Cli.Database.Binders;
 using WishlistApp.Cli.Shared.Binders;
-using WishlistApp.Data;
+using WishlistApp.Data.Sql;
 
 namespace WishlistApp.Cli.Database.Commands;
 

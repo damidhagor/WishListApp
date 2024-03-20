@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace WishlistApp.Data.Migrations
+namespace WishlistApp.Data.Sql.Migrations
 {
     /// <inheritdoc />
     public partial class WishlistItemPriceString : Migration

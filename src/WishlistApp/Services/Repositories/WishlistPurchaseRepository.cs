@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WishlistApp.Data;
-using WishlistApp.Data.Models;
+using WishlistApp.Data.Sql;
+using WishlistApp.Data.Sql.Models;
 
 namespace WishlistApp.Services.Repositories;
 

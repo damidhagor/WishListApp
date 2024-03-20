@@ -1,4 +1,4 @@
-﻿namespace WishlistApp.Data.Models;
+﻿namespace WishlistApp.Data.Sql.Models;
 
 public sealed class WishlistShare
 {

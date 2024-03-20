@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using WishlistApp.Data;
+using WishlistApp.Data.Sql;
 
 #nullable disable
 
-namespace WishlistApp.Data.Migrations
+namespace WishlistApp.Data.Sql.Migrations
 {
     [DbContext(typeof(WishlistDbContext))]
-    [Migration("20231219133203_AddWishlistItemInformation")]
-    partial class AddWishlistItemInformation
+    [Migration("20231207141811_AddWishlistItemPriority")]
+    partial class AddWishlistItemPriority
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -163,21 +163,6 @@ namespace WishlistApp.Data.Migrations
 
                     b.Property<int?>("BoughtByWishlistShareId")
                         .HasColumnType("integer");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
-
-                    b.Property<string>("Note")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
-
-                    b.Property<float?>("Price")
-                        .HasColumnType("real");
 
                     b.Property<int>("Priority")
                         .HasColumnType("integer");

@@ -1,7 +1,6 @@
-﻿using CommunityToolkit.Diagnostics;
-using Microsoft.EntityFrameworkCore;
-using WishlistApp.Data;
-using WishlistApp.Data.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using WishlistApp.Data.Sql;
+using WishlistApp.Data.Sql.Models;
 
 namespace WishlistApp.Services.Repositories;
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WishlistApp.Data.Models;
+using WishlistApp.Data.Sql.Models;
 
-namespace WishlistApp.Data;
+namespace WishlistApp.Data.Sql;
 
 public sealed class WishlistDbContext(DbContextOptions options) : DbContext(options)
 {
