@@ -1,6 +1,6 @@
 ﻿namespace WishlistApp.Data.Sql.Models;
 
-public sealed class Wishlist
+public sealed class WishlistEntity
 {
     public int Id { get; set; } = 0;
 
@@ -8,7 +8,7 @@ public sealed class Wishlist
 
     public string Name { get; set; } = "";
 
-    public List<WishlistItem> Items { get; set; } = [];
+    public List<WishlistItemEntity> Items { get; set; } = [];
 
-    public List<WishlistShare> Shares { get; set; } = [];
+    public List<WishlistShareEntity> Shares { get; set; } = [];
 }

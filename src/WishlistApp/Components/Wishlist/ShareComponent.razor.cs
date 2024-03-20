@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using WishlistApp.Data.Services;
 using WishlistApp.Services;
 
 namespace WishlistApp.Components.Wishlist;
@@ -13,7 +14,7 @@ public partial class ShareComponent
     private IAccessKeyGenerator _accessKeyGenerator { get; set; } = default!;
 
     [CascadingParameter]
-    public WishlistShareDto Share { get; set; } = default!;
+    public WishlistShare Share { get; set; } = default!;
 
     [CascadingParameter]
     public WishlistViewModel ViewModel { get; set; } = default!;

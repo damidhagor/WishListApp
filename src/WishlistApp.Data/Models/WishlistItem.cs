@@ -1,6 +1,6 @@
-﻿namespace WishlistApp.Dtos;
+﻿namespace WishlistApp.Data.Models;
 
-public sealed record WishlistItemDto(
+public sealed record WishlistItem(
     int Id,
     int WishlistId,
     string Url,
@@ -9,18 +9,18 @@ public sealed record WishlistItemDto(
     string? Note,
     string? Price,
     int Quantity,
-    WishlistItemPriorityDto Priority,
-    WishlistPurchaseDto[] Purchases)
+    WishlistItemPriority Priority,
+    WishlistPurchase[] Purchases)
 {
     public int PurchasedQuantity => Purchases.Sum(p => p.Quantity);
 
     public int RemainingQuantity => Math.Max(0, Quantity - PurchasedQuantity);
 
-    public bool CanBePurchasedByShare(WishlistShareDto? share)
+    public bool CanBePurchasedByShare(WishlistShare? share)
         => share is not null
         && Purchases.All(p => p.ShareId != share.Id)
         && RemainingQuantity > 0;
 
-    public int GetPurchasedQuantityByShare(WishlistShareDto? share)
-        => Purchases.Where(p => p.ShareId == share?.Id).Sum(b=>b.Quantity);
+    public int GetPurchasedQuantityByShare(WishlistShare? share)
+        => Purchases.Where(p => p.ShareId == share?.Id).Sum(b => b.Quantity);
 }

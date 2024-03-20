@@ -7,25 +7,20 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="Endpoints\**" />
-	  <Content Remove="Endpoints\**" />
-	  <EmbeddedResource Remove="Endpoints\**" />
-	  <None Remove="Endpoints\**" />
+		<Compile Remove="Endpoints\**" />
+		<Content Remove="Endpoints\**" />
+		<EmbeddedResource Remove="Endpoints\**" />
+		<None Remove="Endpoints\**" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Diagnostics" Version="8.2.2" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="9.0.0-preview.2.24128.4" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0-preview.2.24128.4">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\WishlistApp.Data.Sql\WishlistApp.Data.Sql.csproj" />
-	  <ProjectReference Include="..\WishlistApp.ProductCrawling\WishlistApp.ProductCrawling.csproj" />
+		<ProjectReference Include="..\WishlistApp.Data.Sql\WishlistApp.Data.Sql.csproj" />
+		<ProjectReference Include="..\WishlistApp.ProductCrawling\WishlistApp.ProductCrawling.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -13,7 +13,7 @@ public partial class ItemComponent
     private IProductCrawlerService _productCrawler { get; set; } = default!;
 
     [CascadingParameter]
-    public WishlistItemDto Item { get; set; } = default!;
+    public WishlistItem Item { get; set; } = default!;
 
     [CascadingParameter]
     public WishlistViewModel ViewModel { get; set; } = default!;
@@ -65,7 +65,7 @@ public partial class ItemComponent
 
     private async Task UnbuyItem() => await ViewModel.UnbuyWishlistItem(Item, default);
 
-    private async Task SetItemPriority(WishlistItemPriorityDto priority) => await ViewModel.SetWishlistItemPriority(Item, priority, default);
+    private async Task SetItemPriority(WishlistItemPriority priority) => await ViewModel.SetWishlistItemPriority(Item, priority, default);
 
     private async Task DeleteItem()
     {

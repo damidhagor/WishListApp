@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using WishlistApp.Models;
 
 namespace WishlistApp.ViewModels;
 
@@ -11,11 +12,11 @@ public sealed class WishlistViewModel
     private readonly NavigationManager _navigationManager;
     private readonly IMessenger _messenger;
 
-    public WishlistDto Wishlist { get; private set; } = default!;
+    public Wishlist Wishlist { get; private set; } = default!;
 
-    public WishlistUserDto? LoggedInUser { get; private set; }
+    public WishlistUser? LoggedInUser { get; private set; }
 
-    public WishlistShareDto? LoggedInShare { get; private set; }
+    public WishlistShare? LoggedInShare { get; private set; }
 
     public bool HideBoughtItems { get; set; }
 
@@ -30,9 +31,9 @@ public sealed class WishlistViewModel
         IWishlistPurchaseRepository purchaseRepository,
         NavigationManager navigationManager,
         IMessenger messenger,
-        WishlistDto wishlist,
-        WishlistUserDto? loggedInUser,
-        WishlistShareDto? loggedInShare)
+        Wishlist wishlist,
+        WishlistUser? loggedInUser,
+        WishlistShare? loggedInShare)
     {
         _wishlistRepository = wishlistRepository;
         _itemRepository = itemRepository;
@@ -66,13 +67,13 @@ public sealed class WishlistViewModel
         await ReloadWishlist(cancellationToken);
     }
 
-    public async Task UpdateWishlistItem(WishlistItemDto item, CancellationToken cancellationToken)
+    public async Task UpdateWishlistItem(WishlistItem item, CancellationToken cancellationToken)
     {
         await _itemRepository.UpdateWishlistItem(item, cancellationToken);
         await ReloadWishlist(cancellationToken);
     }
 
-    public async Task BuyWishlistItem(WishlistItemDto item, CancellationToken cancellationToken)
+    public async Task BuyWishlistItem(WishlistItem item, CancellationToken cancellationToken)
     {
         if (LoggedInShare is null)
         {
@@ -83,7 +84,7 @@ public sealed class WishlistViewModel
         await ReloadWishlist(cancellationToken);
     }
 
-    public async Task UnbuyWishlistItem(WishlistItemDto item, CancellationToken cancellationToken)
+    public async Task UnbuyWishlistItem(WishlistItem item, CancellationToken cancellationToken)
     {
         if (LoggedInShare is null)
         {
@@ -94,13 +95,13 @@ public sealed class WishlistViewModel
         await ReloadWishlist(cancellationToken);
     }
 
-    public async Task SetWishlistItemPriority(WishlistItemDto item, WishlistItemPriorityDto priority, CancellationToken cancellationToken)
+    public async Task SetWishlistItemPriority(WishlistItem item, WishlistItemPriority priority, CancellationToken cancellationToken)
     {
         await _itemRepository.SetWishlistItemPriority(item.Id, priority, cancellationToken);
         await ReloadWishlist(cancellationToken);
     }
 
-    public async Task DeleteWishlistItem(WishlistItemDto item, CancellationToken cancellationToken)
+    public async Task DeleteWishlistItem(WishlistItem item, CancellationToken cancellationToken)
     {
         await _itemRepository.DeleteWishlistItem(item.Id, cancellationToken);
         await ReloadWishlist(cancellationToken);
@@ -123,7 +124,7 @@ public sealed class WishlistViewModel
         await ReloadWishlist(cancellationToken);
     }
 
-    public async Task DeleteWishlistShare(WishlistShareDto share, CancellationToken cancellationToken)
+    public async Task DeleteWishlistShare(WishlistShare share, CancellationToken cancellationToken)
     {
         await _shareRepository.DeleteWishlistShare(share.Id, cancellationToken);
         await ReloadWishlist(cancellationToken);

@@ -1,14 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WishlistApp.Data.Sql;
+using WishlistApp.Data.Models;
+using WishlistApp.Data.Repositories;
 using WishlistApp.Data.Sql.Models;
 
-namespace WishlistApp.Services.Repositories;
+namespace WishlistApp.Data.Sql.Repositories;
 
 internal sealed class WishlistPurchaseRepository(WishlistDbContext wishlistDbContext) : IWishlistPurchaseRepository
 {
     private readonly WishlistDbContext _context = wishlistDbContext;
 
-    public async Task<WishlistPurchaseDto?> UpdatePurchaseQuantity(int itemId, int shareId, int quantity, CancellationToken cancellationToken)
+    public async Task<WishlistPurchase?> UpdatePurchaseQuantity(int itemId, int shareId, int quantity, CancellationToken cancellationToken)
     {
         var item = await _context.Items.FirstOrDefaultAsync(i => i.Id == itemId, cancellationToken);
         var share = await _context.Shares.FirstOrDefaultAsync(s => s.Id == shareId, cancellationToken);
@@ -28,7 +29,7 @@ internal sealed class WishlistPurchaseRepository(WishlistDbContext wishlistDbCon
 
         if (purchase is null && quantity > 0)
         {
-            purchase = new WishlistPurchase
+            purchase = new WishlistPurchaseEntity
             {
                 ItemId = itemId,
                 Item = item,
@@ -39,7 +40,7 @@ internal sealed class WishlistPurchaseRepository(WishlistDbContext wishlistDbCon
 
             _context.Purchases.Add(purchase);
             await _context.SaveChangesAsync(cancellationToken);
-            return purchase.ToDto();
+            return purchase.ToModel();
         }
 
         if (purchase is not null)
@@ -52,7 +53,7 @@ internal sealed class WishlistPurchaseRepository(WishlistDbContext wishlistDbCon
             }
 
             await _context.SaveChangesAsync(cancellationToken);
-            return purchase.ToDto();
+            return purchase.ToModel();
         }
 
         return null;

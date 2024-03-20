@@ -1,15 +1,15 @@
-﻿using WishlistApp.Data.Sql.Models;
+﻿using WishlistApp.Data.Models;
 
 namespace WishlistApp;
 
 internal static class Constants
 {
-    public readonly static WishlistItemPriorityDto[] WishlistItemPriorities =
+    public readonly static WishlistItemPriority[] WishlistItemPriorities =
         [
-            WishlistItemPriority.Unknown.ToDto(),
-            WishlistItemPriority.Low.ToDto(),
-            WishlistItemPriority.Medium.ToDto(),
-            WishlistItemPriority.High.ToDto(),
-            WishlistItemPriority.VeryHigh.ToDto()
+            WishlistItemPriorityValue.Unknown.ToModel(),
+            WishlistItemPriorityValue.Low.ToModel(),
+            WishlistItemPriorityValue.Medium.ToModel(),
+            WishlistItemPriorityValue.High.ToModel(),
+            WishlistItemPriorityValue.VeryHigh.ToModel()
         ];
 }

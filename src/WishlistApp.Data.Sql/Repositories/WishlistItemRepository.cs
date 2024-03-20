@@ -1,14 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WishlistApp.Data.Sql;
+﻿using WishlistApp.Data.Models;
+using WishlistApp.Data.Repositories;
 using WishlistApp.Data.Sql.Models;
 
-namespace WishlistApp.Services.Repositories;
+namespace WishlistApp.Data.Sql.Repositories;
 
 internal sealed class WishlistItemRepository(WishlistDbContext wishlistDbContext) : IWishlistItemRepository
 {
     private readonly WishlistDbContext _context = wishlistDbContext;
 
-    public async Task<WishlistItemDto?> AddWishlistItem(int wishlistId, string url, CancellationToken cancellationToken)
+    public async Task<WishlistItem?> AddWishlistItem(int wishlistId, string url, CancellationToken cancellationToken)
     {
         Guard.IsGreaterThan(wishlistId, -1, nameof(wishlistId));
         Guard.IsNotNullOrWhiteSpace(url, nameof(url));
@@ -17,7 +17,7 @@ internal sealed class WishlistItemRepository(WishlistDbContext wishlistDbContext
 
         if (wishlist is not null)
         {
-            var item = new WishlistItem
+            var item = new WishlistItemEntity
             {
                 WishlistId = wishlistId,
                 Wishlist = wishlist,
@@ -27,13 +27,13 @@ internal sealed class WishlistItemRepository(WishlistDbContext wishlistDbContext
 
             _context.Items.Add(item);
             await _context.SaveChangesAsync(cancellationToken);
-            return item.ToDto();
+            return item.ToModel();
         }
 
         return null;
     }
 
-    public async Task<WishlistItemDto?> UpdateWishlistItem(WishlistItemDto updatedItem, CancellationToken cancellationToken)
+    public async Task<WishlistItem?> UpdateWishlistItem(WishlistItem updatedItem, CancellationToken cancellationToken)
     {
         Guard.IsNotNull(updatedItem, nameof(updatedItem));
 
@@ -49,7 +49,7 @@ internal sealed class WishlistItemRepository(WishlistDbContext wishlistDbContext
             item.Priority = updatedItem.Priority.Priority;
 
             await _context.SaveChangesAsync(cancellationToken);
-            return item.ToDto();
+            return item.ToModel();
         }
 
         return null;
@@ -83,7 +83,7 @@ internal sealed class WishlistItemRepository(WishlistDbContext wishlistDbContext
         await _context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<WishlistItemDto?> SetWishlistItemPriority(int itemId, WishlistItemPriorityDto priority, CancellationToken cancellationToken)
+    public async Task<WishlistItem?> SetWishlistItemPriority(int itemId, WishlistItemPriority priority, CancellationToken cancellationToken)
     {
         Guard.IsGreaterThan(itemId, -1, nameof(itemId));
 
@@ -93,7 +93,7 @@ internal sealed class WishlistItemRepository(WishlistDbContext wishlistDbContext
         {
             item.Priority = priority.Priority;
             await _context.SaveChangesAsync(cancellationToken);
-            return item.ToDto();
+            return item.ToModel();
         }
 
         return null;

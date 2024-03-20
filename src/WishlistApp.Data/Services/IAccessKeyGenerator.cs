@@ -1,4 +1,4 @@
-﻿namespace WishlistApp.Services;
+﻿namespace WishlistApp.Data.Services;
 
 public interface IAccessKeyGenerator
 {

@@ -1,4 +1,4 @@
-﻿namespace WishlistApp.Services;
+﻿namespace WishlistApp.Data.Services;
 
 internal sealed class AccessKeyGenerator(IConfiguration configuration) : IAccessKeyGenerator
 {

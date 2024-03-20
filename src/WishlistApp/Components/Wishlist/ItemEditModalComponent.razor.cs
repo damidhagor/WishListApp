@@ -13,18 +13,18 @@ public partial class ItemEditModalComponent
     public WishlistViewModel ViewModel { get; set; } = default!;
 
     private ModalComponent _modal = default!;
-    private WishlistItemDto? _item;
+    private WishlistItem? _item;
 
     private string _name = "";
     private string _description = "";
     private string _note = "";
     private string _price = "";
     private int _quantity = 1;
-    private WishlistItemPriorityDto _priority = Constants.WishlistItemPriorities[0];
+    private WishlistItemPriority _priority = Constants.WishlistItemPriorities[0];
 
     private bool _isLoading = false;
 
-    public async Task Open(WishlistItemDto item)
+    public async Task Open(WishlistItem item)
     {
         _item = item;
         _name = _item?.Name ?? "";

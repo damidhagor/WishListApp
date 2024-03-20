@@ -1,6 +1,6 @@
-﻿namespace WishlistApp.Data.Sql.Models;
+﻿namespace WishlistApp.Data.Models;
 
-public enum WishlistItemPriority
+public enum WishlistItemPriorityValue
 {
     Unknown = 0,
     Low = 1,

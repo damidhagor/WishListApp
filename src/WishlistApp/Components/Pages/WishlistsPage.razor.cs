@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using WishlistApp.Models;
 using WishlistApp.Services;
 
 namespace WishlistApp.Components.Pages;
@@ -18,9 +19,9 @@ public partial class WishlistsPage
     [Inject]
     private IWishlistRepository _repository { get; set; } = default!;
 
-    private WishlistUserDto? _user;
+    private WishlistUser? _user;
 
-    private List<WishlistDto>? _wishlists;
+    private List<Data.Models.Wishlist>? _wishlists;
 
     private string _newWishlistName = "";
 

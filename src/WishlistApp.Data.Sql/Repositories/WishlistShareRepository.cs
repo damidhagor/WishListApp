@@ -1,15 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WishlistApp.Data.Sql;
+using WishlistApp.Data.Models;
+using WishlistApp.Data.Repositories;
+using WishlistApp.Data.Services;
 using WishlistApp.Data.Sql.Models;
 
-namespace WishlistApp.Services.Repositories;
+namespace WishlistApp.Data.Sql.Repositories;
 
 internal sealed class WishlistShareRepository(WishlistDbContext wishlistDbContext, IAccessKeyGenerator accessKeyGenerator) : IWishlistShareRepository
 {
     private readonly WishlistDbContext _context = wishlistDbContext;
     private readonly IAccessKeyGenerator _accessKeyGenerator = accessKeyGenerator;
 
-    public async Task<WishlistShareDto?> AddWishlistShare(int wishlistId, string name, CancellationToken cancellationToken)
+    public async Task<WishlistShare?> AddWishlistShare(int wishlistId, string name, CancellationToken cancellationToken)
     {
         Guard.IsNotNullOrWhiteSpace(name, nameof(name));
 
@@ -21,7 +23,7 @@ internal sealed class WishlistShareRepository(WishlistDbContext wishlistDbContex
         }
 
         var accessKey = _accessKeyGenerator.GenerateAccessKey(16);
-        var share = new WishlistShare
+        var share = new WishlistShareEntity
         {
             WishlistId = wishlistId,
             Wishlist = wishlist,
@@ -32,7 +34,7 @@ internal sealed class WishlistShareRepository(WishlistDbContext wishlistDbContex
         _context.Shares.Add(share);
         await _context.SaveChangesAsync(cancellationToken);
 
-        return share.ToDto();
+        return share.ToModel();
     }
 
     public async Task<bool> DeleteWishlistShare(int shareId, CancellationToken cancellationToken)
@@ -49,19 +51,19 @@ internal sealed class WishlistShareRepository(WishlistDbContext wishlistDbContex
         return false;
     }
 
-    public async Task<WishlistShareDto?> GetWishlistShareByAccessKey(string accessKey, CancellationToken cancellationToken)
+    public async Task<WishlistShare?> GetWishlistShareByAccessKey(string accessKey, CancellationToken cancellationToken)
     {
         Guard.IsNotNullOrWhiteSpace(accessKey, nameof(accessKey));
 
         var share = await _context.Shares.FirstOrDefaultAsync(s => s.AccessKey == accessKey, cancellationToken);
-        return share?.ToDto();
+        return share?.ToModel();
     }
 
-    public async Task<WishlistShareDto?> GetWishlistShareById(int shareId, CancellationToken cancellationToken)
+    public async Task<WishlistShare?> GetWishlistShareById(int shareId, CancellationToken cancellationToken)
     {
         Guard.IsGreaterThan(shareId, -1, nameof(shareId));
 
         var share = await _context.Shares.FirstOrDefaultAsync(s => s.Id == shareId, cancellationToken);
-        return share?.ToDto();
+        return share?.ToModel();
     }
 }

@@ -1,6 +1,8 @@
-﻿namespace WishlistApp.Services;
+﻿using WishlistApp.Models;
+
+namespace WishlistApp.Services;
 
 public interface IUserService
 {
-    Task<WishlistUserDto?> GetLoggedInWishlistUser();
+    Task<WishlistUser?> GetLoggedInWishlistUser();
 }

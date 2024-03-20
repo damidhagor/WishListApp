@@ -55,7 +55,7 @@ public partial class WishlistComponent : IRecipient<WishlistUpdated>
         }
     }
 
-    private IEnumerable<WishlistItemDto> GetFilteredWishlistItems()
+    private IEnumerable<WishlistItem> GetFilteredWishlistItems()
     {
         if (ViewModel?.Wishlist is null || ViewModel.Wishlist.Items.Length == 0)
         {

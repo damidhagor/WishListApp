@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Components.Authorization;
+using WishlistApp.Models;
 
 namespace WishlistApp.Services;
 
@@ -7,7 +8,7 @@ internal sealed class UserService(AuthenticationStateProvider authenticationStat
 {
     private readonly AuthenticationStateProvider _authenticationStateProvider = authenticationStateProvider;
 
-    public async Task<WishlistUserDto?> GetLoggedInWishlistUser()
+    public async Task<WishlistUser?> GetLoggedInWishlistUser()
     {
         var authenticationState = await _authenticationStateProvider.GetAuthenticationStateAsync();
         if (authenticationState.User.Identity is null
@@ -37,6 +38,6 @@ internal sealed class UserService(AuthenticationStateProvider authenticationStat
             .Select(c => c.Value)
             .ToArray();
 
-        return new WishlistUserDto(identifier, name, roles, claims);
+        return new WishlistUser(identifier, name, roles, claims);
     }
 }

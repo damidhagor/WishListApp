@@ -5,76 +5,76 @@ namespace WishlistApp.Data.Sql;
 
 public sealed class WishlistDbContext(DbContextOptions options) : DbContext(options)
 {
-    public DbSet<Wishlist> Wishlists { get; set; }
+    public DbSet<WishlistEntity> Wishlists { get; set; }
 
-    public DbSet<WishlistItem> Items { get; set; }
+    public DbSet<WishlistItemEntity> Items { get; set; }
 
-    public DbSet<WishlistShare> Shares { get; set; }
+    public DbSet<WishlistShareEntity> Shares { get; set; }
 
-    public DbSet<WishlistPurchase> Purchases { get; set; }
+    public DbSet<WishlistPurchaseEntity> Purchases { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
 
-        builder.Entity<Wishlist>()
+        builder.Entity<WishlistEntity>()
             .HasKey(e => e.Id);
-        builder.Entity<Wishlist>()
+        builder.Entity<WishlistEntity>()
             .Property(e => e.Name)
             .HasMaxLength(300)
             .IsRequired();
-        builder.Entity<Wishlist>()
+        builder.Entity<WishlistEntity>()
             .Navigation(e => e.Shares)
             .AutoInclude();
-        builder.Entity<Wishlist>()
+        builder.Entity<WishlistEntity>()
             .Navigation(e => e.Items)
             .AutoInclude();
 
-        builder.Entity<WishlistItem>()
+        builder.Entity<WishlistItemEntity>()
             .HasKey(e => e.Id);
-        builder.Entity<WishlistItem>()
+        builder.Entity<WishlistItemEntity>()
             .Property(e => e.Url)
             .HasMaxLength(500)
             .IsRequired();
-        builder.Entity<WishlistItem>()
+        builder.Entity<WishlistItemEntity>()
             .HasOne(e => e.Wishlist)
             .WithMany(e => e.Items)
             .HasForeignKey(e => e.WishlistId);
-        builder.Entity<WishlistItem>()
+        builder.Entity<WishlistItemEntity>()
             .Navigation(e => e.Wishlist)
             .AutoInclude();
-        builder.Entity<WishlistItem>()
+        builder.Entity<WishlistItemEntity>()
             .Navigation(e => e.Purchases)
             .AutoInclude();
 
-        builder.Entity<WishlistPurchase>()
+        builder.Entity<WishlistPurchaseEntity>()
             .HasKey(e => e.Id);
-        builder.Entity<WishlistPurchase>()
+        builder.Entity<WishlistPurchaseEntity>()
             .HasOne(e => e.Item)
             .WithMany(e => e.Purchases)
             .HasForeignKey(e => e.ItemId);
-        builder.Entity<WishlistPurchase>()
+        builder.Entity<WishlistPurchaseEntity>()
             .HasOne(e => e.Share)
             .WithMany(e => e.Purchases)
             .HasForeignKey(e => e.ShareId);
-        builder.Entity<WishlistPurchase>()
+        builder.Entity<WishlistPurchaseEntity>()
             .Navigation(e => e.Item)
             .AutoInclude();
-        builder.Entity<WishlistPurchase>()
+        builder.Entity<WishlistPurchaseEntity>()
             .Navigation(e => e.Share)
             .AutoInclude();
 
-        builder.Entity<WishlistShare>()
+        builder.Entity<WishlistShareEntity>()
             .HasKey(e => e.Id);
-        builder.Entity<WishlistShare>()
+        builder.Entity<WishlistShareEntity>()
             .Property(e => e.Name)
             .HasMaxLength(300)
             .IsRequired();
-        builder.Entity<WishlistShare>()
+        builder.Entity<WishlistShareEntity>()
             .Property(e => e.AccessKey)
             .HasMaxLength(16)
             .IsRequired();
-        builder.Entity<WishlistShare>()
+        builder.Entity<WishlistShareEntity>()
             .HasOne(e => e.Wishlist)
             .WithMany(e => e.Shares)
             .HasForeignKey(e => e.WishlistId);

@@ -1,4 +1,7 @@
 using Microsoft.AspNetCore.Components;
+using WishlistApp.Data.Models;
+using WishlistApp.Data.Repositories;
+using WishlistApp.Models;
 using WishlistApp.Services;
 
 namespace WishlistApp.Components.Pages;
@@ -49,7 +52,7 @@ public partial class WishlistPage : IRecipient<WishlistUpdated>
         await LoadWishlistAndValidateAccess(user, share, default);
     }
 
-    private async Task LoadWishlistAndValidateAccess(WishlistUserDto? user, WishlistShareDto? share, CancellationToken cancellationToken)
+    private async Task LoadWishlistAndValidateAccess(WishlistUser? user, WishlistShare? share, CancellationToken cancellationToken)
     {
         var wishlistId = share?.WishlistId ?? WishlistId;
 
