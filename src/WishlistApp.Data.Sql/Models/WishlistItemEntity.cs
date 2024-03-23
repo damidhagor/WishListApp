@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using WishlistApp.Data.Models;
 
 namespace WishlistApp.Data.Sql.Models;
 
