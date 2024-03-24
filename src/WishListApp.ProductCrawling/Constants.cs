@@ -1,4 +1,4 @@
-﻿namespace WishlistApp.ProductCrawling;
+﻿namespace WishListApp.ProductCrawling;
 
 internal static class Constants
 {

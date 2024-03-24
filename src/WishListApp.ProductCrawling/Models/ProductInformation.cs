@@ -1,4 +1,4 @@
-﻿namespace WishlistApp.ProductCrawling.Models;
+﻿namespace WishListApp.ProductCrawling.Models;
 
 public sealed record class ProductInformation(
     string? Title,

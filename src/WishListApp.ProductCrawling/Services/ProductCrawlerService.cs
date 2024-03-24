@@ -1,9 +1,9 @@
 ﻿using System.Collections.Frozen;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
-using WishlistApp.ProductCrawling.ProductCrawlers;
+using WishListApp.ProductCrawling.ProductCrawlers;
 
-namespace WishlistApp.ProductCrawling.Services;
+namespace WishListApp.ProductCrawling.Services;
 
 internal sealed class ProductCrawlerService(
     IHttpClientFactory httpClientFactory,

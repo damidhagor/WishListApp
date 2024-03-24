@@ -1,4 +1,4 @@
-﻿namespace WishlistApp.ProductCrawling.Services;
+﻿namespace WishListApp.ProductCrawling.Services;
 
 public interface IProductCrawlerService
 {

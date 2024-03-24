@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using WishlistApp.ProductCrawling.ProductCrawlers;
-using WishlistApp.ProductCrawling.Services;
+using WishListApp.ProductCrawling.ProductCrawlers;
+using WishListApp.ProductCrawling.Services;
 
-namespace WishlistApp.ProductCrawling;
+namespace WishListApp.ProductCrawling;
 
 public static class ServiceCollectionExtensions
 {

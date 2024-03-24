@@ -1,4 +1,4 @@
-﻿namespace WishlistApp.ProductCrawling.ProductCrawlers;
+﻿namespace WishListApp.ProductCrawling.ProductCrawlers;
 
 internal interface IProductInformationParser
 {
