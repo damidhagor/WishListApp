@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34310.174
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WishlistApp", "WishlistApp\WishlistApp.csproj", "{1E316D81-7BB3-4E29-8983-3E5116C1BD16}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WishlistApp.ProductCrawling", "WishlistApp.ProductCrawling\WishlistApp.ProductCrawling.csproj", "{3975F8AB-60B3-4810-8C34-CD7700CF7FA4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WishlistApp.Data.Sql", "WishlistApp.Data.Sql\WishlistApp.Data.Sql.csproj", "{4F86C138-C3A3-4C18-B631-3CAB7733C9C9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WishlistApp.Cli", "WishlistApp.Cli\WishlistApp.Cli.csproj", "{071C5BA1-F044-4774-970C-0FBF44E08318}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WishListApp.Data", "WishListApp.Data\WishListApp.Data.csproj", "{730E5A2E-D524-478F-9DB9-3C88E064CBB8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{67819FE2-744A-41A5-A3DA-5B411992BCFA}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1E316D81-7BB3-4E29-8983-3E5116C1BD16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E316D81-7BB3-4E29-8983-3E5116C1BD16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E316D81-7BB3-4E29-8983-3E5116C1BD16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E316D81-7BB3-4E29-8983-3E5116C1BD16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3975F8AB-60B3-4810-8C34-CD7700CF7FA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3975F8AB-60B3-4810-8C34-CD7700CF7FA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3975F8AB-60B3-4810-8C34-CD7700CF7FA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3975F8AB-60B3-4810-8C34-CD7700CF7FA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F86C138-C3A3-4C18-B631-3CAB7733C9C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F86C138-C3A3-4C18-B631-3CAB7733C9C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F86C138-C3A3-4C18-B631-3CAB7733C9C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F86C138-C3A3-4C18-B631-3CAB7733C9C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{071C5BA1-F044-4774-970C-0FBF44E08318}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{071C5BA1-F044-4774-970C-0FBF44E08318}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{071C5BA1-F044-4774-970C-0FBF44E08318}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{071C5BA1-F044-4774-970C-0FBF44E08318}.Release|Any CPU.Build.0 = Release|Any CPU
+		{730E5A2E-D524-478F-9DB9-3C88E064CBB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{730E5A2E-D524-478F-9DB9-3C88E064CBB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{730E5A2E-D524-478F-9DB9-3C88E064CBB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{730E5A2E-D524-478F-9DB9-3C88E064CBB8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C8786EAC-B873-4FC8-B5CA-4829B6774077}
+	EndGlobalSection
+EndGlobal
