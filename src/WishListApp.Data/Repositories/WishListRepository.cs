@@ -1,6 +1,6 @@
 ﻿namespace WishListApp.Data.Repositories;
 
-public sealed class WishlistRepository(IMongoClient mongoClient) : IWishListRepository
+public sealed class WishListRepository(IMongoClient mongoClient) : IWishListRepository
 {
     private readonly IMongoCollection<WishList> _collection = mongoClient
         .GetDatabase(Constants.DatabaseName)
