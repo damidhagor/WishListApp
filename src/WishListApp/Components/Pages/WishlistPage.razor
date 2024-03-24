@@ -1,0 +1,23 @@
+﻿@page "/editwishlist"
+@page "/w/{accessKey}"
+@attribute [AllowAnonymous]
+
+<PageTitle>@_viewModel?.Wishlist?.Name</PageTitle>
+
+<div>
+    @if (_viewModel?.Wishlist is null)
+    {
+        <div>
+            <div class="spinner-border spinner-border-sm text-primary ms-1" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            Loading Wishlist ...
+        </div>
+    }
+    else
+    {
+        <CascadingValue Value="_viewModel">
+            <WishlistComponent />
+        </CascadingValue>
+    }
+</div>

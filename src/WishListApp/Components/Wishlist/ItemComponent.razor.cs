@@ -1,0 +1,78 @@
+using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
+using WishlistApp.ProductCrawling.Services;
+
+namespace WishlistApp.Components.Wishlist;
+
+public partial class ItemComponent
+{
+    [Inject]
+    private IJSRuntime _jsRuntime { get; set; } = default!;
+
+    [Inject]
+    private IProductCrawlerService _productCrawler { get; set; } = default!;
+
+    [CascadingParameter]
+    public WishlistItem Item { get; set; } = default!;
+
+    [CascadingParameter]
+    public WishlistViewModel ViewModel { get; set; } = default!;
+
+    protected bool IsProductInformationLoading { get; set; }
+
+    private string? ImageUrl { get; set; }
+
+    private bool _canBePurchased => Item.CanBePurchasedByShare(ViewModel.LoggedInShare);
+
+    private bool _purchasedByOtherShare => Item.Purchases.Length > 0;
+
+    private int _purchasedByLoggedInShare => Item.GetPurchasedQuantityByShare(ViewModel.LoggedInShare);
+
+    private ItemEditModalComponent _itemEditModal = default!;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await LoadItemInformation(default);
+    }
+
+    private async Task OpenWishlistItemEditModal() => await _itemEditModal.Open(Item);
+
+    private async Task LoadItemInformation(CancellationToken cancellationToken)
+    {
+        if (Item is null)
+        {
+            return;
+        }
+
+        try
+        {
+            IsProductInformationLoading = true;
+            var result = await _productCrawler.CrawlProduct(new Uri(Item.Url), cancellationToken);
+
+            ImageUrl = result.ImageUrl;
+        }
+        catch (Exception e)
+        {
+            ;
+        }
+        finally
+        {
+            IsProductInformationLoading = false;
+        }
+    }
+
+    private async Task BuyItem() => await ViewModel.BuyWishlistItem(Item, default);
+
+    private async Task UnbuyItem() => await ViewModel.UnbuyWishlistItem(Item, default);
+
+    private async Task SetItemPriority(WishlistItemPriority priority) => await ViewModel.SetWishlistItemPriority(Item, priority, default);
+
+    private async Task DeleteItem()
+    {
+        bool confirmed = await _jsRuntime.InvokeAsync<bool>("confirm", "Möchten Sie den Eintrag von der Wunschliste entfernen?");
+        if (confirmed)
+        {
+            await ViewModel.DeleteWishlistItem(Item, default);
+        }
+    }
+}

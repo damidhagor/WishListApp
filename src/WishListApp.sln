@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34310.174
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WishlistApp", "WishlistApp\WishlistApp.csproj", "{1E316D81-7BB3-4E29-8983-3E5116C1BD16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WishListApp", "WishListApp\WishListApp.csproj", "{1E316D81-7BB3-4E29-8983-3E5116C1BD16}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WishlistApp.ProductCrawling", "WishlistApp.ProductCrawling\WishlistApp.ProductCrawling.csproj", "{3975F8AB-60B3-4810-8C34-CD7700CF7FA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WishListApp.ProductCrawling", "WishListApp.ProductCrawling\WishListApp.ProductCrawling.csproj", "{3975F8AB-60B3-4810-8C34-CD7700CF7FA4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WishlistApp.Data.Sql", "WishlistApp.Data.Sql\WishlistApp.Data.Sql.csproj", "{4F86C138-C3A3-4C18-B631-3CAB7733C9C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WishListApp.Data.Sql", "WishListApp.Data.Sql\WishListApp.Data.Sql.csproj", "{4F86C138-C3A3-4C18-B631-3CAB7733C9C9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WishlistApp.Cli", "WishlistApp.Cli\WishlistApp.Cli.csproj", "{071C5BA1-F044-4774-970C-0FBF44E08318}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WishListApp.Cli", "WishListApp.Cli\WishListApp.Cli.csproj", "{071C5BA1-F044-4774-970C-0FBF44E08318}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WishListApp.Data", "WishListApp.Data\WishListApp.Data.csproj", "{730E5A2E-D524-478F-9DB9-3C88E064CBB8}"
 EndProject

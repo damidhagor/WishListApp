@@ -1,0 +1,112 @@
+﻿@inherits ComponentBase
+
+@if (Item is not null)
+{
+    <div class="d-flex rounded-2 border border-secondary border-1" style="height: 200px;">
+        <div class="d-flex flex-column w-25 overflow-hidden border-secondary border-end">
+            @if (IsProductInformationLoading)
+            {
+                <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-center">
+                    <img src="@ImageUrl" class="h-100 w-auto">
+                </div>
+            }
+        </div>
+
+        <div class="d-flex flex-column w-75">
+            <div class="d-flex flex-row ps-2 pt-2 pe-2 gap-2 border-bottom border-secondary align-items-baseline">
+                <h5 class="">
+                    <a href="@Item.Url" target="_blank">@(string.IsNullOrWhiteSpace(Item.Name) ? Item.Url : Item.Name)</a>
+                </h5>
+
+                @if (Item.Quantity > 1)
+                {
+                    <div class="align-self-baseline ms-auto">
+                        @Item.Quantity Stk.
+                    </div>
+                }
+
+                <div class="align-self-baseline">
+                    @Item.Price
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-grow-1 overflow-y-auto ms-2 mt-2 mb-2">
+                @Item.Description
+            </div>
+
+            <div class="d-flex flex-row gap-2 justify-content-end align-content-baseline border-top border-secondary p-2">
+                @if (ViewModel.ViewedByOwner)
+                {
+                    <div class="me-auto">
+                        <DropdownComponent T="WishlistItemPriority" Items="Constants.WishlistItemPriorities" SelectedItem="Item.Priority" SelectedItemChanged="SetItemPriority">
+                            <ItemTemplate>
+                                @context?.Name
+                            </ItemTemplate>
+                            <EmptySelectionTemplate>
+                                Keine Priorität gewählt
+                            </EmptySelectionTemplate>
+                        </DropdownComponent>
+                    </div>
+
+                    <button type="button" class="btn btn-outline-danger" @onclick="DeleteItem">
+                        <i class="bi bi-trash" /> Löschen
+                    </button>
+
+                    <button type="button" class="btn btn-outline-light" @onclick="OpenWishlistItemEditModal">
+                        <i class="bi bi-pen" /> Bearbeiten
+                    </button>
+                }
+                else
+                {
+                    <div class="d-flex rounded-2 me-auto p-2 border border-rounded-2 border-success text-bg-success-emphasis">
+                        <span class="text-white align-self-center">
+                            @Item.Priority.Name
+                        </span>
+                    </div>
+                }
+
+                @if (!ViewModel.HideBuyInformation)
+                {
+                    @if (_canBePurchased)
+                    {
+                        <button type="button" class="btn btn-outline-primary" @onclick="BuyItem">
+                            <i class="bi bi-bag" /> Als gekauft markieren
+                        </button>
+                    }
+                    
+                    if (_purchasedByLoggedInShare > 0)
+                    {
+                        <button type="button" class="btn btn-outline-warning" @onclick="UnbuyItem">
+                            <i class="bi bi-bag" /> Als Ungekauft Markieren
+                        </button>
+
+                        <div class="d-flex rounded-2 ps-4 pe-4 text-bg-success">
+                            <span class="text-white align-self-center">
+                                <i class="bi bi-bag-fill" /> @(Item.Quantity > 1 ? $"{_purchasedByLoggedInShare}" : "") Von Dir Gekauft
+                            </span>
+                        </div>
+                    }
+
+                    if (_purchasedByOtherShare)
+                    {
+                        <div class="d-flex rounded-2 p-2 text-bg-success">
+                            <span class="text-white align-self-center">
+                                <i class="bi bi-bag-fill" /> @(Item.Quantity > 1 ? $"{Item.PurchasedQuantity}" : "") Gekauft
+                            </span>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+        <ItemEditModalComponent @ref="_itemEditModal" />
+    </div>
+}

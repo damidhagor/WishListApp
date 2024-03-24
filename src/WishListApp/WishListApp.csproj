@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Remove="Endpoints\**" />
+		<Content Remove="Endpoints\**" />
+		<EmbeddedResource Remove="Endpoints\**" />
+		<None Remove="Endpoints\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="9.0.0-preview.2.24128.4" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\WishlistApp.Data.Sql\WishlistApp.Data.Sql.csproj" />
+		<ProjectReference Include="..\WishlistApp.ProductCrawling\WishlistApp.ProductCrawling.csproj" />
+	</ItemGroup>
+
+</Project>
