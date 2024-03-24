@@ -3,7 +3,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace WishlistApp.Data.Sql.Migrations
+namespace WishListApp.Data.Sql.Migrations
 {
     /// <inheritdoc />
     public partial class AddWishlistPurchase : Migration

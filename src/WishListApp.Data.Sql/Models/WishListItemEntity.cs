@@ -1,14 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WishlistApp.Data.Sql.Models;
+namespace WishListApp.Data.Sql.Models;
 
-public sealed class WishlistItemEntity
+public sealed class WishListItemEntity
 {
     public int Id { get; init; } = 0;
 
     public required int WishlistId { get; init; }
 
-    public required WishlistEntity Wishlist { get; init; }
+    public required WishListEntity Wishlist { get; init; }
 
     [MaxLength(500)]
     public required string Url { get; init; }
@@ -27,7 +27,7 @@ public sealed class WishlistItemEntity
     [MaxLength(500)]
     public string? Note { get; set; }
 
-    public WishlistItemPriorityValue Priority { get; set; }
+    public WishListItemPriorityValue Priority { get; set; }
 
-    public List<WishlistPurchaseEntity> Purchases { get; set; } = [];
+    public List<WishListPurchaseEntity> Purchases { get; set; } = [];
 }

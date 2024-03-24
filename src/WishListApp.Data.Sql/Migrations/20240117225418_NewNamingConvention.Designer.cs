@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using WishlistApp.Data.Sql;
+using WishListApp.Data.Sql;
 
 #nullable disable
 
-namespace WishlistApp.Data.Sql.Migrations
+namespace WishListApp.Data.Sql.Migrations
 {
-    [DbContext(typeof(WishlistDbContext))]
+    [DbContext(typeof(WishListDbContext))]
     [Migration("20240117225418_NewNamingConvention")]
     partial class NewNamingConvention
     {
@@ -131,7 +131,7 @@ namespace WishlistApp.Data.Sql.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("WishlistApp.Data.Models.Wishlist", b =>
+            modelBuilder.Entity("WishListApp.Data.Models.Wishlist", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -153,7 +153,7 @@ namespace WishlistApp.Data.Sql.Migrations
                     b.ToTable("Wishlists");
                 });
 
-            modelBuilder.Entity("WishlistApp.Data.Models.WishlistItem", b =>
+            modelBuilder.Entity("WishListApp.Data.Models.WishlistItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -200,7 +200,7 @@ namespace WishlistApp.Data.Sql.Migrations
                     b.ToTable("Items");
                 });
 
-            modelBuilder.Entity("WishlistApp.Data.Models.WishlistRole", b =>
+            modelBuilder.Entity("WishListApp.Data.Models.WishlistRole", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -226,7 +226,7 @@ namespace WishlistApp.Data.Sql.Migrations
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
-            modelBuilder.Entity("WishlistApp.Data.Models.WishlistShare", b =>
+            modelBuilder.Entity("WishListApp.Data.Models.WishlistShare", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -257,7 +257,7 @@ namespace WishlistApp.Data.Sql.Migrations
                     b.ToTable("Shares");
                 });
 
-            modelBuilder.Entity("WishlistApp.Data.Models.WishlistUser", b =>
+            modelBuilder.Entity("WishListApp.Data.Models.WishlistUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -323,7 +323,7 @@ namespace WishlistApp.Data.Sql.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("WishlistApp.Data.Models.WishlistRole", null)
+                    b.HasOne("WishListApp.Data.Models.WishlistRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -332,7 +332,7 @@ namespace WishlistApp.Data.Sql.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("WishlistApp.Data.Models.WishlistUser", null)
+                    b.HasOne("WishListApp.Data.Models.WishlistUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -341,7 +341,7 @@ namespace WishlistApp.Data.Sql.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("WishlistApp.Data.Models.WishlistUser", null)
+                    b.HasOne("WishListApp.Data.Models.WishlistUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -350,13 +350,13 @@ namespace WishlistApp.Data.Sql.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("WishlistApp.Data.Models.WishlistRole", null)
+                    b.HasOne("WishListApp.Data.Models.WishlistRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WishlistApp.Data.Models.WishlistUser", null)
+                    b.HasOne("WishListApp.Data.Models.WishlistUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -365,20 +365,20 @@ namespace WishlistApp.Data.Sql.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("WishlistApp.Data.Models.WishlistUser", null)
+                    b.HasOne("WishListApp.Data.Models.WishlistUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WishlistApp.Data.Models.WishlistItem", b =>
+            modelBuilder.Entity("WishListApp.Data.Models.WishlistItem", b =>
                 {
-                    b.HasOne("WishlistApp.Data.Models.WishlistShare", "BuyerShare")
+                    b.HasOne("WishListApp.Data.Models.WishlistShare", "BuyerShare")
                         .WithMany("BoughtItems")
                         .HasForeignKey("BuyerShareId");
 
-                    b.HasOne("WishlistApp.Data.Models.Wishlist", "Wishlist")
+                    b.HasOne("WishListApp.Data.Models.Wishlist", "Wishlist")
                         .WithMany("Items")
                         .HasForeignKey("WishlistId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -389,9 +389,9 @@ namespace WishlistApp.Data.Sql.Migrations
                     b.Navigation("Wishlist");
                 });
 
-            modelBuilder.Entity("WishlistApp.Data.Models.WishlistShare", b =>
+            modelBuilder.Entity("WishListApp.Data.Models.WishlistShare", b =>
                 {
-                    b.HasOne("WishlistApp.Data.Models.Wishlist", "Wishlist")
+                    b.HasOne("WishListApp.Data.Models.Wishlist", "Wishlist")
                         .WithMany("Shares")
                         .HasForeignKey("WishlistId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -400,14 +400,14 @@ namespace WishlistApp.Data.Sql.Migrations
                     b.Navigation("Wishlist");
                 });
 
-            modelBuilder.Entity("WishlistApp.Data.Models.Wishlist", b =>
+            modelBuilder.Entity("WishListApp.Data.Models.Wishlist", b =>
                 {
                     b.Navigation("Items");
 
                     b.Navigation("Shares");
                 });
 
-            modelBuilder.Entity("WishlistApp.Data.Models.WishlistShare", b =>
+            modelBuilder.Entity("WishListApp.Data.Models.WishlistShare", b =>
                 {
                     b.Navigation("BoughtItems");
                 });

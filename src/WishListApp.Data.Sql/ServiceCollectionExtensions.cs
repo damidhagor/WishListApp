@@ -2,13 +2,13 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace WishlistApp.Data.Sql;
+namespace WishListApp.Data.Sql;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddWishlistSqlData(this IServiceCollection services)
+    public static IServiceCollection AddWishListSqlData(this IServiceCollection services)
     {
-        services.AddDbContext<WishlistDbContext>((serviceProvider, options) =>
+        services.AddDbContext<WishListDbContext>((serviceProvider, options) =>
         {
             var configuration = serviceProvider.GetRequiredService<IConfiguration>();
             var connectionString = configuration.GetConnectionString("SqlServer");

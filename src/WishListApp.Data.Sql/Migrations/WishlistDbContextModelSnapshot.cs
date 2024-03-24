@@ -3,13 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using WishlistApp.Data.Sql;
+using WishListApp.Data.Sql;
 
 #nullable disable
 
-namespace WishlistApp.Data.Sql.Migrations
+namespace WishListApp.Data.Sql.Migrations
 {
-    [DbContext(typeof(WishlistDbContext))]
+    [DbContext(typeof(WishListDbContext))]
     partial class WishlistDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -21,7 +21,7 @@ namespace WishlistApp.Data.Sql.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("WishlistApp.Data.Models.Wishlist", b =>
+            modelBuilder.Entity("WishListApp.Data.Models.Wishlist", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -43,7 +43,7 @@ namespace WishlistApp.Data.Sql.Migrations
                     b.ToTable("Wishlists");
                 });
 
-            modelBuilder.Entity("WishlistApp.Data.Models.WishlistItem", b =>
+            modelBuilder.Entity("WishListApp.Data.Models.WishlistItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -88,7 +88,7 @@ namespace WishlistApp.Data.Sql.Migrations
                     b.ToTable("Items");
                 });
 
-            modelBuilder.Entity("WishlistApp.Data.Models.WishlistPurchase", b =>
+            modelBuilder.Entity("WishListApp.Data.Models.WishlistPurchase", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -114,7 +114,7 @@ namespace WishlistApp.Data.Sql.Migrations
                     b.ToTable("Purchases");
                 });
 
-            modelBuilder.Entity("WishlistApp.Data.Models.WishlistShare", b =>
+            modelBuilder.Entity("WishListApp.Data.Models.WishlistShare", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -145,9 +145,9 @@ namespace WishlistApp.Data.Sql.Migrations
                     b.ToTable("Shares");
                 });
 
-            modelBuilder.Entity("WishlistApp.Data.Models.WishlistItem", b =>
+            modelBuilder.Entity("WishListApp.Data.Models.WishlistItem", b =>
                 {
-                    b.HasOne("WishlistApp.Data.Models.Wishlist", "Wishlist")
+                    b.HasOne("WishListApp.Data.Models.Wishlist", "Wishlist")
                         .WithMany("Items")
                         .HasForeignKey("WishlistId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -156,15 +156,15 @@ namespace WishlistApp.Data.Sql.Migrations
                     b.Navigation("Wishlist");
                 });
 
-            modelBuilder.Entity("WishlistApp.Data.Models.WishlistPurchase", b =>
+            modelBuilder.Entity("WishListApp.Data.Models.WishlistPurchase", b =>
                 {
-                    b.HasOne("WishlistApp.Data.Models.WishlistItem", "Item")
+                    b.HasOne("WishListApp.Data.Models.WishlistItem", "Item")
                         .WithMany("Purchases")
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WishlistApp.Data.Models.WishlistShare", "Share")
+                    b.HasOne("WishListApp.Data.Models.WishlistShare", "Share")
                         .WithMany("Purchases")
                         .HasForeignKey("ShareId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -175,9 +175,9 @@ namespace WishlistApp.Data.Sql.Migrations
                     b.Navigation("Share");
                 });
 
-            modelBuilder.Entity("WishlistApp.Data.Models.WishlistShare", b =>
+            modelBuilder.Entity("WishListApp.Data.Models.WishlistShare", b =>
                 {
-                    b.HasOne("WishlistApp.Data.Models.Wishlist", "Wishlist")
+                    b.HasOne("WishListApp.Data.Models.Wishlist", "Wishlist")
                         .WithMany("Shares")
                         .HasForeignKey("WishlistId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -186,19 +186,19 @@ namespace WishlistApp.Data.Sql.Migrations
                     b.Navigation("Wishlist");
                 });
 
-            modelBuilder.Entity("WishlistApp.Data.Models.Wishlist", b =>
+            modelBuilder.Entity("WishListApp.Data.Models.Wishlist", b =>
                 {
                     b.Navigation("Items");
 
                     b.Navigation("Shares");
                 });
 
-            modelBuilder.Entity("WishlistApp.Data.Models.WishlistItem", b =>
+            modelBuilder.Entity("WishListApp.Data.Models.WishlistItem", b =>
                 {
                     b.Navigation("Purchases");
                 });
 
-            modelBuilder.Entity("WishlistApp.Data.Models.WishlistShare", b =>
+            modelBuilder.Entity("WishListApp.Data.Models.WishlistShare", b =>
                 {
                     b.Navigation("Purchases");
                 });
