@@ -4,7 +4,7 @@ using WishListApp.Components.Controls.Modals;
 
 namespace WishListApp.Components.Wishlist;
 
-public partial class WishlistComponent : IRecipient<WishListUpdated>
+public partial class WishListComponent : IRecipient<WishListUpdated>
 {
     [Inject]
     private IJSRuntime _jsRuntime { get; set; } = default!;
