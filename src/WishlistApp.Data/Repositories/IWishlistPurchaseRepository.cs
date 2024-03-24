@@ -1,8 +1,8 @@
-﻿using WishlistApp.Data.Models;
+﻿//using WishListApp.Data.Models;
 
-namespace WishlistApp.Data.Repositories;
+//namespace WishListApp.Data.Repositories;
 
-public interface IWishlistPurchaseRepository
-{
-    Task<WishlistPurchase?> UpdatePurchaseQuantity(int itemId, int shareId, int quantity, CancellationToken cancellationToken);
-}
+//public interface IWishlistPurchaseRepository
+//{
+//    Task<WishlistPurchase?> UpdatePurchaseQuantity(int itemId, int shareId, int quantity, CancellationToken cancellationToken);
+//}

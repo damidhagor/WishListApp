@@ -1,16 +1,14 @@
-﻿using WishlistApp.Data.Models;
+﻿namespace WishListApp.Data.Repositories;
 
-namespace WishlistApp.Data.Repositories;
-
-public interface IWishlistRepository
+public interface IWishListRepository
 {
-    Task<Wishlist> CreateWishlist(string name, string ownerIdentifier, CancellationToken cancellationToken);
+    Task<WishList> CreateWishList(string name, string ownerId, CancellationToken cancellationToken);
 
-    Task<Wishlist?> RenameWishlist(int wishlistId, string name, CancellationToken cancellationToken);
+    Task<WishList?> GetWishListById(string wishListId, CancellationToken cancellationToken);
 
-    Task<Wishlist?> GetWishlist(int wishlistId, CancellationToken cancellationToken);
+    Task<List<WishList>> GetWishListsForOwner(string ownerId, CancellationToken cancellationToken);
 
-    Task<List<Wishlist>> GetAll(string ownerIdentifier, CancellationToken cancellationToken);
+    Task<WishList?> RenameWishList(string wishListId, string name, CancellationToken cancellationToken);
 
-    Task<bool> DeleteWishlist(int wishlistId, CancellationToken cancellationToken);
+    Task<bool> DeleteWishList(string wishListId, CancellationToken cancellationToken);
 }

@@ -1,4 +1,4 @@
-﻿namespace WishlistApp.Data.Services;
+﻿namespace WishListApp.Data.Services;
 
 internal sealed class AccessKeyGenerator(IConfiguration configuration) : IAccessKeyGenerator
 {
@@ -15,7 +15,7 @@ internal sealed class AccessKeyGenerator(IConfiguration configuration) : IAccess
         return new string(chars);
     }
 
-    public string GenerateWishlistShareUrl(string accessKey)
+    public string GenerateShareUrl(string accessKey)
     {
         return $"{_baseUrl}/w/{accessKey}";
     }

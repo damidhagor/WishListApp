@@ -1,10 +1,8 @@
-﻿using WishlistApp.Data.Services;
-
-namespace WishlistApp.Data;
+﻿namespace WishListApp.Data;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddWishlistData(this IServiceCollection services)
+    public static IServiceCollection AddWishListData(this IServiceCollection services)
     {
         services.AddTransient<IAccessKeyGenerator, AccessKeyGenerator>();
 

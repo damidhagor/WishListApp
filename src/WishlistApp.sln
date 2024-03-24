@@ -11,7 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WishlistApp.Data.Sql", "Wis
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WishlistApp.Cli", "WishlistApp.Cli\WishlistApp.Cli.csproj", "{071C5BA1-F044-4774-970C-0FBF44E08318}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WishlistApp.Data", "WishlistApp.Data\WishlistApp.Data.csproj", "{730E5A2E-D524-478F-9DB9-3C88E064CBB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WishListApp.Data", "WishListApp.Data\WishListApp.Data.csproj", "{730E5A2E-D524-478F-9DB9-3C88E064CBB8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{67819FE2-744A-41A5-A3DA-5B411992BCFA}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

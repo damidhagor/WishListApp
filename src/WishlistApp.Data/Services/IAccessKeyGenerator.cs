@@ -1,8 +1,8 @@
-﻿namespace WishlistApp.Data.Services;
+﻿namespace WishListApp.Data.Services;
 
 public interface IAccessKeyGenerator
 {
     string GenerateAccessKey(int length);
 
-    string GenerateWishlistShareUrl(string accessKey);
+    string GenerateShareUrl(string accessKey);
 }

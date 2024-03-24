@@ -1,8 +1,7 @@
-﻿namespace WishlistApp.Data.Models;
+﻿namespace WishListApp.Data.Models;
 
-public sealed record Wishlist(
-    int Id,
-    string OwnerIdentifier,
+public sealed record WishList(
+    ObjectId Id,
+    string OwnerId,
     string Name,
-    WishlistItem[] Items,
-    WishlistShare[] Shares);
+    WishListItem[] Items);
