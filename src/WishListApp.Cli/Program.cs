@@ -1,7 +1,7 @@
 ﻿using System.CommandLine;
-using WishlistApp.Cli.Database;
+using WishListApp.Cli.Database;
 
-var rootCommand = new RootCommand("Cli tool for the Wishlist App");
+var rootCommand = new RootCommand("Cli tool for the WishList App");
 
 rootCommand.AddDatabaseCommand();
 

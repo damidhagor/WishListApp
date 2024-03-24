@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WishlistApp.Data.Sql\WishlistApp.Data.Sql.csproj" />
+    <ProjectReference Include="..\WishListApp.Data.Sql\WishListApp.Data.Sql.csproj" />
   </ItemGroup>
 
 </Project>

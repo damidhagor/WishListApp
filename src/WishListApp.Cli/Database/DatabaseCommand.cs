@@ -1,8 +1,8 @@
 ﻿using System.CommandLine;
-using WishlistApp.Cli.Database.Commands;
-using WishlistApp.Cli.Database.Options;
+using WishListApp.Cli.Database.Commands;
+using WishListApp.Cli.Database.Options;
 
-namespace WishlistApp.Cli.Database;
+namespace WishListApp.Cli.Database;
 
 internal static class DatabaseCommand
 {

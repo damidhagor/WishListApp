@@ -1,11 +1,11 @@
 ﻿using System.CommandLine;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using WishlistApp.Cli.Database.Binders;
-using WishlistApp.Cli.Shared.Binders;
-using WishlistApp.Data.Sql;
+using WishListApp.Cli.Database.Binders;
+using WishListApp.Cli.Shared.Binders;
+using WishListApp.Data.Sql;
 
-namespace WishlistApp.Cli.Database.Commands;
+namespace WishListApp.Cli.Database.Commands;
 
 internal static class ApplyMigrationCommand
 {
@@ -13,13 +13,13 @@ internal static class ApplyMigrationCommand
     {
         var migrationCommand = new Command("apply-migrations", "Apply migrations to the database");
 
-        migrationCommand.SetHandler(ApplyMigrations, new LoggerBinder(), new WishlistDbContextBinder(connectionStringOption));
+        migrationCommand.SetHandler(ApplyMigrations, new LoggerBinder(), new WishListDbContextBinder(connectionStringOption));
 
         parentCommand.AddCommand(migrationCommand);
         return parentCommand;
     }
 
-    private static async Task ApplyMigrations(ILogger logger, WishlistDbContext context)
+    private static async Task ApplyMigrations(ILogger logger, WishListDbContext context)
     {
         var pendingMigrations = (await context.Database.GetPendingMigrationsAsync()).ToArray();
 

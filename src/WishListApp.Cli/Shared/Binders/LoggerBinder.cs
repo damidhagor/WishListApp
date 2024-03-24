@@ -1,7 +1,7 @@
 ﻿using System.CommandLine.Binding;
 using Microsoft.Extensions.Logging;
 
-namespace WishlistApp.Cli.Shared.Binders;
+namespace WishListApp.Cli.Shared.Binders;
 
 internal sealed class LoggerBinder : BinderBase<ILogger>
 {

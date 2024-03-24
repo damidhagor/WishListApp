@@ -1,6 +1,6 @@
 ﻿using System.CommandLine;
 
-namespace WishlistApp.Cli.Database.Options;
+namespace WishListApp.Cli.Database.Options;
 
 internal static class ConnectionStringOption
 {
@@ -8,7 +8,7 @@ internal static class ConnectionStringOption
     {
         var option = new Option<string>(
             aliases: ["--connection-string", "-c"],
-            description: "Connection string to the Wishlist database")
+            description: "Connection string to the WishList database")
         {
             IsRequired = true,
         };
