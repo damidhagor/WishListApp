@@ -1,4 +1,4 @@
-﻿namespace WishlistApp.Identity.Services;
+﻿namespace WishListApp.Identity.Services;
 
 public interface IIdentityService
 {

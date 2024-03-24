@@ -1,4 +1,4 @@
-﻿namespace WishlistApp.Identity;
+﻿namespace WishListApp.Identity;
 
 public sealed class IdentityOptions
 {

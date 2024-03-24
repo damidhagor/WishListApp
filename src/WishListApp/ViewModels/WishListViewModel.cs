@@ -1,20 +1,20 @@
 ﻿using Microsoft.AspNetCore.Components;
-using WishlistApp.Models;
+using WishListApp.Models;
 
-namespace WishlistApp.ViewModels;
+namespace WishListApp.ViewModels;
 
-public sealed class WishlistViewModel
+public sealed class WishListViewModel
 {
-    private readonly IWishlistRepository _wishlistRepository;
+    private readonly IWishlistRepository _wishListRepository;
     private readonly IWishlistItemRepository _itemRepository;
     private readonly IWishlistShareRepository _shareRepository;
     private readonly IWishlistPurchaseRepository _purchaseRepository;
     private readonly NavigationManager _navigationManager;
     private readonly IMessenger _messenger;
 
-    public Wishlist Wishlist { get; private set; } = default!;
+    public WishList WishList { get; private set; } = default!;
 
-    public WishlistUser? LoggedInUser { get; private set; }
+    public WishListUser? LoggedInUser { get; private set; }
 
     public WishlistShare? LoggedInShare { get; private set; }
 
@@ -22,9 +22,9 @@ public sealed class WishlistViewModel
 
     public bool HideBuyInformation { get; set; }
 
-    public bool ViewedByOwner => LoggedInUser is not null && LoggedInUser.Identifier == Wishlist.OwnerIdentifier;
+    public bool ViewedByOwner => LoggedInUser is not null && LoggedInUser.Identifier == WishList.OwnerIdentifier;
 
-    public WishlistViewModel(
+    public WishListViewModel(
         IWishlistRepository wishlistRepository,
         IWishlistItemRepository itemRepository,
         IWishlistShareRepository shareRepository,
@@ -32,17 +32,17 @@ public sealed class WishlistViewModel
         NavigationManager navigationManager,
         IMessenger messenger,
         Wishlist wishlist,
-        WishlistUser? loggedInUser,
+        WishListUser? loggedInUser,
         WishlistShare? loggedInShare)
     {
-        _wishlistRepository = wishlistRepository;
+        _wishListRepository = wishlistRepository;
         _itemRepository = itemRepository;
         _shareRepository = shareRepository;
         _purchaseRepository = purchaseRepository;
         _navigationManager = navigationManager;
         _messenger = messenger;
 
-        Wishlist = wishlist;
+        WishList = wishlist;
         LoggedInUser = loggedInUser;
         LoggedInShare = loggedInShare;
 
@@ -52,7 +52,7 @@ public sealed class WishlistViewModel
 
     public async Task RenameWishlist(string name, CancellationToken cancellationToken)
     {
-        await _wishlistRepository.RenameWishlist(Wishlist.Id, name, cancellationToken);
+        await _wishListRepository.RenameWishlist(WishList.Id, name, cancellationToken);
         await ReloadWishlist(cancellationToken);
     }
 
@@ -63,7 +63,7 @@ public sealed class WishlistViewModel
             return;
         }
 
-        await _itemRepository.AddWishlistItem(Wishlist.Id, url, cancellationToken);
+        await _itemRepository.AddWishlistItem(WishList.Id, url, cancellationToken);
         await ReloadWishlist(cancellationToken);
     }
 
@@ -109,7 +109,7 @@ public sealed class WishlistViewModel
 
     public async Task DeleteBoughtWishlistItems(CancellationToken cancellationToken)
     {
-        await _itemRepository.DeletePurchasedWishlistItems(Wishlist.Id, cancellationToken);
+        await _itemRepository.DeletePurchasedWishlistItems(WishList.Id, cancellationToken);
         await ReloadWishlist(cancellationToken);
     }
 
@@ -120,7 +120,7 @@ public sealed class WishlistViewModel
             return;
         }
 
-        await _shareRepository.AddWishlistShare(Wishlist.Id, name, cancellationToken);
+        await _shareRepository.AddWishlistShare(WishList.Id, name, cancellationToken);
         await ReloadWishlist(cancellationToken);
     }
 
@@ -132,7 +132,7 @@ public sealed class WishlistViewModel
 
     private async Task ReloadWishlist(CancellationToken cancellationToken)
     {
-        var wishlist = await _wishlistRepository.GetWishlist(Wishlist.Id, cancellationToken);
+        var wishlist = await _wishListRepository.GetWishlist(WishList.Id, cancellationToken);
 
         if (wishlist is null)
         {
@@ -140,7 +140,7 @@ public sealed class WishlistViewModel
             return;
         }
 
-        Wishlist = wishlist;
+        WishList = wishlist;
         _messenger.Send(new WishlistUpdated(wishlist));
     }
 }

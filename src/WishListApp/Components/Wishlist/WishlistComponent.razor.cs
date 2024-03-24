@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using WishlistApp.Components.Controls.Modals;
+using WishListApp.Components.Controls.Modals;
 
-namespace WishlistApp.Components.Wishlist;
+namespace WishListApp.Components.Wishlist;
 
-public partial class WishlistComponent : IRecipient<WishlistUpdated>
+public partial class WishlistComponent : IRecipient<WishListUpdated>
 {
     [Inject]
     private IJSRuntime _jsRuntime { get; set; } = default!;
@@ -16,7 +16,7 @@ public partial class WishlistComponent : IRecipient<WishlistUpdated>
     public int? WishlistId { get; set; }
 
     [CascadingParameter]
-    public WishlistViewModel ViewModel { get; set; } = default!;
+    public WishListViewModel ViewModel { get; set; } = default!;
 
     private string _newItemUrl = "";
 
@@ -26,7 +26,7 @@ public partial class WishlistComponent : IRecipient<WishlistUpdated>
 
     private TextInputModalComponent _inputModal = default!;
 
-    public void Receive(WishlistUpdated message)
+    public void Receive(WishListUpdated message)
     {
         StateHasChanged();
     }
@@ -57,14 +57,14 @@ public partial class WishlistComponent : IRecipient<WishlistUpdated>
 
     private IEnumerable<WishlistItem> GetFilteredWishlistItems()
     {
-        if (ViewModel?.Wishlist is null || ViewModel.Wishlist.Items.Length == 0)
+        if (ViewModel?.WishList is null || ViewModel.WishList.Items.Length == 0)
         {
             return [];
         }
 
         var filteredItems = ViewModel.HideBoughtItems
-            ? ViewModel.Wishlist.Items.Where(i => i.RemainingQuantity > 0)
-            : ViewModel.Wishlist.Items;
+            ? ViewModel.WishList.Items.Where(i => i.RemainingQuantity > 0)
+            : ViewModel.WishList.Items;
 
         filteredItems = ViewModel.HideBuyInformation
             ? filteredItems.OrderByDescending(i => i.Priority.Priority) // Don't order by buy-information if owner is viewing

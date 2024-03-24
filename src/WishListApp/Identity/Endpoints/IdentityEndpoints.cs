@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
-namespace WishlistApp.Identity.Endpoints;
+namespace WishListApp.Identity.Endpoints;
 
 public static class IdentityEndpoints
 {

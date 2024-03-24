@@ -1,6 +1,6 @@
 ﻿@inherits ComponentBase
 
-@if (ViewModel?.Wishlist is null)
+@if (ViewModel?.WishList is null)
 {
     <h1> Unbekannte Wunschliste </h1>
 
@@ -18,13 +18,13 @@ else
         <h1>
             @if (ViewModel.ViewedByOwner)
             {
-                <TextEditToggleComponent Value="@ViewModel.Wishlist.Name" OnValueAccepted="RenameWishlist">
-                    @ViewModel.Wishlist.Name
+                <TextEditToggleComponent Value="@ViewModel.WishList.Name" OnValueAccepted="RenameWishlist">
+                    @ViewModel.WishList.Name
                 </TextEditToggleComponent>
             }
             else
             {
-                @ViewModel.Wishlist.Name
+                @ViewModel.WishList.Name
             }
         </h1>
 
@@ -73,7 +73,7 @@ else
 
     <div class="border border-secondary"></div>
 
-    @if (ViewModel.Wishlist.Items.Length == 0)
+    @if (ViewModel.WishList.Items.Length == 0)
     {
         <h3 class="m-2 ms-4">
             <i class="bi bi-exclamation-circle" />

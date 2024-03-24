@@ -1,15 +1,15 @@
 using Microsoft.AspNetCore.Components;
-using WishlistApp.Components.Controls.Modals;
+using WishListApp.Components.Controls.Modals;
 
-namespace WishlistApp.Components.Wishlist;
+namespace WishListApp.Components.Wishlist;
 
-public partial class SharesModalComponent : IRecipient<WishlistUpdated>
+public partial class SharesModalComponent : IRecipient<WishListUpdated>
 {
     [Inject]
     private IMessenger _messenger { get; set; } = default!;
 
     [CascadingParameter]
-    public WishlistViewModel ViewModel { get; set; } = default!;
+    public WishListViewModel ViewModel { get; set; } = default!;
 
     private ModalComponent _modal = default!;
     private string _newShareName = "";
@@ -18,7 +18,7 @@ public partial class SharesModalComponent : IRecipient<WishlistUpdated>
 
     public async Task Open() => await _modal.Open();
 
-    public void Receive(WishlistUpdated message) => StateHasChanged();
+    public void Receive(WishListUpdated message) => StateHasChanged();
 
     protected override void OnInitialized() => _messenger.RegisterAll(this);
 

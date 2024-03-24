@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
-using WishlistApp.Identity.Endpoints;
+using WishListApp.Identity.Endpoints;
 
-namespace WishlistApp.Identity.Services;
+namespace WishListApp.Identity.Services;
 
 public sealed class IdentityService(NavigationManager navigationManager) : IIdentityService
 {

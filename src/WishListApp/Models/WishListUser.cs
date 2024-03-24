@@ -1,6 +1,6 @@
-﻿namespace WishlistApp.Models;
+﻿namespace WishListApp.Models;
 
-public sealed record class WishlistUser(
+public sealed record class WishListUser(
     string Identifier,
     string Name,
     string[] Roles,

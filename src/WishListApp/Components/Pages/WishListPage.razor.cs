@@ -1,18 +1,18 @@
 using Microsoft.AspNetCore.Components;
-using WishlistApp.Data.Models;
-using WishlistApp.Data.Repositories;
-using WishlistApp.Models;
-using WishlistApp.Services;
+using WishListApp.Data.Models;
+using WishListApp.Data.Repositories;
+using WishListApp.Models;
+using WishListApp.Services;
 
-namespace WishlistApp.Components.Pages;
+namespace WishListApp.Components.Pages;
 
-public partial class WishlistPage : IRecipient<WishlistUpdated>
+public partial class WishListPage : IRecipient<WishListUpdated>
 {
     [Inject]
     private IUserService _userService { get; set; } = default!;
 
     [Inject]
-    private IWishlistRepository _wishlistRepository { get; set; } = default!;
+    private IWishlistRepository _wishListRepository { get; set; } = default!;
 
     [Inject]
     private IWishlistItemRepository _itemRepository { get; set; } = default!;
@@ -31,12 +31,12 @@ public partial class WishlistPage : IRecipient<WishlistUpdated>
 
     [Parameter]
     [SupplyParameterFromQuery(Name = "id")]
-    public int? WishlistId { get; set; }
+    public int? WishListId { get; set; }
 
     [Parameter]
     public string AccessKey { get; set; } = "";
 
-    private WishlistViewModel? _viewModel;
+    private WishListViewModel? _viewModel;
 
 
     protected override async Task OnInitializedAsync()
@@ -44,33 +44,33 @@ public partial class WishlistPage : IRecipient<WishlistUpdated>
         _messenger.RegisterAll(this);
 
         var share = !string.IsNullOrWhiteSpace(AccessKey)
-            ? await _shareRepository.GetWishlistShareByAccessKey(AccessKey, default)
+            ? await _shareRepository.GetWishListShareByAccessKey(AccessKey, default)
             : null;
 
-        var user = await _userService.GetLoggedInWishlistUser();
+        var user = await _userService.GetLoggedInWishListUser();
 
-        await LoadWishlistAndValidateAccess(user, share, default);
+        await LoadWishListAndValidateAccess(user, share, default);
     }
 
-    private async Task LoadWishlistAndValidateAccess(WishlistUser? user, WishlistShare? share, CancellationToken cancellationToken)
+    private async Task LoadWishListAndValidateAccess(WishListUser? user, WishListShare? share, CancellationToken cancellationToken)
     {
-        var wishlistId = share?.WishlistId ?? WishlistId;
+        var wishListId = share?.WishListId ?? WishListId;
 
-        var wishlist = wishlistId is not null
-            ? await _wishlistRepository.GetWishlist(wishlistId.Value, cancellationToken)
+        var wishList = wishListId is not null
+            ? await _wishListRepository.GetWishList(wishListId.Value, cancellationToken)
             : null;
 
-        if (wishlist is null)
+        if (wishList is null)
         {
             _navigationManager.NavigateTo("/not-found");
             return;
         }
 
         var validOwner = user is not null
-            && wishlist.OwnerIdentifier == user.Identifier;
+            && wishList.OwnerIdentifier == user.Identifier;
 
         var validShare = share is not null
-            && wishlist.Id == share.WishlistId;
+            && wishList.Id == share.WishListId;
 
         if (!validOwner && !validShare)
         {
@@ -78,17 +78,17 @@ public partial class WishlistPage : IRecipient<WishlistUpdated>
             return;
         }
 
-        _viewModel = new WishlistViewModel(
-            _wishlistRepository,
+        _viewModel = new WishListViewModel(
+            _wishListRepository,
             _itemRepository,
             _shareRepository,
             _purchaseRepository,
             _navigationManager,
             _messenger,
-            wishlist,
+            wishList,
             user,
             share);
     }
 
-    public void Receive(WishlistUpdated message) => StateHasChanged();
+    public void Receive(WishListUpdated message) => StateHasChanged();
 }

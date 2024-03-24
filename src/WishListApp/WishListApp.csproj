@@ -14,13 +14,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Diagnostics" Version="8.2.2" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="9.0.0-preview.2.24128.4" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\WishlistApp.Data.Sql\WishlistApp.Data.Sql.csproj" />
-		<ProjectReference Include="..\WishlistApp.ProductCrawling\WishlistApp.ProductCrawling.csproj" />
+		<ProjectReference Include="..\WishListApp.Data.Sql\WishListApp.Data.Sql.csproj" />
+		<ProjectReference Include="..\WishListApp.ProductCrawling\WishListApp.ProductCrawling.csproj" />
 	</ItemGroup>
 
 </Project>

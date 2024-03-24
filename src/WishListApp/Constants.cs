@@ -1,6 +1,6 @@
-﻿using WishlistApp.Data.Models;
+﻿using WishListApp.Data.Models;
 
-namespace WishlistApp;
+namespace WishListApp;
 
 internal static class Constants
 {

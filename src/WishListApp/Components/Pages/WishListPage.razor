@@ -2,10 +2,10 @@
 @page "/w/{accessKey}"
 @attribute [AllowAnonymous]
 
-<PageTitle>@_viewModel?.Wishlist?.Name</PageTitle>
+<PageTitle>@_viewModel?.WishList?.Name</PageTitle>
 
 <div>
-    @if (_viewModel?.Wishlist is null)
+    @if (_viewModel?.WishList is null)
     {
         <div>
             <div class="spinner-border spinner-border-sm text-primary ms-1" role="status">

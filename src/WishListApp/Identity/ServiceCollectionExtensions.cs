@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Components.Server;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
-using WishlistApp.Identity.Services;
+using WishListApp.Identity.Services;
 
-namespace WishlistApp.Identity;
+namespace WishListApp.Identity;
 
 internal static class ServiceCollectionExtensions
 {

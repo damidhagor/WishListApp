@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using WishlistApp.Data.Services;
-using WishlistApp.Services;
+using WishListApp.Data.Services;
+using WishListApp.Services;
 
-namespace WishlistApp.Components.Wishlist;
+namespace WishListApp.Components.Wishlist;
 
 public partial class ShareComponent
 {
@@ -17,7 +17,7 @@ public partial class ShareComponent
     public WishlistShare Share { get; set; } = default!;
 
     [CascadingParameter]
-    public WishlistViewModel ViewModel { get; set; } = default!;
+    public WishListViewModel ViewModel { get; set; } = default!;
 
     private string Url => _accessKeyGenerator.GenerateWishlistShareUrl(Share.AccessKey);
 

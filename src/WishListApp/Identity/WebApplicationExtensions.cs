@@ -1,6 +1,6 @@
-﻿using WishlistApp.Identity.Endpoints;
+﻿using WishListApp.Identity.Endpoints;
 
-namespace WishlistApp.Identity;
+namespace WishListApp.Identity;
 
 internal static class WebApplicationExtensions
 {

@@ -1,8 +1,8 @@
-using WishlistApp.Components;
-using WishlistApp.Data.Sql;
-using WishlistApp.Identity;
-using WishlistApp.ProductCrawling;
-using WishlistApp.Services;
+using WishListApp.Components;
+using WishListApp.Data.Sql;
+using WishListApp.Identity;
+using WishListApp.ProductCrawling;
+using WishListApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

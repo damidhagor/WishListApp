@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
-namespace WishlistApp.Components.Controls;
+namespace WishListApp.Components.Controls;
 
 public partial class TextEditToggleComponent
 {

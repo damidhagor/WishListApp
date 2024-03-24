@@ -1,4 +1,4 @@
-namespace WishlistApp.Components.Controls.Modals;
+namespace WishListApp.Components.Controls.Modals;
 
 public partial class TextInputModalComponent
 {

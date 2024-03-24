@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components;
 
-namespace WishlistApp.Components.Controls;
+namespace WishListApp.Components.Controls;
 
 public partial class DropdownComponent<T>
 {

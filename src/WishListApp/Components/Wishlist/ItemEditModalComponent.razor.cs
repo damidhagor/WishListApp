@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Components;
-using WishlistApp.Components.Controls.Modals;
-using WishlistApp.ProductCrawling.Services;
+using WishListApp.Components.Controls.Modals;
+using WishListApp.ProductCrawling.Services;
 
-namespace WishlistApp.Components.Wishlist;
+namespace WishListApp.Components.Wishlist;
 
 public partial class ItemEditModalComponent
 {
@@ -10,7 +10,7 @@ public partial class ItemEditModalComponent
     private IProductCrawlerService _productCrawlerService { get; set; } = default!;
 
     [CascadingParameter]
-    public WishlistViewModel ViewModel { get; set; } = default!;
+    public WishListViewModel ViewModel { get; set; } = default!;
 
     private ModalComponent _modal = default!;
     private WishlistItem? _item;
