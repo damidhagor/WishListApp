@@ -1,16 +1,12 @@
-﻿//using WishListApp.Data.Models;
+﻿namespace WishListApp.Data.Repositories;
 
-//namespace WishListApp.Data.Repositories;
+public interface IWishListItemRepository
+{
+    Task<WishList?> Add(ObjectId wishListId, string url, CancellationToken cancellationToken);
 
-//public interface IWishlistItemRepository
-//{
-//    Task<WishlistItem?> AddWishlistItem(int wishlistId, string url, CancellationToken cancellationToken);
+    Task<WishList?> Delete(ObjectId wishListId, ObjectId itemId, CancellationToken cancellationToken);
 
-//    Task<WishlistItem?> UpdateWishlistItem(WishlistItem updatedItem, CancellationToken cancellationToken);
+    Task<WishList?> Update(ObjectId wishListId, WishListItem item, CancellationToken cancellationToken);
 
-//    Task<bool> DeleteWishlistItem(int itemId, CancellationToken cancellationToken);
-
-//    Task DeletePurchasedWishlistItems(int wishlistId, CancellationToken cancellationToken);
-
-//    Task<WishlistItem?> SetWishlistItemPriority(int itemId, WishlistItemPriority priority, CancellationToken cancellationToken);
-//}
+    Task<WishList?> UpdatePurchaseQuantity(ObjectId wishListId, ObjectId itemId, ObjectId shareId, int quantity, CancellationToken cancellationToken);
+}

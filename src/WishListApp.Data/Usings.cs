@@ -4,4 +4,5 @@ global using MongoDB.Bson;
 global using MongoDB.Driver;
 global using MongoDB.Driver.Linq;
 global using WishListApp.Data.Models;
+global using WishListApp.Data.Repositories;
 global using WishListApp.Data.Services;

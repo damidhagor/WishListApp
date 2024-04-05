@@ -2,13 +2,13 @@
 
 public interface IWishListRepository
 {
-    Task<WishList> CreateWishList(string name, string ownerId, CancellationToken cancellationToken);
+    Task<WishList> Add(string name, string ownerId, CancellationToken cancellationToken);
 
-    Task<WishList?> GetWishListById(string wishListId, CancellationToken cancellationToken);
+    Task<WishList?> GetById(ObjectId wishListId, CancellationToken cancellationToken);
 
-    Task<List<WishList>> GetWishListsForOwner(string ownerId, CancellationToken cancellationToken);
+    Task<List<WishList>> GetByOwner(string ownerId, CancellationToken cancellationToken);
 
-    Task<WishList?> RenameWishList(string wishListId, string name, CancellationToken cancellationToken);
+    Task<WishList?> Rename(ObjectId wishListId, string name, CancellationToken cancellationToken);
 
-    Task<bool> DeleteWishList(string wishListId, CancellationToken cancellationToken);
+    Task<bool> Delete(ObjectId wishListId, CancellationToken cancellationToken);
 }

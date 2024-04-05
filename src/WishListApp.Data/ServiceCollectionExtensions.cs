@@ -6,6 +6,10 @@ public static class ServiceCollectionExtensions
     {
         services.AddTransient<IAccessKeyGenerator, AccessKeyGenerator>();
 
+        services.AddScoped<IWishListRepository, WishListRepository>();
+        services.AddScoped<IWishListItemRepository, WishListItemRepository>();
+        services.AddScoped<IWishListShareRepository, WishListShareRepository>();
+
         return services;
     }
 }

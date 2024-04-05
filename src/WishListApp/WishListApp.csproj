@@ -20,7 +20,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\WishListApp.Data.Sql\WishListApp.Data.Sql.csproj" />
+		<ProjectReference Include="..\WishListApp.Data\WishListApp.Data.csproj" />
 		<ProjectReference Include="..\WishListApp.ProductCrawling\WishListApp.ProductCrawling.csproj" />
 	</ItemGroup>
 
