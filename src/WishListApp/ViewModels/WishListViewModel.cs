@@ -5,10 +5,10 @@ namespace WishListApp.ViewModels;
 
 public sealed class WishListViewModel
 {
-    private readonly IWishlistRepository _wishListRepository;
-    private readonly IWishlistItemRepository _itemRepository;
-    private readonly IWishlistShareRepository _shareRepository;
-    private readonly IWishlistPurchaseRepository _purchaseRepository;
+    private readonly IWishListRepository _wishListRepository;
+    private readonly IWishListItemRepository _itemRepository;
+    private readonly IWishListShareRepository _shareRepository;
+    private readonly IAccessKeyGenerator _accessKeyGenerator;
     private readonly NavigationManager _navigationManager;
     private readonly IMessenger _messenger;
 
@@ -16,33 +16,33 @@ public sealed class WishListViewModel
 
     public WishListUser? LoggedInUser { get; private set; }
 
-    public WishlistShare? LoggedInShare { get; private set; }
+    public WishListShare? LoggedInShare { get; private set; }
 
     public bool HideBoughtItems { get; set; }
 
     public bool HideBuyInformation { get; set; }
 
-    public bool ViewedByOwner => LoggedInUser is not null && LoggedInUser.Identifier == WishList.OwnerIdentifier;
+    public bool ViewedByOwner => LoggedInUser is not null && LoggedInUser.Identifier == WishList.OwnerId;
 
     public WishListViewModel(
-        IWishlistRepository wishlistRepository,
-        IWishlistItemRepository itemRepository,
-        IWishlistShareRepository shareRepository,
-        IWishlistPurchaseRepository purchaseRepository,
+        IWishListRepository wishListRepository,
+        IWishListItemRepository itemRepository,
+        IWishListShareRepository shareRepository,
+        IAccessKeyGenerator accessKeyGenerator,
         NavigationManager navigationManager,
         IMessenger messenger,
-        Wishlist wishlist,
+        WishList wishList,
         WishListUser? loggedInUser,
-        WishlistShare? loggedInShare)
+        WishListShare? loggedInShare)
     {
-        _wishListRepository = wishlistRepository;
+        _wishListRepository = wishListRepository;
         _itemRepository = itemRepository;
         _shareRepository = shareRepository;
-        _purchaseRepository = purchaseRepository;
+        _accessKeyGenerator = accessKeyGenerator;
         _navigationManager = navigationManager;
         _messenger = messenger;
 
-        WishList = wishlist;
+        WishList = wishList;
         LoggedInUser = loggedInUser;
         LoggedInShare = loggedInShare;
 
@@ -50,97 +50,98 @@ public sealed class WishListViewModel
         HideBuyInformation = ViewedByOwner;
     }
 
-    public async Task RenameWishlist(string name, CancellationToken cancellationToken)
+    public async Task RenameWishList(string name, CancellationToken cancellationToken)
     {
-        await _wishListRepository.RenameWishlist(WishList.Id, name, cancellationToken);
-        await ReloadWishlist(cancellationToken);
+        await _wishListRepository.Rename(WishList.Id, name, cancellationToken);
+        await ReloadWishList(cancellationToken);
     }
 
-    public async Task AddWishlistItem(string url, CancellationToken cancellationToken)
+    public async Task AddWishListItem(string url, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(url))
         {
             return;
         }
 
-        await _itemRepository.AddWishlistItem(WishList.Id, url, cancellationToken);
-        await ReloadWishlist(cancellationToken);
+        await _itemRepository.Add(WishList.Id, url, cancellationToken);
+        await ReloadWishList(cancellationToken);
     }
 
-    public async Task UpdateWishlistItem(WishlistItem item, CancellationToken cancellationToken)
+    public async Task UpdateWishListItem(WishListItem item, CancellationToken cancellationToken)
     {
-        await _itemRepository.UpdateWishlistItem(item, cancellationToken);
-        await ReloadWishlist(cancellationToken);
+        await _itemRepository.Update(WishList.Id, item, cancellationToken);
+        await ReloadWishList(cancellationToken);
     }
 
-    public async Task BuyWishlistItem(WishlistItem item, CancellationToken cancellationToken)
-    {
-        if (LoggedInShare is null)
-        {
-            return;
-        }
-
-        await _purchaseRepository.UpdatePurchaseQuantity(item.Id, LoggedInShare.Id, 1, cancellationToken);
-        await ReloadWishlist(cancellationToken);
-    }
-
-    public async Task UnbuyWishlistItem(WishlistItem item, CancellationToken cancellationToken)
+    public async Task BuyWishListItem(WishListItem item, CancellationToken cancellationToken)
     {
         if (LoggedInShare is null)
         {
             return;
         }
 
-        await _purchaseRepository.UpdatePurchaseQuantity(item.Id, LoggedInShare.Id, -1, cancellationToken);
-        await ReloadWishlist(cancellationToken);
+        await _itemRepository.UpdatePurchaseQuantity(WishList.Id, item.Id, LoggedInShare.Id, 1, cancellationToken);
+        await ReloadWishList(cancellationToken);
     }
 
-    public async Task SetWishlistItemPriority(WishlistItem item, WishlistItemPriority priority, CancellationToken cancellationToken)
+    public async Task UnbuyWishListItem(WishListItem item, CancellationToken cancellationToken)
     {
-        await _itemRepository.SetWishlistItemPriority(item.Id, priority, cancellationToken);
-        await ReloadWishlist(cancellationToken);
+        if (LoggedInShare is null)
+        {
+            return;
+        }
+
+        await _itemRepository.UpdatePurchaseQuantity(WishList.Id, item.Id, LoggedInShare.Id, 0, cancellationToken);
+        await ReloadWishList(cancellationToken);
     }
 
-    public async Task DeleteWishlistItem(WishlistItem item, CancellationToken cancellationToken)
+    public async Task SetWishListItemPriority(WishListItem item, int priority, CancellationToken cancellationToken)
     {
-        await _itemRepository.DeleteWishlistItem(item.Id, cancellationToken);
-        await ReloadWishlist(cancellationToken);
+        await _itemRepository.UpdatePriority(WishList.Id, item.Id, priority, cancellationToken);
+        await ReloadWishList(cancellationToken);
     }
 
-    public async Task DeleteBoughtWishlistItems(CancellationToken cancellationToken)
+    public async Task DeleteWishListItem(WishListItem item, CancellationToken cancellationToken)
     {
-        await _itemRepository.DeletePurchasedWishlistItems(WishList.Id, cancellationToken);
-        await ReloadWishlist(cancellationToken);
+        await _itemRepository.Delete(WishList.Id, item.Id, cancellationToken);
+        await ReloadWishList(cancellationToken);
     }
 
-    public async Task AddWishlistShare(string name, CancellationToken cancellationToken)
+    public async Task DeleteBoughtWishListItems(CancellationToken cancellationToken)
+    {
+        await _itemRepository.DeletePurchasedItems(WishList.Id, cancellationToken);
+        await ReloadWishList(cancellationToken);
+    }
+
+    public async Task AddWishListShare(string name, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
             return;
         }
 
-        await _shareRepository.AddWishlistShare(WishList.Id, name, cancellationToken);
-        await ReloadWishlist(cancellationToken);
+        var accessKey = _accessKeyGenerator.GenerateAccessKey(16);
+        await _shareRepository.Add(WishList.Id, name, accessKey, cancellationToken);
+        await ReloadWishList(cancellationToken);
     }
 
-    public async Task DeleteWishlistShare(WishlistShare share, CancellationToken cancellationToken)
+    public async Task DeleteWishListShare(WishListShare share, CancellationToken cancellationToken)
     {
-        await _shareRepository.DeleteWishlistShare(share.Id, cancellationToken);
-        await ReloadWishlist(cancellationToken);
+        await _shareRepository.Delete(share.Id, cancellationToken);
+        await ReloadWishList(cancellationToken);
     }
 
-    private async Task ReloadWishlist(CancellationToken cancellationToken)
+    private async Task ReloadWishList(CancellationToken cancellationToken)
     {
-        var wishlist = await _wishListRepository.GetWishlist(WishList.Id, cancellationToken);
+        var wishList = await _wishListRepository.GetById(WishList.Id, cancellationToken);
 
-        if (wishlist is null)
+        if (wishList is null)
         {
             _navigationManager.NavigateTo("/not-found");
             return;
         }
 
-        WishList = wishlist;
-        _messenger.Send(new WishlistUpdated(wishlist));
+        WishList = wishList;
+        _messenger.Send(new WishListUpdated(wishList));
     }
 }
