@@ -51,10 +51,10 @@ public sealed class WishListItemRepository(IMongoClient mongoClient) : IWishList
             cancellationToken);
     }
 
-    public async Task<WishList?> UpdatePriority(ObjectId wishListId, WishListItem item, int priority, CancellationToken cancellationToken)
+    public async Task<WishList?> UpdatePriority(ObjectId wishListId, ObjectId itemId, int priority, CancellationToken cancellationToken)
     {
         return await _collection.FindOneAndUpdateAsync(
-            w => w.Id == wishListId && w.Items.Any(i => i.Id == item.Id),
+            w => w.Id == wishListId && w.Items.Any(i => i.Id == itemId),
             Builders<WishList>.Update.Set(w => w.Items.FirstMatchingElement().Priority, priority),
             new() { ReturnDocument = ReturnDocument.After },
             cancellationToken);

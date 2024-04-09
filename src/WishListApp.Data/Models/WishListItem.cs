@@ -11,9 +11,3 @@ public sealed record WishListItem(
     string Note,
     int Priority,
     WishListItemPurchase[] Purchases);
-
-// Unknown = 0,
-// Low = 1,
-// Medium = 2,
-// High = 3,
-// VeryHigh = 4

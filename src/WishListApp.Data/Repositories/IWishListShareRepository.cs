@@ -8,5 +8,7 @@ public interface IWishListShareRepository
 
     Task<WishListShare?> GetByAccessKey(string accessKey, CancellationToken cancellationToken);
 
+    Task<List<WishListShare>> GetByWishListId(ObjectId wishListId, CancellationToken cancellationToken);
+
     Task<bool> Delete(ObjectId shareId, CancellationToken cancellationToken);
 }

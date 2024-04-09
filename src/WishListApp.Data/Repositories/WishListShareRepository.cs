@@ -23,6 +23,11 @@ public sealed class WishListShareRepository(IMongoClient mongoClient) : IWishLis
         return await _collection.Find(s => s.AccessKey == accessKey, null).FirstOrDefaultAsync(cancellationToken);
     }
 
+    public async Task<List<WishListShare>> GetByWishListId(ObjectId wishListId, CancellationToken cancellationToken)
+    {
+        return await _collection.Find(s => s.WishListId == wishListId, null).ToListAsync(cancellationToken);
+    }
+
     public async Task<bool> Delete(ObjectId shareId, CancellationToken cancellationToken)
     {
         var result = await _collection.DeleteOneAsync(s => s.Id == shareId, cancellationToken);
