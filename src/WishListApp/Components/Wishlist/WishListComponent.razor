@@ -18,7 +18,7 @@ else
         <h1>
             @if (ViewModel.ViewedByOwner)
             {
-                <TextEditToggleComponent Value="@ViewModel.WishList.Name" OnValueAccepted="RenameWishlist">
+                <TextEditToggleComponent Value="@ViewModel.WishList.Name" OnValueAccepted="RenameWishList">
                     @ViewModel.WishList.Name
                 </TextEditToggleComponent>
             }
@@ -61,7 +61,7 @@ else
                                 <i class="bi bi-person fill" /> Freigaben
                             </button>
 
-                            <button type="button" class="btn btn-outline-danger" @onclick="DeleteBoughtWishlistItems">
+                            <button type="button" class="btn btn-outline-danger" @onclick="DeleteBoughtWishListItems">
                                 <i class="bi bi-trash" /> Gekaufte Produkte löschen
                             </button>
                         }
@@ -84,7 +84,7 @@ else
     else
     {
         <div class="d-flex flex-column mt-4 mb-4 gap-2">
-            @foreach (var item in GetFilteredWishlistItems())
+            @foreach (var item in GetFilteredWishListItems())
             {
                 <CascadingValue Value="item">
                     <ItemComponent />
@@ -96,7 +96,7 @@ else
     <div class="d-flex align-content-center align-top">
         @if (ViewModel.ViewedByOwner)
         {
-            <button type="button" class="btn btn-outline-primary" @onclick="AddNewWishlistItem">
+            <button type="button" class="btn btn-outline-primary" @onclick="AddNewWishListItem">
                 <i class="bi bi-plus-lg" /> Eintrag Hinzufügen
             </button>
         }

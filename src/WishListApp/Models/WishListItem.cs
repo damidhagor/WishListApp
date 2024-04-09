@@ -1,0 +1,28 @@
+﻿using MongoDB.Bson;
+
+namespace WishListApp.Models;
+
+public sealed record WishListItem(
+    ObjectId Id,
+    ObjectId WishListId,
+    string Url,
+    string? Name,
+    string? Description,
+    decimal? Price,
+    string? Currency,
+    int Quantity,
+    string Note,
+    WishListItemPriority Priority,
+    WishListItemPurchase[] Purchases)
+{
+    public int PurchasedQuantity { get; } = Purchases.Sum(p => p.Quantity);
+
+    public int RemainingQuantity { get; } = Math.Max(0, Quantity - Purchases.Sum(p => p.Quantity));
+
+    public int GetPurchasedQuantityByShare(ObjectId? shareId) => Purchases.FirstOrDefault(p => p.ShareId == shareId)?.Quantity ?? 0;
+
+    public bool CanBePurchasedByShare(ObjectId? shareId)
+        => shareId is not null
+        && Purchases.All(p => p.ShareId != shareId)
+        && RemainingQuantity > 0;
+}

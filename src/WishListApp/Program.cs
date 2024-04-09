@@ -1,5 +1,5 @@
 using WishListApp.Components;
-using WishListApp.Data.Sql;
+using WishListApp.Data;
 using WishListApp.Identity;
 using WishListApp.ProductCrawling;
 using WishListApp.Services;
@@ -14,7 +14,7 @@ builder.Services.AddHttpClient();
 
 builder.Services.AddIdentity(builder.Configuration);
 
-builder.Services.AddWishlistSqlData();
+builder.Services.AddWishListData(builder.Configuration);
 
 builder.Services.AddScoped<IUserService, UserService>();
 

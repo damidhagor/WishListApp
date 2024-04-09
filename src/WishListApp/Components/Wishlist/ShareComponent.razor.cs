@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using WishListApp.Data.Services;
-using WishListApp.Services;
 
 namespace WishListApp.Components.Wishlist;
 
@@ -14,12 +12,12 @@ public partial class ShareComponent
     private IAccessKeyGenerator _accessKeyGenerator { get; set; } = default!;
 
     [CascadingParameter]
-    public WishlistShare Share { get; set; } = default!;
+    public WishListShare Share { get; set; } = default!;
 
     [CascadingParameter]
     public WishListViewModel ViewModel { get; set; } = default!;
 
-    private string Url => _accessKeyGenerator.GenerateWishlistShareUrl(Share.AccessKey);
+    private string Url => _accessKeyGenerator.GenerateShareUrl(Share.AccessKey);
 
     private async Task CopyShareUrlToClipboard() => await _jsRuntime.InvokeVoidAsync("navigator.clipboard.writeText", Url);
 
@@ -28,7 +26,7 @@ public partial class ShareComponent
         bool confirmed = await _jsRuntime.InvokeAsync<bool>("confirm", $"Möchten Sie die Freigabe \"{Share.Name}\" löschen?");
         if (confirmed)
         {
-            await ViewModel.DeleteWishlistShare(Share, default);
+            await ViewModel.DeleteWishListShare(Share, default);
         }
     }
 }

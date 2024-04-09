@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using WishListApp.Components.Controls.Modals;
+using WishListApp.Models;
 
 namespace WishListApp.Components.Wishlist;
 
@@ -11,9 +12,6 @@ public partial class WishListComponent : IRecipient<WishListUpdated>
 
     [Inject]
     private IMessenger _messenger { get; set; } = default!;
-
-    [Parameter]
-    public int? WishlistId { get; set; }
 
     [CascadingParameter]
     public WishListViewModel ViewModel { get; set; } = default!;
@@ -36,26 +34,26 @@ public partial class WishListComponent : IRecipient<WishListUpdated>
         _messenger.RegisterAll(this);
     }
 
-    private async Task RenameWishlist(string name) => await ViewModel.RenameWishlist(name, default);
+    private async Task RenameWishList(string name) => await ViewModel.RenameWishList(name, default);
 
-    private async Task AddNewWishlistItem()
+    private async Task AddNewWishListItem()
     {
         await _inputModal.Open(
             title: "Eintrag hinzufügen",
             placeholderText: "Produkt Url",
-            inputCallback: (string url) => ViewModel.AddWishlistItem(url, default));
+            inputCallback: (string url) => ViewModel.AddWishListItem(url, default));
     }
 
-    private async Task DeleteBoughtWishlistItems()
+    private async Task DeleteBoughtWishListItems()
     {
         bool confirmed = await _jsRuntime.InvokeAsync<bool>("confirm", "Möchten Sie alle gekauften Einträge von der Wunschliste entfernen?");
         if (confirmed)
         {
-            await ViewModel.DeleteBoughtWishlistItems(default);
+            await ViewModel.DeleteBoughtWishListItems(default);
         }
     }
 
-    private IEnumerable<WishlistItem> GetFilteredWishlistItems()
+    private IEnumerable<WishListItem> GetFilteredWishListItems()
     {
         if (ViewModel?.WishList is null || ViewModel.WishList.Items.Length == 0)
         {
@@ -67,13 +65,13 @@ public partial class WishListComponent : IRecipient<WishListUpdated>
             : ViewModel.WishList.Items;
 
         filteredItems = ViewModel.HideBuyInformation
-            ? filteredItems.OrderByDescending(i => i.Priority.Priority) // Don't order by buy-information if owner is viewing
+            ? filteredItems.OrderByDescending(i => i.Priority) // Don't order by buy-information if owner is viewing
             : filteredItems.OrderBy(i => i.RemainingQuantity > 0
                             ? 0 // 1st: Unbought items
-                            : i.GetPurchasedQuantityByShare(ViewModel.LoggedInShare) > 0
+                            : i.GetPurchasedQuantityByShare(ViewModel.LoggedInShare?.Id) > 0
                                 ? 1 // 2nd: Items bought by currently viewing share
                                 : 2) // 3rd: Items bought by other shares
-            .ThenByDescending(i => i.Priority.Priority);
+            .ThenByDescending(i => i.Priority);
 
         return filteredItems;
     }

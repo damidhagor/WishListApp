@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using WishListApp.Models;
 
 namespace WishListApp.ViewModels;
 
@@ -69,7 +68,7 @@ public sealed class WishListViewModel
 
     public async Task UpdateWishListItem(WishListItem item, CancellationToken cancellationToken)
     {
-        await _itemRepository.Update(WishList.Id, item, cancellationToken);
+        await _itemRepository.Update(item.WishListId, item.ToDataModel(), cancellationToken);
         await ReloadWishList(cancellationToken);
     }
 
@@ -80,7 +79,7 @@ public sealed class WishListViewModel
             return;
         }
 
-        await _itemRepository.UpdatePurchaseQuantity(WishList.Id, item.Id, LoggedInShare.Id, 1, cancellationToken);
+        await _itemRepository.UpdatePurchaseQuantity(item.WishListId, item.Id, LoggedInShare.Id, 1, cancellationToken);
         await ReloadWishList(cancellationToken);
     }
 
@@ -91,19 +90,19 @@ public sealed class WishListViewModel
             return;
         }
 
-        await _itemRepository.UpdatePurchaseQuantity(WishList.Id, item.Id, LoggedInShare.Id, 0, cancellationToken);
+        await _itemRepository.UpdatePurchaseQuantity(item.WishListId, item.Id, LoggedInShare.Id, 0, cancellationToken);
         await ReloadWishList(cancellationToken);
     }
 
     public async Task SetWishListItemPriority(WishListItem item, int priority, CancellationToken cancellationToken)
     {
-        await _itemRepository.UpdatePriority(WishList.Id, item.Id, priority, cancellationToken);
+        await _itemRepository.UpdatePriority(item.WishListId, item.Id, priority, cancellationToken);
         await ReloadWishList(cancellationToken);
     }
 
     public async Task DeleteWishListItem(WishListItem item, CancellationToken cancellationToken)
     {
-        await _itemRepository.Delete(WishList.Id, item.Id, cancellationToken);
+        await _itemRepository.Delete(item.WishListId, item.Id, cancellationToken);
         await ReloadWishList(cancellationToken);
     }
 
@@ -121,14 +120,14 @@ public sealed class WishListViewModel
         }
 
         var accessKey = _accessKeyGenerator.GenerateAccessKey(16);
-        await _shareRepository.Add(WishList.Id, name, accessKey, cancellationToken);
-        await ReloadWishList(cancellationToken);
+        var share = await _shareRepository.Add(WishList.Id, name, accessKey, cancellationToken);
+        _messenger.Send(new WishListShareAdded(share.ToModel()));
     }
 
     public async Task DeleteWishListShare(WishListShare share, CancellationToken cancellationToken)
     {
         await _shareRepository.Delete(share.Id, cancellationToken);
-        await ReloadWishList(cancellationToken);
+        _messenger.Send(new WishListShareDeleted(share));
     }
 
     private async Task ReloadWishList(CancellationToken cancellationToken)
@@ -141,7 +140,7 @@ public sealed class WishListViewModel
             return;
         }
 
-        WishList = wishList;
-        _messenger.Send(new WishListUpdated(wishList));
+        WishList = wishList.ToModel();
+        _messenger.Send(new WishListUpdated(WishList));
     }
 }

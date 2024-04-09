@@ -34,8 +34,8 @@
                 </div>
 
                 <h5 class="mt-4">Priorität</h5>
-                <DropdownComponent T="WishlistItemPriority"
-                                   Items="Constants.WishlistItemPriorities"
+                <DropdownComponent T="WishListItemPriority"
+                                   Items="Constants.WishListItemPriorities"
                                    SelectedItem="_priority"
                                    SelectedItemChanged="@(priority => _priority = priority)">
                     <ItemTemplate>
@@ -62,7 +62,7 @@
             Produktinformationen abrufen
         </button>
 
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @onclick="SaveWishlistItem">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @onclick="SaveWishListItem">
             <i class="bi bi-floppy" /> Speichern
         </button>
     </Footer>

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using WishListApp.Models;
+using MongoDB.Bson;
 using WishListApp.Services;
 
 namespace WishListApp.Components.Pages;
@@ -17,15 +17,18 @@ public partial class WishListsPage
     private IUserService _userService { get; set; } = default!;
 
     [Inject]
-    private IWishlistRepository _repository { get; set; } = default!;
+    private IWishListRepository _wishListRepository { get; set; } = default!;
+
+    [Inject]
+    private IWishListShareRepository _shareRepository { get; set; } = default!;
 
     private WishListUser? _user;
 
-    private List<Data.Models.WishList>? _wishLists;
+    private List<(WishList WishList, WishListShare[] Shares)>? _wishLists;
 
     private string _newWishListName = "";
 
-    private bool _isNewWishlistNameEmpty => string.IsNullOrWhiteSpace(_newWishListName);
+    private bool _isNewWishListNameEmpty => string.IsNullOrWhiteSpace(_newWishListName);
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -45,8 +48,15 @@ public partial class WishListsPage
             return;
         }
 
-        var wishLists = await _repository.GetAll(_user.Identifier, cancellationToken);
-        _wishLists = [.. wishLists.OrderBy(l => l.Name)];
+        var wishLists = await _wishListRepository.GetByOwner(_user.Identifier, cancellationToken);
+        var wishListsWithShares = new List<(WishList, WishListShare[])>(wishLists.Count);
+        foreach (var wishList in wishLists.OrderBy(w => w.Name))
+        {
+            var shares = await _shareRepository.GetByWishListId(wishList.Id, cancellationToken);
+            wishListsWithShares.Add((wishList.ToModel(), shares.ToModels().ToArray()));
+        }
+
+        _wishLists = wishListsWithShares;
         StateHasChanged();
     }
 
@@ -58,23 +68,23 @@ public partial class WishListsPage
             return;
         }
 
-        var wishList = await _repository.CreateWishList(_newWishListName, _user.Identifier, default);
+        var wishList = await _wishListRepository.Add(_newWishListName, _user.Identifier, default);
         _navigationManager.NavigateTo($"editwishlist?id={wishList.Id}");
     }
 
-    private async Task DeleteWishlist(int id)
+    private async Task DeleteWishList(ObjectId wishListId)
     {
         bool confirmed = await _jsRuntime.InvokeAsync<bool>("confirm", "Möchten Sie die Wunschliste löschen?");
         if (confirmed)
         {
-            await _repository.DeleteWishList(id, default);
+            await _wishListRepository.Delete(wishListId, default);
             await LoadWishLists(default);
         }
     }
 
-    private async Task RenameWishlist(int id, string name)
+    private async Task RenameWishList(ObjectId wishListId, string name)
     {
-        await _repository.RenameWishList(id, name, default);
+        await _wishListRepository.Rename(wishListId, name, default);
         await LoadWishLists(default);
     }
 }

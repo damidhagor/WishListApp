@@ -46,7 +46,7 @@
                 @if (ViewModel.ViewedByOwner)
                 {
                     <div class="me-auto">
-                        <DropdownComponent T="WishlistItemPriority" Items="Constants.WishlistItemPriorities" SelectedItem="Item.Priority" SelectedItemChanged="SetItemPriority">
+                        <DropdownComponent T="WishListItemPriority" Items="Constants.WishListItemPriorities" SelectedItem="Item.Priority" SelectedItemChanged="SetItemPriority">
                             <ItemTemplate>
                                 @context?.Name
                             </ItemTemplate>

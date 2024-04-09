@@ -2,7 +2,7 @@
 
 <ModalComponent @ref="_modal" Title="Freigaben" Size="ModalComponent.ModalSize.Large">
     <Body>
-        @if (ViewModel.WishList.Shares.Length == 0)
+        @if (_shares.Count == 0)
         {
             <h3 class="m-2 ms-4">
                 <i class="bi bi-exclamation-circle" />
@@ -13,9 +13,7 @@
         else
         {
             <div class="d-flex flex-column gap-2 mt-4 mb-4">
-                @foreach (var share in ViewModel.WishList.Shares
-                   .Where(s => !s.IsDeleted)
-                   .OrderBy(s => s.Name))
+                @foreach (var share in _shares.OrderBy(s => s.Name))
                 {
                     <CascadingValue Value="share">
                         <ShareComponent />
@@ -27,7 +25,7 @@
 
     <Footer>
         <input type="text" class="flex-grow-1 me-2" placeholder="Name" @bind="@_newShareName" @bind:event="oninput">
-        <button type="button" class="btn btn-outline-primary" @onclick="AddNewWishlistShare" disabled="@_isNewShareNameEmpty">
+        <button type="button" class="btn btn-outline-primary" @onclick="AddNewWishListShare" disabled="@_isNewShareNameEmpty">
             <i class="bi bi-plus-lg" /> Hinzufügen
         </button>
     </Footer>
