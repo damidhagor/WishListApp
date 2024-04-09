@@ -4,5 +4,5 @@ public sealed record class ProductInformation(
     string? Title,
     string? Description,
     string? ImageUrl,
-    string? Price,
+    decimal? Price,
     string? Currency);
