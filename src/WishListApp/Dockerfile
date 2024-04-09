@@ -7,8 +7,9 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0-preview AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["WishListApp/WishListApp.csproj", "WishListApp/"]
+COPY ["WishListApp.Data/WishListApp.Data.csproj", "WishListApp.Data/"]
 COPY ["WishListApp.ProductCrawling/WishListApp.ProductCrawling.csproj", "WishListApp.ProductCrawling/"]
-RUN dotnet restore "./WishListApp/./WishListApp.csproj"
+RUN dotnet restore "./WishListApp/WishListApp.csproj"
 COPY . .
 WORKDIR "/src/WishListApp"
 RUN dotnet build "./WishListApp.csproj" -c $BUILD_CONFIGURATION -o /app/build
