@@ -1,6 +1,6 @@
 ﻿namespace WishListApp.Data;
 
-internal sealed class Constants
+public sealed class MongoDBConstants
 {
     public const string DatabaseName = "wishListAppDB";
     public const string WishListsCollectionName = "wishLists";

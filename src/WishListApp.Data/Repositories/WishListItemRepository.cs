@@ -3,8 +3,8 @@
 public sealed class WishListItemRepository(IMongoClient mongoClient) : IWishListItemRepository
 {
     private readonly IMongoCollection<WishList> _collection = mongoClient
-        .GetDatabase(Constants.DatabaseName)
-        .GetCollection<WishList>(Constants.WishListsCollectionName);
+        .GetDatabase(MongoDBConstants.DatabaseName)
+        .GetCollection<WishList>(MongoDBConstants.WishListsCollectionName);
 
     public async Task<WishList?> Add(ObjectId wishListId, string url, CancellationToken cancellationToken)
     {
