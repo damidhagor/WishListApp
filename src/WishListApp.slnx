@@ -1,0 +1,25 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+  </Folder>
+  <Folder Name="/helm/wishlist/templates/">
+    <File Path="..\helm\wishlist\templates\app-deployment.yaml" />
+    <File Path="..\helm\wishlist\templates\app-ingress.yaml" />
+    <File Path="..\helm\wishlist\templates\app-service.yaml" />
+    <File Path="..\helm\wishlist\templates\cli-migration-job.yaml" />
+    <File Path="..\helm\wishlist\templates\postgres-deployment.yaml" />
+    <File Path="..\helm\wishlist\templates\postgres-pvc.yaml" />
+    <File Path="..\helm\wishlist\templates\postgres-service.yaml" />
+  </Folder>
+  <Folder Name="/helm/wishlist/">
+    <File Path="..\helm\wishlist\Chart.yaml" />
+    <File Path="..\helm\wishlist\Readme.md" />
+    <File Path="..\helm\wishlist\values.yaml" />
+  </Folder>
+  <Folder Name="/helm/" />
+  <Project Path="WishListApp.Cli\WishListApp.Cli.csproj" />
+  <Project Path="WishListApp.Data.Sql\WishListApp.Data.Sql.csproj" />
+  <Project Path="WishListApp.Data\WishListApp.Data.csproj" />
+  <Project Path="WishListApp.ProductCrawling\WishListApp.ProductCrawling.csproj" />
+  <Project Path="WishListApp\WishListApp.csproj" />
+</Solution>
