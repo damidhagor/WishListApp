@@ -1,9 +1,7 @@
 hostname:
 postgres:
   size: 5Gi
+mongodb:
 app:
   image: harbor.damidhagor.de/wishlist/wishlist-app
-  tag: "latest"
-cli:
-  image: harbor.damidhagor.de/wishlist/wishlist-cli
   tag: "latest"

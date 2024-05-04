@@ -30,7 +30,7 @@ This is a helm chart for the Wishlist App.
 	apiVersion: v1
 	kind: Secret
 	metadata:
-	  name: postgres-secret
+	  name: mongodb-secret
 	  namespace: <NAMESPACE>
 	type: Opaque
 	data:

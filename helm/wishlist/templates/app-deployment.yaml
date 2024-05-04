@@ -19,11 +19,11 @@ spec:
         image: "{{ .Values.app.image }}:{{ .Values.app.tag }}"
         imagePullPolicy: IfNotPresent
         env:
-        - name: ConnectionStrings__SqlServer
+        - name: ConnectionStrings__MongoDBServer
           valueFrom:
             secretKeyRef:
-              name: postgres-secret
-              key: connection-string
+              name: mongodb-secret
+              key: connectionString.standardSrv
         - name: ApplicationUrl
           value: "https://{{ .Values.hostname }}"
         - name: IdentityOptions__Authority
