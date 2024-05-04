@@ -15,36 +15,44 @@ spec:
         app: wishlist-app
     spec:
       containers:
-      - name: wishlist-app
-        image: "{{ .Values.app.image }}:{{ .Values.app.tag }}"
-        imagePullPolicy: IfNotPresent
-        env:
-        - name: ConnectionStrings__MongoDBServer
-          valueFrom:
-            secretKeyRef:
-              name: mongodb-admin-wishlist-app
-              key: connectionString.standardSrv
-        - name: ApplicationUrl
-          value: "https://{{ .Values.hostname }}"
-        - name: IdentityOptions__Authority
-          valueFrom:
-            secretKeyRef:
-              name: app-secret
-              key: identity-authority
-        - name: IdentityOptions__ClientId
-          valueFrom:
-            secretKeyRef:
+        - name: wishlist-app
+          image: "{{ .Values.app.image }}:{{ .Values.app.tag }}"
+          imagePullPolicy: IfNotPresent
+          env:
+          - name: ConnectionStrings__MongoDBServer
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-admin-wishlist-app
+                key: connectionString.standardSrv
+          - name: ApplicationUrl
+            value: "https://{{ .Values.hostname }}"
+          - name: IdentityOptions__Authority
+            valueFrom:
+              secretKeyRef:
                 name: app-secret
-                key: identity-client-id
-        - name: IdentityOptions__ClientSecret
-          valueFrom:
-            secretKeyRef:
-                name: app-secret
-                key: identity-client-secret
-        - name: IdentityOptions__Scopes
-          valueFrom:
-            secretKeyRef:
-                name: app-secret
-                key: identity-scopes
+                key: identity-authority
+          - name: IdentityOptions__ClientId
+            valueFrom:
+              secretKeyRef:
+                  name: app-secret
+                  key: identity-client-id
+          - name: IdentityOptions__ClientSecret
+            valueFrom:
+              secretKeyRef:
+                  name: app-secret
+                  key: identity-client-secret
+          - name: IdentityOptions__Scopes
+            valueFrom:
+              secretKeyRef:
+                  name: app-secret
+                  key: identity-scopes
+          volumeMounts:
+            - name: selfsigned-ca
+              mountPath: /etc/ssl/certs/ca.crt
+              subPath: ca.crt
+      volumes:
+        - name: selfsigned-ca
+          configMap:
+            name: selfsigned-ca
       imagePullSecrets:
-      - name: harbor
+        - name: harbor
