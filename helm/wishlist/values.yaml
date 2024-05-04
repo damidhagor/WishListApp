@@ -5,7 +5,7 @@ mongodb:
   name: "mongodb"
   version: "7.0.9"
   members: 3
-  caConfigMapName: "selfsigned-ca-key-pair"
+  caConfigMapName: "selfsigned-ca"
   resources:
     mongod:
       limits:

@@ -22,7 +22,7 @@ spec:
         - name: ConnectionStrings__MongoDBServer
           valueFrom:
             secretKeyRef:
-              name: mongodb-secret
+              name: mongodb-admin-wishlist-app
               key: connectionString.standardSrv
         - name: ApplicationUrl
           value: "https://{{ .Values.hostname }}"

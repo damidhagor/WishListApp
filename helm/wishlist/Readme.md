@@ -11,6 +11,12 @@ This is a helm chart for the Wishlist App.
     kubectl label namespace <NAMESPACE> injectSelfSignedCACertificate=true
 	```
 
+- Create the Harbor secret in the namespace:
+
+	```bash
+	kubectl create secret docker-registry harbor --docker-server=harbor.damidhagor.de --docker-username=<USERNAME> --docker-password=<PASSWORD> -n <NAMESPACE>
+	```
+
 - Create the following secrets in this namespace with the needed values before installing the chart:
 
 	```yaml

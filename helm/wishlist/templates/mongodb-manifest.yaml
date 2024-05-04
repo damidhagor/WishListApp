@@ -27,7 +27,7 @@ spec:
           db: admin
         - name: userAdminAnyDatabase
           db: admin
-      scramCredentialsSecretName: mongodb-user-admin-scram
+      scramCredentialsSecretName: mongodb-user-admin
     - name: wishlist-app
       db: admin
       passwordSecretRef:
@@ -35,7 +35,7 @@ spec:
       roles:
         - name: readWrite
           db: wishlist
-      scramCredentialsSecretName: mongodb-user-wishlist-scram
+      scramCredentialsSecretName: mongodb-user-wishlist
   statefulSet:
     spec:
       template:
