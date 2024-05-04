@@ -21,7 +21,7 @@ mongodb:
       requests:
         cpu: "0.1"
         memory: 100M
-    mongodb-agent-readinessprobe:
+    mongodbAgentReadinessProbe:
       limits:
         cpu: "0.1"
         memory: 100M
