@@ -4,10 +4,11 @@ This is a helm chart for the Wishlist App.
 
 ## Installation
 
-- Create the target namespace:
+- Create the target namespace and add the label for the trust-manager:
 
 	```bash
 	kubectl create namespace <NAMESPACE>
+    kubectl label namespace <NAMESPACE> injectSelfSignedCACertificate=true
 	```
 
 - Create the following secrets in this namespace with the needed values before installing the chart:

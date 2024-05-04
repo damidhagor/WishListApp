@@ -33,7 +33,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{
 		..\helm\wishlist\templates\app-service.yaml = ..\helm\wishlist\templates\app-service.yaml
 		..\helm\wishlist\templates\mongodb-certificate.yaml = ..\helm\wishlist\templates\mongodb-certificate.yaml
 		..\helm\wishlist\templates\mongodb-manifest.yaml = ..\helm\wishlist\templates\mongodb-manifest.yaml
-		..\helm\wishlist\templates\namespace.yaml = ..\helm\wishlist\templates\namespace.yaml
 		..\helm\wishlist\templates\postgres-deployment.yaml = ..\helm\wishlist\templates\postgres-deployment.yaml
 		..\helm\wishlist\templates\postgres-pvc.yaml = ..\helm\wishlist\templates\postgres-pvc.yaml
 		..\helm\wishlist\templates\postgres-service.yaml = ..\helm\wishlist\templates\postgres-service.yaml
@@ -74,6 +73,10 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C8786EAC-B873-4FC8-B5CA-4829B6774077}
+	EndGlobalSection
+EndGlobal
+
 		SolutionGuid = {C8786EAC-B873-4FC8-B5CA-4829B6774077}
 	EndGlobalSection
 EndGlobal
