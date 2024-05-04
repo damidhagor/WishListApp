@@ -2,6 +2,32 @@ hostname:
 postgres:
   size: 5Gi
 mongodb:
+  name: "mongodb"
+  version: "7.0.9"
+  members: 3
+  caConfigMapName: "selfsigned-ca-key-pair"
+  resources:
+    mongod:
+      limits:
+        cpu: "0.2"
+        memory: 250M
+      requests:
+        cpu: "0.2"
+        memory: 200M
+    mongodbAgent:
+      limits:
+        cpu: "0.2"
+        memory: 150M
+      requests:
+        cpu: "0.1"
+        memory: 100M
+    mongodb-agent-readinessprobe:
+      limits:
+        cpu: "0.1"
+        memory: 100M
+      requests:
+        cpu: "0.05"
+        memory: 50M
 app:
   image: harbor.damidhagor.de/wishlist/wishlist-app
   tag: "latest"

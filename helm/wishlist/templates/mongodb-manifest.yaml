@@ -1,0 +1,68 @@
+apiVersion: mongodbcommunity.mongodb.com/v1
+kind: MongoDBCommunity
+metadata:
+  name: {{ .Values.mongodb.name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  members: {{ .Values.mongodb.members }}
+  type: ReplicaSet
+  version: {{ .Values.mongodb.version }}
+  security:
+    authentication:
+      modes: ["SCRAM"]
+      ignoreUnknownUsers: true
+    tls:
+      enabled: true
+      certificateKeySecretRef:
+        name: mongodb-certificate
+      caConfigMapRef:
+        name: {{ .Values.mongodb.caConfigMapName }}
+  users:
+    - name: admin
+      db: admin
+      passwordSecretRef:
+        name: mongodb-user-admin-password
+      roles:
+        - name: clusterAdmin
+          db: admin
+        - name: userAdminAnyDatabase
+          db: admin
+      scramCredentialsSecretName: mongodb-user-admin-scram
+    - name: wishlist-app
+      db: admin
+      passwordSecretRef:
+        name: mongodb-user-wishlist-app-password
+      roles:
+        - name: readWrite
+          db: wishlist
+      scramCredentialsSecretName: mongodb-user-wishlist-scram
+  statefulSet:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: mongod
+              resources:
+                requests:
+                  cpu: {{ .Values.mongodb.resources.mongod.requests.cpu }}
+                  memory: {{ .Values.mongodb.resources.mongod.requests.memory }}
+                limits:
+                  cpu: {{ .Values.mongodb.resources.mongod.limits.cpu }}
+                  memory: {{ .Values.mongodb.resources.mongod.limits.memory }}
+            - name: mongodb-agent
+              resources:
+                requests:
+                  cpu: {{ .Values.mongodb.resources.mongodbAgent.requests.cpu }}
+                  memory: {{ .Values.mongodb.resources.mongodbAgent.requests.memory }}
+                limits:
+                  cpu: {{ .Values.mongodb.resources.mongodbAgent.limits.cpu }}
+                  memory: {{ .Values.mongodb.resources.mongodbAgent.limits.memory }}
+          initContainers:
+            - name: mongodb-agent-readinessprobe
+              resources:
+                requests:
+                  cpu: {{ .Values.mongodb.resources.mongodbAgentReadinessProbe.requests.cpu }}
+                  memory: {{ .Values.mongodb.resources.mongodbAgentReadinessProbe.requests.memory }}
+                limits:
+                  cpu: {{ .Values.mongodb.resources.mongodbAgentReadinessProbe.limits.cpu }}
+                  memory: {{ .Values.mongodb.resources.mongodbAgentReadinessProbe.limits.memory }}

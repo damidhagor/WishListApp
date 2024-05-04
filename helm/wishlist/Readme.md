@@ -30,12 +30,22 @@ This is a helm chart for the Wishlist App.
 	apiVersion: v1
 	kind: Secret
 	metadata:
-	  name: mongodb-secret
+	  name: mongodb-user-admin-password
 	  namespace: <NAMESPACE>
 	type: Opaque
-	data:
-	  connection-string:
-	  db-password:
+	stringData:
+      password:
+	```
+
+	```yaml
+	apiVersion: v1
+	kind: Secret
+	metadata:
+	  name: mongodb-user-wishlist-app-password
+	  namespace: <NAMESPACE>
+	type: Opaque
+	stringData:
+      password:
 	```
 
 - Create a ``values.yaml`` file with the following content:

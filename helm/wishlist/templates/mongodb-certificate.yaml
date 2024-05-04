@@ -1,0 +1,30 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: postgres
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: postgres
+spec:
+  storageClassName: microk8s-hostpath
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .Values.postgres.size }}
+
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: mongodb
+  namespace: {{ .Release.Namespace }}
+spec:
+  secretName: mongodb-certificate
+  issuerRef:
+    name: selfsigned-ca
+    kind: ClusterIssuer
+  duration: "8760h" # 365 days
+  renewBefore: "720h" # 30 days
+  commonName: "*.example-mongodb-svc.{{ .Release.Namespace }}.svc.cluster.local"
+  dnsNames:
+    - "*.example-mongodb-svc.mongodb-test.svc.cluster.local"
