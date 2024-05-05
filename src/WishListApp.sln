@@ -32,9 +32,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{
 		..\helm\wishlist\templates\mongodb-role.yaml = ..\helm\wishlist\templates\mongodb-role.yaml
 		..\helm\wishlist\templates\mongodb-role-binding.yaml = ..\helm\wishlist\templates\mongodb-role-binding.yaml
 		..\helm\wishlist\templates\mongodb-service-account.yaml = ..\helm\wishlist\templates\mongodb-service-account.yaml
-		..\helm\wishlist\templates\postgres-deployment.yaml = ..\helm\wishlist\templates\postgres-deployment.yaml
-		..\helm\wishlist\templates\postgres-pvc.yaml = ..\helm\wishlist\templates\postgres-pvc.yaml
-		..\helm\wishlist\templates\postgres-service.yaml = ..\helm\wishlist\templates\postgres-service.yaml
 	EndProjectSection
 EndProject
 Global
@@ -59,6 +56,15 @@ Global
 		{730E5A2E-D524-478F-9DB9-3C88E064CBB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{730E5A2E-D524-478F-9DB9-3C88E064CBB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{730E5A2E-D524-478F-9DB9-3C88E064CBB8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C8786EAC-B873-4FC8-B5CA-4829B6774077}
+	EndGlobalSection
+EndGlobal
+64CBB8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

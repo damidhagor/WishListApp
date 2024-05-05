@@ -59,8 +59,11 @@ This is a helm chart for the Wishlist App.
 
 	```yaml
 	hostname: <The hostname of the app (required)>
-	postgres:
-	  size: <Size of the Postgres DB (default 5Gi)>
+	mongodb:
+	  name: <Prefix of the MongoDB resources (default "mongodb")>
+	  version: <MongoDB version (default "7.0.9")>
+	  members: <Number of MongoDB instances (default 3)>
+	  caConfigMapName: <Name of the CA bundle ConfigMap (default "selfsigned-ca")>
 	app:
 	  image: <The app's image (default harbor.damidhagor.de/wishlist/wishlist-app)>
 	  tag: <The app's image tag (default latest)>

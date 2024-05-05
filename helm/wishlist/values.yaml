@@ -1,6 +1,4 @@
 hostname:
-postgres:
-  size: 5Gi
 mongodb:
   name: "mongodb"
   version: "7.0.9"
