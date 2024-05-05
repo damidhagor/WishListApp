@@ -34,7 +34,7 @@ spec:
         name: mongodb-user-wishlist-app-password
       roles:
         - name: readWrite
-          db: wishlist
+          db: wishListAppDB
       scramCredentialsSecretName: mongodb-user-wishlist
   statefulSet:
     spec:
