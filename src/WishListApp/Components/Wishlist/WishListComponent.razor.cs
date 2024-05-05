@@ -65,13 +65,13 @@ public partial class WishListComponent : IRecipient<WishListUpdated>
             : ViewModel.WishList.Items;
 
         filteredItems = ViewModel.HideBuyInformation
-            ? filteredItems.OrderByDescending(i => i.Priority) // Don't order by buy-information if owner is viewing
+            ? filteredItems.OrderByDescending(i => i.Priority.Priority) // Don't order by buy-information if owner is viewing
             : filteredItems.OrderBy(i => i.RemainingQuantity > 0
                             ? 0 // 1st: Unbought items
                             : i.GetPurchasedQuantityByShare(ViewModel.LoggedInShare?.Id) > 0
                                 ? 1 // 2nd: Items bought by currently viewing share
                                 : 2) // 3rd: Items bought by other shares
-            .ThenByDescending(i => i.Priority);
+            .ThenByDescending(i => i.Priority.Priority);
 
         return filteredItems;
     }
