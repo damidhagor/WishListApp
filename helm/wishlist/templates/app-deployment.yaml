@@ -50,6 +50,13 @@ spec:
             - name: selfsigned-ca
               mountPath: /etc/ssl/certs/ca.crt
               subPath: ca.crt
+          resources:
+            requests:
+              cpu: {{ .Values.app.resources.requests.cpu }}
+              memory: {{ .Values.app.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.app.resources.limits.cpu }}
+              memory: {{ .Values.app.resources.limits.memory }}
       volumes:
         - name: selfsigned-ca
           configMap:

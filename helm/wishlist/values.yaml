@@ -6,26 +6,33 @@ mongodb:
   caConfigMapName: "selfsigned-ca"
   resources:
     mongod:
-      limits:
-        cpu: "0.2"
-        memory: 250M
       requests:
-        cpu: "0.2"
-        memory: 200M
+        cpu: 50m
+        memory: 150Mi
+      limits:
+        cpu: 200m
+        memory: 500Mi
     mongodbAgent:
-      limits:
-        cpu: "0.2"
-        memory: 150M
       requests:
-        cpu: "0.1"
-        memory: 100M
-    mongodbAgentReadinessProbe:
-      limits:
-        cpu: "0.1"
-        memory: 100M
-      requests:
-        cpu: "0.05"
+        cpu: 50m
         memory: 50M
+      limits:
+        cpu: 200m
+        memory: 200M
+    mongodbAgentReadinessProbe:
+      requests:
+        cpu: 5m
+        memory: 50Mi
+      limits:
+        cpu: 100m
+        memory: 100Mi
 app:
   image: harbor.damidhagor.de/wishlist/wishlist-app
   tag: "latest"
+  resources:
+    requests:
+      cpu: 200m
+      memory: 300Mi
+    limits:
+      cpu: 500m
+      memory: 600Mi
