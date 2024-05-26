@@ -22,6 +22,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\WishListApp.Data\WishListApp.Data.csproj" />
 		<ProjectReference Include="..\WishListApp.ProductCrawling\WishListApp.ProductCrawling.csproj" />
+		<ProjectReference Include="..\WishListApp.ServiceDefaults\WishListApp.ServiceDefaults.csproj" />
 	</ItemGroup>
 
 </Project>
