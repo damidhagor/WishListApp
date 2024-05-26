@@ -1,4 +1,6 @@
-﻿namespace WishListApp.Data;
+﻿using MongoDB.Driver.Core.Extensions.DiagnosticSources;
+
+namespace WishListApp.Data;
 
 public static class ServiceCollectionExtensions
 {
@@ -6,6 +8,12 @@ public static class ServiceCollectionExtensions
     {
         var connectionString = configuration.GetConnectionString("mongodb");
         var mongoSettings = MongoClientSettings.FromConnectionString(connectionString);
+
+        mongoSettings.ClusterConfigurator = clusterBuilder => clusterBuilder.Subscribe(new DiagnosticsActivityEventSubscriber(
+            new()
+            {
+                CaptureCommandText = true
+            }));
 
         configure?.Invoke(mongoSettings);
 
