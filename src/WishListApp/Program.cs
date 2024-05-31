@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-builder.AddServiceDefaults();
+builder.AddServiceDefaults("wishlist-app");
 
 builder.Services.AddIdentity(builder.Configuration);
 
