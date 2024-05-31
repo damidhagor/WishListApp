@@ -19,33 +19,35 @@ spec:
           image: "{{ .Values.app.image }}:{{ .Values.app.tag }}"
           imagePullPolicy: IfNotPresent
           env:
-          - name: ConnectionStrings__MongoDBServer
-            valueFrom:
-              secretKeyRef:
-                name: mongodb-admin-wishlist-app
-                key: connectionString.standardSrv
-          - name: ApplicationUrl
-            value: "https://{{ .Values.hostname }}"
-          - name: IdentityOptions__Authority
-            valueFrom:
-              secretKeyRef:
-                name: app-secret
-                key: identity-authority
-          - name: IdentityOptions__ClientId
-            valueFrom:
-              secretKeyRef:
+            - name: ConnectionStrings__MongoDB
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-admin-wishlist-app
+                  key: connectionString.standardSrv
+            - name: ApplicationUrl
+              value: "https://{{ .Values.hostname }}"
+            - name: IdentityOptions__Authority
+              valueFrom:
+                secretKeyRef:
                   name: app-secret
-                  key: identity-client-id
-          - name: IdentityOptions__ClientSecret
-            valueFrom:
-              secretKeyRef:
-                  name: app-secret
-                  key: identity-client-secret
-          - name: IdentityOptions__Scopes
-            valueFrom:
-              secretKeyRef:
-                  name: app-secret
-                  key: identity-scopes
+                  key: identity-authority
+            - name: IdentityOptions__ClientId
+              valueFrom:
+                secretKeyRef:
+                    name: app-secret
+                    key: identity-client-id
+            - name: IdentityOptions__ClientSecret
+              valueFrom:
+                secretKeyRef:
+                    name: app-secret
+                    key: identity-client-secret
+            - name: IdentityOptions__Scopes
+              valueFrom:
+                secretKeyRef:
+                    name: app-secret
+                    key: identity-scopes
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: "{{ .Values.otel.collector }}"
           volumeMounts:
             - name: selfsigned-ca
               mountPath: /etc/ssl/certs/ca.crt

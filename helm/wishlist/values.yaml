@@ -36,3 +36,5 @@ app:
     limits:
       cpu: 500m
       memory: 600Mi
+otel:
+  collector: 
