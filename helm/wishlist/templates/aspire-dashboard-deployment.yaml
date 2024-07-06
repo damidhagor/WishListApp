@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: aspire-dashboard
-          image: "mcr.microsoft.com/dotnet/{{ .Values.app.image }}:{{ .Values.app.tag }}"
+          image: "mcr.microsoft.com/dotnet/{{ .Values.aspire.image }}:{{ .Values.aspire.tag }}"
           env:
             - name: Dashboard__Frontend__AuthMode
               value: Unsecured
