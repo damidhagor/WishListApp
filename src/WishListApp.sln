@@ -27,7 +27,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{
 		..\helm\wishlist\templates\app-deployment.yaml = ..\helm\wishlist\templates\app-deployment.yaml
 		..\helm\wishlist\templates\app-ingress.yaml = ..\helm\wishlist\templates\app-ingress.yaml
 		..\helm\wishlist\templates\app-service.yaml = ..\helm\wishlist\templates\app-service.yaml
-		..\helm\wishlist\templates\app-servicemonitor.yaml = ..\helm\wishlist\templates\app-servicemonitor.yaml
 		..\helm\wishlist\templates\aspire-dashboard-deployment.yaml = ..\helm\wishlist\templates\aspire-dashboard-deployment.yaml
 		..\helm\wishlist\templates\aspire-dashboard-service.yaml = ..\helm\wishlist\templates\aspire-dashboard-service.yaml
 		..\helm\wishlist\templates\mongodb-certificate.yaml = ..\helm\wishlist\templates\mongodb-certificate.yaml

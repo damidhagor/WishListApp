@@ -66,6 +66,28 @@ This is a helm chart for the Wishlist App.
       api-key:
 	```
 
+
+- Create the ServiceMonitor resource in the monitoring namespace:
+
+	```yaml
+	apiVersion: monitoring.coreos.com/v1
+	kind: ServiceMonitor
+	metadata:
+	  name: wishlist-app
+	  namespace: monitoring
+	  labels:
+		app: wishlist-app
+		release: prometheus
+	spec:
+	  selector:
+		matchLabels:
+		  app: wishlist-app
+	  namespaceSelector:
+		any: true
+	  endpoints:
+		- port: http
+	```
+
 - Create a ``values.yaml`` file with the following content:
 
 	```yaml
