@@ -47,7 +47,12 @@ spec:
                     name: app-secret
                     key: identity-scopes
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
-              value: "{{ .Values.otel.collector }}"
+              value: "{{ .Values.aspire.otlpEndpoint }}"
+            - name: OTEL_EXPORTER_OTLP_API_KEY
+              valueFrom:
+                secretKeyRef:
+                    name: aspire
+                    key: api-key
           volumeMounts:
             - name: selfsigned-ca
               mountPath: /etc/ssl/certs/ca.crt

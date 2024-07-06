@@ -55,6 +55,17 @@ This is a helm chart for the Wishlist App.
       password:
 	```
 
+	```yaml
+	apiVersion: v1
+	kind: Secret
+	metadata:
+	  name: aspire
+	  namespace: <NAMESPACE>
+	type: Opaque
+	stringData:
+      api-key:
+	```
+
 - Create a ``values.yaml`` file with the following content:
 
 	```yaml

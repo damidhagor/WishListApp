@@ -36,5 +36,7 @@ app:
     limits:
       cpu: 500m
       memory: 600Mi
-otel:
-  collector: 
+aspire:
+  image: "aspire-dashboard"
+  tag: "8.0.0"
+  otlpEndpoint: "http://aspire-dashboard:4317"

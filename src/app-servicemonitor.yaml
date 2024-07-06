@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: wishlist-app
+  namespace: monitoring
+  labels:
+    app: wishlist-app
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: wishlist-app
+  endpoints:
+    - port: wishlist-app
+  namespaceSelector:
+    any: true

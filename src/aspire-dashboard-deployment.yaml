@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aspire-dashboard
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: aspire-dashboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aspire-dashboard
+  template:
+    metadata:
+      labels:
+        app: aspire-dashboard
+    spec:
+      containers:
+        - name: aspire-dashboard
+          image: "mcr.microsoft.com/dotnet/{{ .Values.app.image }}:{{ .Values.app.tag }}"
+          env:
+            - name: Dashboard__Frontend__AuthMode
+              value: Unsecured
+            - name: DASHBOARD__OTLP__AUTHMODE
+              value: ApiKey
+            - name: DASHBOARD__OTLP__PRIMARYAPIKEY
+              value: "{{ .Values.aspire.apiKey }}"
+            - name: DASHBOARD__OTLP__PRIMARYAPIKEY
+              valueFrom:
+                secretKeyRef:
+                    name: aspire
+                    key: api-key
+          ports:
+            - containerPort: 18888
+            - containerPort: 4317
