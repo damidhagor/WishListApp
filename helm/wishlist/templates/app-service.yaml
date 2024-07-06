@@ -3,11 +3,12 @@ kind: Service
 metadata:
   name: wishlist-app
   namespace: {{ .Release.Namespace }}
+  app: wishlist-app
 spec:
   selector:
     app: wishlist-app
   ports:
-  - name: wishlist-app
+  - name: http
     protocol: TCP
     port: 8080
     targetPort: 8080

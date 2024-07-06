@@ -10,7 +10,7 @@ spec:
   selector:
     matchLabels:
       app: wishlist-app
-  endpoints:
-    - port: wishlist-app
   namespaceSelector:
     any: true
+  endpoints:
+    - port: http
