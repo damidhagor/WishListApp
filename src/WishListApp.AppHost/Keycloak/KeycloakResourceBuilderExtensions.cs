@@ -77,6 +77,25 @@ internal static class KeycloakResourceBuilderExtensions
         return builder;
     }
 
+    public static IResourceBuilder<KeycloakResource> WithClientReference(
+        this IResourceBuilder<KeycloakResource> builder,
+        IResourceBuilder<IResource> clientReference)
+    {
+        if (!clientReference.Resource.TryGetEndpoints(out var endpoints))
+        {
+            return builder;
+        }
+
+        var endpoint = endpoints.FirstOrDefault(e => e.Name == "http");
+        if (endpoint is null)
+        {
+            return builder;
+        }
+
+        builder.WithEnvironment(Constants.ClientPortEnvironmentKey, endpoint.Port.ToString());
+        return builder;
+    }
+
     public static IResourceBuilder<KeycloakResource> WithDevUserEmail(
         this IResourceBuilder<KeycloakResource> builder,
         string email = "dev@dev.de")

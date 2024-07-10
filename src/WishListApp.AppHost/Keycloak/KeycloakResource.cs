@@ -23,6 +23,8 @@ internal sealed class KeycloakResource(string name)
 
     public string? ClientSecret { get; set; }
 
+    public int? ClientPort { get; set; }
+
     public string? DevUserEmail { get; set; }
 
     public string? DevUserPassword { get; set; }

@@ -12,6 +12,8 @@ internal static class Constants
 
     public const string ClientSecretEnvironmentKey = "CLIENT_SECRET";
 
+    public const string ClientPortEnvironmentKey = "CLIENT_PORT";
+
     public const string DevUserEmailEnvironmentKey = "USER_EMAIL";
 
     public const string DevUserPasswordEnvironmentKey = "USER_PASSWORD";
