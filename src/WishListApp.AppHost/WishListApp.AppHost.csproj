@@ -18,4 +18,10 @@
     <ProjectReference Include="..\WishListApp\WishListApp.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Resources\wishlist-dev-realm.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
