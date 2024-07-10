@@ -413,6 +413,7 @@
   "webAuthnPolicyPasswordlessExtraOrigins": [],
   "users": [
     {
+      "id": "ea0e012f-56e6-4b82-b4c8-054d77b48622",
       "username": "${USER_EMAIL}",
       "firstName": "${USER_FIRSTNAME}",
       "lastName": "${USER_LASTNAME}",

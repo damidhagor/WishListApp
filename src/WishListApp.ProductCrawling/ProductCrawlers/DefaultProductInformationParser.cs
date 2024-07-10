@@ -1,4 +1,6 @@
-﻿namespace WishListApp.ProductCrawling.ProductCrawlers;
+﻿using System.Globalization;
+
+namespace WishListApp.ProductCrawling.ProductCrawlers;
 
 internal sealed class DefaultProductInformationParser : BaseProductInformationParser
 {
@@ -20,7 +22,7 @@ internal sealed class DefaultProductInformationParser : BaseProductInformationPa
 
         var price = GetValue(head, "<meta property=\"product:price:amount\" content=\"", "\"");
         var priceOG = GetValue(head, "<meta property=\"og:price:amount\" content=\"", "\"");
-        var priceValue = decimal.TryParse(priceOG.Length == 0 ? price.ToString() : priceOG.ToString(), out var parsedPrice)
+        var priceValue = decimal.TryParse(priceOG.Length == 0 ? price.ToString() : priceOG.ToString(), CultureInfo.InvariantCulture, out var parsedPrice)
             ? parsedPrice
             : 0;
 
