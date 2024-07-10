@@ -11,13 +11,14 @@ internal static class KeycloakResourceBuilderExtensions
         string adminUsername = "admin",
         string adminPassword = "admin")
     {
-        var keycloak = builder.AddResource(new KeycloakResource(name))
+        var keycloakResource = new KeycloakResource(name);
+        var keycloak = builder.AddResource(keycloakResource)
             .WithImage("quay.io/keycloak/keycloak", "25.0.1")
             .WithEndpoint(
                 port: port,
                 targetPort: 8080,
                 scheme: "http",
-                name: KeycloakResource.HttpEndpointName)
+                name: Constants.HttpEndpointName)
             .WithEnvironment("KEYCLOAK_ADMIN", adminUsername)
             .WithEnvironment("KEYCLOAK_ADMIN_PASSWORD", adminPassword)
             .WithBindMount(
@@ -73,7 +74,7 @@ internal static class KeycloakResourceBuilderExtensions
         string? clientSecret = null)
     {
         builder.Resource.ClientSecret = clientSecret ?? Guid.NewGuid().ToString();
-        builder.WithEnvironment(Constants.ClientSecretEnvironmentKey, clientSecret);
+        builder.WithEnvironment(Constants.ClientSecretEnvironmentKey, builder.Resource.ClientSecret);
         return builder;
     }
 

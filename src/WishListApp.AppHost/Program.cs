@@ -12,7 +12,13 @@ var wishListApp = builder
     .AddProject<Projects.WishListApp>("wishlistapp")
     .WithReference(mongoDB, "MongoDB");
 
-builder.AddKeycloak()
+var keycloak = builder.AddKeycloak()
     .WithClientReference(wishListApp);
+
+wishListApp.AddKeycloakReference(
+    keycloak,
+    "IdentityOptions__Authority",
+    "IdentityOptions__ClientId",
+    "IdentityOptions__ClientSecret");
 
 builder.Build().Run();
