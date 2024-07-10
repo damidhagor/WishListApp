@@ -29,7 +29,11 @@ internal static class KeycloakResourceBuilderExtensions
             .WithRealm()
             .WithClientId()
             .WithClientName()
-            .WithClientSecret();
+            .WithClientSecret()
+            .WithDevUserEmail()
+            .WithDevUserPassword()
+            .WithDevUserFirstName()
+            .WithDevUserLastName();
 
         return keycloak;
     }
@@ -70,6 +74,46 @@ internal static class KeycloakResourceBuilderExtensions
     {
         builder.Resource.ClientSecret = clientSecret ?? Guid.NewGuid().ToString();
         builder.WithEnvironment(Constants.ClientSecretEnvironmentKey, clientSecret);
+        return builder;
+    }
+
+    public static IResourceBuilder<KeycloakResource> WithDevUserEmail(
+        this IResourceBuilder<KeycloakResource> builder,
+        string email = "dev@dev.de")
+    {
+        Guard.IsNotNullOrWhiteSpace(email);
+        builder.Resource.DevUserEmail = email;
+        builder.WithEnvironment(Constants.DevUserEmailEnvironmentKey, email);
+        return builder;
+    }
+
+    public static IResourceBuilder<KeycloakResource> WithDevUserPassword(
+        this IResourceBuilder<KeycloakResource> builder,
+        string password = "development")
+    {
+        Guard.IsNotNullOrWhiteSpace(password);
+        builder.Resource.DevUserPassword = password;
+        builder.WithEnvironment(Constants.DevUserPasswordEnvironmentKey, password);
+        return builder;
+    }
+
+    public static IResourceBuilder<KeycloakResource> WithDevUserFirstName(
+        this IResourceBuilder<KeycloakResource> builder,
+        string firstName = "David")
+    {
+        Guard.IsNotNullOrWhiteSpace(firstName);
+        builder.Resource.DevUserFirstName = firstName;
+        builder.WithEnvironment(Constants.DevUserFirstNameEnvironmentKey, firstName);
+        return builder;
+    }
+
+    public static IResourceBuilder<KeycloakResource> WithDevUserLastName(
+        this IResourceBuilder<KeycloakResource> builder,
+        string lastName = "Developer")
+    {
+        Guard.IsNotNullOrWhiteSpace(lastName);
+        builder.Resource.DevUserLastName = lastName;
+        builder.WithEnvironment(Constants.DevUserLastNameEnvironmentKey, lastName);
         return builder;
     }
 }
