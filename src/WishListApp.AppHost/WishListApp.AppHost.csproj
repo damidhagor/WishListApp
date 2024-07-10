@@ -12,6 +12,7 @@
   <ItemGroup>
     <PackageReference Include="Aspire.Hosting.AppHost" Version="8.0.2" />
     <PackageReference Include="Aspire.Hosting.MongoDB" Version="8.0.2" />
+    <PackageReference Include="CommunityToolkit.Diagnostics" Version="8.2.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Resources\wishlist-dev-realm.json">
+    <None Update="Keycloak\Resources\wishlist-dev-realm.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
