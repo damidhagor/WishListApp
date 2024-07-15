@@ -47,6 +47,19 @@ internal static class ServiceCollectionExtensions
             };
             options.GetClaimsFromUserInfoEndpoint = true;
 
+            options.Events.OnRedirectToIdentityProviderForSignOut = context =>
+            {
+                var options = context.HttpContext.RequestServices.GetRequiredService<IOptions<IdentityOptions>>()?.Value
+                    ?? throw new ArgumentNullException($"No {nameof(IdentityOptions)} were provided.");
+
+                if (options.RequireHttpsMetadata)
+                {
+                    context.ProtocolMessage.PostLogoutRedirectUri = context.ProtocolMessage.PostLogoutRedirectUri.Replace("http", "https");
+                }
+
+                return Task.CompletedTask;
+            };
+
             options.Events.OnRedirectToIdentityProvider = context =>
             {
                 var options = context.HttpContext.RequestServices.GetRequiredService<IOptions<IdentityOptions>>()?.Value
