@@ -19,8 +19,6 @@ public partial class ItemComponent
     [CascadingParameter]
     public WishListViewModel ViewModel { get; set; } = default!;
 
-    protected bool IsProductInformationLoading { get; set; }
-
     private string? ImageUrl { get; set; }
 
     private bool _canBePurchased => Item.CanBePurchasedByShare(ViewModel.LoggedInShare?.Id);
@@ -31,36 +29,7 @@ public partial class ItemComponent
 
     private ItemEditModalComponent _itemEditModal = default!;
 
-    protected override async Task OnParametersSetAsync()
-    {
-        await LoadItemInformation(default);
-    }
-
     private async Task OpenWishlistItemEditModal() => await _itemEditModal.Open(Item);
-
-    private async Task LoadItemInformation(CancellationToken cancellationToken)
-    {
-        if (Item is null)
-        {
-            return;
-        }
-
-        try
-        {
-            IsProductInformationLoading = true;
-            var result = await _productCrawler.CrawlProduct(new Uri(Item.Url), cancellationToken);
-
-            ImageUrl = result.ImageUrl;
-        }
-        catch (Exception e)
-        {
-            ;
-        }
-        finally
-        {
-            IsProductInformationLoading = false;
-        }
-    }
 
     private async Task BuyItem() => await ViewModel.BuyWishListItem(Item, default);
 

@@ -14,7 +14,7 @@ var wishListApp = builder
     
 wishListApp.WithEnvironment("ApplicationUrl", wishListApp.GetEndpoint("http"));
 
-var keycloak = builder.AddKeycloak()
+var keycloak = builder.AddKeycloak(port: 8888)
     .WithClientReference(wishListApp);
 
 wishListApp.AddKeycloakReference(
