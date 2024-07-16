@@ -11,6 +11,8 @@ var mongoDB = builder
 var wishListApp = builder
     .AddProject<Projects.WishListApp>("wishlistapp")
     .WithReference(mongoDB, "MongoDB");
+    
+wishListApp.WithEnvironment("ApplicationUrl", wishListApp.GetEndpoint("http"));
 
 var keycloak = builder.AddKeycloak()
     .WithClientReference(wishListApp);
