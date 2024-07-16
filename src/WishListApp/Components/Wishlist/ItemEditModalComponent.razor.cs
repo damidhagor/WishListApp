@@ -16,6 +16,7 @@ public partial class ItemEditModalComponent
     private ModalComponent _modal = default!;
     private WishListItem? _item;
 
+    private string _siteName = "";
     private string _name = "";
     private string _description = "";
     private string _note = "";
@@ -29,6 +30,7 @@ public partial class ItemEditModalComponent
     public async Task Open(WishListItem item)
     {
         _item = item;
+        _siteName = _item?.SiteName ?? "";
         _name = _item?.Name ?? "";
         _description = _item?.Description ?? "";
         _note = _item?.Note ?? "";
@@ -53,7 +55,7 @@ public partial class ItemEditModalComponent
             _isLoading = true;
 
             var info = await _productCrawlerService.CrawlProduct(new Uri(_item.Url), default);
-            await Task.Delay(5_000);
+            _siteName = string.IsNullOrWhiteSpace(info.SiteName) ? _siteName : info.SiteName;
             _name = string.IsNullOrWhiteSpace(info.Title) ? _name : info.Title;
             _description = string.IsNullOrWhiteSpace(info.Description) ? _description : info.Description;
             _price = info.Price ?? _price;
@@ -74,6 +76,7 @@ public partial class ItemEditModalComponent
 
         var updatedItem = _item with
         {
+            SiteName = _siteName,
             Name = _name,
             Description = _description,
             Note = _note,

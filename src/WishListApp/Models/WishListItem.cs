@@ -6,6 +6,7 @@ public sealed record WishListItem(
     ObjectId Id,
     ObjectId WishListId,
     string Url,
+    string? SiteName,
     string? Name,
     string? Description,
     decimal? Price,
@@ -15,6 +16,8 @@ public sealed record WishListItem(
     WishListItemPriority Priority,
     WishListItemPurchase[] Purchases)
 {
+    public string NameOrUrl => string.IsNullOrWhiteSpace(Name) ? Url : Name;
+
     public int PurchasedQuantity { get; } = Purchases.Sum(p => p.Quantity);
 
     public int RemainingQuantity { get; } = Math.Max(0, Quantity - Purchases.Sum(p => p.Quantity));

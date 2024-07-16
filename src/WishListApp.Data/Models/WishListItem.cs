@@ -3,6 +3,7 @@
 public sealed record WishListItem(
     ObjectId Id,
     string Url,
+    string? SiteName,
     string? Name,
     string? Description,
     decimal? Price,

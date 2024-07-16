@@ -1,19 +1,19 @@
 ﻿using System.Collections.Frozen;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
-using WishListApp.ProductCrawling.ProductCrawlers;
+using WishListApp.ProductCrawling.Parsers;
 
 namespace WishListApp.ProductCrawling.Services;
 
 internal sealed class ProductCrawlerService(
     IHttpClientFactory httpClientFactory,
     TimeProvider timeProvider,
-    IEnumerable<IProductInformationParser> productInformationParsers)
+    IEnumerable<IParser> productInformationParsers)
     : IProductCrawlerService
 {
     private readonly IHttpClientFactory _httpClientFactory = httpClientFactory;
     private readonly TimeProvider _timeProvider = timeProvider;
-    private readonly FrozenDictionary<string, IProductInformationParser> _productInformationCrawlers
+    private readonly FrozenDictionary<string, IParser> _productInformationCrawlers
         = productInformationParsers.ToFrozenDictionary(p => p.Host);
     private readonly Dictionary<string, (ProductInformation ProductInformation, DateTimeOffset CreatedAt)> _cache = [];
 
@@ -32,23 +32,14 @@ internal sealed class ProductCrawlerService(
         var host = url.Host.StartsWith("www.") ? url.Host.AsSpan(4).ToString() : url.Host;
 
         var result = _productInformationCrawlers.TryGetValue(host, out var parser)
-            ? parser.ParseProductInformation(html)
-            : _productInformationCrawlers["default"].ParseProductInformation(html);
+            ? parser.Parse(html)
+            : _productInformationCrawlers[Constants.DefaultParserHost].Parse(html);
 
-        result = result with { Currency = MapCurrencySymbol(result.Currency) };
 
         _cache[url.ToString()] = (result, _timeProvider.GetUtcNow());
 
         return result;
     }
-
-    private string? MapCurrencySymbol(string? currency)
-        => currency switch
-        {
-            "EUR" => "€",
-            "USD" => "$",
-            _ => currency
-        };
 
     private bool TryGetCachedProductInformation(string url, [NotNullWhen(true)] out ProductInformation? productInformation)
     {

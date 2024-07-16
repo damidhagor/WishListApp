@@ -8,7 +8,7 @@ public sealed class WishListItemRepository(IMongoClient mongoClient) : IWishList
 
     public async Task<WishList?> Add(ObjectId wishListId, string url, CancellationToken cancellationToken)
     {
-        var item = new WishListItem(ObjectId.GenerateNewId(), url, null, null, null, null, 1, "", 0, []);
+        var item = new WishListItem(ObjectId.GenerateNewId(), url, null, null, null, null, null, 1, "", 0, []);
 
         return await _collection.FindOneAndUpdateAsync(
             w => w.Id == wishListId,
@@ -40,6 +40,7 @@ public sealed class WishListItemRepository(IMongoClient mongoClient) : IWishList
         return await _collection.FindOneAndUpdateAsync(
             w => w.Id == wishListId && w.Items.Any(i => i.Id == item.Id),
             Builders<WishList>.Update
+                .Set(w => w.Items.FirstMatchingElement().SiteName, item.SiteName)
                 .Set(w => w.Items.FirstMatchingElement().Name, item.Name)
                 .Set(w => w.Items.FirstMatchingElement().Description, item.Description)
                 .Set(w => w.Items.FirstMatchingElement().Price, item.Price)

@@ -23,7 +23,8 @@
         <div class="d-flex flex-column w-75">
             <div class="d-flex flex-row ps-2 pt-2 pe-2 gap-2 border-bottom border-secondary align-items-baseline">
                 <h5 class="">
-                    <a href="@Item.Url" target="_blank">@(string.IsNullOrWhiteSpace(Item.Name) ? Item.Url : Item.Name)</a>
+                    <a href="@Item.Url" target="_blank">@Item.NameOrUrl</a>
+                    @(string.IsNullOrWhiteSpace(Item.SiteName) ? "" : $"({Item.SiteName})")
                 </h5>
 
                 @if (Item.Quantity > 1)

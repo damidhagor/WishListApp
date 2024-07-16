@@ -19,6 +19,7 @@ internal static class MappingExtensions
             item.Id,
             wishListId,
             item.Url,
+            item.SiteName,
             item.Name,
             item.Description,
             item.Price,
@@ -35,6 +36,7 @@ internal static class MappingExtensions
         => new(
             item.Id,
             item.Url,
+            item.SiteName,
             item.Name,
             item.Description,
             item.Price,
