@@ -144,4 +144,13 @@ public sealed class WishListItemRepository(IMongoClient mongoClient) : IWishList
             new() { ReturnDocument = ReturnDocument.After },
             cancellationToken);
     }
+
+    public async Task<WishList?> ResetPurchases(ObjectId wishListId, ObjectId itemId, CancellationToken cancellationToken)
+    {
+        return await _collection.FindOneAndUpdateAsync(
+            w => w.Id == wishListId && w.Items.Any(i => i.Id == itemId),
+            Builders<WishList>.Update.Set(w => w.Items.FirstMatchingElement().Purchases, []),
+            new() { ReturnDocument = ReturnDocument.After },
+            cancellationToken);
+    }
 }

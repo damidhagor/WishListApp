@@ -66,6 +66,8 @@ public partial class ItemComponent
 
     private async Task UnbuyItem() => await ViewModel.UnbuyWishListItem(Item, default);
 
+    private async Task ResetItemPurchases() => await ViewModel.ResetWishListItemPurchases(Item, default);
+
     private async Task SetItemPriority(WishListItemPriority priority) => await ViewModel.SetWishListItemPriority(Item, priority.Priority, default);
 
     private async Task DeleteItem()

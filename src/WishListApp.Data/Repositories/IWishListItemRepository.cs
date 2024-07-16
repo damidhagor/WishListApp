@@ -13,4 +13,6 @@ public interface IWishListItemRepository
     Task<WishList?> UpdatePriority(ObjectId wishListId, ObjectId itemId, int priority, CancellationToken cancellationToken);
 
     Task<WishList?> UpdatePurchaseQuantity(ObjectId wishListId, ObjectId itemId, ObjectId shareId, int quantity, CancellationToken cancellationToken);
+
+    Task<WishList?> ResetPurchases(ObjectId wishListId, ObjectId itemId, CancellationToken cancellationToken);
 }

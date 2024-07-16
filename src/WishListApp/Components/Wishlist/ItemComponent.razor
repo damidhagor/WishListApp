@@ -35,7 +35,7 @@
                 }
 
                 <div class="align-self-baseline">
-                    @Item.Price
+                    @Item.Price @Item.Currency
                 </div>
             </div>
 
@@ -64,6 +64,14 @@
                     <button type="button" class="btn btn-outline-light" @onclick="OpenWishlistItemEditModal">
                         <i class="bi bi-pen" /> Bearbeiten
                     </button>
+
+                    if (!ViewModel.HideBuyInformation && _purchasedByOtherShare)
+
+                    {
+                        <button type="button" class="btn btn-outline-warning" @onclick="ResetItemPurchases">
+                            <i class="bi bi-bag" /> Kaufstatus zurücksetzen
+                        </button>
+                    }
                 }
                 else
                 {

@@ -94,6 +94,17 @@ public sealed class WishListViewModel
         await ReloadWishList(cancellationToken);
     }
 
+    public async Task ResetWishListItemPurchases(WishListItem item, CancellationToken cancellationToken)
+    {
+        if (!ViewedByOwner)
+        {
+            return;
+        }
+
+        await _itemRepository.ResetPurchases(item.WishListId, item.Id, cancellationToken);
+        await ReloadWishList(cancellationToken);
+    }
+
     public async Task SetWishListItemPriority(WishListItem item, int priority, CancellationToken cancellationToken)
     {
         await _itemRepository.UpdatePriority(item.WishListId, item.Id, priority, cancellationToken);
