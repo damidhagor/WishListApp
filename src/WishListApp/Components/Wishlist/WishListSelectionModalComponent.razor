@@ -1,0 +1,31 @@
+﻿@inherits ComponentBase
+
+<ModalComponent @ref="_modal" Title="Eintrag verschieben" Size="ModalComponent.ModalSize.Large">
+    <Body>
+        <div class="d-flex align-items-center">
+            <h5 class="me-4 mt-0 mb-0">Wunschliste auswählen:</h5>
+            <DropdownComponent T="WishListApp.Models.WishList"
+                               Items="@_lists"
+                               SelectedItem="_selectedList"
+                               SelectedItemChanged="@(list => _selectedList = list)">
+                <ItemTemplate>
+                    @context?.Name
+                </ItemTemplate>
+                <EmptySelectionTemplate>
+                    -
+                </EmptySelectionTemplate>
+            </DropdownComponent>
+        </div>
+    </Body>
+
+    <Footer>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Abbrechen
+        </button>
+
+        <button type="button" class="btn btn-primary" @onclick="MoveItemToWishList">
+            <i class="bi bi-arrow-left-right" />
+            Verschieben
+        </button>
+    </Footer>
+</ModalComponent>

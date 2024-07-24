@@ -50,8 +50,12 @@
                         <i class="bi bi-trash" /> Löschen
                     </button>
 
-                    <button type="button" class="btn btn-outline-light" @onclick="OpenWishlistItemEditModal">
+                    <button type="button" class="btn btn-outline-light" @onclick="OpenWishListItemEditModal">
                         <i class="bi bi-pen" /> Bearbeiten
+                    </button>
+
+                    <button type="button" class="btn btn-outline-light" @onclick="OpenWishListSelectionModal">
+                        <i class="bi bi-arrow-left-right" /> Verschieben
                     </button>
 
                     if (!ViewModel.HideBuyInformation && _purchasedByOtherShare)
@@ -106,5 +110,7 @@
         </div>
 
         <ItemEditModalComponent @ref="_itemEditModal" />
+
+        <WishListSelectionModalComponent @ref="_wishListSelectionModal" />
     </div>
 }

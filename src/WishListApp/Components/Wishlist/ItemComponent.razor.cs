@@ -29,7 +29,11 @@ public partial class ItemComponent
 
     private ItemEditModalComponent _itemEditModal = default!;
 
-    private async Task OpenWishlistItemEditModal() => await _itemEditModal.Open(Item);
+    private WishListSelectionModalComponent _wishListSelectionModal = default!;
+
+    private async Task OpenWishListItemEditModal() => await _itemEditModal.Open(Item);
+
+    private async Task OpenWishListSelectionModal() => await _wishListSelectionModal.Open(Item);
 
     private async Task BuyItem() => await ViewModel.BuyWishListItem(Item, default);
 

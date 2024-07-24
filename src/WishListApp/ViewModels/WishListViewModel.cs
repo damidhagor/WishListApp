@@ -117,6 +117,13 @@ public sealed class WishListViewModel
         await ReloadWishList(cancellationToken);
     }
 
+    public async Task MoveItemToWishList(WishListItem item, WishList newList, CancellationToken cancellationToken)
+    {
+        await _itemRepository.MoveToWishList(item.WishListId, item.Id, newList.Id, cancellationToken);
+        await ReloadWishList(cancellationToken);
+    }
+
+
     public async Task DeleteBoughtWishListItems(CancellationToken cancellationToken)
     {
         await _itemRepository.DeletePurchasedItems(WishList.Id, cancellationToken);

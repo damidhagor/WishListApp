@@ -154,4 +154,34 @@ public sealed class WishListItemRepository(IMongoClient mongoClient) : IWishList
             new() { ReturnDocument = ReturnDocument.After },
             cancellationToken);
     }
+
+    public async Task<WishList?> MoveToWishList(ObjectId listId, ObjectId itemId, ObjectId newListId, CancellationToken cancellationToken)
+    {
+        var item = await _collection.Find(w => w.Id == listId && w.Items.Any(i => i.Id == itemId))
+            .Project(w => w.Items.FirstOrDefault(i => i.Id == itemId))
+            .FirstOrDefaultAsync(cancellationToken);
+
+        if (item is null)
+        {
+            return null;
+        }
+
+        item = item with
+        {
+            Id = ObjectId.GenerateNewId(),
+            Purchases = []
+        };
+
+        await _collection.FindOneAndUpdateAsync(
+            w => w.Id == newListId,
+            Builders<WishList>.Update.Push(w => w.Items, item),
+            null,
+            cancellationToken);
+
+        return await _collection.FindOneAndUpdateAsync(
+            w => w.Id == listId,
+            Builders<WishList>.Update.PullFilter(w => w.Items, i => i.Id == itemId),
+            new() { ReturnDocument = ReturnDocument.After },
+            cancellationToken);
+    }
 }
