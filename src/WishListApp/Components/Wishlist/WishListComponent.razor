@@ -34,6 +34,13 @@ else
                 <h2>Hallo @ViewModel.LoggedInShare.Name</h2>
             }
 
+            @if (ViewModel.ViewedByOwner)
+            {
+                <button type="button" class="btn btn-outline-primary" @onclick="AddNewWishListItem">
+                    <i class="bi bi-plus-lg" /> Eintrag Hinzufügen
+                </button>
+            }
+
             <div class="dropdown ms-2">
                 <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                     <i class="bi bi-sliders" />
@@ -92,15 +99,6 @@ else
             }
         </div>
     }
-
-    <div class="d-flex align-content-center align-top">
-        @if (ViewModel.ViewedByOwner)
-        {
-            <button type="button" class="btn btn-outline-primary" @onclick="AddNewWishListItem">
-                <i class="bi bi-plus-lg" /> Eintrag Hinzufügen
-            </button>
-        }
-    </div>
 
     <SharesModalComponent @ref="_shareModal" />
     <TextInputModalComponent @ref="_inputModal" />
