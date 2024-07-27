@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using MongoDB.Bson;
+using WishListApp.Components.Controls.Modals;
 using WishListApp.Services;
 
 namespace WishListApp.Components.Pages;
@@ -22,13 +23,11 @@ public partial class WishListsPage
     [Inject]
     private IWishListShareRepository _shareRepository { get; set; } = default!;
 
+    private TextInputModalComponent _inputModal = default!;
+
     private WishListUser? _user;
 
     private List<(WishList WishList, WishListShare[] Shares)>? _wishLists;
-
-    private string _newWishListName = "";
-
-    private bool _isNewWishListNameEmpty => string.IsNullOrWhiteSpace(_newWishListName);
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -62,14 +61,20 @@ public partial class WishListsPage
 
     private async Task CreateNewWishList()
     {
-        if (string.IsNullOrWhiteSpace(_newWishListName)
-            || _user is null)
-        {
-            return;
-        }
+        await _inputModal.Open(
+            title: "Wunschliste hinzufügen",
+            placeholderText: "Name",
+            inputCallback: async (string name) =>
+            {
+                if (string.IsNullOrWhiteSpace(name)
+                    || _user is null)
+                {
+                    return;
+                }
 
-        var wishList = await _wishListRepository.Add(_newWishListName, _user.Identifier, default);
-        _navigationManager.NavigateTo($"editwishlist?id={wishList.Id}");
+                var wishList = await _wishListRepository.Add(name, _user.Identifier, default);
+                _navigationManager.NavigateTo($"editwishlist?id={wishList.Id}");
+            });
     }
 
     private async Task DeleteWishList(ObjectId wishListId)

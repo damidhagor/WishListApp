@@ -3,7 +3,18 @@
 
 <PageTitle>Wish Lists</PageTitle>
 
-<h1>Wish Lists</h1>
+<div class="d-flex">
+    <h1>Wish Lists</h1>
+
+    @if (_wishLists is not null)
+    {
+        <div class="d-flex ms-auto align-self-center">
+            <button valign="baseline" type="button" class="btn btn-outline-primary" @onclick="CreateNewWishList">
+                <i class="bi bi-plus-lg" /> Hinzufügen
+            </button>
+        </div>
+    }
+</div>
 <div class="border border-secondary"></div>
 
 <div>
@@ -43,12 +54,7 @@
                 </div>
             }
         </div>
-
-        <div class="d-flex">
-            <input class="me-2 col-4" valign="baseline" type="text" placeholder="Name" @bind="@_newWishListName" @bind:event="oninput">
-            <button valign="baseline" type="button" class="btn btn-outline-primary" @onclick="CreateNewWishList" disabled="@_isNewWishListNameEmpty">
-                <i class="bi bi-plus-lg" /> Hinzufügen
-            </button>
-        </div>
     }
 </div>
+
+<TextInputModalComponent @ref="_inputModal" />
