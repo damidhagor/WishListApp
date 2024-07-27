@@ -3,7 +3,8 @@
 <ModalComponent @ref="_modal" Title="@_title">
     <Body>
         <div class="d-flex flex-row">
-            <input type="text" class="flex-grow-1 me-2" placeholder="@_placeholderText" @bind="_text" @bind:event="oninput" @onkeydown="OnKeyDown">
+            <input type="text" class="flex-grow-1 me-2" @ref="_input" autofocus
+                   placeholder="@_placeholderText" @bind="_text" @bind:event="oninput" @onkeydown="OnKeyDown">
             <button type="button" class="btn btn-primary" @onclick="OnOkButtonClicked" disabled="@_isOkButtonDisabled">
                 <i class="bi bi-check-lg" /> Ok
             </button>

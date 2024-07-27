@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
 namespace WishListApp.Components.Controls.Modals;
@@ -5,6 +6,7 @@ namespace WishListApp.Components.Controls.Modals;
 public partial class TextInputModalComponent
 {
     private ModalComponent _modal = default!;
+    private ElementReference _input = default!;
 
     private string _title = "";
     private string _placeholderText = "";
@@ -31,6 +33,8 @@ public partial class TextInputModalComponent
         StateHasChanged();
 
         await _modal.Open();
+        await Task.Delay(500);
+        await _input.FocusAsync();
     }
 
     private async Task OnOkButtonClicked()
