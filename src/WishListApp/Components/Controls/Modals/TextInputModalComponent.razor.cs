@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Components.Web;
+
 namespace WishListApp.Components.Controls.Modals;
 
 public partial class TextInputModalComponent
@@ -39,5 +41,16 @@ public partial class TextInputModalComponent
         }
 
         await _modal.Close();
+    }
+
+    private async Task OnKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Code == "Enter" || e.Code == "NumpadEnter")
+        {
+            if(!_isOkButtonDisabled)
+            {
+                await OnOkButtonClicked();
+            }
+        }
     }
 }
