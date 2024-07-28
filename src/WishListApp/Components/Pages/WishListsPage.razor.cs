@@ -15,6 +15,9 @@ public partial class WishListsPage
     private IJSRuntime _jsRuntime { get; set; } = default!;
 
     [Inject]
+    private IStringLocalizer<Strings> _localizer { get; set; } = default!;
+
+    [Inject]
     private IUserService _userService { get; set; } = default!;
 
     [Inject]
@@ -62,8 +65,8 @@ public partial class WishListsPage
     private async Task CreateNewWishList()
     {
         await _inputModal.Open(
-            title: "Wunschliste hinzufügen",
-            placeholderText: "Name",
+            title: _localizer["WishListsPage_Add_Title"],
+            placeholderText: _localizer["WishListsPage_Add_Placeholder"],
             inputCallback: async (string name) =>
             {
                 if (string.IsNullOrWhiteSpace(name)
@@ -79,7 +82,7 @@ public partial class WishListsPage
 
     private async Task DeleteWishList(ObjectId wishListId)
     {
-        bool confirmed = await _jsRuntime.InvokeAsync<bool>("confirm", "Möchten Sie die Wunschliste löschen?");
+        bool confirmed = await _jsRuntime.InvokeAsync<bool>("confirm", _localizer["WishListsPage_Delete_Message"]);
         if (confirmed)
         {
             await _wishListRepository.Delete(wishListId, default);

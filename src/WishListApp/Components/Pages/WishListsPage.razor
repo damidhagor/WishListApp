@@ -1,16 +1,16 @@
 ﻿@page "/"
 @attribute [Authorize]
 
-<PageTitle>Wish Lists</PageTitle>
+<PageTitle>@_localizer["WishListsPage_Title"]</PageTitle>
 
 <div class="d-flex">
-    <h1>Wish Lists</h1>
+    <h1>@_localizer["WishListsPage_Title"]</h1>
 
     @if (_wishLists is not null)
     {
         <div class="d-flex ms-auto align-self-center">
             <button valign="baseline" type="button" class="btn btn-outline-primary" @onclick="CreateNewWishList">
-                <i class="bi bi-plus-lg" /> Hinzufügen
+                <i class="bi bi-plus-lg" /> @_localizer["Add"]
             </button>
         </div>
     }
@@ -22,9 +22,9 @@
     {
         <div>
             <div class="spinner-border spinner-border-sm text-primary ms-1" role="status">
-                <span class="visually-hidden">Loading...</span>
+                <span class="visually-hidden">@_localizer["Loading"] ...</span>
             </div>
-            Loading Wish Lists ...
+            @_localizer["WishListsPage_LoadingWishLists"] ...
         </div>
     }
     else
@@ -47,7 +47,7 @@
                     </div>
 
                     <button type="button" class="btn btn-outline-danger ms-auto" style="z-index: 100" @onclick="@(async () => await DeleteWishList(wishList.Id))">
-                        <i class="bi bi-trash3" /> Löschen
+                        <i class="bi bi-trash3" /> @_localizer["Delete"]
                     </button>
 
                     <a href="editwishlist?id=@wishList.Id" class="stretched-link"></a>

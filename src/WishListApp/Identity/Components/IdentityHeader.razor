@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Components.Routing
 @using WishListApp.Identity.Services
 
+@inject IStringLocalizer<Strings> _localizer
 @inject IIdentityService _accountService
 
 <div class="d-flex">
@@ -12,12 +13,12 @@
             </a>
 
             <button class="btn btn-outline-light" onclick="@(() => _accountService.Logout())">
-                <i class="bi bi-box-arrow-left navbar-icon"></i> Logout
+                <i class="bi bi-box-arrow-left navbar-icon"></i> @_localizer["IdentityHeader_Logout"]
             </button>
         </Authorized>
         <NotAuthorized>
             <button type="button" class="btn btn-outline-light" onclick="@(() => _accountService.Login())">
-                <i class="bi bi-box-arrow-in-right navbar-icon"></i> Login
+                <i class="bi bi-box-arrow-in-right navbar-icon"></i> @_localizer["IdentityHeader_Login"]
             </button>
         </NotAuthorized>
     </AuthorizeView>

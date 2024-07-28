@@ -4,6 +4,9 @@ namespace WishListApp.Components.Controls;
 
 public partial class DropdownComponent<T>
 {
+    [Inject]
+    private IStringLocalizer<Strings> _localizer { get; set; } = default!;
+
     [Parameter, EditorRequired]
     public IReadOnlyList<T> Items { get; set; } = [];
 

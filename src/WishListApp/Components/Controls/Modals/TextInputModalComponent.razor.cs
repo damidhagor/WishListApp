@@ -5,6 +5,9 @@ namespace WishListApp.Components.Controls.Modals;
 
 public partial class TextInputModalComponent
 {
+    [Inject]
+    private IStringLocalizer<Strings> _localizer { get; set; } = default!;
+
     private ModalComponent _modal = default!;
     private ElementReference _input = default!;
 
@@ -18,17 +21,17 @@ public partial class TextInputModalComponent
     private bool _isOkButtonDisabled => string.IsNullOrWhiteSpace(_text) && !_inputCanBeEmpty;
 
     public async Task Open(
-        string title = "Eingabe",
-        string initialText = "",
-        string placeholderText = "",
+        string? title = null,
+        string? initialText = null,
+        string? placeholderText = null,
         bool inputCanBeEmpty = false,
         Func<string, Task>? inputCallback = null)
     {
-        _title = title;
-        _placeholderText = placeholderText;
+        _title = title ?? _localizer["InputModal_DefaultTitle"];
+        _text = initialText ?? "";
+        _placeholderText = placeholderText ?? "";
         _inputCanBeEmpty = inputCanBeEmpty;
         _inputCallback = inputCallback;
-        _text = initialText;
 
         StateHasChanged();
 
@@ -51,7 +54,7 @@ public partial class TextInputModalComponent
     {
         if (e.Code == "Enter" || e.Code == "NumpadEnter")
         {
-            if(!_isOkButtonDisabled)
+            if (!_isOkButtonDisabled)
             {
                 await OnOkButtonClicked();
             }

@@ -11,6 +11,8 @@ builder.Services.AddRazorComponents()
 
 builder.AddServiceDefaults("wishlist-app");
 
+builder.Services.AddLocalization();
+
 builder.Services.AddIdentity(builder.Configuration);
 
 builder.Services.AddWishListData(builder.Configuration);
@@ -22,6 +24,15 @@ builder.Services.AddScoped<IMessenger, WeakReferenceMessenger>();
 builder.Services.AddProductCrawler();
 
 var app = builder.Build();
+
+app.UseRequestLocalization(options =>
+{
+    var supportedCultures = new[] { "en-US", "de-DE" };
+
+    options.SetDefaultCulture(supportedCultures[0])
+        .AddSupportedCultures(supportedCultures)
+        .AddSupportedUICultures(supportedCultures);
+});
 
 app.UseStaticFiles();
 app.UseAntiforgery();
