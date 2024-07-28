@@ -45,12 +45,12 @@
                 </div>
 
                 <h5 class="mt-4">Priorität</h5>
-                <DropdownComponent T="WishListItemPriority"
-                                   Items="Constants.WishListItemPriorities"
+                <DropdownComponent T="int"
+                                   Items="WishListItem.AvailablePriorities"
                                    SelectedItem="_priority"
                                    SelectedItemChanged="@(priority => _priority = priority)">
                     <ItemTemplate>
-                        @context?.Name
+                        @context.ToDisplayName(_localizer)
                     </ItemTemplate>
                     <EmptySelectionTemplate>
                         Keine Priorität gewählt

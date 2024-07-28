@@ -180,4 +180,19 @@
   <data name="WishListsPage_Delete_Title" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="WishListItemPriority_0" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="WishListItemPriority_1" xml:space="preserve">
+    <value>Not necessarily</value>
+  </data>
+  <data name="WishListItemPriority_4" xml:space="preserve">
+    <value>I need to have it</value>
+  </data>
+  <data name="WishListItemPriority_2" xml:space="preserve">
+    <value>I'd like to have it</value>
+  </data>
+  <data name="WishListItemPriority_3" xml:space="preserve">
+    <value>I'd like to have it very much</value>
+  </data>
 </root>

@@ -1,6 +1,5 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Components.Authorization;
-using WishListApp.Models;
 
 namespace WishListApp.Services;
 

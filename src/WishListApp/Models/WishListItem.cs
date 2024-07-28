@@ -14,9 +14,11 @@ public sealed record WishListItem(
     string? Currency,
     int Quantity,
     string Note,
-    WishListItemPriority Priority,
+    int Priority,
     WishListItemPurchase[] Purchases)
 {
+    public static int[] AvailablePriorities { get; } = [0, 1, 2, 3, 4];
+
     public string NameOrUrl => string.IsNullOrWhiteSpace(Name) ? Url : Name;
 
     public int PurchasedQuantity { get; } = Purchases.Sum(p => p.Quantity);

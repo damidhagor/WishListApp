@@ -123,7 +123,6 @@ public sealed class WishListViewModel
         await ReloadWishList(cancellationToken);
     }
 
-
     public async Task DeleteBoughtWishListItems(CancellationToken cancellationToken)
     {
         await _itemRepository.DeletePurchasedItems(WishList.Id, cancellationToken);

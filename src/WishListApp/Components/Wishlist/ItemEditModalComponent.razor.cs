@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Components;
 using WishListApp.Components.Controls.Modals;
-using WishListApp.Models;
 using WishListApp.ProductCrawling.Services;
 
 namespace WishListApp.Components.Wishlist;
@@ -9,6 +8,9 @@ public partial class ItemEditModalComponent
 {
     [Inject]
     private IProductCrawlerService _productCrawlerService { get; set; } = default!;
+
+    [Inject]
+    private IStringLocalizer<Strings> _localizer { get; set; } = default!;
 
     [CascadingParameter]
     public WishListViewModel ViewModel { get; set; } = default!;
@@ -24,7 +26,7 @@ public partial class ItemEditModalComponent
     private decimal _price = 0;
     private string _currency = "";
     private int _quantity = 1;
-    private WishListItemPriority _priority = Constants.WishListItemPriorities[0];
+    private int _priority = WishListItem.AvailablePriorities[0];
 
     private bool _isLoading = false;
 
@@ -39,7 +41,7 @@ public partial class ItemEditModalComponent
         _price = _item?.Price ?? 0;
         _currency = _item?.Currency ?? "";
         _quantity = _item?.Quantity ?? 1;
-        _priority = _item?.Priority ?? Constants.WishListItemPriorities[0];
+        _priority = _item?.Priority ?? WishListItem.AvailablePriorities[0];
         StateHasChanged();
 
         await _modal.Open();

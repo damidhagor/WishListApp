@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using WishListApp.Models;
 using WishListApp.ProductCrawling.Services;
 
 namespace WishListApp.Components.Wishlist;
@@ -9,6 +8,9 @@ public partial class ItemComponent
 {
     [Inject]
     private IJSRuntime _jsRuntime { get; set; } = default!;
+
+    [Inject]
+    private IStringLocalizer<Strings> _localizer { get; set; } = default!;
 
     [Inject]
     private IProductCrawlerService _productCrawler { get; set; } = default!;
@@ -41,7 +43,7 @@ public partial class ItemComponent
 
     private async Task ResetItemPurchases() => await ViewModel.ResetWishListItemPurchases(Item, default);
 
-    private async Task SetItemPriority(WishListItemPriority priority) => await ViewModel.SetWishListItemPriority(Item, priority.Priority, default);
+    private async Task SetItemPriority(int priority) => await ViewModel.SetWishListItemPriority(Item, priority, default);
 
     private async Task DeleteItem()
     {

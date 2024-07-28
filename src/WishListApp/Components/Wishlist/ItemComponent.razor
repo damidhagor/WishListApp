@@ -36,9 +36,9 @@
                 @if (ViewModel.ViewedByOwner)
                 {
                     <div class="me-auto">
-                        <DropdownComponent T="WishListItemPriority" Items="Constants.WishListItemPriorities" SelectedItem="Item.Priority" SelectedItemChanged="SetItemPriority">
+                        <DropdownComponent T="int" Items="WishListItem.AvailablePriorities" SelectedItem="Item.Priority" SelectedItemChanged="SetItemPriority">
                             <ItemTemplate>
-                                @context?.Name
+                                @context.ToDisplayName(_localizer)
                             </ItemTemplate>
                             <EmptySelectionTemplate>
                                 Keine Priorität gewählt
@@ -70,7 +70,7 @@
                 {
                     <div class="d-flex rounded-2 me-auto p-2 border border-rounded-2 border-success text-bg-success-emphasis">
                         <span class="text-white align-self-center">
-                            @Item.Priority.Name
+                            @Item.Priority.ToDisplayName(_localizer)
                         </span>
                     </div>
                 }

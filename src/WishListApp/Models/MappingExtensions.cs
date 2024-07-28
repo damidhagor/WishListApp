@@ -27,7 +27,7 @@ internal static class MappingExtensions
             item.Currency,
             item.Quantity,
             item.Note,
-            item.Priority.ToModel(),
+            item.Priority,
             item.Purchases.ToModels().ToArray());
 
     public static IEnumerable<WishListItem> ToModels(this IEnumerable<Data.Models.WishListItem> items, ObjectId wishListId)
@@ -45,7 +45,7 @@ internal static class MappingExtensions
             item.Currency,
             item.Quantity,
             item.Note,
-            item.Priority.Priority,
+            item.Priority,
             item.Purchases.ToDataModels().ToArray());
 
     public static IEnumerable<Data.Models.WishListItem> ToDataModels(this IEnumerable<WishListItem> items)
@@ -69,14 +69,14 @@ internal static class MappingExtensions
     public static IEnumerable<WishListShare> ToModels(this IEnumerable<Data.Models.WishListShare> shares)
         => shares.Select(s => s.ToModel());
 
-    public static WishListItemPriority ToModel(this int priority)
+    public static string ToDisplayName(this int priority, IStringLocalizer<Strings> localizer)
         => priority switch
         {
-            0 => new WishListItemPriority(0, "Unbekannt"),
-            1 => new WishListItemPriority(1, "Nicht unbedingt"),
-            2 => new WishListItemPriority(2, "Hätte ich gerne"),
-            3 => new WishListItemPriority(3, "Hätte ich sehr gerne"),
-            4 => new WishListItemPriority(4, "Muss ich haben"),
-            _ => new WishListItemPriority(priority, priority.ToString())
+            0 => localizer["WishListItemPriority_0"],
+            1 => localizer["WishListItemPriority_1"],
+            2 => localizer["WishListItemPriority_2"],
+            3 => localizer["WishListItemPriority_3"],
+            4 => localizer["WishListItemPriority_4"],
+            _ => priority.ToString()
         };
 }
