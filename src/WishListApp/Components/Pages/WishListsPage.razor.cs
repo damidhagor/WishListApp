@@ -12,9 +12,6 @@ public partial class WishListsPage
     private NavigationManager _navigationManager { get; set; } = default!;
 
     [Inject]
-    private IJSRuntime _jsRuntime { get; set; } = default!;
-
-    [Inject]
     private IStringLocalizer<Strings> _localizer { get; set; } = default!;
 
     [Inject]
@@ -27,6 +24,7 @@ public partial class WishListsPage
     private IWishListShareRepository _shareRepository { get; set; } = default!;
 
     private TextInputModalComponent _inputModal = default!;
+    private ConfirmationModalComponent _confirmationModal = default!;
 
     private WishListUser? _user;
 
@@ -82,12 +80,16 @@ public partial class WishListsPage
 
     private async Task DeleteWishList(ObjectId wishListId)
     {
-        bool confirmed = await _jsRuntime.InvokeAsync<bool>("confirm", _localizer["WishListsPage_Delete_Message"]);
-        if (confirmed)
-        {
-            await _wishListRepository.Delete(wishListId, default);
-            await LoadWishLists(default);
-        }
+        await _confirmationModal.Open(
+            message: _localizer["WishListsPage_Delete_Message"],
+            confirmationCallback: async (bool confirmed) =>
+            {
+                if (confirmed)
+                {
+                    await _wishListRepository.Delete(wishListId, default);
+                    await LoadWishLists(default);
+                }
+            });
     }
 
     private async Task RenameWishList(ObjectId wishListId, string name)

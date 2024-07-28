@@ -1,0 +1,15 @@
+﻿@inherits ComponentBase
+
+<ModalComponent @ref="_modal" Title="@_title" ShowCloseButton="false">
+    <Body>
+        <h5>@_message</h5>
+    </Body>
+    <Footer>
+        <button type="button" class="btn btn-primary" @ref="_okButton" @onclick="OnOkButtonClicked">
+            <i class="bi bi-check-lg" /> @_localizer["ConfirmationModal_DefaultOk"]
+        </button>
+        <button type="button" class="btn btn-secondary" @ref="_cancelButton" @onclick="OnCancelButtonClicked">
+            <i class="bi bi-x-lg" /> @_localizer["ConfirmationModal_DefaultCancel"]
+        </button>
+    </Footer>
+</ModalComponent>
