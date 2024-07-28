@@ -195,4 +195,7 @@
   <data name="WishListItemPriority_3" xml:space="preserve">
     <value>Hätte ich sehr gerne</value>
   </data>
+  <data name="WishListPage_LoadingWishList" xml:space="preserve">
+    <value>Lade Wunschliste</value>
+  </data>
 </root>
