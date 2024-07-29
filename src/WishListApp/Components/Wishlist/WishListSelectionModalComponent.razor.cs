@@ -6,6 +6,9 @@ namespace WishListApp.Components.Wishlist;
 public partial class WishListSelectionModalComponent
 {
     [Inject]
+    private IStringLocalizer<Strings> _localizer { get; set; } = default!;
+
+    [Inject]
     private IWishListRepository _repository { get; set; } = default!;
 
     private ModalComponent _modal = default!;

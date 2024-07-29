@@ -48,6 +48,10 @@ public partial class ConfirmationModalComponent
             await _confirmationCallback.Invoke(isConfirmation);
         }
 
-        await _modal.Close();
+        try
+        {
+            await _modal.Close();
+        }
+        catch { }
     }
 }

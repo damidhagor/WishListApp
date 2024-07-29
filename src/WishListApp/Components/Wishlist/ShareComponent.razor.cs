@@ -1,10 +1,14 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using WishListApp.Components.Controls.Modals;
 
 namespace WishListApp.Components.Wishlist;
 
 public partial class ShareComponent
 {
+    [Inject]
+    private IStringLocalizer<Strings> _localizer { get; set; } = default!;
+
     [Inject]
     private IJSRuntime _jsRuntime { get; set; } = default!;
 
@@ -17,16 +21,22 @@ public partial class ShareComponent
     [CascadingParameter]
     public WishListViewModel ViewModel { get; set; } = default!;
 
+    private ConfirmationModalComponent _modal = default!;
+
     private string Url => _accessKeyGenerator.GenerateShareUrl(Share.AccessKey);
 
     private async Task CopyShareUrlToClipboard() => await _jsRuntime.InvokeVoidAsync("navigator.clipboard.writeText", Url);
 
     private async Task DeleteShare()
     {
-        bool confirmed = await _jsRuntime.InvokeAsync<bool>("confirm", $"Möchten Sie die Freigabe \"{Share.Name}\" löschen?");
-        if (confirmed)
-        {
-            await ViewModel.DeleteWishListShare(Share, default);
-        }
+        await _modal.Open(
+            message: _localizer["ShareComponent_Delete_Message", Share.Name],
+            confirmationCallback: async (bool confirmed) =>
+            {
+                if (confirmed)
+                {
+                    await ViewModel.DeleteWishListShare(Share, default);
+                }
+            });
     }
 }

@@ -198,4 +198,34 @@
   <data name="WishListPage_LoadingWishList" xml:space="preserve">
     <value>Lade Wunschliste</value>
   </data>
+  <data name="WishListSelectionModal_Title" xml:space="preserve">
+    <value>Eintrag verschieben</value>
+  </data>
+  <data name="WishListSelectionModal_Label" xml:space="preserve">
+    <value>Wunschliste auswählen:</value>
+  </data>
+  <data name="WishListSelectionModal_Cancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="WishListSelectionModal_Move" xml:space="preserve">
+    <value>Verschieben</value>
+  </data>
+  <data name="ShareComponent_Delete" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="ShareComponent_Delete_Message" xml:space="preserve">
+    <value>Möchten Sie die Freigabe "{0}" löschen?</value>
+  </data>
+  <data name="SharesModal_Add" xml:space="preserve">
+    <value>Hinzufügen</value>
+  </data>
+  <data name="SharesModal_Title" xml:space="preserve">
+    <value>Freigaben</value>
+  </data>
+  <data name="SharesModal_Empty" xml:space="preserve">
+    <value>Die Wunschliste hat noch keine Freigaben.</value>
+  </data>
+  <data name="SharesModal_Add_Placeholder" xml:space="preserve">
+    <value>Name</value>
+  </data>
 </root>

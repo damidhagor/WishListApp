@@ -198,4 +198,34 @@
   <data name="WishListPage_LoadingWishList" xml:space="preserve">
     <value>Loading WishList</value>
   </data>
+  <data name="WishListSelectionModal_Title" xml:space="preserve">
+    <value>Move item</value>
+  </data>
+  <data name="WishListSelectionModal_Label" xml:space="preserve">
+    <value>Select wish list:</value>
+  </data>
+  <data name="WishListSelectionModal_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="WishListSelectionModal_Move" xml:space="preserve">
+    <value>Move</value>
+  </data>
+  <data name="ShareComponent_Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ShareComponent_Delete_Message" xml:space="preserve">
+    <value>Do you want to delete the share "{0}"?</value>
+  </data>
+  <data name="SharesModal_Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="SharesModal_Title" xml:space="preserve">
+    <value>Shares</value>
+  </data>
+  <data name="SharesModal_Empty" xml:space="preserve">
+    <value>This wish list has no shares yet.</value>
+  </data>
+  <data name="SharesModal_Add_Placeholder" xml:space="preserve">
+    <value>Name</value>
+  </data>
 </root>

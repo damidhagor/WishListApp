@@ -1,12 +1,12 @@
 ﻿@inherits ComponentBase
 
-<ModalComponent @ref="_modal" Title="Freigaben" Size="ModalComponent.ModalSize.Large">
+<ModalComponent @ref="_modal" Title="@_localizer["SharesModal_Title"]" Size="ModalComponent.ModalSize.Large">
     <Body>
         @if (_shares.Count == 0)
         {
             <h3 class="m-2 ms-4">
                 <i class="bi bi-exclamation-circle" />
-                Die Wunschliste hat noch keine Freigaben.
+                @_localizer["SharesModal_Empty"]
                 <i class="bi bi-exclamation-circle" />
             </h3>
         }
@@ -24,9 +24,9 @@
     </Body>
 
     <Footer>
-        <input type="text" class="flex-grow-1 me-2" placeholder="Name" @bind="@_newShareName" @bind:event="oninput">
+        <input type="text" class="flex-grow-1 me-2" placeholder="@_localizer["SharesModal_Add_Placeholder"]" @bind="@_newShareName" @bind:event="oninput">
         <button type="button" class="btn btn-outline-primary" @onclick="AddNewWishListShare" disabled="@_isNewShareNameEmpty">
-            <i class="bi bi-plus-lg" /> Hinzufügen
+            <i class="bi bi-plus-lg" /> @_localizer["SharesModal_Add"]
         </button>
     </Footer>
 </ModalComponent>
