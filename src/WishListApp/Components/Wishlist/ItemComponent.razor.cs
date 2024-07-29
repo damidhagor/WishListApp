@@ -10,7 +10,7 @@ public partial class ItemComponent
     private IJSRuntime _jsRuntime { get; set; } = default!;
 
     [Inject]
-    private IStringLocalizer<Strings> _localizer { get; set; } = default!;
+    private IStringLocalizer<Localization> _localizer { get; set; } = default!;
 
     [Inject]
     private IProductCrawlerService _productCrawler { get; set; } = default!;

@@ -1,5 +1,5 @@
 ﻿namespace WishListApp.Resources;
 
-public class Strings
+public class Localization
 {
 }

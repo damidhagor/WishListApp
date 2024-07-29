@@ -7,7 +7,7 @@ namespace WishListApp.Components.Pages;
 public partial class WishListPage : IRecipient<WishListUpdated>
 {
     [Inject]
-    private IStringLocalizer<Strings> _localizer { get; set; } = default!;
+    private IStringLocalizer<Localization> _localizer { get; set; } = default!;
 
     [Inject]
     private IUserService _userService { get; set; } = default!;

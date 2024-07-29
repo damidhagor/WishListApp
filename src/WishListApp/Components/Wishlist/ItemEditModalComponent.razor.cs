@@ -10,7 +10,7 @@ public partial class ItemEditModalComponent
     private IProductCrawlerService _productCrawlerService { get; set; } = default!;
 
     [Inject]
-    private IStringLocalizer<Strings> _localizer { get; set; } = default!;
+    private IStringLocalizer<Localization> _localizer { get; set; } = default!;
 
     [CascadingParameter]
     public WishListViewModel ViewModel { get; set; } = default!;

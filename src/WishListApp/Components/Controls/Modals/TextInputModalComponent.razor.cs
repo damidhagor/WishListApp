@@ -6,7 +6,7 @@ namespace WishListApp.Components.Controls.Modals;
 public partial class TextInputModalComponent
 {
     [Inject]
-    private IStringLocalizer<Strings> _localizer { get; set; } = default!;
+    private IStringLocalizer<Localization> _localizer { get; set; } = default!;
 
     private ModalComponent _modal = default!;
     private ElementReference _input = default!;

@@ -8,7 +8,7 @@ public partial class SharesModalComponent
       IRecipient<WishListShareDeleted>
 {
     [Inject]
-    private IStringLocalizer<Strings> _localizer { get; set; } = default!;
+    private IStringLocalizer<Localization> _localizer { get; set; } = default!;
 
     [Inject]
     private IMessenger _messenger { get; set; } = default!;

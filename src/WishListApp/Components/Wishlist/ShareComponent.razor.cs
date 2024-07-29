@@ -7,7 +7,7 @@ namespace WishListApp.Components.Wishlist;
 public partial class ShareComponent
 {
     [Inject]
-    private IStringLocalizer<Strings> _localizer { get; set; } = default!;
+    private IStringLocalizer<Localization> _localizer { get; set; } = default!;
 
     [Inject]
     private IJSRuntime _jsRuntime { get; set; } = default!;
