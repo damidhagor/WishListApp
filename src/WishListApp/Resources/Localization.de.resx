@@ -228,4 +228,34 @@
   <data name="SharesModal_Add_Placeholder" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="WishList_Unknown_Title" xml:space="preserve">
+    <value>Unbekannte Wunschliste</value>
+  </data>
+  <data name="WishList_Unknown_Message" xml:space="preserve">
+    <value>Diese Wunschliste existiert nicht.</value>
+  </data>
+  <data name="WishList_Settings_HideBoughtItems" xml:space="preserve">
+    <value>Gekaufte Produkte ausblenden</value>
+  </data>
+  <data name="WishList_Settings_HideBuyInformation" xml:space="preserve">
+    <value>Kaufinformationen ausblenden</value>
+  </data>
+  <data name="WishList_Settings_Shares" xml:space="preserve">
+    <value>Freigaben</value>
+  </data>
+  <data name="WishList_Settings_DeleteBoughtItems" xml:space="preserve">
+    <value>Gekaufte Produkte löschen</value>
+  </data>
+  <data name="WishList_Empty" xml:space="preserve">
+    <value>Die Wunschliste hat noch keine Einträge.</value>
+  </data>
+  <data name="WishList_Add_Title" xml:space="preserve">
+    <value>Eintrag hinzufügen</value>
+  </data>
+  <data name="WishList_Add_Placeholder" xml:space="preserve">
+    <value>Produkt Url</value>
+  </data>
+  <data name="WishList_DeleteBoughtItems_Message" xml:space="preserve">
+    <value>Möchten Sie alle gekauften Einträge von der Wunschliste entfernen?</value>
+  </data>
 </root>

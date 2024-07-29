@@ -1,14 +1,12 @@
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using WishListApp.Components.Controls.Modals;
-using WishListApp.Models;
 
 namespace WishListApp.Components.Wishlist;
 
 public partial class WishListComponent : IRecipient<WishListUpdated>
 {
     [Inject]
-    private IJSRuntime _jsRuntime { get; set; } = default!;
+    private IStringLocalizer<Localization> _localizer { get; set; } = default!;
 
     [Inject]
     private IMessenger _messenger { get; set; } = default!;
@@ -18,11 +16,11 @@ public partial class WishListComponent : IRecipient<WishListUpdated>
 
     private string _newItemUrl = "";
 
-    private bool _isNewItemUrlEmpty => string.IsNullOrWhiteSpace(_newItemUrl);
-
     private SharesModalComponent _shareModal = default!;
 
     private TextInputModalComponent _inputModal = default!;
+
+    private ConfirmationModalComponent _confirmationModal = default!;
 
     public void Receive(WishListUpdated message)
     {
@@ -39,18 +37,22 @@ public partial class WishListComponent : IRecipient<WishListUpdated>
     private async Task AddNewWishListItem()
     {
         await _inputModal.Open(
-            title: "Eintrag hinzufügen",
-            placeholderText: "Produkt Url",
+            title: _localizer["WishList_Add_Title"],
+            placeholderText: _localizer["WishList_Add_Placeholder"],
             inputCallback: (string url) => ViewModel.AddWishListItem(url, default));
     }
 
     private async Task DeleteBoughtWishListItems()
     {
-        bool confirmed = await _jsRuntime.InvokeAsync<bool>("confirm", "Möchten Sie alle gekauften Einträge von der Wunschliste entfernen?");
-        if (confirmed)
-        {
-            await ViewModel.DeleteBoughtWishListItems(default);
-        }
+        await _confirmationModal.Open(
+            message: _localizer["WishList_DeleteBoughtItems_Message"],
+            confirmationCallback: async (bool confirmed) =>
+            {
+                if (confirmed)
+                {
+                    await ViewModel.DeleteBoughtWishListItems(default);
+                }
+            });
     }
 
     private IEnumerable<WishListItem> GetFilteredWishListItems()

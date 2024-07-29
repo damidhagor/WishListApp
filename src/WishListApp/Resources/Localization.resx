@@ -228,4 +228,34 @@
   <data name="SharesModal_Add_Placeholder" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="WishList_Unknown_Title" xml:space="preserve">
+    <value>Unknown Wish List</value>
+  </data>
+  <data name="WishList_Unknown_Message" xml:space="preserve">
+    <value>This wish list does not exist.</value>
+  </data>
+  <data name="WishList_Settings_HideBoughtItems" xml:space="preserve">
+    <value>Hide bought items</value>
+  </data>
+  <data name="WishList_Settings_HideBuyInformation" xml:space="preserve">
+    <value>Hide buy information</value>
+  </data>
+  <data name="WishList_Settings_Shares" xml:space="preserve">
+    <value>Shares</value>
+  </data>
+  <data name="WishList_Settings_DeleteBoughtItems" xml:space="preserve">
+    <value>Delete bought items</value>
+  </data>
+  <data name="WishList_Empty" xml:space="preserve">
+    <value>The wish list has no items yet.</value>
+  </data>
+  <data name="WishList_Add_Title" xml:space="preserve">
+    <value>Add new item</value>
+  </data>
+  <data name="WishList_Add_Placeholder" xml:space="preserve">
+    <value>Product url</value>
+  </data>
+  <data name="WishList_DeleteBoughtItems_Message" xml:space="preserve">
+    <value>Do you want to delete all bought items from the list?</value>
+  </data>
 </root>

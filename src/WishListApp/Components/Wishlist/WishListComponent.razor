@@ -2,13 +2,13 @@
 
 @if (ViewModel?.WishList is null)
 {
-    <h1> Unbekannte Wunschliste </h1>
+    <h1> @_localizer["WishList_Unknown_Title"] </h1>
 
     <div class="border border-secondary"></div>
 
     <h3 class="m-2 ms-4">
         <i class="bi bi-exclamation-triangle" />
-        Diese Wunschliste existiert nicht.
+        @_localizer["WishList_Unknown_Message"]
         <i class="bi bi-exclamation-triangle" />
     </h3>
 }
@@ -37,7 +37,7 @@ else
             @if (ViewModel.ViewedByOwner)
             {
                 <button type="button" class="btn btn-outline-primary" @onclick="AddNewWishListItem">
-                    <i class="bi bi-plus-lg" /> Eintrag Hinzufügen
+                    <i class="bi bi-plus-lg" /> @_localizer["Add"]
                 </button>
             }
 
@@ -51,7 +51,7 @@ else
                         <div class="d-flex align-items-center form-check form-switch">
                             <input class="form-check-input me-2 mb-1" type="checkbox" @bind="ViewModel.HideBoughtItems" id="hideBoughtItemsCheckBox">
                             <label for="hideBoughtItemsCheckBox">
-                                Gekaufte Produkte Ausblenden
+                                @_localizer["WishList_Settings_HideBoughtItems"]
                             </label>
                         </div>
 
@@ -60,16 +60,16 @@ else
                             <div class="d-flex align-items-center form-check form-switch">
                                 <input class="form-check-input me-2 mb-1" type="checkbox" @bind="ViewModel.HideBuyInformation" id="hideBuyInformationCheckBox">
                                 <label for="hideBuyInformationCheckBox">
-                                    Kaufinformationen ausblenden
+                                    @_localizer["WishList_Settings_HideBuyInformation"]
                                 </label>
                             </div>
 
                             <button type="button" class="btn btn-outline-light" @onclick="@(async () => await _shareModal.Open())">
-                                <i class="bi bi-person fill" /> Freigaben
+                                <i class="bi bi-person fill" /> @_localizer["WishList_Settings_Shares"]
                             </button>
 
                             <button type="button" class="btn btn-outline-danger" @onclick="DeleteBoughtWishListItems">
-                                <i class="bi bi-trash" /> Gekaufte Produkte löschen
+                                <i class="bi bi-trash" /> @_localizer["WishList_Settings_DeleteBoughtItems"]
                             </button>
                         }
                     </div>
@@ -84,7 +84,7 @@ else
     {
         <h3 class="m-2 ms-4">
             <i class="bi bi-exclamation-circle" />
-            Die Wunschliste hat noch keine Einträge.
+            @_localizer["WishList_Empty"]
             <i class="bi bi-exclamation-circle" />
         </h3>
     }
@@ -102,4 +102,5 @@ else
 
     <SharesModalComponent @ref="_shareModal" />
     <TextInputModalComponent @ref="_inputModal" />
+    <ConfirmationModalComponent @ref="_confirmationModal" />
 }
