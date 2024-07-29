@@ -258,4 +258,34 @@
   <data name="WishList_DeleteBoughtItems_Message" xml:space="preserve">
     <value>Do you want to delete all bought items from the list?</value>
   </data>
+  <data name="Item_Delete_Message" xml:space="preserve">
+    <value>Do you want to delete this item from the list?</value>
+  </data>
+  <data name="Item_Priority_NoSelection" xml:space="preserve">
+    <value>No priority selected</value>
+  </data>
+  <data name="Item_Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Item_Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Item_Move" xml:space="preserve">
+    <value>Move</value>
+  </data>
+  <data name="Item_ResetPurchaseStatus" xml:space="preserve">
+    <value>Reset purchase status</value>
+  </data>
+  <data name="Item_MarkAsBought" xml:space="preserve">
+    <value>Mark as bought</value>
+  </data>
+  <data name="Item_MarkAsUnbought" xml:space="preserve">
+    <value>Mark as unbought</value>
+  </data>
+  <data name="Item_BoughtByYou" xml:space="preserve">
+    <value>Bought by you</value>
+  </data>
+  <data name="Item_Bought" xml:space="preserve">
+    <value>Bought</value>
+  </data>
 </root>

@@ -41,28 +41,28 @@
                                 @context.ToDisplayName(_localizer)
                             </ItemTemplate>
                             <EmptySelectionTemplate>
-                                Keine Priorität gewählt
+                                @_localizer["Item_Priority_NoSelection"]
                             </EmptySelectionTemplate>
                         </DropdownComponent>
                     </div>
 
                     <button type="button" class="btn btn-outline-danger" @onclick="DeleteItem">
-                        <i class="bi bi-trash" /> Löschen
+                        <i class="bi bi-trash" /> @_localizer["Item_Delete"]
                     </button>
 
                     <button type="button" class="btn btn-outline-light" @onclick="OpenWishListItemEditModal">
-                        <i class="bi bi-pen" /> Bearbeiten
+                        <i class="bi bi-pen" /> @_localizer["Item_Edit"]
                     </button>
 
                     <button type="button" class="btn btn-outline-light" @onclick="OpenWishListSelectionModal">
-                        <i class="bi bi-arrow-left-right" /> Verschieben
+                        <i class="bi bi-arrow-left-right" /> @_localizer["Item_Move"]
                     </button>
 
                     if (!ViewModel.HideBuyInformation && _purchasedByOtherShare)
 
                     {
                         <button type="button" class="btn btn-outline-warning" @onclick="ResetItemPurchases">
-                            <i class="bi bi-bag" /> Kaufstatus zurücksetzen
+                            <i class="bi bi-bag" /> @_localizer["Item_ResetPurchaseStatus"]
                         </button>
                     }
                 }
@@ -80,19 +80,19 @@
                     @if (_canBePurchased)
                     {
                         <button type="button" class="btn btn-outline-primary" @onclick="BuyItem">
-                            <i class="bi bi-bag" /> Als gekauft markieren
+                            <i class="bi bi-bag" /> @_localizer["Item_MarkAsBought"]
                         </button>
                     }
                     
                     if (_purchasedByLoggedInShare > 0)
                     {
                         <button type="button" class="btn btn-outline-warning" @onclick="UnbuyItem">
-                            <i class="bi bi-bag" /> Als Ungekauft Markieren
+                            <i class="bi bi-bag" /> @_localizer["Item_MarkAsUnbought"]
                         </button>
 
                         <div class="d-flex rounded-2 ps-4 pe-4 text-bg-success">
                             <span class="text-white align-self-center">
-                                <i class="bi bi-bag-fill" /> @(Item.Quantity > 1 ? $"{_purchasedByLoggedInShare}" : "") Von Dir Gekauft
+                                <i class="bi bi-bag-fill" /> @(Item.Quantity > 1 ? $"{_purchasedByLoggedInShare}" : "") @_localizer["Item_BoughtByYou"]
                             </span>
                         </div>
                     }
@@ -101,7 +101,7 @@
                     {
                         <div class="d-flex rounded-2 p-2 text-bg-success">
                             <span class="text-white align-self-center">
-                                <i class="bi bi-bag-fill" /> @(Item.Quantity > 1 ? $"{Item.PurchasedQuantity}" : "") Gekauft
+                                <i class="bi bi-bag-fill" /> @(Item.Quantity > 1 ? $"{Item.PurchasedQuantity}" : "") @_localizer["Item_Bought"]
                             </span>
                         </div>
                     }
@@ -110,7 +110,7 @@
         </div>
 
         <ItemEditModalComponent @ref="_itemEditModal" />
-
         <WishListSelectionModalComponent @ref="_wishListSelectionModal" />
+        <ConfirmationModalComponent @ref="_confirmationModal" />
     </div>
 }

@@ -1,27 +1,18 @@
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
-using WishListApp.ProductCrawling.Services;
+using WishListApp.Components.Controls.Modals;
 
 namespace WishListApp.Components.Wishlist;
 
 public partial class ItemComponent
 {
     [Inject]
-    private IJSRuntime _jsRuntime { get; set; } = default!;
-
-    [Inject]
     private IStringLocalizer<Localization> _localizer { get; set; } = default!;
-
-    [Inject]
-    private IProductCrawlerService _productCrawler { get; set; } = default!;
 
     [CascadingParameter]
     public WishListItem Item { get; set; } = default!;
 
     [CascadingParameter]
     public WishListViewModel ViewModel { get; set; } = default!;
-
-    private string? ImageUrl { get; set; }
 
     private bool _canBePurchased => Item.CanBePurchasedByShare(ViewModel.LoggedInShare?.Id);
 
@@ -32,6 +23,8 @@ public partial class ItemComponent
     private ItemEditModalComponent _itemEditModal = default!;
 
     private WishListSelectionModalComponent _wishListSelectionModal = default!;
+
+    private ConfirmationModalComponent _confirmationModal = default!;
 
     private async Task OpenWishListItemEditModal() => await _itemEditModal.Open(Item);
 
@@ -47,10 +40,14 @@ public partial class ItemComponent
 
     private async Task DeleteItem()
     {
-        bool confirmed = await _jsRuntime.InvokeAsync<bool>("confirm", "Möchten Sie den Eintrag von der Wunschliste entfernen?");
-        if (confirmed)
-        {
-            await ViewModel.DeleteWishListItem(Item, default);
-        }
+        await _confirmationModal.Open(
+            message: _localizer["Item_Delete_Message"],
+            confirmationCallback: async (bool confirmed) =>
+            {
+                if (confirmed)
+                {
+                    await ViewModel.DeleteWishListItem(Item, default);
+                }
+            });
     }
 }
