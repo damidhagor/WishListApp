@@ -3,13 +3,13 @@ using WishListApp.Components.Controls.Modals;
 
 namespace WishListApp.Components.Wishlist;
 
-public partial class WishListComponent : IRecipient<WishListUpdated>
+public partial class WishListComponent(
+    IStringLocalizer<Localization> localizer,
+    IMessenger messenger)
+    : IRecipient<WishListUpdated>
 {
-    [Inject]
-    private IStringLocalizer<Localization> _localizer { get; set; } = default!;
-
-    [Inject]
-    private IMessenger _messenger { get; set; } = default!;
+    private readonly IStringLocalizer<Localization> _localizer = localizer;
+    private readonly IMessenger _messenger = messenger;
 
     [CascadingParameter]
     public WishListViewModel ViewModel { get; set; } = default!;

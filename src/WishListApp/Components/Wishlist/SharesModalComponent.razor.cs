@@ -3,18 +3,16 @@ using WishListApp.Components.Controls.Modals;
 
 namespace WishListApp.Components.Wishlist;
 
-public partial class SharesModalComponent
+public partial class SharesModalComponent(
+    IStringLocalizer<Localization> localizer,
+    IMessenger messenger,
+    IWishListShareRepository shareRepository)
     : IRecipient<WishListShareAdded>,
       IRecipient<WishListShareDeleted>
 {
-    [Inject]
-    private IStringLocalizer<Localization> _localizer { get; set; } = default!;
-
-    [Inject]
-    private IMessenger _messenger { get; set; } = default!;
-
-    [Inject]
-    private IWishListShareRepository _shareRepository { get; set; } = default!;
+    private readonly IStringLocalizer<Localization> _localizer = localizer;
+    private readonly IMessenger _messenger = messenger;
+    private readonly IWishListShareRepository _shareRepository = shareRepository;
 
     [CascadingParameter]
     public WishListViewModel ViewModel { get; set; } = default!;

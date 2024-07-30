@@ -1,27 +1,22 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using MongoDB.Bson;
 using WishListApp.Components.Controls.Modals;
 using WishListApp.Services;
 
 namespace WishListApp.Components.Pages;
 
-public partial class WishListsPage
+public partial class WishListsPage(
+    NavigationManager navigationManager,
+    IStringLocalizer<Localization> localizer,
+    IUserService userService,
+    IWishListRepository wishListRepository,
+    IWishListShareRepository shareRepository)
 {
-    [Inject]
-    private NavigationManager _navigationManager { get; set; } = default!;
-
-    [Inject]
-    private IStringLocalizer<Localization> _localizer { get; set; } = default!;
-
-    [Inject]
-    private IUserService _userService { get; set; } = default!;
-
-    [Inject]
-    private IWishListRepository _wishListRepository { get; set; } = default!;
-
-    [Inject]
-    private IWishListShareRepository _shareRepository { get; set; } = default!;
+    private readonly NavigationManager _navigationManager = navigationManager;
+    private readonly IStringLocalizer<Localization> _localizer = localizer;
+    private readonly IUserService _userService = userService;
+    private readonly IWishListRepository _wishListRepository = wishListRepository;
+    private readonly IWishListShareRepository _shareRepository = shareRepository;
 
     private TextInputModalComponent _inputModal = default!;
     private ConfirmationModalComponent _confirmationModal = default!;

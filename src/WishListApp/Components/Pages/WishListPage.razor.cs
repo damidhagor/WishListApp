@@ -4,31 +4,25 @@ using WishListApp.Services;
 
 namespace WishListApp.Components.Pages;
 
-public partial class WishListPage : IRecipient<WishListUpdated>
+public partial class WishListPage(
+    NavigationManager navigationManager,
+    IMessenger messenger,
+    IStringLocalizer<Localization> localizer,
+    IUserService userService,
+    IWishListRepository wishListRepository,
+    IWishListItemRepository itemRepository,
+    IWishListShareRepository shareRepository,
+    IAccessKeyGenerator accessKeyGenerator)
+    : IRecipient<WishListUpdated>
 {
-    [Inject]
-    private IStringLocalizer<Localization> _localizer { get; set; } = default!;
-
-    [Inject]
-    private IUserService _userService { get; set; } = default!;
-
-    [Inject]
-    private IWishListRepository _wishListRepository { get; set; } = default!;
-
-    [Inject]
-    private IWishListItemRepository _itemRepository { get; set; } = default!;
-
-    [Inject]
-    private IWishListShareRepository _shareRepository { get; set; } = default!;
-
-    [Inject]
-    private IAccessKeyGenerator _accessKeyGenerator { get; set; } = default!;
-
-    [Inject]
-    private NavigationManager _navigationManager { get; set; } = default!;
-
-    [Inject]
-    private IMessenger _messenger { get; set; } = default!;
+    private readonly NavigationManager _navigationManager = navigationManager;
+    private readonly IMessenger _messenger = messenger;
+    private readonly IStringLocalizer<Localization> _localizer = localizer;
+    private readonly IUserService _userService = userService;
+    private readonly IWishListRepository _wishListRepository = wishListRepository;
+    private readonly IWishListItemRepository _itemRepository = itemRepository;
+    private readonly IWishListShareRepository _shareRepository = shareRepository;
+    private readonly IAccessKeyGenerator _accessKeyGenerator = accessKeyGenerator;
 
     [Parameter]
     [SupplyParameterFromQuery(Name = "id")]

@@ -4,16 +4,14 @@ using WishListApp.Components.Controls.Modals;
 
 namespace WishListApp.Components.Wishlist;
 
-public partial class ShareComponent
+public partial class ShareComponent(
+    IStringLocalizer<Localization> localizer,
+    IJSRuntime jsRuntime,
+    IAccessKeyGenerator accessKeyGenerator)
 {
-    [Inject]
-    private IStringLocalizer<Localization> _localizer { get; set; } = default!;
-
-    [Inject]
-    private IJSRuntime _jsRuntime { get; set; } = default!;
-
-    [Inject]
-    private IAccessKeyGenerator _accessKeyGenerator { get; set; } = default!;
+    private readonly IStringLocalizer<Localization> _localizer = localizer;
+    private readonly IJSRuntime _jsRuntime = jsRuntime;
+    private readonly IAccessKeyGenerator _accessKeyGenerator = accessKeyGenerator;
 
     [CascadingParameter]
     public WishListShare Share { get; set; } = default!;

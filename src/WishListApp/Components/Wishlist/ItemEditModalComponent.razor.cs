@@ -4,13 +4,12 @@ using WishListApp.ProductCrawling.Services;
 
 namespace WishListApp.Components.Wishlist;
 
-public partial class ItemEditModalComponent
+public partial class ItemEditModalComponent(
+    IStringLocalizer<Localization> localizer,
+    IProductCrawlerService productCrawlerService)
 {
-    [Inject]
-    private IProductCrawlerService _productCrawlerService { get; set; } = default!;
-
-    [Inject]
-    private IStringLocalizer<Localization> _localizer { get; set; } = default!;
+    private readonly IStringLocalizer<Localization> _localizer = localizer;
+    private readonly IProductCrawlerService _productCrawlerService = productCrawlerService;
 
     [CascadingParameter]
     public WishListViewModel ViewModel { get; set; } = default!;

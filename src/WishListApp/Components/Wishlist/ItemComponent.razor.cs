@@ -3,10 +3,9 @@ using WishListApp.Components.Controls.Modals;
 
 namespace WishListApp.Components.Wishlist;
 
-public partial class ItemComponent
+public partial class ItemComponent(IStringLocalizer<Localization> localizer)
 {
-    [Inject]
-    private IStringLocalizer<Localization> _localizer { get; set; } = default!;
+    private readonly IStringLocalizer<Localization> _localizer = localizer;
 
     [CascadingParameter]
     public WishListItem Item { get; set; } = default!;

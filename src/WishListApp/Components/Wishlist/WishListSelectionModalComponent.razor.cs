@@ -3,13 +3,12 @@ using WishListApp.Components.Controls.Modals;
 
 namespace WishListApp.Components.Wishlist;
 
-public partial class WishListSelectionModalComponent
+public partial class WishListSelectionModalComponent(
+    IStringLocalizer<Localization> localizer,
+    IWishListRepository wishListRepository)
 {
-    [Inject]
-    private IStringLocalizer<Localization> _localizer { get; set; } = default!;
-
-    [Inject]
-    private IWishListRepository _repository { get; set; } = default!;
+    IStringLocalizer<Localization> _localizer = localizer;
+    IWishListRepository _repository = wishListRepository;
 
     private ModalComponent _modal = default!;
     private WishListItem? _item;
