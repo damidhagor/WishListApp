@@ -1,50 +1,50 @@
 ﻿@inherits ComponentBase
 
-<ModalComponent @ref="_modal" Title="Bearbeiten" Size="ModalComponent.ModalSize.Large">
+<ModalComponent @ref="_modal" Title="@_localizer["ItemEditModal_Title"]" Size="ModalComponent.ModalSize.Large">
     <Body>
         @if (_item is not null)
         {
             <div class="d-flex flex-column gap-y-2">
                 <h5>
                     <a href="@_item.Url" target="_blank">
-                        Produktseite öffnen
+                        @_localizer["ItemEditModal_OpenProductPage"]
                         <i class="bi bi-box-arrow-up-right ms-2" />
                     </a>
                 </h5>
 
-                <h5 class="mt-4">Name</h5>
+                <h5 class="mt-4">@_localizer["ItemEditModal_Name"]</h5>
                 <input type="text" @bind="_name">
 
-                <h5 class="mt-4">Shop Name</h5>
+                <h5 class="mt-4">@_localizer["ItemEditModal_StoreName"]</h5>
                 <input type="text" @bind="_siteName">
 
-                <h5 class="mt-4">Bild Url</h5>
+                <h5 class="mt-4">@_localizer["ItemEditModal_Image"]</h5>
                 <input type="text" @bind="_imageUrl">
 
-                <h5 class="mt-4">Beschreibung</h5>
+                <h5 class="mt-4">@_localizer["ItemEditModal_Description"]</h5>
                 <input type="text" @bind="_description">
 
-                <h5 class="mt-4">Bemerkung</h5>
+                <h5 class="mt-4">@_localizer["ItemEditModal_Note"]</h5>
                 <input type="text" @bind="_note">
 
                 <div class="d-flex flex-row gap-2">
                     <div class="d-flex flex-column flex-fill">
-                        <h5 class="mt-4">Anzahl</h5>
+                        <h5 class="mt-4">@_localizer["ItemEditModal_Quantity"]</h5>
                         <input type="number" @bind="_quantity" min="1">
                     </div>
 
                     <div class="d-flex flex-column flex-fill">
-                        <h5 class="mt-4">Preis</h5>
+                        <h5 class="mt-4">@_localizer["ItemEditModal_Prize"]</h5>
                         <input type="text" @bind="_price">
                     </div>
 
                     <div class="d-flex flex-column flex-fill">
-                        <h5 class="mt-4">Währung</h5>
+                        <h5 class="mt-4">@_localizer["ItemEditModal_Currency"]</h5>
                         <input type="text" @bind="_currency">
                     </div>
                 </div>
 
-                <h5 class="mt-4">Priorität</h5>
+                <h5 class="mt-4">@_localizer["ItemEditModal_Priority"]</h5>
                 <PriorityDropDownComponent @bind-SelectedPriority="_priority" />
             </div>
         }
@@ -60,11 +60,11 @@
             {
                 <i class="bi bi-arrow-clockwise" />
             }
-            Produktinformationen abrufen
+            @_localizer["ItemEditModal_FetchProductInformation"]
         </button>
 
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @onclick="SaveWishListItem">
-            <i class="bi bi-floppy" /> Speichern
+            <i class="bi bi-floppy" /> @_localizer["ItemEditModal_Save"]
         </button>
     </Footer>
 </ModalComponent>

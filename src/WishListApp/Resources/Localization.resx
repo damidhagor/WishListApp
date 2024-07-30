@@ -288,4 +288,43 @@
   <data name="Item_Bought" xml:space="preserve">
     <value>Bought</value>
   </data>
+  <data name="ItemEditModal_OpenProductPage" xml:space="preserve">
+    <value>Open product page</value>
+  </data>
+  <data name="ItemEditModal_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="ItemEditModal_StoreName" xml:space="preserve">
+    <value>Store Name</value>
+  </data>
+  <data name="ItemEditModal_Image" xml:space="preserve">
+    <value>Image Url</value>
+  </data>
+  <data name="ItemEditModal_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="ItemEditModal_Note" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="ItemEditModal_Quantity" xml:space="preserve">
+    <value>Quantity</value>
+  </data>
+  <data name="ItemEditModal_Prize" xml:space="preserve">
+    <value>Prize</value>
+  </data>
+  <data name="ItemEditModal_Currency" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="ItemEditModal_Priority" xml:space="preserve">
+    <value>Priority</value>
+  </data>
+  <data name="ItemEditModal_FetchProductInformation" xml:space="preserve">
+    <value>Fetch product information</value>
+  </data>
+  <data name="ItemEditModal_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="ItemEditModal_Title" xml:space="preserve">
+    <value>Edit</value>
+  </data>
 </root>
