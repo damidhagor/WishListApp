@@ -23,9 +23,12 @@
                     </div>
                 }
 
-                <div class="align-self-baseline">
-                    @Item.Price @Item.Currency
-                </div>
+                @if (Item.Price > 0)
+                {
+                    <div class="align-self-baseline">
+                        @Item.Price @Item.Currency
+                    </div>
+                }
             </div>
 
             <div class="d-flex flex-row flex-grow-1 overflow-y-auto ms-2 mt-2 mb-2">
