@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
-namespace WishListApp.Components.Controls.Modals;
+namespace WishListApp.Components.Modals;
 
 public partial class TextInputModalComponent(IStringLocalizer<Localization> localizer)
 {

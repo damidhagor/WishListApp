@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Components;
-using WishListApp.Components.Controls.Modals;
 
-namespace WishListApp.Components.Wishlist;
+namespace WishListApp.Components.Modals;
 
 public partial class SharesModalComponent(
     IStringLocalizer<Localization> localizer,

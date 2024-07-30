@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Components;
-using WishListApp.Components.Controls.Modals;
+using WishListApp.Components.Modals;
 
-namespace WishListApp.Components.Wishlist;
+namespace WishListApp.Components;
 
 public partial class WishListComponent(
     IStringLocalizer<Localization> localizer,
@@ -39,14 +39,14 @@ public partial class WishListComponent(
         await _inputModal.Open(
             title: _localizer["WishList_Add_Title"],
             placeholderText: _localizer["WishList_Add_Placeholder"],
-            inputCallback: (string url) => ViewModel.AddWishListItem(url, default));
+            inputCallback: (url) => ViewModel.AddWishListItem(url, default));
     }
 
     private async Task DeleteBoughtWishListItems()
     {
         await _confirmationModal.Open(
             message: _localizer["WishList_DeleteBoughtItems_Message"],
-            confirmationCallback: async (bool confirmed) =>
+            confirmationCallback: async (confirmed) =>
             {
                 if (confirmed)
                 {

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components;
 
-namespace WishListApp.Components.Controls.Modals;
+namespace WishListApp.Components.Modals;
 
 public partial class ConfirmationModalComponent(IStringLocalizer<Localization> localizer)
 {

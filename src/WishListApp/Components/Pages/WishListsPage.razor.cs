@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MongoDB.Bson;
-using WishListApp.Components.Controls.Modals;
+using WishListApp.Components.Modals;
 using WishListApp.Services;
 
 namespace WishListApp.Components.Pages;
@@ -60,7 +60,7 @@ public partial class WishListsPage(
         await _inputModal.Open(
             title: _localizer["WishListsPage_Add_Title"],
             placeholderText: _localizer["WishListsPage_Add_Placeholder"],
-            inputCallback: async (string name) =>
+            inputCallback: async (name) =>
             {
                 if (string.IsNullOrWhiteSpace(name)
                     || _user is null)
@@ -77,7 +77,7 @@ public partial class WishListsPage(
     {
         await _confirmationModal.Open(
             message: _localizer["WishListsPage_Delete_Message"],
-            confirmationCallback: async (bool confirmed) =>
+            confirmationCallback: async (confirmed) =>
             {
                 if (confirmed)
                 {

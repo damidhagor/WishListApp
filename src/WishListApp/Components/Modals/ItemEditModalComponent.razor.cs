@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Components;
-using WishListApp.Components.Controls.Modals;
 using WishListApp.ProductCrawling.Services;
 
-namespace WishListApp.Components.Wishlist;
+namespace WishListApp.Components.Modals;
 
 public partial class ItemEditModalComponent(
     IStringLocalizer<Localization> localizer,

@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
-namespace WishListApp.Components.Controls.Modals;
+namespace WishListApp.Components.Modals;
 
-public partial class ModalComponent
+public partial class ModalComponent(IJSRuntime jsRuntime)
 {
+    private readonly IJSRuntime _jsRuntime = jsRuntime;
+
     [Parameter]
     public string Id { get; set; } = $"id{Guid.NewGuid()}";
 
@@ -30,12 +32,12 @@ public partial class ModalComponent
 
     public async Task Open()
     {
-        await JSRuntime.InvokeVoidAsync("OpenModal", $"#{Id}");
+        await _jsRuntime.InvokeVoidAsync("OpenModal", $"#{Id}");
     }
 
     public async Task Close()
     {
-        await JSRuntime.InvokeVoidAsync("CloseModal", $"#{Id}");
+        await _jsRuntime.InvokeVoidAsync("CloseModal", $"#{Id}");
     }
 
     private string GetSizeClass()

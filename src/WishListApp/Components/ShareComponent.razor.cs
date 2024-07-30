@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using WishListApp.Components.Controls.Modals;
+using WishListApp.Components.Modals;
 
-namespace WishListApp.Components.Wishlist;
+namespace WishListApp.Components;
 
 public partial class ShareComponent(
     IStringLocalizer<Localization> localizer,
@@ -29,7 +29,7 @@ public partial class ShareComponent(
     {
         await _modal.Open(
             message: _localizer["ShareComponent_Delete_Message", Share.Name],
-            confirmationCallback: async (bool confirmed) =>
+            confirmationCallback: async (confirmed) =>
             {
                 if (confirmed)
                 {

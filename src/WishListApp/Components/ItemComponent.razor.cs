@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Components;
-using WishListApp.Components.Controls.Modals;
+using WishListApp.Components.Modals;
 
-namespace WishListApp.Components.Wishlist;
+namespace WishListApp.Components;
 
 public partial class ItemComponent(IStringLocalizer<Localization> localizer)
 {
@@ -41,7 +41,7 @@ public partial class ItemComponent(IStringLocalizer<Localization> localizer)
     {
         await _confirmationModal.Open(
             message: _localizer["Item_Delete_Message"],
-            confirmationCallback: async (bool confirmed) =>
+            confirmationCallback: async (confirmed) =>
             {
                 if (confirmed)
                 {

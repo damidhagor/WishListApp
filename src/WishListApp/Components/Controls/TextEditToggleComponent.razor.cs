@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Components.Web;
 
 namespace WishListApp.Components.Controls;
 
-public partial class TextEditToggleComponent
+public partial class TextEditToggleComponent(IStringLocalizer<Localization> localizer)
 {
+    private readonly IStringLocalizer<Localization> _localizer = localizer;
+
     private string _editedValue;
 
     private bool _isInEditMode;
