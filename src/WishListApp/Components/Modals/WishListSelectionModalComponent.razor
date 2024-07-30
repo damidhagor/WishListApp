@@ -6,8 +6,7 @@
             <h5 class="me-4 mt-0 mb-0">@_localizer["WishListSelectionModal_Label"]</h5>
             <DropdownComponent T="WishListApp.Models.WishList"
                                Items="@_lists"
-                               SelectedItem="_selectedList"
-                               SelectedItemChanged="@(list => _selectedList = list)">
+                               @bind-SelectedItem="_selectedList">
                 <ItemTemplate>
                     @context?.Name
                 </ItemTemplate>

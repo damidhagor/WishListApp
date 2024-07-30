@@ -45,7 +45,7 @@
                 </div>
 
                 <h5 class="mt-4">Priorität</h5>
-                <PriorityDropDownComponent @bind-SelectedPriority:get="_priority" @bind-SelectedPriority:set="p => _priority = p" />
+                <PriorityDropDownComponent @bind-SelectedPriority="_priority" />
             </div>
         }
     </Body>
