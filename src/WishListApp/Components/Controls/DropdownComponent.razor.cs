@@ -10,14 +10,16 @@ public partial class DropdownComponent<T>(IStringLocalizer<Localization> localiz
     public IReadOnlyList<T> Items { get; set; } = [];
 
     [Parameter]
-    public RenderFragment<T>? ItemTemplate { get; set; }
+    public RenderFragment<T?>? ItemTemplate { get; set; }
 
     [Parameter]
     public RenderFragment? EmptySelectionTemplate { get; set; }
 
     [Parameter]
-    public EventCallback<T> SelectedItemChanged { get; set; }
+    public T? SelectedItem { get; set; }
 
     [Parameter]
-    public T? SelectedItem { get; set; }
+    public EventCallback<T?> SelectedItemChanged { get; set; }
+
+    private async Task UpdateSelectedItem(T? item) => await SelectedItemChanged.InvokeAsync(item);
 }

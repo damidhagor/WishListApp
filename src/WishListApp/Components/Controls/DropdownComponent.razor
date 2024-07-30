@@ -30,7 +30,7 @@
         @foreach (var item in Items)
         {
             <li>
-                <button type="button" class="dropdown-item" onclick="@(async () => await SelectedItemChanged.InvokeAsync(item))">
+                <button type="button" class="dropdown-item" @onclick="() => UpdateSelectedItem(item)">
                     @if (ItemTemplate is not null)
                     {
                         <span>@ItemTemplate(item)</span>

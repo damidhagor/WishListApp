@@ -40,7 +40,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WishListApp.ServiceDefaults
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WishListApp.AppHost", "WishListApp.AppHost\WishListApp.AppHost.csproj", "{76FB086B-E01C-4F14-B596-7E19923A2C97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WishListApp.Tests", "WishListApp.Tests\WishListApp.Tests.csproj", "{C4581D07-A2FC-42C3-B8E1-DEA2C451C88E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WishListApp.Tests", "WishListApp.Tests\WishListApp.Tests.csproj", "{C4581D07-A2FC-42C3-B8E1-DEA2C451C88E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

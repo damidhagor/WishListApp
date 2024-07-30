@@ -39,14 +39,7 @@
                 @if (ViewModel.ViewedByOwner)
                 {
                     <div class="me-auto">
-                        <DropdownComponent T="int" Items="WishListItem.AvailablePriorities" SelectedItem="Item.Priority" SelectedItemChanged="SetItemPriority">
-                            <ItemTemplate>
-                                @context.ToDisplayName(_localizer)
-                            </ItemTemplate>
-                            <EmptySelectionTemplate>
-                                @_localizer["Item_Priority_NoSelection"]
-                            </EmptySelectionTemplate>
-                        </DropdownComponent>
+                        <PriorityDropDownComponent @bind-SelectedPriority:get="Item.Priority" @bind-SelectedPriority:set="SetItemPriority"/>
                     </div>
 
                     <button type="button" class="btn btn-outline-danger" @onclick="DeleteItem">
