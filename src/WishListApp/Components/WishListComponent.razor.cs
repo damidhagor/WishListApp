@@ -42,15 +42,15 @@ public partial class WishListComponent(
             inputCallback: (url) => ViewModel.AddWishListItem(url, default));
     }
 
-    private async Task DeleteBoughtWishListItems()
+    private async Task DeletePurchasedWishListItems()
     {
         await _confirmationModal.Open(
-            message: _localizer["WishList_DeleteBoughtItems_Message"],
+            message: _localizer["WishList_DeletePurchasedItems_Message"],
             confirmationCallback: async (confirmed) =>
             {
                 if (confirmed)
                 {
-                    await ViewModel.DeleteBoughtWishListItems(default);
+                    await ViewModel.DeletePurchasedWishListItems(default);
                 }
             });
     }
@@ -62,17 +62,17 @@ public partial class WishListComponent(
             return [];
         }
 
-        var filteredItems = ViewModel.HideBoughtItems
+        var filteredItems = ViewModel.HidePurchasedItems
             ? ViewModel.WishList.Items.Where(i => i.RemainingQuantity > 0)
             : ViewModel.WishList.Items;
 
-        filteredItems = ViewModel.HideBuyInformation
-            ? filteredItems.OrderByDescending(i => i.Priority) // Don't order by buy-information if owner is viewing
+        filteredItems = ViewModel.HidePurchaseDetails
+            ? filteredItems.OrderByDescending(i => i.Priority) // Don't order by purchase details if owner is viewing
             : filteredItems.OrderBy(i => i.RemainingQuantity > 0
-                            ? 0 // 1st: Unbought items
+                            ? 0 // 1st: Unpurchased items
                             : i.GetPurchasedQuantityByShare(ViewModel.LoggedInShare?.Id) > 0
-                                ? 1 // 2nd: Items bought by currently viewing share
-                                : 2) // 3rd: Items bought by other shares
+                                ? 1 // 2nd: Items purchased by currently viewing share
+                                : 2) // 3rd: Items purchased by other shares
             .ThenByDescending(i => i.Priority);
 
         return filteredItems;

@@ -127,13 +127,13 @@
     <value>Loading</value>
   </data>
   <data name="WishListsPage_LoadingWishLists" xml:space="preserve">
-    <value>Loading Wish Lists</value>
+    <value>Loading wish lists</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="WishListsPage_Add_Title" xml:space="preserve">
-    <value>Add new Wish List</value>
+    <value>Add new wish list</value>
   </data>
   <data name="WishListsPage_Add_Placeholder" xml:space="preserve">
     <value>Name</value>
@@ -196,7 +196,7 @@
     <value>I'd like to have it very much</value>
   </data>
   <data name="WishListPage_LoadingWishList" xml:space="preserve">
-    <value>Loading WishList</value>
+    <value>Loading wish list</value>
   </data>
   <data name="WishListSelectionModal_Title" xml:space="preserve">
     <value>Move item</value>
@@ -214,7 +214,7 @@
     <value>Delete</value>
   </data>
   <data name="ShareComponent_Delete_Message" xml:space="preserve">
-    <value>Do you want to delete the share "{0}"?</value>
+    <value>Do you want to delete the share '{0}'?</value>
   </data>
   <data name="SharesModal_Add" xml:space="preserve">
     <value>Add</value>
@@ -229,22 +229,22 @@
     <value>Name</value>
   </data>
   <data name="WishList_Unknown_Title" xml:space="preserve">
-    <value>Unknown Wish List</value>
+    <value>Unknown wish list</value>
   </data>
   <data name="WishList_Unknown_Message" xml:space="preserve">
     <value>This wish list does not exist.</value>
   </data>
-  <data name="WishList_Settings_HideBoughtItems" xml:space="preserve">
-    <value>Hide bought items</value>
+  <data name="WishList_Settings_HidePurchasedItems" xml:space="preserve">
+    <value>Hide purchased items</value>
   </data>
-  <data name="WishList_Settings_HideBuyInformation" xml:space="preserve">
-    <value>Hide buy information</value>
+  <data name="WishList_Settings_HidePurchaseDetails" xml:space="preserve">
+    <value>Hide purchase details</value>
   </data>
   <data name="WishList_Settings_Shares" xml:space="preserve">
     <value>Shares</value>
   </data>
-  <data name="WishList_Settings_DeleteBoughtItems" xml:space="preserve">
-    <value>Delete bought items</value>
+  <data name="WishList_Settings_DeletePurchasedItems" xml:space="preserve">
+    <value>Delete purchased items</value>
   </data>
   <data name="WishList_Empty" xml:space="preserve">
     <value>The wish list has no items yet.</value>
@@ -255,8 +255,8 @@
   <data name="WishList_Add_Placeholder" xml:space="preserve">
     <value>Product url</value>
   </data>
-  <data name="WishList_DeleteBoughtItems_Message" xml:space="preserve">
-    <value>Do you want to delete all bought items from the list?</value>
+  <data name="WishList_DeletePurchasedItems_Message" xml:space="preserve">
+    <value>Do you want to delete all purchased items from the list?</value>
   </data>
   <data name="Item_Delete_Message" xml:space="preserve">
     <value>Do you want to delete this item from the list?</value>
@@ -276,17 +276,17 @@
   <data name="Item_ResetPurchaseStatus" xml:space="preserve">
     <value>Reset purchase status</value>
   </data>
-  <data name="Item_MarkAsBought" xml:space="preserve">
-    <value>Mark as bought</value>
+  <data name="Item_MarkAsPurchased" xml:space="preserve">
+    <value>Mark as purchased</value>
   </data>
-  <data name="Item_MarkAsUnbought" xml:space="preserve">
-    <value>Mark as unbought</value>
+  <data name="Item_RevertPurchase" xml:space="preserve">
+    <value>Revert purchase</value>
   </data>
-  <data name="Item_BoughtByYou" xml:space="preserve">
-    <value>Bought by you</value>
+  <data name="Item_PurchasedByYou" xml:space="preserve">
+    <value>Purchased by you</value>
   </data>
-  <data name="Item_Bought" xml:space="preserve">
-    <value>Bought</value>
+  <data name="Item_Purchased" xml:space="preserve">
+    <value>Purchased</value>
   </data>
   <data name="ItemEditModal_OpenProductPage" xml:space="preserve">
     <value>Open product page</value>

@@ -17,9 +17,9 @@ public sealed class WishListViewModel
 
     public WishListShare? LoggedInShare { get; private set; }
 
-    public bool HideBoughtItems { get; set; }
+    public bool HidePurchasedItems { get; set; }
 
-    public bool HideBuyInformation { get; set; }
+    public bool HidePurchaseDetails { get; set; }
 
     public bool ViewedByOwner => LoggedInUser is not null && LoggedInUser.Identifier == WishList.OwnerId;
 
@@ -45,8 +45,8 @@ public sealed class WishListViewModel
         LoggedInUser = loggedInUser;
         LoggedInShare = loggedInShare;
 
-        HideBoughtItems = !ViewedByOwner;
-        HideBuyInformation = ViewedByOwner;
+        HidePurchasedItems = !ViewedByOwner;
+        HidePurchaseDetails = ViewedByOwner;
     }
 
     public async Task RenameWishList(string name, CancellationToken cancellationToken)
@@ -72,7 +72,7 @@ public sealed class WishListViewModel
         await ReloadWishList(cancellationToken);
     }
 
-    public async Task BuyWishListItem(WishListItem item, CancellationToken cancellationToken)
+    public async Task MarkWishListItemAsPurchased(WishListItem item, CancellationToken cancellationToken)
     {
         if (LoggedInShare is null)
         {
@@ -83,7 +83,7 @@ public sealed class WishListViewModel
         await ReloadWishList(cancellationToken);
     }
 
-    public async Task UnbuyWishListItem(WishListItem item, CancellationToken cancellationToken)
+    public async Task RevertWishListItemPurchase(WishListItem item, CancellationToken cancellationToken)
     {
         if (LoggedInShare is null)
         {
@@ -123,7 +123,7 @@ public sealed class WishListViewModel
         await ReloadWishList(cancellationToken);
     }
 
-    public async Task DeleteBoughtWishListItems(CancellationToken cancellationToken)
+    public async Task DeletePurchasedWishListItems(CancellationToken cancellationToken)
     {
         await _itemRepository.DeletePurchasedItems(WishList.Id, cancellationToken);
         await ReloadWishList(cancellationToken);

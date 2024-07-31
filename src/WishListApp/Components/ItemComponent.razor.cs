@@ -29,9 +29,9 @@ public partial class ItemComponent(IStringLocalizer<Localization> localizer)
 
     private async Task OpenWishListSelectionModal() => await _wishListSelectionModal.Open(Item);
 
-    private async Task BuyItem() => await ViewModel.BuyWishListItem(Item, default);
+    private async Task MarkItemAsPurchased() => await ViewModel.MarkWishListItemAsPurchased(Item, default);
 
-    private async Task UnbuyItem() => await ViewModel.UnbuyWishListItem(Item, default);
+    private async Task ReversePurchase() => await ViewModel.RevertWishListItemPurchase(Item, default);
 
     private async Task ResetItemPurchases() => await ViewModel.ResetWishListItemPurchases(Item, default);
 

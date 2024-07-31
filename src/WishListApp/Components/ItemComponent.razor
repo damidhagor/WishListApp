@@ -54,7 +54,7 @@
                         <i class="bi bi-arrow-left-right" /> @_localizer["Item_Move"]
                     </button>
 
-                    if (!ViewModel.HideBuyInformation && _purchasedByOtherShare)
+                    if (!ViewModel.HidePurchaseDetails && _purchasedByOtherShare)
 
                     {
                         <button type="button" class="btn btn-outline-warning" @onclick="ResetItemPurchases">
@@ -71,24 +71,24 @@
                     </div>
                 }
 
-                @if (!ViewModel.HideBuyInformation)
+                @if (!ViewModel.HidePurchaseDetails)
                 {
                     @if (_canBePurchased)
                     {
-                        <button type="button" class="btn btn-outline-primary" @onclick="BuyItem">
-                            <i class="bi bi-bag" /> @_localizer["Item_MarkAsBought"]
+                        <button type="button" class="btn btn-outline-primary" @onclick="MarkItemAsPurchased">
+                            <i class="bi bi-bag" /> @_localizer["Item_MarkAsPurchased"]
                         </button>
                     }
                     
                     if (_purchasedByLoggedInShare > 0)
                     {
-                        <button type="button" class="btn btn-outline-warning" @onclick="UnbuyItem">
-                            <i class="bi bi-bag" /> @_localizer["Item_MarkAsUnbought"]
+                        <button type="button" class="btn btn-outline-warning" @onclick="ReversePurchase">
+                            <i class="bi bi-bag" /> @_localizer["Item_RevertPurchase"]
                         </button>
 
                         <div class="d-flex rounded-2 ps-4 pe-4 text-bg-success">
                             <span class="text-white align-self-center">
-                                <i class="bi bi-bag-fill" /> @(Item.Quantity > 1 ? $"{_purchasedByLoggedInShare}" : "") @_localizer["Item_BoughtByYou"]
+                                <i class="bi bi-bag-fill" /> @(Item.Quantity > 1 ? $"{_purchasedByLoggedInShare}" : "") @_localizer["Item_PurchasedByYou"]
                             </span>
                         </div>
                     }
@@ -97,7 +97,7 @@
                     {
                         <div class="d-flex rounded-2 p-2 text-bg-success">
                             <span class="text-white align-self-center">
-                                <i class="bi bi-bag-fill" /> @(Item.Quantity > 1 ? $"{Item.PurchasedQuantity}" : "") @_localizer["Item_Bought"]
+                                <i class="bi bi-bag-fill" /> @(Item.Quantity > 1 ? $"{Item.PurchasedQuantity}" : "") @_localizer["Item_Purchased"]
                             </span>
                         </div>
                     }

@@ -127,7 +127,7 @@
     <value>Laden</value>
   </data>
   <data name="WishListsPage_LoadingWishLists" xml:space="preserve">
-    <value>Lade Wunschlisten</value>
+    <value>Wunschlisten werden geladen</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Löschen</value>
@@ -139,7 +139,7 @@
     <value>Name</value>
   </data>
   <data name="WishListsPage_Delete_Message" xml:space="preserve">
-    <value>Möchten Sie die Wunschliste löschen?</value>
+    <value>Möchtest du die Wunschliste löschen?</value>
   </data>
   <data name="OK" xml:space="preserve">
     <value>OK</value>
@@ -196,7 +196,7 @@
     <value>Hätte ich sehr gerne</value>
   </data>
   <data name="WishListPage_LoadingWishList" xml:space="preserve">
-    <value>Lade Wunschliste</value>
+    <value>Wunschliste wird geladen</value>
   </data>
   <data name="WishListSelectionModal_Title" xml:space="preserve">
     <value>Eintrag verschieben</value>
@@ -214,7 +214,7 @@
     <value>Löschen</value>
   </data>
   <data name="ShareComponent_Delete_Message" xml:space="preserve">
-    <value>Möchten Sie die Freigabe "{0}" löschen?</value>
+    <value>Möchtest du die Freigabe "{0}" löschen?</value>
   </data>
   <data name="SharesModal_Add" xml:space="preserve">
     <value>Hinzufügen</value>
@@ -234,16 +234,16 @@
   <data name="WishList_Unknown_Message" xml:space="preserve">
     <value>Diese Wunschliste existiert nicht.</value>
   </data>
-  <data name="WishList_Settings_HideBoughtItems" xml:space="preserve">
+  <data name="WishList_Settings_HidePurchasedItems" xml:space="preserve">
     <value>Gekaufte Produkte ausblenden</value>
   </data>
-  <data name="WishList_Settings_HideBuyInformation" xml:space="preserve">
+  <data name="WishList_Settings_HidePurchaseDetails" xml:space="preserve">
     <value>Kaufinformationen ausblenden</value>
   </data>
   <data name="WishList_Settings_Shares" xml:space="preserve">
     <value>Freigaben</value>
   </data>
-  <data name="WishList_Settings_DeleteBoughtItems" xml:space="preserve">
+  <data name="WishList_Settings_DeletePurchasedItems" xml:space="preserve">
     <value>Gekaufte Produkte löschen</value>
   </data>
   <data name="WishList_Empty" xml:space="preserve">
@@ -255,14 +255,14 @@
   <data name="WishList_Add_Placeholder" xml:space="preserve">
     <value>Produkt Url</value>
   </data>
-  <data name="WishList_DeleteBoughtItems_Message" xml:space="preserve">
-    <value>Möchten Sie alle gekauften Einträge von der Wunschliste entfernen?</value>
+  <data name="WishList_DeletePurchasedItems_Message" xml:space="preserve">
+    <value>Möchtest du alle gekauften Einträge von der Wunschliste entfernen?</value>
   </data>
   <data name="Item_Delete_Message" xml:space="preserve">
-    <value>Möchten Sie den Eintrag von der Wunschliste entfernen?</value>
+    <value>Möchtest du den Eintrag von der Wunschliste entfernen?</value>
   </data>
   <data name="PriorityDropDown_NoSelection" xml:space="preserve">
-    <value>Keine Priorität gewählt</value>
+    <value>Keine Priorität ausgewählt</value>
   </data>
   <data name="Item_Delete" xml:space="preserve">
     <value>Löschen</value>
@@ -276,16 +276,16 @@
   <data name="Item_ResetPurchaseStatus" xml:space="preserve">
     <value>Kaufstatus zurücksetzen</value>
   </data>
-  <data name="Item_MarkAsBought" xml:space="preserve">
+  <data name="Item_MarkAsPurchased" xml:space="preserve">
     <value>Als gekauft markieren</value>
   </data>
-  <data name="Item_MarkAsUnbought" xml:space="preserve">
-    <value>Als ungekauft Markieren</value>
+  <data name="Item_RevertPurchase" xml:space="preserve">
+    <value>Als ungekauft markieren</value>
   </data>
-  <data name="Item_BoughtByYou" xml:space="preserve">
-    <value>Von Dir gekauft</value>
+  <data name="Item_PurchasedByYou" xml:space="preserve">
+    <value>Von dir gekauft</value>
   </data>
-  <data name="Item_Bought" xml:space="preserve">
+  <data name="Item_Purchased" xml:space="preserve">
     <value>Gekauft</value>
   </data>
   <data name="ItemEditModal_OpenProductPage" xml:space="preserve">
@@ -295,7 +295,7 @@
     <value>Name</value>
   </data>
   <data name="ItemEditModal_StoreName" xml:space="preserve">
-    <value>Webseitenname</value>
+    <value>Shop-Name</value>
   </data>
   <data name="ItemEditModal_Image" xml:space="preserve">
     <value>Bild Url</value>

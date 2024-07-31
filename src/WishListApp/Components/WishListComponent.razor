@@ -49,18 +49,18 @@ else
                 <div class="dropdown-menu" style="min-width: 300px;">
                     <div class="d-flex flex-column p-2 gap-2">
                         <div class="d-flex align-items-center form-check form-switch">
-                            <input class="form-check-input me-2 mb-1" type="checkbox" @bind="ViewModel.HideBoughtItems" id="hideBoughtItemsCheckBox">
-                            <label for="hideBoughtItemsCheckBox">
-                                @_localizer["WishList_Settings_HideBoughtItems"]
+                            <input class="form-check-input me-2 mb-1" type="checkbox" @bind="ViewModel.HidePurchasedItems" id="hidePurchasedItemsCheckBox">
+                            <label for="hidePurchasedItemsCheckBox">
+                                @_localizer["WishList_Settings_HidePurchasedItems"]
                             </label>
                         </div>
 
                         @if (ViewModel.ViewedByOwner)
                         {
                             <div class="d-flex align-items-center form-check form-switch">
-                                <input class="form-check-input me-2 mb-1" type="checkbox" @bind="ViewModel.HideBuyInformation" id="hideBuyInformationCheckBox">
-                                <label for="hideBuyInformationCheckBox">
-                                    @_localizer["WishList_Settings_HideBuyInformation"]
+                                <input class="form-check-input me-2 mb-1" type="checkbox" @bind="ViewModel.HidePurchaseDetails" id="hidePurchaseDetailsCheckBox">
+                                <label for="hidePurchaseDetailsCheckBox">
+                                    @_localizer["WishList_Settings_HidePurchaseDetails"]
                                 </label>
                             </div>
 
@@ -68,8 +68,8 @@ else
                                 <i class="bi bi-person fill" /> @_localizer["WishList_Settings_Shares"]
                             </button>
 
-                            <button type="button" class="btn btn-outline-danger" @onclick="DeleteBoughtWishListItems">
-                                <i class="bi bi-trash" /> @_localizer["WishList_Settings_DeleteBoughtItems"]
+                            <button type="button" class="btn btn-outline-danger" @onclick="DeletePurchasedWishListItems">
+                                <i class="bi bi-trash" /> @_localizer["WishList_Settings_DeletePurchasedItems"]
                             </button>
                         }
                     </div>
