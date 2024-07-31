@@ -33,7 +33,7 @@ internal static class ParserExtensions
             return null;
         }
 
-        if (currency is "EUR")
+        if (currency is "EUR" || currency is "€")
         {
             price = price.Replace(',', '.');
         }
