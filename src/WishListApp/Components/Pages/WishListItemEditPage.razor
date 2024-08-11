@@ -1,6 +1,6 @@
 ﻿@page "/edititem"
 
-<PageTitle>@_item?.Name</PageTitle>
+<PageTitle>@_localizer["WishListItemEditPage_Title"]</PageTitle>
 
 <div>
     @if (_item is null)
@@ -9,7 +9,7 @@
             <div class="spinner-border spinner-border-sm text-primary ms-1" role="status">
                 <span class="visually-hidden">@_localizer["Loading"] ...</span>
             </div>
-            @_localizer["WishListPage_LoadingWishList"] ...
+            @_localizer["WishListItemEditPage_LoadingItem"] ...
         </div>
     }
     else
@@ -19,11 +19,11 @@
 
             <div class="flex-row mt-4">
                 <LoadingButton LoadingAction="LoadProductInformation">
-                    @_localizer["ItemEditModal_FetchProductInformation"]
+                    @_localizer["WishListItemEditPage_FetchProductInformation"]
                 </LoadingButton>
 
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @onclick="SaveWishListItem">
-                    <i class="bi bi-floppy" /> @_localizer["ItemEditModal_Save"]
+                    <i class="bi bi-floppy" /> @_localizer["WishListItemEditPage_Save"]
                 </button>
             </div>
         </div>

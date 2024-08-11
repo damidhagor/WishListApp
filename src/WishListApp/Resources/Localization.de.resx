@@ -288,34 +288,34 @@
   <data name="Item_Purchased" xml:space="preserve">
     <value>Gekauft</value>
   </data>
-  <data name="ItemEditModal_OpenProductPage" xml:space="preserve">
+  <data name="ItemEditComponent_OpenProductPage" xml:space="preserve">
     <value>Produktseite öffnen</value>
   </data>
-  <data name="ItemEditModal_Name" xml:space="preserve">
+  <data name="ItemEditComponent_Name" xml:space="preserve">
     <value>Name</value>
   </data>
-  <data name="ItemEditModal_StoreName" xml:space="preserve">
+  <data name="ItemEditComponent_StoreName" xml:space="preserve">
     <value>Shop-Name</value>
   </data>
-  <data name="ItemEditModal_Image" xml:space="preserve">
+  <data name="ItemEditComponent_Image" xml:space="preserve">
     <value>Bild Url</value>
   </data>
-  <data name="ItemEditModal_Description" xml:space="preserve">
+  <data name="ItemEditComponent_Description" xml:space="preserve">
     <value>Beschreibung</value>
   </data>
-  <data name="ItemEditModal_Note" xml:space="preserve">
+  <data name="ItemEditComponent_Note" xml:space="preserve">
     <value>Bemerkung</value>
   </data>
-  <data name="ItemEditModal_Quantity" xml:space="preserve">
+  <data name="ItemEditComponent_Quantity" xml:space="preserve">
     <value>Anzahl</value>
   </data>
-  <data name="ItemEditModal_Prize" xml:space="preserve">
+  <data name="ItemEditComponent_Prize" xml:space="preserve">
     <value>Preis</value>
   </data>
-  <data name="ItemEditModal_Currency" xml:space="preserve">
+  <data name="ItemEditComponent_Currency" xml:space="preserve">
     <value>Währung</value>
   </data>
-  <data name="ItemEditModal_Priority" xml:space="preserve">
+  <data name="ItemEditComponent_Priority" xml:space="preserve">
     <value>Priorität</value>
   </data>
   <data name="ItemEditModal_FetchProductInformation" xml:space="preserve">
@@ -326,5 +326,17 @@
   </data>
   <data name="ItemEditModal_Title" xml:space="preserve">
     <value>Bearbeiten</value>
+  </data>
+  <data name="WishListItemEditPage_LoadingItem" xml:space="preserve">
+    <value>Eintrag wird geladen</value>
+  </data>
+  <data name="WishListItemEditPage_FetchProductInformation" xml:space="preserve">
+    <value>Produktinformationen abrufen</value>
+  </data>
+  <data name="WishListItemEditPage_Save" xml:space="preserve">
+    <value>Speichern</value>
+  </data>
+  <data name="WishListItemEditPage_Title" xml:space="preserve">
+    <value>Eintrag bearbeiten</value>
   </data>
 </root>
