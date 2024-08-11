@@ -2,66 +2,13 @@
 
 <ModalComponent @ref="_modal" Title="@_localizer["ItemEditModal_Title"]" Size="ModalComponent.ModalSize.Large">
     <Body>
-        @if (_item is not null)
-        {
-            <div class="d-flex flex-column gap-y-2">
-                <h5>
-                    <a href="@_item.Url" target="_blank">
-                        @_localizer["ItemEditModal_OpenProductPage"]
-                        <i class="bi bi-box-arrow-up-right ms-2" />
-                    </a>
-                </h5>
-
-                <h5 class="mt-4">@_localizer["ItemEditModal_Name"]</h5>
-                <input type="text" @bind="_name">
-
-                <h5 class="mt-4">@_localizer["ItemEditModal_StoreName"]</h5>
-                <input type="text" @bind="_siteName">
-
-                <h5 class="mt-4">@_localizer["ItemEditModal_Image"]</h5>
-                <input type="text" @bind="_imageUrl">
-
-                <h5 class="mt-4">@_localizer["ItemEditModal_Description"]</h5>
-                <input type="text" @bind="_description">
-
-                <h5 class="mt-4">@_localizer["ItemEditModal_Note"]</h5>
-                <input type="text" @bind="_note">
-
-                <div class="d-flex flex-row gap-2">
-                    <div class="d-flex flex-column flex-fill">
-                        <h5 class="mt-4">@_localizer["ItemEditModal_Quantity"]</h5>
-                        <input type="number" @bind="_quantity" min="1">
-                    </div>
-
-                    <div class="d-flex flex-column flex-fill">
-                        <h5 class="mt-4">@_localizer["ItemEditModal_Prize"]</h5>
-                        <input type="text" @bind="_price">
-                    </div>
-
-                    <div class="d-flex flex-column flex-fill">
-                        <h5 class="mt-4">@_localizer["ItemEditModal_Currency"]</h5>
-                        <input type="text" @bind="_currency">
-                    </div>
-                </div>
-
-                <h5 class="mt-4">@_localizer["ItemEditModal_Priority"]</h5>
-                <PriorityDropDownComponent @bind-SelectedPriority="_priority" />
-            </div>
-        }
+        <ItemEditComponent @ref="_itemEditComponent" Item="_item" />
     </Body>
 
     <Footer>
-        <button type="button" class="btn btn-secondary" @onclick="LoadCrawledProductInformation" disabled="@_isLoading">
-            @if (_isLoading)
-            {
-                <span class="spinner-border spinner-border-sm"></span>
-            }
-            else
-            {
-                <i class="bi bi-arrow-clockwise" />
-            }
+        <LoadingButton LoadingAction="LoadProductInformation">
             @_localizer["ItemEditModal_FetchProductInformation"]
-        </button>
+        </LoadingButton>
 
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @onclick="SaveWishListItem">
             <i class="bi bi-floppy" /> @_localizer["ItemEditModal_Save"]
