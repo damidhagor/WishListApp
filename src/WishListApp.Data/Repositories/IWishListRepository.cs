@@ -8,6 +8,8 @@ public interface IWishListRepository
 
     Task<List<WishList>> GetByOwner(string ownerId, CancellationToken cancellationToken);
 
+    Task<WishList?> GetByItemId(ObjectId itemId, CancellationToken cancellationToken);
+
     Task<WishList?> Rename(ObjectId wishListId, string name, CancellationToken cancellationToken);
 
     Task<bool> Delete(ObjectId wishListId, CancellationToken cancellationToken);

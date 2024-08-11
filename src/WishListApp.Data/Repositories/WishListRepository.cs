@@ -23,6 +23,11 @@ public sealed class WishListRepository(IMongoClient mongoClient) : IWishListRepo
         return await _collection.Find(w => w.OwnerId == ownerId, null).ToListAsync(cancellationToken);
     }
 
+    public async Task<WishList?> GetByItemId(ObjectId itemId, CancellationToken cancellationToken)
+    {
+        return await _collection.Find(w => w.Items.Any(i => i.Id == itemId), null).FirstOrDefaultAsync(cancellationToken);
+    }
+
     public async Task<WishList?> Rename(ObjectId wishListId, string name, CancellationToken cancellationToken)
     {
         return await _collection.FindOneAndUpdateAsync(
