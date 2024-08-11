@@ -3,9 +3,12 @@ using WishListApp.Components.Modals;
 
 namespace WishListApp.Components;
 
-public partial class ItemComponent(IStringLocalizer<Localization> localizer)
+public partial class ItemComponent(
+    IStringLocalizer<Localization> localizer,
+    NavigationManager navigationManager)
 {
     private readonly IStringLocalizer<Localization> _localizer = localizer;
+    private readonly NavigationManager _navigationManager = navigationManager;
 
     [CascadingParameter]
     public WishListItem Item { get; set; } = default!;
@@ -26,6 +29,8 @@ public partial class ItemComponent(IStringLocalizer<Localization> localizer)
     private ConfirmationModalComponent _confirmationModal = default!;
 
     private async Task OpenWishListItemEditModal() => await _itemEditModal.Open(Item);
+
+    private void EditWishListItem() => _navigationManager.NavigateTo($"/edititem?id={Item.Id}");
 
     private async Task OpenWishListSelectionModal() => await _wishListSelectionModal.Open(Item);
 

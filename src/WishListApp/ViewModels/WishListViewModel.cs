@@ -147,7 +147,7 @@ public sealed class WishListViewModel
         _messenger.Send(new WishListShareDeleted(share));
     }
 
-    private async Task ReloadWishList(CancellationToken cancellationToken)
+    public async Task ReloadWishList(CancellationToken cancellationToken)
     {
         var wishList = await _wishListRepository.GetById(WishList.Id, cancellationToken);
 
