@@ -69,7 +69,7 @@ public partial class WishListsPage(
                 }
 
                 var wishList = await _wishListRepository.Add(name, _user.Identifier, default);
-                _navigationManager.NavigateTo($"editwishlist?id={wishList.Id}");
+                _navigationManager.NavigateTo($"wishlist?id={wishList.Id}");
             });
     }
 
