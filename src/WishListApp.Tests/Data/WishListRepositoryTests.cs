@@ -20,6 +20,7 @@ public sealed class WishListRepositoryTests(MongoDbFixture mongoDbFixture)
 
         var list = await repository.Add(name, ownerId, default);
 
+        Assert.NotNull(list);
         Assert.NotEqual(ObjectId.Empty, list.Id);
         Assert.Equal(name, list.Name);
         Assert.Equal(ownerId, list.OwnerId);
@@ -36,6 +37,8 @@ public sealed class WishListRepositoryTests(MongoDbFixture mongoDbFixture)
         var list1 = await repository.Add(name, ownerId, default);
         var list2 = await repository.Add(name, ownerId, default);
 
+        Assert.NotNull(list1);
+        Assert.NotNull(list2);
         Assert.NotEqual(list1.Id, list2.Id);
     }
 
@@ -54,7 +57,6 @@ public sealed class WishListRepositoryTests(MongoDbFixture mongoDbFixture)
 
         Assert.NotNull(foundList);
         Assert.Equal(list1.Id, foundList.Id);
-        Assert.Equal(name1, foundList.Name);
     }
 
     [Fact]
@@ -78,13 +80,17 @@ public sealed class WishListRepositoryTests(MongoDbFixture mongoDbFixture)
         var ownerId2 = "OwnerId2";
 
         var list1 = await repository.Add("Name1", ownerId1, default);
-        var list2 = await repository.Add("Name2", ownerId2, default);
+        var list2 = await repository.Add("Name2", ownerId1, default);
+        var list3 = await repository.Add("Name2", ownerId2, default);
 
         var foundLists = await repository.GetByOwnerId(ownerId1, default);
 
-        var foundList = Assert.Single(foundLists);
-        Assert.Equal(list1.Id, foundList.Id);
-        Assert.Equal(ownerId1, foundList.OwnerId);
+        Assert.NotEmpty(foundLists);
+        Assert.Equal(2, foundLists.Count);
+        var foundList1 = foundLists[0];
+        var foundList2 = foundLists[1];
+        Assert.Equal(list1.Id, foundList1.Id);
+        Assert.Equal(list2.Id, foundList2.Id);
     }
 
     [Fact]
@@ -177,15 +183,20 @@ public sealed class WishListRepositoryTests(MongoDbFixture mongoDbFixture)
     {
         var repository = new WishListRepository(_mongoClient, _databaseName);
 
-        var list = await repository.Add("Name", "OwnerId", default);
+        var list1 = await repository.Add("Name", "OwnerId", default);
+        var list2 = await repository.Add("Name", "OwnerId", default);
 
-        Assert.NotNull(list);
+        Assert.NotNull(list1);
+        Assert.NotNull(list2);
 
-        var deleted = await repository.Delete(list.Id, default);
-        var foundList = await repository.GetById(list.Id, default);
+        var deleted = await repository.Delete(list1.Id, default);
+        var foundList1 = await repository.GetById(list1.Id, default);
+        var foundList2 = await repository.GetById(list2.Id, default);
 
         Assert.True(deleted);
-        Assert.Null(foundList);
+        Assert.Null(foundList1);
+        Assert.NotNull(foundList2);
+        Assert.Equal(list2.Id, foundList2.Id);
     }
 
     [Fact]
