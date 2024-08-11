@@ -42,15 +42,15 @@ public partial class ConfirmationModalComponent(IStringLocalizer<Localization> l
 
     private async Task CloseDialog(bool isConfirmation)
     {
-        if (_confirmationCallback is not null)
-        {
-            await _confirmationCallback.Invoke(isConfirmation);
-        }
-
         try
         {
             await _modal.Close();
         }
         catch { }
+
+        if (_confirmationCallback is not null)
+        {
+            await _confirmationCallback.Invoke(isConfirmation);
+        }
     }
 }
