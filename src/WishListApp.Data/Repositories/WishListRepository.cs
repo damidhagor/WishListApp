@@ -1,9 +1,9 @@
 ﻿namespace WishListApp.Data.Repositories;
 
-public sealed class WishListRepository(IMongoClient mongoClient) : IWishListRepository
+public sealed class WishListRepository(IMongoClient mongoClient, string? databaseName = null) : IWishListRepository
 {
     private readonly IMongoCollection<WishList> _collection = mongoClient
-        .GetDatabase(MongoDBConstants.DatabaseName)
+        .GetDatabase(databaseName ?? MongoDBConstants.DatabaseName)
         .GetCollection<WishList>(MongoDBConstants.WishListsCollectionName);
 
     public async Task<WishList> Add(string name, string ownerId, CancellationToken cancellationToken)
