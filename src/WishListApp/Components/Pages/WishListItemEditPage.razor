@@ -1,0 +1,31 @@
+﻿@page "/edititem"
+
+<PageTitle>@_item?.Name</PageTitle>
+
+<div>
+    @if (_item is null)
+    {
+        <div>
+            <div class="spinner-border spinner-border-sm text-primary ms-1" role="status">
+                <span class="visually-hidden">@_localizer["Loading"] ...</span>
+            </div>
+            @_localizer["WishListPage_LoadingWishList"] ...
+        </div>
+    }
+    else
+    {
+        <div class="d-flex flex-column">
+            <ItemEditComponent @ref="_itemEditComponent" Item="_item" />
+
+            <div class="flex-row mt-4">
+                <LoadingButton LoadingAction="LoadProductInformation">
+                    @_localizer["ItemEditModal_FetchProductInformation"]
+                </LoadingButton>
+
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @onclick="SaveWishListItem">
+                    <i class="bi bi-floppy" /> @_localizer["ItemEditModal_Save"]
+                </button>
+            </div>
+        </div>
+    }
+</div>
