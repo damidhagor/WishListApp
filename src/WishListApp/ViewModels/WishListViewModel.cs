@@ -62,8 +62,8 @@ public sealed class WishListViewModel
             return;
         }
 
-        await _itemRepository.Add(WishList.Id, url, cancellationToken);
-        await ReloadWishList(cancellationToken);
+        var itemId = await _itemRepository.Add(WishList.Id, url, cancellationToken);
+        _navigationManager.NavigateTo($"/edititem?id={itemId}");
     }
 
     public async Task UpdateWishListItem(WishListItem item, CancellationToken cancellationToken)

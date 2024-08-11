@@ -52,6 +52,8 @@ public partial class ItemEditComponent(
         _description = string.IsNullOrWhiteSpace(info.Description) ? _description : info.Description;
         _price = info.Price ?? _price;
         _currency = string.IsNullOrWhiteSpace(info.Currency) ? _currency : info.Currency;
+
+        StateHasChanged();
     }
 
     public async Task SaveWishListItem()

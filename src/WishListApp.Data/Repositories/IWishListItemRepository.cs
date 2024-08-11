@@ -2,7 +2,7 @@
 
 public interface IWishListItemRepository
 {
-    Task<WishList?> Add(ObjectId wishListId, string url, CancellationToken cancellationToken);
+    Task<ObjectId> Add(ObjectId wishListId, string url, CancellationToken cancellationToken);
 
     Task<WishList?> Delete(ObjectId wishListId, ObjectId itemId, CancellationToken cancellationToken);
 

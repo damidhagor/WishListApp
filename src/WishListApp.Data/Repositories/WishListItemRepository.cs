@@ -6,15 +6,17 @@ public sealed class WishListItemRepository(IMongoClient mongoClient) : IWishList
         .GetDatabase(MongoDBConstants.DatabaseName)
         .GetCollection<WishList>(MongoDBConstants.WishListsCollectionName);
 
-    public async Task<WishList?> Add(ObjectId wishListId, string url, CancellationToken cancellationToken)
+    public async Task<ObjectId> Add(ObjectId wishListId, string url, CancellationToken cancellationToken)
     {
         var item = new WishListItem(ObjectId.GenerateNewId(), url, null, null, null, null, null, null, 1, "", 0, []);
 
-        return await _collection.FindOneAndUpdateAsync(
+        await _collection.FindOneAndUpdateAsync(
             w => w.Id == wishListId,
             Builders<WishList>.Update.Push(w => w.Items, item),
             new() { ReturnDocument = ReturnDocument.After },
             cancellationToken);
+
+        return item.Id;
     }
 
     public async Task<WishList?> Delete(ObjectId wishListId, ObjectId itemId, CancellationToken cancellationToken)
