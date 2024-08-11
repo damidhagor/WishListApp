@@ -43,7 +43,7 @@ public partial class WishListsPage(
             return;
         }
 
-        var wishLists = await _wishListRepository.GetByOwner(_user.Identifier, cancellationToken);
+        var wishLists = await _wishListRepository.GetByOwnerId(_user.Identifier, cancellationToken);
         var wishListsWithShares = new List<(WishList, WishListShare[])>(wishLists.Count);
         foreach (var wishList in wishLists.OrderBy(w => w.Name))
         {

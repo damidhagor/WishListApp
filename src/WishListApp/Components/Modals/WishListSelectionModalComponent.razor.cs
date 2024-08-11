@@ -24,7 +24,7 @@ public partial class WishListSelectionModalComponent(
         _lists = [];
         if (ViewModel.LoggedInUser is not null)
         {
-            _lists = (await _repository.GetByOwner(ViewModel.LoggedInUser.Identifier, default))
+            _lists = (await _repository.GetByOwnerId(ViewModel.LoggedInUser.Identifier, default))
                 .Where(l => l.Id != ViewModel.WishList.Id)
                 .ToModels()
                 .ToArray();

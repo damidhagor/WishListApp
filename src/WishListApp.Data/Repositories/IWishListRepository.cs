@@ -6,7 +6,7 @@ public interface IWishListRepository
 
     Task<WishList?> GetById(ObjectId wishListId, CancellationToken cancellationToken);
 
-    Task<List<WishList>> GetByOwner(string ownerId, CancellationToken cancellationToken);
+    Task<List<WishList>> GetByOwnerId(string ownerId, CancellationToken cancellationToken);
 
     Task<WishList?> GetByItemId(ObjectId itemId, CancellationToken cancellationToken);
 

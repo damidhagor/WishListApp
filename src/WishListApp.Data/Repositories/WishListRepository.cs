@@ -18,7 +18,7 @@ public sealed class WishListRepository(IMongoClient mongoClient, string? databas
         return await _collection.Find(w => w.Id == wishListId, null).FirstOrDefaultAsync(cancellationToken);
     }
 
-    public async Task<List<WishList>> GetByOwner(string ownerId, CancellationToken cancellationToken)
+    public async Task<List<WishList>> GetByOwnerId(string ownerId, CancellationToken cancellationToken)
     {
         return await _collection.Find(w => w.OwnerId == ownerId, null).ToListAsync(cancellationToken);
     }
