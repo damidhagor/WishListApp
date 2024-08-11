@@ -1,0 +1,13 @@
+﻿<button type="button" class="btn btn-secondary" @onclick="OnClick" disabled="@_isLoading">
+    @if (_isLoading)
+    {
+        <span class="spinner-border spinner-border-sm"></span>
+    }
+    else
+    {
+        <i class="bi bi-arrow-clockwise" />
+    }
+    @ChildContent
+</button>
+
+
