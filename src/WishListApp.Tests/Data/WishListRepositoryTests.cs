@@ -119,7 +119,7 @@ public sealed class WishListRepositoryTests(MongoDbFixture mongoDbFixture)
         var itemId1 = await itemRepository.Add(list1.Id, "myurl1.com", default);
         var itemId2 = await itemRepository.Add(list2.Id, "myurl2.com", default);
 
-        var foundList = await listRepository.GetByItemId(itemId1, default);
+        var foundList = await listRepository.GetByItemId(itemId1.Value, default);
 
         Assert.NotNull(foundList);
         Assert.Equal(list1.Id, foundList.Id);
