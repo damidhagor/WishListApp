@@ -2,7 +2,7 @@
 
 public interface IWishListItemRepository
 {
-    Task<ObjectId> Add(ObjectId wishListId, string url, CancellationToken cancellationToken);
+    Task<ObjectId?> Add(ObjectId wishListId, string url, CancellationToken cancellationToken);
 
     Task<WishList?> Delete(ObjectId wishListId, ObjectId itemId, CancellationToken cancellationToken);
 
@@ -16,5 +16,5 @@ public interface IWishListItemRepository
 
     Task<WishList?> ResetPurchases(ObjectId wishListId, ObjectId itemId, CancellationToken cancellationToken);
 
-    Task<WishList?> MoveToWishList(ObjectId wishListId, ObjectId itemId, ObjectId newWishListId, CancellationToken cancellationToken);
+    Task<ObjectId?> MoveToWishList(ObjectId wishListId, ObjectId itemId, ObjectId newWishListId, CancellationToken cancellationToken);
 }

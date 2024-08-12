@@ -6,17 +6,17 @@ public sealed class WishListItemRepository(IMongoClient mongoClient, string? dat
         .GetDatabase(databaseName ?? MongoDBConstants.DatabaseName)
         .GetCollection<WishList>(MongoDBConstants.WishListsCollectionName);
 
-    public async Task<ObjectId> Add(ObjectId wishListId, string url, CancellationToken cancellationToken)
+    public async Task<ObjectId?> Add(ObjectId wishListId, string url, CancellationToken cancellationToken)
     {
         var item = new WishListItem(ObjectId.GenerateNewId(), url, null, null, null, null, null, null, 1, "", 0, []);
 
-        await _collection.FindOneAndUpdateAsync(
+        var list = await _collection.FindOneAndUpdateAsync(
             w => w.Id == wishListId,
             Builders<WishList>.Update.Push(w => w.Items, item),
             new() { ReturnDocument = ReturnDocument.After },
             cancellationToken);
 
-        return item.Id;
+        return list?.Items?.FirstOrDefault(i => i.Id == item.Id)?.Id;
     }
 
     public async Task<WishList?> Delete(ObjectId wishListId, ObjectId itemId, CancellationToken cancellationToken)
@@ -157,7 +157,7 @@ public sealed class WishListItemRepository(IMongoClient mongoClient, string? dat
             cancellationToken);
     }
 
-    public async Task<WishList?> MoveToWishList(ObjectId listId, ObjectId itemId, ObjectId newListId, CancellationToken cancellationToken)
+    public async Task<ObjectId?> MoveToWishList(ObjectId listId, ObjectId itemId, ObjectId newListId, CancellationToken cancellationToken)
     {
         var item = await _collection.Find(w => w.Id == listId && w.Items.Any(i => i.Id == itemId))
             .Project(w => w.Items.FirstOrDefault(i => i.Id == itemId))
@@ -174,16 +174,23 @@ public sealed class WishListItemRepository(IMongoClient mongoClient, string? dat
             Purchases = []
         };
 
-        await _collection.FindOneAndUpdateAsync(
+        var result = await _collection.FindOneAndUpdateAsync(
             w => w.Id == newListId,
             Builders<WishList>.Update.Push(w => w.Items, item),
             null,
             cancellationToken);
 
-        return await _collection.FindOneAndUpdateAsync(
+        if (result is null)
+        {
+            return null;
+        }
+
+        result = await _collection.FindOneAndUpdateAsync(
             w => w.Id == listId,
             Builders<WishList>.Update.PullFilter(w => w.Items, i => i.Id == itemId),
             new() { ReturnDocument = ReturnDocument.After },
             cancellationToken);
+
+        return result is not null ? item.Id : null;
     }
 }
