@@ -3,7 +3,7 @@ name: Run Tests
 on: [push]
 
 jobs:
-  build-wishlist-app:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -13,7 +13,6 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.x.x
-        cache: true
     - name: Build
       run: dotnet build src/
     - name: Test
