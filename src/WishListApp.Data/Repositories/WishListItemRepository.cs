@@ -32,7 +32,28 @@ public sealed class WishListItemRepository(IMongoClient mongoClient, string? dat
     {
         return await _collection.FindOneAndUpdateAsync(
             w => w.Id == wishListId,
-            Builders<WishList>.Update.PullFilter(w => w.Items, i => i.Purchases.Sum(p => p.Quantity) >= i.Quantity),
+            new EmptyPipelineDefinition<WishList>()
+                .AppendStage<WishList, WishList, WishList>(
+                $$"""
+                {
+                  $set: {
+                    "{{nameof(WishList.Items)}}": {
+                      $filter: {
+                        input: "${{nameof(WishList.Items)}}",
+                        as: "item",
+                        cond: {
+                          $ne: [
+                            {
+                              $sum: "$$item.{{nameof(WishListItem.Purchases)}}.{{nameof(WishListItemPurchase.Quantity)}}"
+                            },
+                            "$$item.{{nameof(WishListItem.Quantity)}}"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+                """),
             new() { ReturnDocument = ReturnDocument.After },
             cancellationToken);
     }
