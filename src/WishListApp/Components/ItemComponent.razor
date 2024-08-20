@@ -98,9 +98,10 @@
                             <i class="bi bi-bag" /> @_localizer["Item_RevertPurchase"]
                         </button>
 
-                        <div class="d-flex rounded-2 ps-4 pe-4 text-bg-success">
-                            <span class="text-white align-self-center">
-                                <i class="bi bi-bag-fill" /> @(Item.Quantity > 1 ? $"{_purchasedByLoggedInShare}" : "") @_localizer["Item_PurchasedByYou"]
+                        <div class="d-flex rounded-2 p-2 text-bg-success">
+                            <span class="text-white align-self-center"
+                                  title="@(Item.Quantity > 1 ? $"{_purchasedByLoggedInShare}" : "") @_localizer["Item_PurchasedByYou"]">
+                                <i class="bi bi-bag-fill" />
                             </span>
                         </div>
                     }
@@ -108,8 +109,9 @@
                     else if (_purchasedByOtherShare)
                     {
                         <div class="d-flex rounded-2 p-2 text-bg-success">
-                            <span class="text-white align-self-center">
-                                <i class="bi bi-bag-fill" /> @(Item.Quantity > 1 ? $"{Item.PurchasedQuantity}" : "") @_localizer["Item_Purchased"]
+                            <span class="text-white align-self-center"
+                                  title="@(Item.Quantity > 1 ? $"{Item.PurchasedQuantity}" : "") @_localizer["Item_Purchased"]">
+                                <i class="bi bi-bag-fill" />
                             </span>
                         </div>
                     }
