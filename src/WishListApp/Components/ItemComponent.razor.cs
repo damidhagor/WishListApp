@@ -36,7 +36,7 @@ public partial class ItemComponent(
 
     private async Task MarkItemAsPurchased() => await ViewModel.MarkWishListItemAsPurchased(Item, default);
 
-    private async Task ReversePurchase() => await ViewModel.RevertWishListItemPurchase(Item, default);
+    private async Task RevertPurchase() => await ViewModel.RevertWishListItemPurchase(Item, default);
 
     private async Task ResetItemPurchases() => await ViewModel.ResetWishListItemPurchases(Item, default);
 
