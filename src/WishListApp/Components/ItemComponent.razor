@@ -29,6 +29,38 @@
                         @Item.Price @Item.Currency
                     </div>
                 }
+
+                @if (ViewModel.ViewedByOwner)
+                {
+                    <div class="dropdown ms-auto">
+                        <div class="" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                            <i class="bi bi-three-dots-vertical" />
+                        </div>
+
+                        <div class="dropdown-menu bg-dark-subtle">
+                            <div class="d-flex flex-column align-items-stretch px-2 gap-2">
+                                <button type="button" class="btn btn-outline-light" @onclick="EditWishListItem">
+                                    <i class="bi bi-pen" /> @_localizer["Item_Edit"]
+                                </button>
+
+                                <button type="button" class="btn btn-outline-light" @onclick="OpenWishListSelectionModal">
+                                    <i class="bi bi-arrow-left-right" /> @_localizer["Item_Move"]
+                                </button>
+
+                                @if (!ViewModel.HidePurchaseDetails && _purchasedByOtherShare)
+                                {
+                                    <button type="button" class="btn btn-outline-warning" @onclick="ResetItemPurchases">
+                                        <i class="bi bi-bag" /> @_localizer["Item_ResetPurchaseStatus"]
+                                    </button>
+                                }
+
+                                <button type="button" class="btn btn-outline-danger" @onclick="DeleteItem">
+                                    <i class="bi bi-trash" /> @_localizer["Item_Delete"]
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
 
             <div class="d-flex flex-row flex-grow-1 overflow-y-auto ms-2 mt-2 mb-2">
@@ -39,28 +71,8 @@
                 @if (ViewModel.ViewedByOwner)
                 {
                     <div class="me-auto">
-                        <PriorityDropDownComponent @bind-SelectedPriority:get="Item.Priority" @bind-SelectedPriority:set="SetItemPriority"/>
+                        <PriorityDropDownComponent @bind-SelectedPriority:get="Item.Priority" @bind-SelectedPriority:set="SetItemPriority" />
                     </div>
-
-                    <button type="button" class="btn btn-outline-danger" @onclick="DeleteItem">
-                        <i class="bi bi-trash" /> @_localizer["Item_Delete"]
-                    </button>
-
-                    <button type="button" class="btn btn-outline-light" @onclick="EditWishListItem">
-                        <i class="bi bi-pen" /> @_localizer["Item_Edit"]
-                    </button>
-
-                    <button type="button" class="btn btn-outline-light" @onclick="OpenWishListSelectionModal">
-                        <i class="bi bi-arrow-left-right" /> @_localizer["Item_Move"]
-                    </button>
-
-                    if (!ViewModel.HidePurchaseDetails && _purchasedByOtherShare)
-
-                    {
-                        <button type="button" class="btn btn-outline-warning" @onclick="ResetItemPurchases">
-                            <i class="bi bi-bag" /> @_localizer["Item_ResetPurchaseStatus"]
-                        </button>
-                    }
                 }
                 else
                 {
@@ -79,7 +91,7 @@
                             <i class="bi bi-bag" /> @_localizer["Item_MarkAsPurchased"]
                         </button>
                     }
-                    
+
                     if (_purchasedByLoggedInShare > 0)
                     {
                         <button type="button" class="btn btn-outline-warning" @onclick="RevertPurchase">
