@@ -1,0 +1,10 @@
+﻿<div class="d-flex flex-row @Class">
+    @foreach (var priority in WishListItem.AvailablePriorities)
+    {
+        <i class="bi @GetIconClass(priority) px-1"
+           style="cursor: @GetCursorStyle()"
+           @onmouseover="() => OnMouseOver(priority)"
+           @onmouseout="OnMouseOut"
+           @onclick="() => OnCLick(priority)" />
+    }
+</div>

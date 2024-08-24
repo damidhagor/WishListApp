@@ -14,8 +14,6 @@ public partial class WishListComponent(
     [CascadingParameter]
     public WishListViewModel ViewModel { get; set; } = default!;
 
-    private string _newItemUrl = "";
-
     private SharesModalComponent _shareModal = default!;
 
     private TextInputModalComponent _inputModal = default!;

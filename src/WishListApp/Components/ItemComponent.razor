@@ -68,20 +68,10 @@
             </div>
 
             <div class="d-flex flex-row gap-2 justify-content-end align-content-baseline border-top border-secondary p-2">
-                @if (ViewModel.ViewedByOwner)
-                {
-                    <div class="me-auto">
-                        <PriorityDropDownComponent @bind-SelectedPriority:get="Item.Priority" @bind-SelectedPriority:set="SetItemPriority" />
-                    </div>
-                }
-                else
-                {
-                    <div class="d-flex rounded-2 me-auto p-2 border border-rounded-2 border-success text-bg-success-emphasis">
-                        <span class="text-white align-self-center">
-                            @Item.Priority.ToDisplayName(_localizer)
-                        </span>
-                    </div>
-                }
+                <PriorityComponent Class="me-auto"
+                                   @bind-Priority:get="Item.Priority"
+                                   @bind-Priority:set="SetItemPriority"
+                                   IsReadonly="!ViewModel.ViewedByOwner" />
 
                 @if (!ViewModel.HidePurchaseDetails)
                 {
