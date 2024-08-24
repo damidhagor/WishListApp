@@ -180,21 +180,6 @@
   <data name="WishListsPage_Delete_Title" xml:space="preserve">
     <value>Löschen</value>
   </data>
-  <data name="WishListItemPriority_0" xml:space="preserve">
-    <value>Unbekannt</value>
-  </data>
-  <data name="WishListItemPriority_1" xml:space="preserve">
-    <value>Nicht unbedingt</value>
-  </data>
-  <data name="WishListItemPriority_4" xml:space="preserve">
-    <value>Muss ich haben</value>
-  </data>
-  <data name="WishListItemPriority_2" xml:space="preserve">
-    <value>Hätte ich gerne</value>
-  </data>
-  <data name="WishListItemPriority_3" xml:space="preserve">
-    <value>Hätte ich sehr gerne</value>
-  </data>
   <data name="WishListPage_LoadingWishList" xml:space="preserve">
     <value>Wunschliste wird geladen</value>
   </data>
@@ -260,9 +245,6 @@
   </data>
   <data name="Item_Delete_Message" xml:space="preserve">
     <value>Möchtest du den Eintrag von der Wunschliste entfernen?</value>
-  </data>
-  <data name="PriorityDropDown_NoSelection" xml:space="preserve">
-    <value>Keine Priorität ausgewählt</value>
   </data>
   <data name="Item_Delete" xml:space="preserve">
     <value>Löschen</value>

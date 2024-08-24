@@ -68,15 +68,4 @@ internal static class MappingExtensions
 
     public static IEnumerable<WishListShare> ToModels(this IEnumerable<Data.Models.WishListShare> shares)
         => shares.Select(s => s.ToModel());
-
-    public static string ToDisplayName(this int priority, IStringLocalizer<Localization> localizer)
-        => priority switch
-        {
-            0 => localizer["WishListItemPriority_0"],
-            1 => localizer["WishListItemPriority_1"],
-            2 => localizer["WishListItemPriority_2"],
-            3 => localizer["WishListItemPriority_3"],
-            4 => localizer["WishListItemPriority_4"],
-            _ => priority.ToString()
-        };
 }
