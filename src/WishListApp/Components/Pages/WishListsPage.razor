@@ -3,19 +3,20 @@
 
 <PageTitle>@_localizer["WishListsPage_Title"]</PageTitle>
 
-<div class="d-flex">
-    <h1>@_localizer["WishListsPage_Title"]</h1>
+<div class="d-flex flex-row flex-wrap align-content-center column-gap-2">
+    <div class="fs-1 me-auto">@_localizer["WishListsPage_Title"]</div>
 
     @if (_wishLists is not null)
     {
-        <div class="d-flex ms-auto align-self-center">
-            <button valign="baseline" type="button" class="btn btn-outline-primary" @onclick="CreateNewWishList">
+        <div>
+            <button type="button" class="btn btn-outline-primary align-middle" @onclick="CreateNewWishList">
                 <i class="bi bi-plus-lg" /> @_localizer["Add"]
             </button>
         </div>
     }
 </div>
-<div class="border border-secondary"></div>
+
+<div class="border border-secondary mt-2 mb-4"></div>
 
 <div>
     @if (_wishLists is null)
