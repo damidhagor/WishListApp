@@ -321,4 +321,7 @@
   <data name="WishListItemEditPage_Title" xml:space="preserve">
     <value>Edit Item</value>
   </data>
+  <data name="IdentityHeader_EditProfile" xml:space="preserve">
+    <value>Edit profile</value>
+  </data>
 </root>

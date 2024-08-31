@@ -321,4 +321,7 @@
   <data name="WishListItemEditPage_Title" xml:space="preserve">
     <value>Eintrag bearbeiten</value>
   </data>
+  <data name="IdentityHeader_EditProfile" xml:space="preserve">
+    <value>Profil bearbeiten</value>
+  </data>
 </root>
