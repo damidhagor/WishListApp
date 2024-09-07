@@ -25,10 +25,9 @@ internal static class MappingExtensions
             item.Description,
             item.Price,
             item.Currency,
-            item.Quantity,
             item.Note,
             item.Priority,
-            item.Purchases.ToModels().ToArray());
+            item.Purchaser);
 
     public static IEnumerable<WishListItem> ToModels(this IEnumerable<Data.Models.WishListItem> items, ObjectId wishListId)
         => items.Select(i => i.ToModel(wishListId));
@@ -43,25 +42,12 @@ internal static class MappingExtensions
             item.Description,
             item.Price,
             item.Currency,
-            item.Quantity,
             item.Note,
             item.Priority,
-            item.Purchases.ToDataModels().ToArray());
+            item.Purchaser);
 
     public static IEnumerable<Data.Models.WishListItem> ToDataModels(this IEnumerable<WishListItem> items)
         => items.Select(i => i.ToDataModel());
-
-    public static WishListItemPurchase ToModel(this Data.Models.WishListItemPurchase purchase)
-        => new(purchase.ShareId, purchase.Quantity);
-
-    public static IEnumerable<WishListItemPurchase> ToModels(this IEnumerable<Data.Models.WishListItemPurchase> purchases)
-        => purchases.Select(p => p.ToModel());
-
-    public static Data.Models.WishListItemPurchase ToDataModel(this WishListItemPurchase purchase)
-        => new(purchase.ShareId, purchase.Quantity);
-
-    public static IEnumerable<Data.Models.WishListItemPurchase> ToDataModels(this IEnumerable<WishListItemPurchase> purchases)
-        => purchases.Select(p => p.ToDataModel());
 
     public static WishListShare ToModel(this Data.Models.WishListShare share)
         => new(share.Id, share.WishListId, share.Name, share.AccessKey);

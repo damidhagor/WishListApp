@@ -19,7 +19,6 @@ public partial class ItemEditComponent(
     private string _note = "";
     private decimal _price = 0;
     private string _currency = "";
-    private int _quantity = 1;
     private int _priority = WishListItem.AvailablePriorities[0];
 
     [Parameter]
@@ -34,7 +33,6 @@ public partial class ItemEditComponent(
         _note = Item?.Note ?? "";
         _price = Item?.Price ?? 0;
         _currency = Item?.Currency ?? "";
-        _quantity = Item?.Quantity ?? 1;
         _priority = Item?.Priority ?? WishListItem.AvailablePriorities[0];
     }
 
@@ -72,7 +70,6 @@ public partial class ItemEditComponent(
             Note = _note,
             Price = _price,
             Currency = _currency,
-            Quantity = _quantity,
             Priority = _priority
         };
 

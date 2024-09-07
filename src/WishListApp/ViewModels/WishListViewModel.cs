@@ -79,29 +79,18 @@ public sealed class WishListViewModel
             return;
         }
 
-        await _itemRepository.UpdatePurchaseQuantity(item.WishListId, item.Id, LoggedInShare.Id, 1, cancellationToken);
+        await _itemRepository.UpdatePurchaser(item.WishListId, item.Id, LoggedInShare.Id, cancellationToken);
         await ReloadWishList(cancellationToken);
     }
 
-    public async Task RevertWishListItemPurchase(WishListItem item, CancellationToken cancellationToken)
+    public async Task ResetWishListItemPurchase(WishListItem item, CancellationToken cancellationToken)
     {
         if (LoggedInShare is null)
         {
             return;
         }
 
-        await _itemRepository.UpdatePurchaseQuantity(item.WishListId, item.Id, LoggedInShare.Id, 0, cancellationToken);
-        await ReloadWishList(cancellationToken);
-    }
-
-    public async Task ResetWishListItemPurchases(WishListItem item, CancellationToken cancellationToken)
-    {
-        if (!ViewedByOwner)
-        {
-            return;
-        }
-
-        await _itemRepository.ResetPurchases(item.WishListId, item.Id, cancellationToken);
+        await _itemRepository.UpdatePurchaser(item.WishListId, item.Id, null, cancellationToken);
         await ReloadWishList(cancellationToken);
     }
 

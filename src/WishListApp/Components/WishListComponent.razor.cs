@@ -61,17 +61,18 @@ public partial class WishListComponent(
         }
 
         var filteredItems = ViewModel.HidePurchasedItems
-            ? ViewModel.WishList.Items.Where(i => i.RemainingQuantity > 0)
+            ? ViewModel.WishList.Items.Where(i => !i.IsPurchased)
             : ViewModel.WishList.Items;
 
         filteredItems = ViewModel.HidePurchaseDetails
             ? filteredItems.OrderByDescending(i => i.Priority) // Don't order by purchase details if owner is viewing
-            : filteredItems.OrderBy(i => i.RemainingQuantity > 0
-                            ? 0 // 1st: Unpurchased items
-                            : i.GetPurchasedQuantityByShare(ViewModel.LoggedInShare?.Id) > 0
-                                ? 1 // 2nd: Items purchased by currently viewing share
-                                : 2) // 3rd: Items purchased by other shares
-            .ThenByDescending(i => i.Priority);
+            : filteredItems.OrderBy(
+                i => !i.IsPurchased
+                    ? 0 // 1st: Unpurchased items
+                    : i.IsPurchasedByShare(ViewModel.LoggedInShare?.Id)
+                        ? 1 // 2nd: Items purchased by currently viewing share
+                        : 2) // 3rd: Items purchased by other shares
+                .ThenByDescending(i => i.Priority);
 
         return filteredItems;
     }
