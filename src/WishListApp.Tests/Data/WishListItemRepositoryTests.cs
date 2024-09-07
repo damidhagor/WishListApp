@@ -39,7 +39,6 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
         Assert.Null(item.Description);
         Assert.Null(item.Price);
         Assert.Null(item.Currency);
-        Assert.Equal(1, item.Quantity);
         Assert.Equal("", item.Note);
         Assert.Equal(0, item.Priority);
         Assert.Null(item.Purchaser);
@@ -158,9 +157,9 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
         var itemId4 = await itemRepository.Add(list2.Id, "https://example4.com", default);
         var itemId5 = await itemRepository.Add(list2.Id, "https://example5.com", default);
 
-        await itemRepository.SetPurchaser(list1.Id, itemId1.Value, ObjectId.GenerateNewId(), default);
-        await itemRepository.SetPurchaser(list1.Id, itemId3.Value, ObjectId.GenerateNewId(), default);
-        await itemRepository.SetPurchaser(list2.Id, itemId5.Value, ObjectId.GenerateNewId(), default);
+        await itemRepository.UpdatePurchaser(list1.Id, itemId1.Value, ObjectId.GenerateNewId(), default);
+        await itemRepository.UpdatePurchaser(list1.Id, itemId3.Value, ObjectId.GenerateNewId(), default);
+        await itemRepository.UpdatePurchaser(list2.Id, itemId5.Value, ObjectId.GenerateNewId(), default);
 
         var result = await itemRepository.DeletePurchasedItems(list1.Id, default);
         list1 = await listRepository.GetById(list1.Id, default);
@@ -186,7 +185,7 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
 
         var itemId = await itemRepository.Add(list.Id, "https://example.com", default);
 
-        await itemRepository.SetPurchaser(list.Id, itemId.Value, ObjectId.GenerateNewId(), default);
+        await itemRepository.UpdatePurchaser(list.Id, itemId.Value, ObjectId.GenerateNewId(), default);
 
         var result = await itemRepository.DeletePurchasedItems(ObjectId.GenerateNewId(), default);
 
@@ -205,7 +204,6 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
         var newDescription = "Description2";
         var newPrice = 1.23m;
         var newCurrency = "USD";
-        var newQuantity = 2;
         var newNote = "Note2";
         var newPriority = 3;
         var newPurchaser = ObjectId.GenerateNewId();
@@ -232,7 +230,6 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
                 Description = newDescription,
                 Price = newPrice,
                 Currency = newCurrency,
-                Quantity = newQuantity,
                 Note = newNote,
                 Priority = newPriority,
                 Purchaser = newPurchaser
@@ -254,7 +251,6 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
         Assert.Equal(newDescription, item1.Description);
         Assert.Equal(newPrice, item1.Price);
         Assert.Equal(newCurrency, item1.Currency);
-        Assert.Equal(newQuantity, item1.Quantity);
         Assert.Equal(newNote, item1.Note);
         Assert.Equal(newPriority, item1.Priority);
         Assert.Equal(newPurchaser, item1.Purchaser);
@@ -337,7 +333,7 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
     }
 
     [Fact]
-    public async Task SetPurchaser_Set()
+    public async Task UpdatePurchaser_Set()
     {
         var listRepository = new WishListRepository(_mongoClient, _databaseName);
         var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
@@ -351,7 +347,7 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
         var itemId2 = await itemRepository.Add(list1.Id, "https://example2.com", default);
         var itemId3 = await itemRepository.Add(list2.Id, "https://example3.com", default);
 
-        var result = await itemRepository.SetPurchaser(list1.Id, itemId2.Value, shareId, default);
+        var result = await itemRepository.UpdatePurchaser(list1.Id, itemId2.Value, shareId, default);
 
         list1 = await listRepository.GetById(list1.Id, default);
         list2 = await listRepository.GetById(list2.Id, default);
@@ -371,7 +367,7 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
     }
 
     [Fact]
-    public async Task SetPurchaser_Reset()
+    public async Task UpdatePurchaser_Reset()
     {
         var listRepository = new WishListRepository(_mongoClient, _databaseName);
         var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
@@ -385,9 +381,9 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
         var itemId2 = await itemRepository.Add(list1.Id, "https://example2.com", default);
         var itemId3 = await itemRepository.Add(list2.Id, "https://example3.com", default);
 
-        var result = await itemRepository.SetPurchaser(list1.Id, itemId2.Value, shareId, default);
+        var result = await itemRepository.UpdatePurchaser(list1.Id, itemId2.Value, shareId, default);
 
-        await itemRepository.SetPurchaser(list1.Id, itemId2.Value, null, default);
+        await itemRepository.UpdatePurchaser(list1.Id, itemId2.Value, null, default);
 
         list1 = await listRepository.GetById(list1.Id, default);
         list2 = await listRepository.GetById(list2.Id, default);
@@ -410,7 +406,7 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
     }
 
     [Fact]
-    public async Task SetPurchaser_WishListNotFound()
+    public async Task UpdatePurchaser_WishListNotFound()
     {
         var listRepository = new WishListRepository(_mongoClient, _databaseName);
         var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
@@ -420,13 +416,13 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
         var list = await listRepository.Add("Name", "OwnerId", default);
         var itemId = await itemRepository.Add(list.Id, "https://example.com", default);
 
-        var result = await itemRepository.SetPurchaser(ObjectId.GenerateNewId(), itemId.Value, shareId, default);
+        var result = await itemRepository.UpdatePurchaser(ObjectId.GenerateNewId(), itemId.Value, shareId, default);
 
         Assert.Null(result);
     }
 
     [Fact]
-    public async Task SetPurchaser_ItemNotFound()
+    public async Task UpdatePurchaser_ItemNotFound()
     {
         var listRepository = new WishListRepository(_mongoClient, _databaseName);
         var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
@@ -436,7 +432,7 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
         var list = await listRepository.Add("Name", "OwnerId", default);
         await itemRepository.Add(list.Id, "https://example.com", default);
 
-        var result = await itemRepository.SetPurchaser(list.Id, ObjectId.GenerateNewId(), shareId, default);
+        var result = await itemRepository.UpdatePurchaser(list.Id, ObjectId.GenerateNewId(), shareId, default);
 
         Assert.Null(result);
     }
@@ -454,9 +450,9 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
         var itemId2 = await itemRepository.Add(list1.Id, "https://example2.com", default);
         var itemId3 = await itemRepository.Add(list2.Id, "https://example3.com", default);
 
-        await itemRepository.SetPurchaser(list1.Id, itemId1.Value, ObjectId.GenerateNewId(), default);
-        await itemRepository.SetPurchaser(list1.Id, itemId2.Value, ObjectId.GenerateNewId(), default);
-        await itemRepository.SetPurchaser(list2.Id, itemId3.Value, ObjectId.GenerateNewId(), default);
+        await itemRepository.UpdatePurchaser(list1.Id, itemId1.Value, ObjectId.GenerateNewId(), default);
+        await itemRepository.UpdatePurchaser(list1.Id, itemId2.Value, ObjectId.GenerateNewId(), default);
+        await itemRepository.UpdatePurchaser(list2.Id, itemId3.Value, ObjectId.GenerateNewId(), default);
 
         var newItemId1 = await itemRepository.MoveToWishList(list1.Id, itemId1.Value, list2.Id, default);
 

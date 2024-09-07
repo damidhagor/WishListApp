@@ -9,7 +9,6 @@ public sealed record WishListItem(
     string? Description,
     decimal? Price,
     string? Currency,
-    int Quantity,
     string Note,
     int Priority,
     ObjectId? Purchaser);

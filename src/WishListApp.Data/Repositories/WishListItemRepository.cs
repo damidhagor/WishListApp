@@ -8,7 +8,7 @@ public sealed class WishListItemRepository(IMongoClient mongoClient, string? dat
 
     public async Task<ObjectId?> Add(ObjectId listId, string url, CancellationToken cancellationToken)
     {
-        var item = new WishListItem(ObjectId.GenerateNewId(), url, null, null, null, null, null, null, 1, "", 0, null);
+        var item = new WishListItem(ObjectId.GenerateNewId(), url, null, null, null, null, null, null, "", 0, null);
 
         var list = await _collection.FindOneAndUpdateAsync(
             w => w.Id == listId,
@@ -35,33 +35,6 @@ public sealed class WishListItemRepository(IMongoClient mongoClient, string? dat
             Builders<WishList>.Update.PullFilter(w => w.Items, i => i.Purchaser != null),
             new() { ReturnDocument = ReturnDocument.After },
             cancellationToken);
-
-        //return await _collection.FindOneAndUpdateAsync(
-        //    w => w.Id == listId,
-        //    new EmptyPipelineDefinition<WishList>()
-        //        .AppendStage<WishList, WishList, WishList>(
-        //        $$"""
-        //        {
-        //          $set: {
-        //            "{{nameof(WishList.Items)}}": {
-        //              $filter: {
-        //                input: "${{nameof(WishList.Items)}}",
-        //                as: "item",
-        //                cond: {
-        //                  $ne: [
-        //                    {
-        //                      $sum: "$$item.{{nameof(WishListItem.Purchases)}}.{{nameof(WishListItemPurchase.Quantity)}}"
-        //                    },
-        //                    "$$item.{{nameof(WishListItem.Quantity)}}"
-        //                  ]
-        //                }
-        //              }
-        //            }
-        //          }
-        //        }
-        //        """),
-        //    new() { ReturnDocument = ReturnDocument.After },
-        //    cancellationToken);
     }
 
     public async Task<WishList?> Update(ObjectId listId, WishListItem item, CancellationToken cancellationToken)
@@ -75,7 +48,6 @@ public sealed class WishListItemRepository(IMongoClient mongoClient, string? dat
                 .Set(w => w.Items.FirstMatchingElement().Description, item.Description)
                 .Set(w => w.Items.FirstMatchingElement().Price, item.Price)
                 .Set(w => w.Items.FirstMatchingElement().Currency, item.Currency)
-                .Set(w => w.Items.FirstMatchingElement().Quantity, item.Quantity)
                 .Set(w => w.Items.FirstMatchingElement().Note, item.Note)
                 .Set(w => w.Items.FirstMatchingElement().Priority, item.Priority)
                 .Set(w => w.Items.FirstMatchingElement().Purchaser, item.Purchaser),
@@ -92,7 +64,7 @@ public sealed class WishListItemRepository(IMongoClient mongoClient, string? dat
             cancellationToken);
     }
 
-    public async Task<WishList?> SetPurchaser(ObjectId listId, ObjectId itemId, ObjectId? purchaserId, CancellationToken cancellationToken)
+    public async Task<WishList?> UpdatePurchaser(ObjectId listId, ObjectId itemId, ObjectId? purchaserId, CancellationToken cancellationToken)
     {
         return await _collection.FindOneAndUpdateAsync(
             w => w.Id == listId && w.Items.Any(i => i.Id == itemId),
