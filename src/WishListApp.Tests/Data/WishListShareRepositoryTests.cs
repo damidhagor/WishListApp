@@ -9,7 +9,7 @@ namespace WishListApp.Tests.Data;
 public sealed class WishListShareRepositoryTests(MongoDbFixture mongoDbFixture)
 {
     private readonly IMongoClient _mongoClient = mongoDbFixture.GetMongoClient();
-    private string _databaseName = Guid.NewGuid().ToString();
+    private readonly string _databaseName = Guid.NewGuid().ToString();
 
     [Fact]
     public async Task Add_New()

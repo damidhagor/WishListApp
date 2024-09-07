@@ -12,4 +12,4 @@ public sealed record WishListItem(
     int Quantity,
     string Note,
     int Priority,
-    WishListItemPurchase[] Purchases);
+    ObjectId? Purchaser);

@@ -12,9 +12,7 @@ public interface IWishListItemRepository
 
     Task<WishList?> UpdatePriority(ObjectId wishListId, ObjectId itemId, int priority, CancellationToken cancellationToken);
 
-    Task<WishList?> UpdatePurchaseQuantity(ObjectId wishListId, ObjectId itemId, ObjectId shareId, int quantity, CancellationToken cancellationToken);
-
-    Task<WishList?> ResetPurchases(ObjectId wishListId, ObjectId itemId, CancellationToken cancellationToken);
+    Task<WishList?> SetPurchaser(ObjectId wishListId, ObjectId itemId, ObjectId? purchaserId, CancellationToken cancellationToken);
 
     Task<ObjectId?> MoveToWishList(ObjectId wishListId, ObjectId itemId, ObjectId newWishListId, CancellationToken cancellationToken);
 }
