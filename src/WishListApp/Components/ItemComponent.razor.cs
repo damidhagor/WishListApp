@@ -16,12 +16,6 @@ public partial class ItemComponent(
     [CascadingParameter]
     public WishListViewModel ViewModel { get; set; } = default!;
 
-    private bool _canBePurchased => Item.CanBePurchasedByShare(ViewModel.LoggedInShare?.Id);
-
-    private bool _purchasedByOtherShare => Item.Purchases.Length > 0;
-
-    private int _purchasedByLoggedInShare => Item.GetPurchasedQuantityByShare(ViewModel.LoggedInShare?.Id);
-
     private ItemEditModalComponent _itemEditModal = default!;
 
     private WishListSelectionModalComponent _wishListSelectionModal = default!;
@@ -36,9 +30,7 @@ public partial class ItemComponent(
 
     private async Task MarkItemAsPurchased() => await ViewModel.MarkWishListItemAsPurchased(Item, default);
 
-    private async Task RevertPurchase() => await ViewModel.RevertWishListItemPurchase(Item, default);
-
-    private async Task ResetItemPurchases() => await ViewModel.ResetWishListItemPurchases(Item, default);
+    private async Task ResetItemPurchase() => await ViewModel.ResetWishListItemPurchase(Item, default);
 
     private async Task SetItemPriority(int priority) => await ViewModel.SetWishListItemPriority(Item, priority, default);
 

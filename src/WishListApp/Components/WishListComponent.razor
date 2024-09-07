@@ -15,7 +15,7 @@
 else
 {
     <div class="d-flex align-items-center">
-        <h1>
+        <div class="fs-1 my-auto">
             @if (ViewModel.ViewedByOwner)
             {
                 <TextEditToggleComponent Value="@ViewModel.WishList.Name" OnValueAccepted="RenameWishList">
@@ -26,22 +26,24 @@ else
             {
                 @ViewModel.WishList.Name
             }
-        </h1>
+        </div>
 
         <div class="d-flex flex-row ms-auto">
             @if (ViewModel.LoggedInShare is not null)
             {
-                <h2>Hallo @ViewModel.LoggedInShare.Name</h2>
+                <div class="fs-2 me-4">
+                    @_localizer["WishList_ShareGreeting"] @ViewModel.LoggedInShare.Name
+                </div>
             }
 
             @if (ViewModel.ViewedByOwner)
             {
-                <button type="button" class="btn btn-outline-primary" @onclick="AddNewWishListItem">
+                <button type="button" class="btn btn-outline-primary my-auto" @onclick="AddNewWishListItem">
                     <i class="bi bi-plus-lg" /> @_localizer["Add"]
                 </button>
             }
 
-            <div class="dropdown ms-2">
+            <div class="dropdown ms-2 my-auto">
                 <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                     <i class="bi bi-sliders" />
                 </button>
@@ -78,7 +80,7 @@ else
         </div>
     </div>
 
-    <div class="border border-secondary"></div>
+    <div class="border border-secondary mt-2 mb-4"></div>
 
     @if (ViewModel.WishList.Items.Length == 0)
     {

@@ -2,42 +2,70 @@
 
 @if (Item is not null)
 {
-    <div class="d-flex rounded-2 border border-secondary border-1" style="height: 200px;">
-        <div class="d-flex flex-column w-25 overflow-hidden border-secondary border-end">
-            <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-center">
-                <img src="@Item.ImageUrl" class="h-100 w-auto">
+    <div class="item-grid rounded-2 overflow-hidden border border-secondary border-1">
+
+        <div class="item-grid-image border-end border-secondary border-1">
+
+            <div class="item-grid-image-image d-flex overflow-hidden">
+                <img class="w-100 object-fit-cover" src="@Item.ImageUrl">
+            </div>
+
+            <div class="item-grid-image-badge ms-auto mt-auto mb-1 rounded-start w-75 bg-dark">
+                @if (!ViewModel.HidePurchaseDetails)
+                {
+                    @if (Item.IsPurchasedByShare(ViewModel.LoggedInShare?.Id))
+                    {
+                        <div class="d-flex flex-row">
+                            <div class="d-flex rounded-start-2 px-2 bg-success">
+                                <div class="my-auto">
+                                    <i class="bi bi-bag-fill" />
+                                </div>
+                            </div>
+
+                            <div class="flex-grow-1 bg-warning-subtle">
+                                <button type="button" class="btn btn-outline-warning w-100 border-start-0 border-end-0 rounded-0" @onclick="ResetItemPurchase">
+                                    @_localizer["Item_ResetPurchase"]
+                                </button>
+                            </div>
+                        </div>
+                    }
+                    else if (Item.IsPurchasedByOtherShare(ViewModel.LoggedInShare?.Id))
+                    {
+                        <div class="rounded-start-2 p-2 bg-success">
+                            <i class="bi bi-bag-fill" />
+                            @_localizer["Item_Purchased"]
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="flex-grow-1 bg-success-subtle rounded-start-2">
+                            <button type="button"
+                                    class="btn btn-outline-success w-100 border-end-0 rounded-start-2 rounded-0" @onclick="MarkItemAsPurchased">
+                                <i class="bi bi-bag" /> @_localizer["Item_MarkAsPurchased"]
+                            </button>
+                        </div>
+                    }
+                }
             </div>
         </div>
 
-        <div class="d-flex flex-column w-75">
-            <div class="d-flex flex-row ps-2 pt-2 pe-2 gap-2 border-bottom border-secondary align-items-baseline">
-                <h5 class="">
+        <div class="item-grid-header d-flex flex-column p-1">
+
+            <div class="d-flex flex-row overflow-y-hidden">
+
+                <div class="fs-5">
                     <a href="@Item.Url" target="_blank">@Item.NameOrUrl</a>
-                    @(string.IsNullOrWhiteSpace(Item.SiteName) ? "" : $"({Item.SiteName})")
-                </h5>
-
-                @if (Item.Quantity > 1)
-                {
-                    <div class="align-self-baseline ms-auto">
-                        @Item.Quantity Stk.
-                    </div>
-                }
-
-                @if (Item.Price > 0)
-                {
-                    <div class="align-self-baseline">
-                        @Item.Price @Item.Currency
-                    </div>
-                }
+                    <span class="text-nowrap">@(string.IsNullOrWhiteSpace(Item.SiteName) ? "" : $"({Item.SiteName})")</span>
+                </div>
 
                 @if (ViewModel.ViewedByOwner)
                 {
                     <div class="dropdown ms-auto">
-                        <div class="" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                        <div type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-three-dots-vertical" />
                         </div>
 
-                        <div class="dropdown-menu bg-dark-subtle">
+                        <div class="dropdown-menu bg-dark">
                             <div class="d-flex flex-column align-items-stretch px-2 gap-2">
                                 <button type="button" class="btn btn-outline-light" @onclick="EditWishListItem">
                                     <i class="bi bi-pen" /> @_localizer["Item_Edit"]
@@ -47,9 +75,9 @@
                                     <i class="bi bi-arrow-left-right" /> @_localizer["Item_Move"]
                                 </button>
 
-                                @if (!ViewModel.HidePurchaseDetails && _purchasedByOtherShare)
+                                @if (!ViewModel.HidePurchaseDetails)
                                 {
-                                    <button type="button" class="btn btn-outline-warning" @onclick="ResetItemPurchases">
+                                    <button type="button" class="btn btn-outline-warning" @onclick="ResetItemPurchase">
                                         <i class="bi bi-bag" /> @_localizer["Item_ResetPurchaseStatus"]
                                     </button>
                                 }
@@ -61,52 +89,31 @@
                         </div>
                     </div>
                 }
+
             </div>
 
-            <div class="d-flex flex-row flex-grow-1 overflow-y-auto ms-2 mt-2 mb-2">
-                @Item.Description
-            </div>
+            <div class="d-flex flex-row mt-1">
 
-            <div class="d-flex flex-row gap-2 justify-content-end align-content-baseline border-top border-secondary p-2">
-                <PriorityComponent Class="me-auto"
+                <PriorityComponent Class=""
                                    @bind-Priority:get="Item.Priority"
                                    @bind-Priority:set="SetItemPriority"
                                    IsReadonly="!ViewModel.ViewedByOwner" />
 
-                @if (!ViewModel.HidePurchaseDetails)
-                {
-                    @if (_canBePurchased)
-                    {
-                        <button type="button" class="btn btn-outline-primary" @onclick="MarkItemAsPurchased">
-                            <i class="bi bi-bag" /> @_localizer["Item_MarkAsPurchased"]
-                        </button>
-                    }
+                <div class="ms-auto">
 
-                    if (_purchasedByLoggedInShare > 0)
+                    @if (Item.Price > 0)
                     {
-                        <button type="button" class="btn btn-outline-warning" @onclick="RevertPurchase">
-                            <i class="bi bi-bag" /> @_localizer["Item_RevertPurchase"]
-                        </button>
-
-                        <div class="d-flex rounded-2 p-2 text-bg-success">
-                            <span class="text-white align-self-center"
-                                  title="@(Item.Quantity > 1 ? $"{_purchasedByLoggedInShare}" : "") @_localizer["Item_PurchasedByYou"]">
-                                <i class="bi bi-bag-fill" />
-                            </span>
+                        <div class="text-nowrap align-self-baseline">
+                            @Item.Price @Item.Currency
                         </div>
                     }
 
-                    else if (_purchasedByOtherShare)
-                    {
-                        <div class="d-flex rounded-2 p-2 text-bg-success">
-                            <span class="text-white align-self-center"
-                                  title="@(Item.Quantity > 1 ? $"{Item.PurchasedQuantity}" : "") @_localizer["Item_Purchased"]">
-                                <i class="bi bi-bag-fill" />
-                            </span>
-                        </div>
-                    }
-                }
+                </div>
             </div>
+        </div>
+
+        <div class="item-grid-description p-1 overflow-y-auto border-top border-secondary border-1">
+            @Item.Description
         </div>
 
         <ItemEditModalComponent @ref="_itemEditModal" />

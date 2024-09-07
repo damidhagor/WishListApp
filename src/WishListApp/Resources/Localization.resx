@@ -255,17 +255,11 @@
   <data name="Item_Move" xml:space="preserve">
     <value>Move</value>
   </data>
-  <data name="Item_ResetPurchaseStatus" xml:space="preserve">
-    <value>Reset purchase status</value>
-  </data>
   <data name="Item_MarkAsPurchased" xml:space="preserve">
-    <value>Mark as purchased</value>
+    <value>Purchase</value>
   </data>
-  <data name="Item_RevertPurchase" xml:space="preserve">
-    <value>Revert purchase</value>
-  </data>
-  <data name="Item_PurchasedByYou" xml:space="preserve">
-    <value>Purchased by you</value>
+  <data name="Item_ResetPurchase" xml:space="preserve">
+    <value>Return</value>
   </data>
   <data name="Item_Purchased" xml:space="preserve">
     <value>Purchased</value>
@@ -323,5 +317,8 @@
   </data>
   <data name="IdentityHeader_EditProfile" xml:space="preserve">
     <value>Edit profile</value>
+  </data>
+  <data name="WishList_ShareGreeting" xml:space="preserve">
+    <value>Hello</value>
   </data>
 </root>
