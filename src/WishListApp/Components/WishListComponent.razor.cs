@@ -61,7 +61,7 @@ public partial class WishListComponent(
         }
 
         var filteredItems = ViewModel.HidePurchasedItems
-            ? ViewModel.WishList.Items.Where(i => !i.IsPurchased)
+            ? ViewModel.WishList.Items.Where(i => !i.IsPurchasedByOtherShare(ViewModel.LoggedInShare?.Id))
             : ViewModel.WishList.Items;
 
         filteredItems = ViewModel.HidePurchaseDetails

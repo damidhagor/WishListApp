@@ -10,43 +10,12 @@
                 <img class="w-100 object-fit-cover" src="@Item.ImageUrl">
             </div>
 
-            <div class="item-grid-image-badge ms-auto mt-auto mb-1 rounded-start w-75 bg-dark">
-                @if (!ViewModel.HidePurchaseDetails)
-                {
-                    @if (Item.IsPurchasedByShare(ViewModel.LoggedInShare?.Id))
-                    {
-                        <div class="d-flex flex-row">
-                            <div class="d-flex rounded-start-2 px-2 bg-success">
-                                <div class="my-auto">
-                                    <i class="bi bi-bag-fill" />
-                                </div>
-                            </div>
-
-                            <div class="flex-grow-1 bg-warning-subtle">
-                                <button type="button" class="btn btn-outline-warning w-100 border-start-0 border-end-0 rounded-0" @onclick="ResetItemPurchase">
-                                    @_localizer["Item_ResetPurchase"]
-                                </button>
-                            </div>
-                        </div>
-                    }
-                    else if (Item.IsPurchasedByOtherShare(ViewModel.LoggedInShare?.Id))
-                    {
-                        <div class="rounded-start-2 p-2 bg-success">
-                            <i class="bi bi-bag-fill" />
-                            @_localizer["Item_Purchased"]
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="flex-grow-1 bg-success-subtle rounded-start-2">
-                            <button type="button"
-                                    class="btn btn-outline-success w-100 border-end-0 rounded-start-2 rounded-0" @onclick="MarkItemAsPurchased">
-                                <i class="bi bi-bag" /> @_localizer["Item_MarkAsPurchased"]
-                            </button>
-                        </div>
-                    }
-                }
-            </div>
+            @if (!ViewModel.HidePurchaseDetails)
+            {
+                <div class="item-grid-image-badge mt-auto mb-0 bg-dark">
+                    <PurchaseButtonComponent />
+                </div>
+            }
         </div>
 
         <div class="item-grid-header d-flex flex-column p-1">
@@ -61,8 +30,11 @@
                 @if (ViewModel.ViewedByOwner)
                 {
                     <div class="dropdown ms-auto">
-                        <div type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-three-dots-vertical" />
+                        <div type="button"
+                             data-bs-toggle="dropdown"
+                             data-bs-popper-config='{"strategy":"fixed"}'
+                             aria-expanded="false">
+                            <i class="bi bi-three-dots-vertical fs-5" />
                         </div>
 
                         <div class="dropdown-menu bg-dark">
@@ -78,7 +50,7 @@
                                 @if (!ViewModel.HidePurchaseDetails)
                                 {
                                     <button type="button" class="btn btn-outline-warning" @onclick="ResetItemPurchase">
-                                        <i class="bi bi-bag" /> @_localizer["Item_ResetPurchaseStatus"]
+                                        <i class="bi bi-bag" /> @_localizer["Item_ResetPurchase"]
                                     </button>
                                 }
 
@@ -89,26 +61,21 @@
                         </div>
                     </div>
                 }
-
             </div>
 
-            <div class="d-flex flex-row mt-1">
+            <div class="d-flex flex-row mt-auto">
 
                 <PriorityComponent Class=""
                                    @bind-Priority:get="Item.Priority"
                                    @bind-Priority:set="SetItemPriority"
                                    IsReadonly="!ViewModel.ViewedByOwner" />
 
-                <div class="ms-auto">
-
-                    @if (Item.Price > 0)
-                    {
-                        <div class="text-nowrap align-self-baseline">
-                            @Item.Price @Item.Currency
-                        </div>
-                    }
-
-                </div>
+                @if (Item.Price > 0)
+                {
+                    <div class="ms-auto text-nowrap align-self-baseline">
+                        @Item.Price @Item.Currency
+                    </div>
+                }
             </div>
         </div>
 

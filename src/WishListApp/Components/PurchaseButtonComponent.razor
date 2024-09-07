@@ -1,0 +1,34 @@
+﻿<div class="d-flex flex-row @_backgroundClass @_hiddenClass">
+
+    @if (Item.IsPurchasedByShare(ViewModel.LoggedInShare?.Id))
+    {
+        <div class="btn btn-success disabled rounded-0">
+            <i class="bi bi-bag-fill" />
+        </div>
+    }
+
+    <button class="btn @_buttonClass flex-grow-1 border-0 rounded-0"
+            style="outline: none; box-shadow: none;"
+            @onclick="ChangePurchase">
+        @if (!Item.IsPurchased)
+        {
+            <div>
+                <i class="bi bi-bag" />
+                @_localizer["Item_MarkAsPurchased"]
+            </div>
+        }
+        else if (Item.IsPurchasedByOtherShare(ViewModel.LoggedInShare?.Id))
+        {
+            <div>
+                <i class="bi bi-bag-fill" />
+                @_localizer["Item_Purchased"]
+            </div>
+        }
+        else if (Item.IsPurchasedByShare(ViewModel.LoggedInShare?.Id))
+        {
+            <div>
+                @_localizer["Item_ResetPurchase"]
+            </div>
+        }
+    </button>
+</div>

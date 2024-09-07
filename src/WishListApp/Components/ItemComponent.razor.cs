@@ -28,8 +28,6 @@ public partial class ItemComponent(
 
     private async Task OpenWishListSelectionModal() => await _wishListSelectionModal.Open(Item);
 
-    private async Task MarkItemAsPurchased() => await ViewModel.MarkWishListItemAsPurchased(Item, default);
-
     private async Task ResetItemPurchase() => await ViewModel.ResetWishListItemPurchase(Item, default);
 
     private async Task SetItemPriority(int priority) => await ViewModel.SetWishListItemPriority(Item, priority, default);
