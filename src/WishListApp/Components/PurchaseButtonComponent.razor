@@ -14,20 +14,20 @@
         {
             <div>
                 <i class="bi bi-bag" />
-                @_localizer["Item_MarkAsPurchased"]
+                @_localizer.Item_MarkAsPurchased
             </div>
         }
         else if (Item.IsPurchasedByOtherShare(ViewModel.LoggedInShare?.Id))
         {
             <div>
                 <i class="bi bi-bag-fill" />
-                @_localizer["Item_Purchased"]
+                @_localizer.Item_Purchased
             </div>
         }
         else if (Item.IsPurchasedByShare(ViewModel.LoggedInShare?.Id))
         {
             <div>
-                @_localizer["Item_ResetPurchase"]
+                @_localizer.Item_ResetPurchase
             </div>
         }
     </button>

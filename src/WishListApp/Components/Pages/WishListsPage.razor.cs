@@ -7,13 +7,13 @@ namespace WishListApp.Components.Pages;
 
 public partial class WishListsPage(
     NavigationManager navigationManager,
-    IStringLocalizer<Localization> localizer,
+    ILocalizationService_Localization localizer,
     IUserService userService,
     IWishListRepository wishListRepository,
     IWishListShareRepository shareRepository)
 {
     private readonly NavigationManager _navigationManager = navigationManager;
-    private readonly IStringLocalizer<Localization> _localizer = localizer;
+    private readonly ILocalizationService_Localization _localizer = localizer;
     private readonly IUserService _userService = userService;
     private readonly IWishListRepository _wishListRepository = wishListRepository;
     private readonly IWishListShareRepository _shareRepository = shareRepository;
@@ -58,8 +58,8 @@ public partial class WishListsPage(
     private async Task CreateNewWishList()
     {
         await _inputModal.Open(
-            title: _localizer["WishListsPage_Add_Title"],
-            placeholderText: _localizer["WishListsPage_Add_Placeholder"],
+            title: _localizer.WishListsPage_Add_Title,
+            placeholderText: _localizer.WishListsPage_Add_Placeholder,
             inputCallback: async (name) =>
             {
                 if (string.IsNullOrWhiteSpace(name)
@@ -76,7 +76,7 @@ public partial class WishListsPage(
     private async Task RenameWishList(WishList list)
     {
         await _inputModal.Open(
-            title: "Rename wish list",
+            title: _localizer.WishListsPage_Rename_Title,
             initialText: list.Name,
             inputCanBeEmpty: false,
             inputCallback: async (name) =>
@@ -95,7 +95,7 @@ public partial class WishListsPage(
     private async Task DeleteWishList(ObjectId wishListId)
     {
         await _confirmationModal.Open(
-            message: _localizer["WishListsPage_Delete_Message"],
+            message: _localizer.WishListsPage_Delete_Message,
             confirmationCallback: async (confirmed) =>
             {
                 if (confirmed)

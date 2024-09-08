@@ -2,9 +2,9 @@ using Microsoft.AspNetCore.Components;
 
 namespace WishListApp.Components.Controls;
 
-public partial class DropdownComponent<T>(IStringLocalizer<Localization> localizer)
+public partial class DropdownComponent<T>(ILocalizationService_Localization localizer)
 {
-    private readonly IStringLocalizer<Localization> _localizer = localizer;
+    private readonly ILocalizationService_Localization _localizer = localizer;
 
     [Parameter, EditorRequired]
     public IReadOnlyList<T> Items { get; set; } = [];

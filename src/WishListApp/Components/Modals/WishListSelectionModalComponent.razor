@@ -1,9 +1,9 @@
 ﻿@inherits ComponentBase
 
-<ModalComponent @ref="_modal" Title="@_localizer["WishListSelectionModal_Title"]" Size="ModalComponent.ModalSize.Large">
+<ModalComponent @ref="_modal" Title="@_localizer.WishListSelectionModal_Title" Size="ModalComponent.ModalSize.Large">
     <Body>
         <div class="d-flex align-items-center">
-            <h5 class="me-4 mt-0 mb-0">@_localizer["WishListSelectionModal_Label"]</h5>
+            <h5 class="me-4 mt-0 mb-0">@_localizer.WishListSelectionModal_Label</h5>
             <DropdownComponent T="WishListApp.Models.WishList"
                                Items="@_lists"
                                @bind-SelectedItem="_selectedList">
@@ -20,11 +20,11 @@
     <Footer>
         <button type="button" class="btn btn-primary" @onclick="MoveItemToWishList">
             <i class="bi bi-arrow-left-right" />
-            @_localizer["WishListSelectionModal_Move"]
+            @_localizer.WishListSelectionModal_Move
         </button>
 
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-            @_localizer["WishListSelectionModal_Cancel"]
+            @_localizer.WishListSelectionModal_Cancel
         </button>
     </Footer>
 </ModalComponent>

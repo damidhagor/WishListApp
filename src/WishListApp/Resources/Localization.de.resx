@@ -259,7 +259,7 @@
     <value>Kaufen</value>
   </data>
   <data name="Item_ResetPurchase" xml:space="preserve">
-    <value>Freigeben</value>
+    <value>Zurückgeben</value>
   </data>
   <data name="Item_Purchased" xml:space="preserve">
     <value>Gekauft</value>
@@ -320,5 +320,23 @@
   </data>
   <data name="WishList_ShareGreeting" xml:space="preserve">
     <value>Hi</value>
+  </data>
+  <data name="WishListsPage_Rename" xml:space="preserve">
+    <value>Umbenennen</value>
+  </data>
+  <data name="WishListsPage_Rename_Title" xml:space="preserve">
+    <value>Wunschliste umbenennen</value>
+  </data>
+  <data name="WishList_Settings_Rename" xml:space="preserve">
+    <value>Umbenennen</value>
+  </data>
+  <data name="WishList_Settings_Rename_Title" xml:space="preserve">
+    <value>Wunschliste umbenennen</value>
+  </data>
+  <data name="ShareComponent_AccessKey" xml:space="preserve">
+    <value>Zugangscode</value>
+  </data>
+  <data name="ShareComponent_CopyLink" xml:space="preserve">
+    <value>Link kopieren</value>
   </data>
 </root>

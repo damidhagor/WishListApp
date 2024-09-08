@@ -11,17 +11,17 @@
 
                 <div class="dropdown-menu bg-dark">
                     <div class="d-flex flex-column align-items-stretch px-2 gap-2">
-                        <div>
+                        <div class="d-flex flex-row">
                             <i class="bi bi-pen me-2" />
-                            <a class="text-body" href="account/profile">
-                                @_localizer["IdentityHeader_EditProfile"]
+                            <a class="text-body text-nowrap" href="account/profile">
+                                @_localizer.IdentityHeader_EditProfile
                             </a>
                         </div>
 
-                        <div>
+                        <div class="d-flex flex-row">
                             <i class="bi bi-box-arrow-left me-2" />
                             <a class="text-body" href="" onclick="@(() => _accountService.Logout())">
-                                @_localizer["IdentityHeader_Logout"]
+                                @_localizer.IdentityHeader_Logout
                             </a>
                         </div>
                     </div>
@@ -30,7 +30,7 @@
         </Authorized>
         <NotAuthorized>
             <button type="button" class="btn btn-outline-light" onclick="@(() => _accountService.Login())">
-                <i class="bi bi-box-arrow-in-right navbar-icon"></i> @_localizer["IdentityHeader_Login"]
+                <i class="bi bi-box-arrow-in-right navbar-icon"></i> @_localizer.IdentityHeader_Login
             </button>
         </NotAuthorized>
     </AuthorizeView>

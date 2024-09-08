@@ -2,9 +2,9 @@ using Microsoft.AspNetCore.Components;
 
 namespace WishListApp.Components;
 
-public partial class PurchaseButtonComponent(IStringLocalizer<Localization> localizer)
+public partial class PurchaseButtonComponent(ILocalizationService_Localization localizer)
 {
-    private readonly IStringLocalizer<Localization> _localizer = localizer;
+    private readonly ILocalizationService_Localization _localizer = localizer;
 
     [CascadingParameter]
     public WishListItem Item { get; set; } = default!;

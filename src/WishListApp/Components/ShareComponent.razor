@@ -5,18 +5,18 @@
         <h4>@Share.Name</h4>
 
         <div class="d-flex flex-row flex-wrap fs-6 gap-2">
-            Access Key:
+            @_localizer.ShareComponent_AccessKey:
             <a href="@Url" class="">@Share.AccessKey</a>
         </div>
     </div>
 
     <div class="d-flex flex-column flex-shrink-0 ms-auto gap-2">
         <button type="button" class="btn btn-outline-light" @onclick="CopyShareUrlToClipboard">
-            <i class="bi bi-copy" /> Copy Link
+            <i class="bi bi-copy" /> @_localizer.ShareComponent_CopyLink
         </button>
 
         <button type="button" class="btn btn-outline-danger" @onclick="DeleteShare">
-            <i class="bi bi-trash3" /> @_localizer["ShareComponent_Delete"]
+            <i class="bi bi-trash3" /> @_localizer.ShareComponent_Delete
         </button>
     </div>
 </div>

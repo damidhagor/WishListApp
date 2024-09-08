@@ -4,9 +4,11 @@ using WishListApp.Identity.Services;
 
 namespace WishListApp.Identity.Components;
 
-public partial class IdentityHeader(IStringLocalizer<Localization> localizer, IIdentityService accountService)
+public partial class IdentityHeader(
+    ILocalizationService_Localization localizer,
+    IIdentityService accountService)
 {
-    private readonly IStringLocalizer<Localization> _localizer = localizer;
+    private readonly ILocalizationService_Localization _localizer = localizer;
     private readonly IIdentityService _accountService = accountService;
 
     [Parameter]

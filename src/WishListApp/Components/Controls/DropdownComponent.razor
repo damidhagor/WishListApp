@@ -2,7 +2,11 @@
 @inherits ComponentBase
 
 <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <button type="button"
+            class="btn btn-secondary dropdown-toggle"
+            data-bs-toggle="dropdown"
+            data-bs-popper-config='{"strategy":"fixed"}'
+            aria-expanded="false">
         @if (SelectedItem is not null)
         {
             @if (ItemTemplate is not null)
@@ -22,7 +26,7 @@
             }
             else
             {
-                <span>@_localizer["DropDown_EmptyText"]</span>
+                <span>@_localizer.DropDown_EmptyText</span>
             }
         }
     </button>

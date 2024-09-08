@@ -2,9 +2,9 @@ using Microsoft.AspNetCore.Components;
 
 namespace WishListApp.Components.Modals;
 
-public partial class ConfirmationModalComponent(IStringLocalizer<Localization> localizer)
+public partial class ConfirmationModalComponent(ILocalizationService_Localization localizer)
 {
-    private readonly IStringLocalizer<Localization> _localizer = localizer;
+    private readonly ILocalizationService_Localization _localizer = localizer;
 
     private ModalComponent _modal = default!;
     private ElementReference _okButton = default!;
@@ -25,8 +25,8 @@ public partial class ConfirmationModalComponent(IStringLocalizer<Localization> l
     {
         _title = title;
         _message = message;
-        _okButtonText = okButtonText ?? _localizer["ConfirmationModal_DefaultOk"];
-        _cancelButtonText = cancelButtonText ?? _localizer["ConfirmationModal_DefaultCancel"];
+        _okButtonText = okButtonText ?? _localizer.ConfirmationModal_DefaultOk;
+        _cancelButtonText = cancelButtonText ?? _localizer.ConfirmationModal_DefaultCancel;
         _confirmationCallback = confirmationCallback;
 
         StateHasChanged();

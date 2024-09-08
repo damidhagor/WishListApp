@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Components;
 namespace WishListApp.Components.Modals;
 
 public partial class WishListSelectionModalComponent(
-    IStringLocalizer<Localization> localizer,
+    ILocalizationService_Localization localizer,
     IWishListRepository wishListRepository)
 {
-    IStringLocalizer<Localization> _localizer = localizer;
+    ILocalizationService_Localization _localizer = localizer;
     IWishListRepository _repository = wishListRepository;
 
     private ModalComponent _modal = default!;

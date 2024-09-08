@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Components;
 namespace WishListApp.Components.Modals;
 
 public partial class SharesModalComponent(
-    IStringLocalizer<Localization> localizer,
+    ILocalizationService_Localization localizer,
     IMessenger messenger,
     IWishListShareRepository shareRepository)
     : IRecipient<WishListShareAdded>,
       IRecipient<WishListShareDeleted>
 {
-    private readonly IStringLocalizer<Localization> _localizer = localizer;
+    private readonly ILocalizationService_Localization _localizer = localizer;
     private readonly IMessenger _messenger = messenger;
     private readonly IWishListShareRepository _shareRepository = shareRepository;
 

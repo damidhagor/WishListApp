@@ -5,39 +5,39 @@
     <div class="d-flex flex-column gap-y-2">
         <h5>
             <a href="@Item.Url" target="_blank">
-                @_localizer["ItemEditComponent_OpenProductPage"]
+                @_localizer.ItemEditComponent_OpenProductPage
                 <i class="bi bi-box-arrow-up-right ms-2" />
             </a>
         </h5>
 
-        <h5 class="mt-4">@_localizer["ItemEditComponent_Name"]</h5>
+        <h5 class="mt-4">@_localizer.ItemEditComponent_Name</h5>
         <input type="text" @bind="_name">
 
-        <h5 class="mt-4">@_localizer["ItemEditComponent_StoreName"]</h5>
+        <h5 class="mt-4">@_localizer.ItemEditComponent_StoreName</h5>
         <input type="text" @bind="_siteName">
 
-        <h5 class="mt-4">@_localizer["ItemEditComponent_Image"]</h5>
+        <h5 class="mt-4">@_localizer.ItemEditComponent_Image</h5>
         <input type="text" @bind="_imageUrl">
 
-        <h5 class="mt-4">@_localizer["ItemEditComponent_Description"]</h5>
+        <h5 class="mt-4">@_localizer.ItemEditComponent_Description</h5>
         <input type="text" @bind="_description">
 
-        <h5 class="mt-4">@_localizer["ItemEditComponent_Note"]</h5>
+        <h5 class="mt-4">@_localizer.ItemEditComponent_Note</h5>
         <input type="text" @bind="_note">
 
         <div class="d-flex flex-row gap-2">
             <div class="d-flex flex-column flex-fill">
-                <h5 class="mt-4">@_localizer["ItemEditComponent_Prize"]</h5>
+                <h5 class="mt-4">@_localizer.ItemEditComponent_Prize</h5>
                 <input type="text" @bind="_price">
             </div>
 
             <div class="d-flex flex-column flex-fill">
-                <h5 class="mt-4">@_localizer["ItemEditComponent_Currency"]</h5>
+                <h5 class="mt-4">@_localizer.ItemEditComponent_Currency</h5>
                 <input type="text" @bind="_currency">
             </div>
         </div>
 
-        <h5 class="mt-4">@_localizer["ItemEditComponent_Priority"]</h5>
+        <h5 class="mt-4">@_localizer.ItemEditComponent_Priority</h5>
         <PriorityComponent IsReadonly="false" @bind-Priority="_priority" />
     </div>
 }

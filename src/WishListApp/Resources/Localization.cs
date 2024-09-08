@@ -1,5 +1,6 @@
-﻿namespace WishListApp.Resources;
+﻿using WishListApp.SourceGeneration.LocalizationServiceGenerator;
 
-public class Localization
-{
-}
+namespace WishListApp.Resources;
+
+[LocalizationService("Localization.resx")]
+public class Localization { }

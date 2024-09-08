@@ -7,6 +7,16 @@
 		<UserSecretsId>3f27ba78-b92b-4585-8ae0-cf6fc01cfa93</UserSecretsId>
 	</PropertyGroup>
 
+	<PropertyGroup>
+		<AdditionalFileItemNames>$(AdditionalFileItemNames);EmbeddedResource</AdditionalFileItemNames>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\WishListApp.SourceGeneration\WishListApp.SourceGeneration.csproj"
+						  ReferenceOutputAssembly="false"
+						  OutputItemType="Analyzer" />
+	</ItemGroup>
+
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Diagnostics" Version="8.2.2" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />

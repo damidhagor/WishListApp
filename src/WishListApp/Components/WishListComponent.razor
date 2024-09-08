@@ -2,13 +2,13 @@
 
 @if (ViewModel?.WishList is null)
 {
-    <h1> @_localizer["WishList_Unknown_Title"] </h1>
+    <h1> @_localizer.WishList_Unknown_Title </h1>
 
     <div class="border border-secondary"></div>
 
     <h3 class="m-2 ms-4">
         <i class="bi bi-exclamation-triangle" />
-        @_localizer["WishList_Unknown_Message"]
+        @_localizer.WishList_Unknown_Message
         <i class="bi bi-exclamation-triangle" />
     </h3>
 }
@@ -23,14 +23,14 @@ else
             @if (ViewModel.LoggedInShare is not null)
             {
                 <div class="fs-2 me-4">
-                    @_localizer["WishList_ShareGreeting"] @ViewModel.LoggedInShare.Name
+                    @_localizer.WishList_ShareGreeting @ViewModel.LoggedInShare.Name
                 </div>
             }
 
             @if (ViewModel.ViewedByOwner)
             {
                 <button type="button" class="btn btn-outline-primary my-auto" @onclick="AddNewWishListItem">
-                    <i class="bi bi-plus-lg" /> @_localizer["Add"]
+                    <i class="bi bi-plus-lg" /> @_localizer.Add
                 </button>
             }
 
@@ -44,7 +44,7 @@ else
                         <div class="d-flex align-items-center form-check form-switch">
                             <input class="form-check-input me-2 mb-1" type="checkbox" @bind="ViewModel.HidePurchasedItems" id="hidePurchasedItemsCheckBox">
                             <label for="hidePurchasedItemsCheckBox">
-                                @_localizer["WishList_Settings_HidePurchasedItems"]
+                                @_localizer.WishList_Settings_HidePurchasedItems
                             </label>
                         </div>
 
@@ -53,20 +53,20 @@ else
                             <div class="d-flex align-items-center form-check form-switch">
                                 <input class="form-check-input me-2 mb-1" type="checkbox" @bind="ViewModel.HidePurchaseDetails" id="hidePurchaseDetailsCheckBox">
                                 <label for="hidePurchaseDetailsCheckBox">
-                                    @_localizer["WishList_Settings_HidePurchaseDetails"]
+                                    @_localizer.WishList_Settings_HidePurchaseDetails
                                 </label>
                             </div>
 
                             <button type="button" class="btn btn-outline-light" @onclick="RenameWishList">
-                                <i class="bi bi-pen fill" /> Rename
+                                <i class="bi bi-pen fill" /> @_localizer.WishList_Settings_Rename
                             </button>
 
                             <button type="button" class="btn btn-outline-light" @onclick="async () => await _shareModal.Open()">
-                                <i class="bi bi-person fill" /> @_localizer["WishList_Settings_Shares"]
+                                <i class="bi bi-person fill" /> @_localizer.WishList_Settings_Shares
                             </button>
 
                             <button type="button" class="btn btn-outline-danger" @onclick="DeletePurchasedWishListItems">
-                                <i class="bi bi-trash" /> @_localizer["WishList_Settings_DeletePurchasedItems"]
+                                <i class="bi bi-trash" /> @_localizer.WishList_Settings_DeletePurchasedItems
                             </button>
                         }
                     </div>
@@ -81,7 +81,7 @@ else
     {
         <h3 class="m-2 ms-4">
             <i class="bi bi-exclamation-circle" />
-            @_localizer["WishList_Empty"]
+            @_localizer.WishList_Empty
             <i class="bi bi-exclamation-circle" />
         </h3>
     }

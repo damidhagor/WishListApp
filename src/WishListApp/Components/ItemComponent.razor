@@ -40,22 +40,22 @@
                         <div class="dropdown-menu bg-dark">
                             <div class="d-flex flex-column align-items-stretch px-2 gap-2">
                                 <button type="button" class="btn btn-outline-light" @onclick="OpenWishListItemEditModal">
-                                    <i class="bi bi-pen" /> @_localizer["Item_Edit"]
+                                    <i class="bi bi-pen" /> @_localizer.Item_Edit
                                 </button>
 
                                 <button type="button" class="btn btn-outline-light" @onclick="OpenWishListSelectionModal">
-                                    <i class="bi bi-arrow-left-right" /> @_localizer["Item_Move"]
+                                    <i class="bi bi-arrow-left-right" /> @_localizer.Item_Move
                                 </button>
 
                                 @if (!ViewModel.HidePurchaseDetails)
                                 {
                                     <button type="button" class="btn btn-outline-warning" @onclick="ResetItemPurchase">
-                                        <i class="bi bi-bag" /> @_localizer["Item_ResetPurchase"]
+                                        <i class="bi bi-bag" /> @_localizer.Item_ResetPurchase
                                     </button>
                                 }
 
                                 <button type="button" class="btn btn-outline-danger" @onclick="DeleteItem">
-                                    <i class="bi bi-trash" /> @_localizer["Item_Delete"]
+                                    <i class="bi bi-trash" /> @_localizer.Item_Delete
                                 </button>
                             </div>
                         </div>

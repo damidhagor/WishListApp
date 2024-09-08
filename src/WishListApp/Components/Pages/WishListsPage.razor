@@ -1,16 +1,16 @@
 ﻿@page "/"
 @attribute [Authorize]
 
-<PageTitle>@_localizer["WishListsPage_Title"]</PageTitle>
+<PageTitle>@_localizer.WishListsPage_Title</PageTitle>
 
 <div class="d-flex flex-column mx-auto" style="max-width: 1000px">
     <div class="d-flex flex-row flex-wrap align-content-center column-gap-2">
-        <div class="fs-1 me-auto">@_localizer["WishListsPage_Title"]</div>
+        <div class="fs-1 me-auto">@_localizer.WishListsPage_Title</div>
 
         @if (_wishLists is not null)
         {
             <button type="button" class="btn btn-outline-primary my-auto" @onclick="CreateNewWishList">
-                <i class="bi bi-plus-lg" /> @_localizer["Add"]
+                <i class="bi bi-plus-lg" /> @_localizer.Add
             </button>
         }
     </div>
@@ -22,9 +22,9 @@
         {
             <div>
                 <div class="spinner-border spinner-border-sm text-primary ms-1" role="status">
-                    <span class="visually-hidden">@_localizer["Loading"] ...</span>
+                    <span class="visually-hidden">@_localizer.Loading ...</span>
                 </div>
-                @_localizer["WishListsPage_LoadingWishLists"] ...
+                @_localizer.WishListsPage_LoadingWishLists ...
             </div>
         }
         else
@@ -46,11 +46,11 @@
 
                         <div class="d-flex flex-column ms-auto gap-2">
                             <button type="button" class="btn btn-outline-light" style="z-index: 100" @onclick="async () => await RenameWishList(wishList)">
-                                <i class="bi bi-pen" /> Rename
+                                <i class="bi bi-pen" /> @_localizer.WishListsPage_Rename
                             </button>
 
                             <button type="button" class="btn btn-outline-danger" style="z-index: 100" @onclick="async () => await DeleteWishList(wishList.Id)">
-                                <i class="bi bi-trash3" /> @_localizer["Delete"]
+                                <i class="bi bi-trash3" /> @_localizer.Delete
                             </button>
                         </div>
 

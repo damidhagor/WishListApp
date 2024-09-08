@@ -4,10 +4,10 @@ using WishListApp.Components.Modals;
 namespace WishListApp.Components;
 
 public partial class ItemComponent(
-    IStringLocalizer<Localization> localizer,
+    ILocalizationService_Localization localizer,
     NavigationManager navigationManager)
 {
-    private readonly IStringLocalizer<Localization> _localizer = localizer;
+    private readonly ILocalizationService_Localization _localizer = localizer;
     private readonly NavigationManager _navigationManager = navigationManager;
 
     [CascadingParameter]
@@ -35,7 +35,7 @@ public partial class ItemComponent(
     private async Task DeleteItem()
     {
         await _confirmationModal.Open(
-            message: _localizer["Item_Delete_Message"],
+            message: _localizer.Item_Delete_Message,
             confirmationCallback: async (confirmed) =>
             {
                 if (confirmed)
