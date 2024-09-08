@@ -73,6 +73,25 @@ public partial class WishListsPage(
             });
     }
 
+    private async Task RenameWishList(WishList list)
+    {
+        await _inputModal.Open(
+            title: "Rename wish list",
+            initialText: list.Name,
+            inputCanBeEmpty: false,
+            inputCallback: async (name) =>
+            {
+                if (string.IsNullOrWhiteSpace(name)
+                    || _user is null)
+                {
+                    return;
+                }
+
+                var wishList = await _wishListRepository.Rename(list.Id, name, default);
+                await LoadWishLists(default);
+            });
+    }
+
     private async Task DeleteWishList(ObjectId wishListId)
     {
         await _confirmationModal.Open(
@@ -85,11 +104,5 @@ public partial class WishListsPage(
                     await LoadWishLists(default);
                 }
             });
-    }
-
-    private async Task RenameWishList(ObjectId wishListId, string name)
-    {
-        await _wishListRepository.Rename(wishListId, name, default);
-        await LoadWishLists(default);
     }
 }

@@ -30,7 +30,14 @@ public partial class WishListComponent(
         _messenger.RegisterAll(this);
     }
 
-    private async Task RenameWishList(string name) => await ViewModel.RenameWishList(name, default);
+    private async Task RenameWishList()
+    {
+        await _inputModal.Open(
+            title: "Rename wish list",
+            initialText: ViewModel.WishList.Name,
+            inputCanBeEmpty: false,
+            inputCallback: async (name) => await ViewModel.RenameWishList(name, default));
+    }
 
     private async Task AddNewWishListItem()
     {
