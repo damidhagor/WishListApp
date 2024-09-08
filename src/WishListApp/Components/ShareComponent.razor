@@ -4,17 +4,21 @@
     <div class="flex-column">
         <h4>@Share.Name</h4>
 
-        <h5>
-            <a href="@Url">@Url</a>
-            <button type="button" class="btn ms-1" @onclick="CopyShareUrlToClipboard">
-                <i class="bi bi-copy" />
-            </button>
-        </h5>
+        <div class="d-flex flex-row flex-wrap fs-6 gap-2">
+            Access Key:
+            <a href="@Url" class="">@Share.AccessKey</a>
+        </div>
     </div>
 
-    <button type="button" class="btn btn-outline-danger ms-auto" @onclick="DeleteShare">
-        <i class="bi bi-trash3" /> @_localizer["ShareComponent_Delete"]
-    </button>
+    <div class="d-flex flex-column flex-shrink-0 ms-auto gap-2">
+        <button type="button" class="btn btn-outline-light" @onclick="CopyShareUrlToClipboard">
+            <i class="bi bi-copy" /> Copy Link
+        </button>
+
+        <button type="button" class="btn btn-outline-danger" @onclick="DeleteShare">
+            <i class="bi bi-trash3" /> @_localizer["ShareComponent_Delete"]
+        </button>
+    </div>
 </div>
 
 <ConfirmationModalComponent @ref="_modal" />

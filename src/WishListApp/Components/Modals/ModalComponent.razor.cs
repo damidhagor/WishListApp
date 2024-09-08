@@ -28,6 +28,9 @@ public partial class ModalComponent(IJSRuntime jsRuntime)
     [Parameter]
     public ModalSize Size { get; set; } = ModalSize.Default;
 
+    [Parameter]
+    public string? ModalDialogClass { get; set; }
+
     private string _sizeClass => GetSizeClass();
 
     public async Task Open()

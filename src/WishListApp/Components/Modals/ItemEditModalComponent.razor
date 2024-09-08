@@ -1,6 +1,8 @@
 ﻿@inherits ComponentBase
 
-<ModalComponent @ref="_modal" Title="@_localizer["ItemEditModal_Title"]" Size="ModalComponent.ModalSize.Large">
+<ModalComponent @ref="_modal" Title="@_localizer["ItemEditModal_Title"]"
+                Size="ModalComponent.ModalSize.Large"
+                ModalDialogClass="modal-fullscreen-md-down">
     <Body>
         <ItemEditComponent @ref="_itemEditComponent" Item="_item" />
     </Body>

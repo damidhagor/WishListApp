@@ -1,6 +1,8 @@
 ﻿@inherits ComponentBase
 
-<ModalComponent @ref="_modal" Title="@_localizer["SharesModal_Title"]" Size="ModalComponent.ModalSize.Large">
+<ModalComponent @ref="_modal" Title="@_localizer["SharesModal_Title"]"
+                Size="ModalComponent.ModalSize.Large"
+                ModalDialogClass="modal-fullscreen-md-down">
     <Body>
         @if (_shares.Count == 0)
         {
@@ -12,7 +14,7 @@
         }
         else
         {
-            <div class="d-flex flex-column gap-2 mt-4 mb-4">
+            <div class="d-flex flex-column gap-2 m-4">
                 @foreach (var share in _shares.OrderBy(s => s.Name))
                 {
                     <CascadingValue Value="share">
