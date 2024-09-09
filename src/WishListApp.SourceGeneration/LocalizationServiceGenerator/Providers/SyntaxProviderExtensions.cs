@@ -14,7 +14,8 @@ internal static class SyntaxProviderExtensions
                 LocalizationServiceAttribute.FullyQualifiedName,
                 static (syntaxNode, cancellationToken) =>
                 {
-                    return syntaxNode is ClassDeclarationSyntax @class;
+                    return syntaxNode is ClassDeclarationSyntax @class
+                        && @class.Modifiers.Any(SyntaxKind.PartialKeyword);
                 },
                 static (syntaxContext, cancellationToken) =>
                 {
