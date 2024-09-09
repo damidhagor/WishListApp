@@ -4,11 +4,9 @@ using WishListApp.ProductCrawling.Services;
 namespace WishListApp.Components;
 
 public partial class ItemEditComponent(
-    ILocalizationService_Localization localizer,
     IProductCrawlerService productCrawlerService,
     IWishListItemRepository itemRepository)
 {
-    private readonly ILocalizationService_Localization _localizer = localizer;
     private readonly IProductCrawlerService _productCrawlerService = productCrawlerService;
     private readonly IWishListItemRepository _itemRepository = itemRepository;
 

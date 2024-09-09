@@ -3,12 +3,9 @@ using WishListApp.Components.Modals;
 
 namespace WishListApp.Components;
 
-public partial class WishListComponent(
-    ILocalizationService_Localization localizer,
-    IMessenger messenger)
+public partial class WishListComponent(IMessenger messenger)
     : IRecipient<WishListUpdated>
 {
-    private readonly ILocalizationService_Localization _localizer = localizer;
     private readonly IMessenger _messenger = messenger;
 
     [CascadingParameter]
@@ -33,7 +30,7 @@ public partial class WishListComponent(
     private async Task RenameWishList()
     {
         await _inputModal.Open(
-            title: _localizer.WishList_Settings_Rename_Title,
+            title: _localization.WishList_Settings_Rename_Title,
             initialText: ViewModel.WishList.Name,
             inputCanBeEmpty: false,
             inputCallback: async (name) => await ViewModel.RenameWishList(name, default));
@@ -42,15 +39,15 @@ public partial class WishListComponent(
     private async Task AddNewWishListItem()
     {
         await _inputModal.Open(
-            title: _localizer.WishList_Add_Title,
-            placeholderText: _localizer.WishList_Add_Placeholder,
+            title: _localization.WishList_Add_Title,
+            placeholderText: _localization.WishList_Add_Placeholder,
             inputCallback: (url) => ViewModel.AddWishListItem(url, default));
     }
 
     private async Task DeletePurchasedWishListItems()
     {
         await _confirmationModal.Open(
-            message: _localizer.WishList_DeletePurchasedItems_Message,
+            message: _localization.WishList_DeletePurchasedItems_Message,
             confirmationCallback: async (confirmed) =>
             {
                 if (confirmed)

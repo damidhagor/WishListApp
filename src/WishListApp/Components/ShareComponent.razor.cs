@@ -5,11 +5,9 @@ using WishListApp.Components.Modals;
 namespace WishListApp.Components;
 
 public partial class ShareComponent(
-    ILocalizationService_Localization localizer,
     IJSRuntime jsRuntime,
     IAccessKeyGenerator accessKeyGenerator)
 {
-    private readonly ILocalizationService_Localization _localizer = localizer;
     private readonly IJSRuntime _jsRuntime = jsRuntime;
     private readonly IAccessKeyGenerator _accessKeyGenerator = accessKeyGenerator;
 
@@ -28,7 +26,7 @@ public partial class ShareComponent(
     private async Task DeleteShare()
     {
         await _modal.Open(
-            message: string.Format(_localizer.ShareComponent_Delete_Message, Share.Name),
+            message: string.Format(_localization.ShareComponent_Delete_Message, Share.Name),
             confirmationCallback: async (confirmed) =>
             {
                 if (confirmed)

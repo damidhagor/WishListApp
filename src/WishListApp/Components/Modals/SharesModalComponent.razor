@@ -1,6 +1,6 @@
 ﻿@inherits ComponentBase
 
-<ModalComponent @ref="_modal" Title="@_localizer.SharesModal_Title"
+<ModalComponent @ref="_modal" Title="@_localization.SharesModal_Title"
                 Size="ModalComponent.ModalSize.Large"
                 ModalDialogClass="modal-fullscreen-md-down">
     <Body>
@@ -8,7 +8,7 @@
         {
             <h3 class="m-2 ms-4">
                 <i class="bi bi-exclamation-circle" />
-                @_localizer.SharesModal_Empty
+                @_localization.SharesModal_Empty
                 <i class="bi bi-exclamation-circle" />
             </h3>
         }
@@ -26,9 +26,9 @@
     </Body>
 
     <Footer>
-        <input type="text" class="flex-grow-1 me-2" placeholder="@_localizer.SharesModal_Add_Placeholder" @bind="@_newShareName" @bind:event="oninput">
+        <input type="text" class="flex-grow-1 me-2" placeholder="@_localization.SharesModal_Add_Placeholder" @bind="@_newShareName" @bind:event="oninput">
         <button type="button" class="btn btn-outline-primary" @onclick="AddNewWishListShare" disabled="@_isNewShareNameEmpty">
-            <i class="bi bi-plus-lg" /> @_localizer.SharesModal_Add
+            <i class="bi bi-plus-lg" /> @_localization.SharesModal_Add
         </button>
     </Footer>
 </ModalComponent>

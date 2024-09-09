@@ -2,10 +2,8 @@ using Microsoft.AspNetCore.Components;
 
 namespace WishListApp.Components.Modals;
 
-public partial class ItemEditModalComponent(ILocalizationService_Localization localizer)
+public partial class ItemEditModalComponent
 {
-    private readonly ILocalizationService_Localization _localizer = localizer;
-
     private ModalComponent _modal = default!;
     private ItemEditComponent _itemEditComponent = default!;
     private WishListItem? _item;

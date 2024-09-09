@@ -12,7 +12,7 @@ builder.Services.AddRazorComponents()
 builder.AddServiceDefaults("wishlist-app");
 
 builder.Services.AddLocalization();
-builder.Services.AddScoped<ILocalizationService_Localization, LocalizationService_Localization>();
+builder.Services.AddScoped<Localization.ILocalizationService, Localization.LocalizationService>();
 
 builder.Services.AddIdentity(builder.Configuration);
 

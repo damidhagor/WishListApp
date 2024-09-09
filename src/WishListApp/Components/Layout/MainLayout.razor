@@ -1,18 +1,17 @@
 ﻿@using Microsoft.AspNetCore.Authentication
 @using WishListApp.Identity.Components
 @inherits LayoutComponentBase
-@inject ILocalizationService_Localization _localizer
 
 <div class="page">
     <main>
         <nav class="navbar sticky-top bg-body-secondary">
             <div class="container-fluid justify-content-start">
-                <span class="navbar-brand">@_localizer.AppName</span>
+                <span class="navbar-brand">@_localization.AppName</span>
 
                 <AuthorizeView>
                     <Authorized>
                         <a class="nav-link align-self-center me-4" href="/">
-                            <i class="bi bi-list navbar-icon"></i> @_localizer.MainLayout_MyWishLists
+                            <i class="bi bi-list navbar-icon"></i> @_localization.MainLayout_MyWishLists
                         </a>
                     </Authorized>
                 </AuthorizeView>
@@ -30,7 +29,7 @@
 </div>
 
 <div id="blazor-error-ui">
-    @_localizer.MainLayout_Error_Message
-    <a href="" class="reload">@_localizer.MainLayout_Error_Reload</a>
-    <a class="dismiss">@_localizer.MainLayout_Error_Dismiss</a>
+    @_localization.MainLayout_Error_Message
+    <a href="" class="reload">@_localization.MainLayout_Error_Reload</a>
+    <a class="dismiss">@_localization.MainLayout_Error_Dismiss</a>
 </div>

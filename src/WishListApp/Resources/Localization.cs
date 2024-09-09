@@ -3,4 +3,4 @@
 namespace WishListApp.Resources;
 
 [LocalizationService("Localization.resx")]
-public class Localization { }
+public partial class Localization { }

@@ -3,10 +3,8 @@ using Microsoft.AspNetCore.Components.Web;
 
 namespace WishListApp.Components.Modals;
 
-public partial class TextInputModalComponent(ILocalizationService_Localization localizer)
+public partial class TextInputModalComponent
 {
-    private readonly ILocalizationService_Localization _localizer = localizer;
-
     private ModalComponent _modal = default!;
     private ElementReference _input = default!;
 
@@ -26,7 +24,7 @@ public partial class TextInputModalComponent(ILocalizationService_Localization l
         bool inputCanBeEmpty = false,
         Func<string, Task>? inputCallback = null)
     {
-        _title = title ?? _localizer.InputModal_DefaultTitle;
+        _title = title ?? _localization.InputModal_DefaultTitle;
         _text = initialText ?? "";
         _placeholderText = placeholderText ?? "";
         _inputCanBeEmpty = inputCanBeEmpty;

@@ -6,7 +6,7 @@
             <input type="text" class="flex-grow-1 me-2" @ref="_input"
                    placeholder="@_placeholderText" @bind="_text" @bind:event="oninput" @onkeydown="OnKeyDown">
             <button type="button" class="btn btn-primary" @onclick="OnOkButtonClicked" disabled="@_isOkButtonDisabled">
-                <i class="bi bi-check-lg" /> @_localizer.OK
+                <i class="bi bi-check-lg" /> @_localization.OK
             </button>
         </div>
     </Body>

@@ -7,7 +7,6 @@ namespace WishListApp.Components.Pages;
 public partial class WishListPage(
     NavigationManager navigationManager,
     IMessenger messenger,
-    ILocalizationService_Localization localizer,
     IUserService userService,
     IWishListRepository wishListRepository,
     IWishListItemRepository itemRepository,
@@ -17,7 +16,6 @@ public partial class WishListPage(
 {
     private readonly NavigationManager _navigationManager = navigationManager;
     private readonly IMessenger _messenger = messenger;
-    private readonly ILocalizationService_Localization _localizer = localizer;
     private readonly IUserService _userService = userService;
     private readonly IWishListRepository _wishListRepository = wishListRepository;
     private readonly IWishListItemRepository _itemRepository = itemRepository;
