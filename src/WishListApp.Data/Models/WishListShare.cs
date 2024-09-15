@@ -4,4 +4,7 @@ public sealed record WishListShare(
     ObjectId Id,
     ObjectId WishListId,
     string Name,
-    string AccessKey);
+    string AccessKey)
+{
+    public uint Version { get; private set; } = 1;
+}
