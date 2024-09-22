@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using WishListApp.ProductCrawling.Helpers;
 using WishListApp.ProductCrawling.Parsers;
 
 namespace WishListApp.Tests.ProductCrawling.Unit;

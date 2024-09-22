@@ -16,7 +16,7 @@ public sealed class MongoDbFixture : IAsyncLifetime
         return new MongoClient(connectionString);
     }
 
-    public async Task InitializeAsync() => await _mongoDbContainer.StartAsync();
+    public async ValueTask InitializeAsync() => await _mongoDbContainer.StartAsync();
 
-    public async Task DisposeAsync() => await _mongoDbContainer.DisposeAsync();
+    public async ValueTask DisposeAsync() => await _mongoDbContainer.DisposeAsync();
 }

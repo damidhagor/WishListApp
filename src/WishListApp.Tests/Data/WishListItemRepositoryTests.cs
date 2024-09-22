@@ -10,6 +10,7 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
 {
     private readonly IMongoClient _mongoClient = mongoDbFixture.GetMongoClient();
     private readonly string _databaseName = Guid.NewGuid().ToString();
+    private readonly CancellationToken _cancellationToken = TestContext.Current.CancellationToken;
 
     [Fact]
     public async Task Add_New()
@@ -19,13 +20,13 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
 
         var url = "https://example.com";
 
-        var list1 = await listRepository.Add("Name1", "OwnerId", default);
-        var list2 = await listRepository.Add("Name2", "OwnerId", default);
+        var list1 = await listRepository.Add("Name1", "OwnerId", _cancellationToken);
+        var list2 = await listRepository.Add("Name2", "OwnerId", _cancellationToken);
 
-        var itemId = await itemRepository.Add(list1.Id, url, default);
+        var itemId = await itemRepository.Add(list1.Id, url, _cancellationToken);
 
-        list1 = await listRepository.GetById(list1.Id, default);
-        list2 = await listRepository.GetById(list2.Id, default);
+        list1 = await listRepository.GetById(list1.Id, _cancellationToken);
+        list2 = await listRepository.GetById(list2.Id, _cancellationToken);
 
         Assert.NotNull(list1);
         Assert.NotNull(list2);
@@ -54,12 +55,12 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
 
         var url = "https://example.com";
 
-        var list = await listRepository.Add("Name", "OwnerId", default);
+        var list = await listRepository.Add("Name", "OwnerId", _cancellationToken);
 
-        var itemId1 = await itemRepository.Add(list.Id, url, default);
-        var itemId2 = await itemRepository.Add(list.Id, url, default);
+        var itemId1 = await itemRepository.Add(list.Id, url, _cancellationToken);
+        var itemId2 = await itemRepository.Add(list.Id, url, _cancellationToken);
 
-        list = await listRepository.GetById(list.Id, default);
+        list = await listRepository.GetById(list.Id, _cancellationToken);
 
         Assert.NotNull(list);
         Assert.Equal(2, list.Items.Length);
@@ -79,9 +80,9 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
 
         var url = "https://example.com";
 
-        var list = await listRepository.Add("Name", "OwnerId", default);
+        var list = await listRepository.Add("Name", "OwnerId", _cancellationToken);
 
-        var itemId = await itemRepository.Add(ObjectId.GenerateNewId(), url, default);
+        var itemId = await itemRepository.Add(ObjectId.GenerateNewId(), url, _cancellationToken);
 
         Assert.Null(itemId);
     }
@@ -92,17 +93,17 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
         var listRepository = new WishListRepository(_mongoClient, _databaseName);
         var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
 
-        var list1 = await listRepository.Add("Name1", "OwnerId", default);
-        var list2 = await listRepository.Add("Name2", "OwnerId", default);
+        var list1 = await listRepository.Add("Name1", "OwnerId", _cancellationToken);
+        var list2 = await listRepository.Add("Name2", "OwnerId", _cancellationToken);
 
-        var itemId1 = await itemRepository.Add(list1.Id, "https://example1.com", default);
-        var itemId2 = await itemRepository.Add(list1.Id, "https://example2.com", default);
-        var itemId3 = await itemRepository.Add(list2.Id, "https://example3.com", default);
+        var itemId1 = await itemRepository.Add(list1.Id, "https://example1.com", _cancellationToken);
+        var itemId2 = await itemRepository.Add(list1.Id, "https://example2.com", _cancellationToken);
+        var itemId3 = await itemRepository.Add(list2.Id, "https://example3.com", _cancellationToken);
 
-        var result = await itemRepository.Delete(list1.Id, itemId2.Value, default);
+        var result = await itemRepository.Delete(list1.Id, itemId2.Value, _cancellationToken);
 
-        list1 = await listRepository.GetById(list1.Id, default);
-        list2 = await listRepository.GetById(list2.Id, default);
+        list1 = await listRepository.GetById(list1.Id, _cancellationToken);
+        list2 = await listRepository.GetById(list2.Id, _cancellationToken);
 
         Assert.NotNull(result);
         Assert.NotNull(list1);
@@ -119,10 +120,10 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
         var listRepository = new WishListRepository(_mongoClient, _databaseName);
         var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
 
-        var list = await listRepository.Add("Name", "OwnerId", default);
-        var itemId = await itemRepository.Add(list.Id, "https://example.com", default);
+        var list = await listRepository.Add("Name", "OwnerId", _cancellationToken);
+        var itemId = await itemRepository.Add(list.Id, "https://example.com", _cancellationToken);
 
-        var result = await itemRepository.Delete(ObjectId.GenerateNewId(), itemId.Value, default);
+        var result = await itemRepository.Delete(ObjectId.GenerateNewId(), itemId.Value, _cancellationToken);
 
         Assert.Null(result);
     }
@@ -133,10 +134,10 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
         var listRepository = new WishListRepository(_mongoClient, _databaseName);
         var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
 
-        var list = await listRepository.Add("Name", "OwnerId", default);
-        var itemId = await itemRepository.Add(list.Id, "https://example.com", default);
+        var list = await listRepository.Add("Name", "OwnerId", _cancellationToken);
+        var itemId = await itemRepository.Add(list.Id, "https://example.com", _cancellationToken);
 
-        var result = await itemRepository.Delete(list.Id, ObjectId.GenerateNewId(), default);
+        var result = await itemRepository.Delete(list.Id, ObjectId.GenerateNewId(), _cancellationToken);
 
         Assert.NotNull(result);
         Assert.Single(result.Items);
@@ -148,22 +149,22 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
         var listRepository = new WishListRepository(_mongoClient, _databaseName);
         var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
 
-        var list1 = await listRepository.Add("Name1", "OwnerId", default);
-        var list2 = await listRepository.Add("Name2", "OwnerId", default);
+        var list1 = await listRepository.Add("Name1", "OwnerId", _cancellationToken);
+        var list2 = await listRepository.Add("Name2", "OwnerId", _cancellationToken);
 
-        var itemId1 = await itemRepository.Add(list1.Id, "https://example1.com", default);
-        var itemId2 = await itemRepository.Add(list1.Id, "https://example2.com", default);
-        var itemId3 = await itemRepository.Add(list1.Id, "https://example3.com", default);
-        var itemId4 = await itemRepository.Add(list2.Id, "https://example4.com", default);
-        var itemId5 = await itemRepository.Add(list2.Id, "https://example5.com", default);
+        var itemId1 = await itemRepository.Add(list1.Id, "https://example1.com", _cancellationToken);
+        var itemId2 = await itemRepository.Add(list1.Id, "https://example2.com", _cancellationToken);
+        var itemId3 = await itemRepository.Add(list1.Id, "https://example3.com", _cancellationToken);
+        var itemId4 = await itemRepository.Add(list2.Id, "https://example4.com", _cancellationToken);
+        var itemId5 = await itemRepository.Add(list2.Id, "https://example5.com", _cancellationToken);
 
-        await itemRepository.UpdatePurchaser(list1.Id, itemId1.Value, ObjectId.GenerateNewId(), default);
-        await itemRepository.UpdatePurchaser(list1.Id, itemId3.Value, ObjectId.GenerateNewId(), default);
-        await itemRepository.UpdatePurchaser(list2.Id, itemId5.Value, ObjectId.GenerateNewId(), default);
+        await itemRepository.UpdatePurchaser(list1.Id, itemId1.Value, ObjectId.GenerateNewId(), _cancellationToken);
+        await itemRepository.UpdatePurchaser(list1.Id, itemId3.Value, ObjectId.GenerateNewId(), _cancellationToken);
+        await itemRepository.UpdatePurchaser(list2.Id, itemId5.Value, ObjectId.GenerateNewId(), _cancellationToken);
 
-        var result = await itemRepository.DeletePurchasedItems(list1.Id, default);
-        list1 = await listRepository.GetById(list1.Id, default);
-        list2 = await listRepository.GetById(list2.Id, default);
+        var result = await itemRepository.DeletePurchasedItems(list1.Id, _cancellationToken);
+        list1 = await listRepository.GetById(list1.Id, _cancellationToken);
+        list2 = await listRepository.GetById(list2.Id, _cancellationToken);
 
         Assert.NotNull(result);
         Assert.NotNull(list1);
@@ -181,13 +182,13 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
         var listRepository = new WishListRepository(_mongoClient, _databaseName);
         var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
 
-        var list = await listRepository.Add("Name1", "OwnerId", default);
+        var list = await listRepository.Add("Name1", "OwnerId", _cancellationToken);
 
-        var itemId = await itemRepository.Add(list.Id, "https://example.com", default);
+        var itemId = await itemRepository.Add(list.Id, "https://example.com", _cancellationToken);
 
-        await itemRepository.UpdatePurchaser(list.Id, itemId.Value, ObjectId.GenerateNewId(), default);
+        await itemRepository.UpdatePurchaser(list.Id, itemId.Value, ObjectId.GenerateNewId(), _cancellationToken);
 
-        var result = await itemRepository.DeletePurchasedItems(ObjectId.GenerateNewId(), default);
+        var result = await itemRepository.DeletePurchasedItems(ObjectId.GenerateNewId(), _cancellationToken);
 
         Assert.Null(result);
     }
@@ -208,14 +209,14 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
         var newPriority = 3;
         var newPurchaser = ObjectId.GenerateNewId();
 
-        var list1 = await listRepository.Add("Name1", "OwnerId", default);
-        var list2 = await listRepository.Add("Name2", "OwnerId", default);
+        var list1 = await listRepository.Add("Name1", "OwnerId", _cancellationToken);
+        var list2 = await listRepository.Add("Name2", "OwnerId", _cancellationToken);
 
-        var itemId1 = await itemRepository.Add(list1.Id, "https://example1.com", default);
-        var itemId2 = await itemRepository.Add(list1.Id, "https://example2.com", default);
-        var itemId3 = await itemRepository.Add(list2.Id, "https://example3.com", default);
+        var itemId1 = await itemRepository.Add(list1.Id, "https://example1.com", _cancellationToken);
+        var itemId2 = await itemRepository.Add(list1.Id, "https://example2.com", _cancellationToken);
+        var itemId3 = await itemRepository.Add(list2.Id, "https://example3.com", _cancellationToken);
 
-        list1 = await listRepository.GetById(list1.Id, default);
+        list1 = await listRepository.GetById(list1.Id, _cancellationToken);
         Assert.NotNull(list1);
 
         var item1 = list1.Items.First(i => i.Id == itemId1);
@@ -234,10 +235,10 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
                 Priority = newPriority,
                 Purchaser = newPurchaser
             },
-            default);
+            _cancellationToken);
 
-        list1 = await listRepository.GetById(list1.Id, default);
-        list2 = await listRepository.GetById(list2.Id, default);
+        list1 = await listRepository.GetById(list1.Id, _cancellationToken);
+        list2 = await listRepository.GetById(list2.Id, _cancellationToken);
 
         Assert.NotNull(result);
         Assert.NotNull(list1);
@@ -268,17 +269,17 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
         var listRepository = new WishListRepository(_mongoClient, _databaseName);
         var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
 
-        var list = await listRepository.Add("Name1", "OwnerId", default);
+        var list = await listRepository.Add("Name1", "OwnerId", _cancellationToken);
 
-        var itemId = await itemRepository.Add(list.Id, "https://example.com", default);
+        var itemId = await itemRepository.Add(list.Id, "https://example.com", _cancellationToken);
 
-        list = await listRepository.GetById(list.Id, default);
+        list = await listRepository.GetById(list.Id, _cancellationToken);
 
         Assert.NotNull(list);
 
         var updatedItem = list.Items.First(i => i.Id == itemId) with { Name = "Name2" };
 
-        var result = await itemRepository.Update(ObjectId.GenerateNewId(), updatedItem, default);
+        var result = await itemRepository.Update(ObjectId.GenerateNewId(), updatedItem, _cancellationToken);
 
         Assert.Null(result);
     }
@@ -291,17 +292,17 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
 
         var newPriority = 3;
 
-        var list1 = await listRepository.Add("Name1", "OwnerId", default);
-        var list2 = await listRepository.Add("Name2", "OwnerId", default);
+        var list1 = await listRepository.Add("Name1", "OwnerId", _cancellationToken);
+        var list2 = await listRepository.Add("Name2", "OwnerId", _cancellationToken);
 
-        var itemId1 = await itemRepository.Add(list1.Id, "https://example1.com", default);
-        var itemId2 = await itemRepository.Add(list1.Id, "https://example2.com", default);
-        var itemId3 = await itemRepository.Add(list2.Id, "https://example3.com", default);
+        var itemId1 = await itemRepository.Add(list1.Id, "https://example1.com", _cancellationToken);
+        var itemId2 = await itemRepository.Add(list1.Id, "https://example2.com", _cancellationToken);
+        var itemId3 = await itemRepository.Add(list2.Id, "https://example3.com", _cancellationToken);
 
-        var result = await itemRepository.UpdatePriority(list1.Id, itemId2.Value, newPriority, default);
+        var result = await itemRepository.UpdatePriority(list1.Id, itemId2.Value, newPriority, _cancellationToken);
 
-        list1 = await listRepository.GetById(list1.Id, default);
-        list2 = await listRepository.GetById(list2.Id, default);
+        list1 = await listRepository.GetById(list1.Id, _cancellationToken);
+        list2 = await listRepository.GetById(list2.Id, _cancellationToken);
 
         Assert.NotNull(result);
         Assert.NotNull(list1);
@@ -323,11 +324,11 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
         var listRepository = new WishListRepository(_mongoClient, _databaseName);
         var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
 
-        var list = await listRepository.Add("Name1", "OwnerId", default);
+        var list = await listRepository.Add("Name1", "OwnerId", _cancellationToken);
 
-        var itemId = await itemRepository.Add(list.Id, "https://example.com", default);
+        var itemId = await itemRepository.Add(list.Id, "https://example.com", _cancellationToken);
 
-        var result = await itemRepository.UpdatePriority(ObjectId.GenerateNewId(), itemId.Value, 3, default);
+        var result = await itemRepository.UpdatePriority(ObjectId.GenerateNewId(), itemId.Value, 3, _cancellationToken);
 
         Assert.Null(result);
     }
@@ -340,17 +341,17 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
 
         var shareId = ObjectId.GenerateNewId();
 
-        var list1 = await listRepository.Add("Name1", "OwnerId", default);
-        var list2 = await listRepository.Add("Name2", "OwnerId", default);
+        var list1 = await listRepository.Add("Name1", "OwnerId", _cancellationToken);
+        var list2 = await listRepository.Add("Name2", "OwnerId", _cancellationToken);
 
-        var itemId1 = await itemRepository.Add(list1.Id, "https://example1.com", default);
-        var itemId2 = await itemRepository.Add(list1.Id, "https://example2.com", default);
-        var itemId3 = await itemRepository.Add(list2.Id, "https://example3.com", default);
+        var itemId1 = await itemRepository.Add(list1.Id, "https://example1.com", _cancellationToken);
+        var itemId2 = await itemRepository.Add(list1.Id, "https://example2.com", _cancellationToken);
+        var itemId3 = await itemRepository.Add(list2.Id, "https://example3.com", _cancellationToken);
 
-        var result = await itemRepository.UpdatePurchaser(list1.Id, itemId2.Value, shareId, default);
+        var result = await itemRepository.UpdatePurchaser(list1.Id, itemId2.Value, shareId, _cancellationToken);
 
-        list1 = await listRepository.GetById(list1.Id, default);
-        list2 = await listRepository.GetById(list2.Id, default);
+        list1 = await listRepository.GetById(list1.Id, _cancellationToken);
+        list2 = await listRepository.GetById(list2.Id, _cancellationToken);
 
         Assert.NotNull(result);
         Assert.NotNull(list1);
@@ -374,19 +375,19 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
 
         var shareId = ObjectId.GenerateNewId();
 
-        var list1 = await listRepository.Add("Name1", "OwnerId", default);
-        var list2 = await listRepository.Add("Name2", "OwnerId", default);
+        var list1 = await listRepository.Add("Name1", "OwnerId", _cancellationToken);
+        var list2 = await listRepository.Add("Name2", "OwnerId", _cancellationToken);
 
-        var itemId1 = await itemRepository.Add(list1.Id, "https://example1.com", default);
-        var itemId2 = await itemRepository.Add(list1.Id, "https://example2.com", default);
-        var itemId3 = await itemRepository.Add(list2.Id, "https://example3.com", default);
+        var itemId1 = await itemRepository.Add(list1.Id, "https://example1.com", _cancellationToken);
+        var itemId2 = await itemRepository.Add(list1.Id, "https://example2.com", _cancellationToken);
+        var itemId3 = await itemRepository.Add(list2.Id, "https://example3.com", _cancellationToken);
 
-        var result = await itemRepository.UpdatePurchaser(list1.Id, itemId2.Value, shareId, default);
+        var result = await itemRepository.UpdatePurchaser(list1.Id, itemId2.Value, shareId, _cancellationToken);
 
-        await itemRepository.UpdatePurchaser(list1.Id, itemId2.Value, null, default);
+        await itemRepository.UpdatePurchaser(list1.Id, itemId2.Value, null, _cancellationToken);
 
-        list1 = await listRepository.GetById(list1.Id, default);
-        list2 = await listRepository.GetById(list2.Id, default);
+        list1 = await listRepository.GetById(list1.Id, _cancellationToken);
+        list2 = await listRepository.GetById(list2.Id, _cancellationToken);
 
         Assert.NotNull(result);
         Assert.NotNull(list1);
@@ -413,10 +414,10 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
 
         var shareId = ObjectId.GenerateNewId();
 
-        var list = await listRepository.Add("Name", "OwnerId", default);
-        var itemId = await itemRepository.Add(list.Id, "https://example.com", default);
+        var list = await listRepository.Add("Name", "OwnerId", _cancellationToken);
+        var itemId = await itemRepository.Add(list.Id, "https://example.com", _cancellationToken);
 
-        var result = await itemRepository.UpdatePurchaser(ObjectId.GenerateNewId(), itemId.Value, shareId, default);
+        var result = await itemRepository.UpdatePurchaser(ObjectId.GenerateNewId(), itemId.Value, shareId, _cancellationToken);
 
         Assert.Null(result);
     }
@@ -429,10 +430,10 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
 
         var shareId = ObjectId.GenerateNewId();
 
-        var list = await listRepository.Add("Name", "OwnerId", default);
-        await itemRepository.Add(list.Id, "https://example.com", default);
+        var list = await listRepository.Add("Name", "OwnerId", _cancellationToken);
+        await itemRepository.Add(list.Id, "https://example.com", _cancellationToken);
 
-        var result = await itemRepository.UpdatePurchaser(list.Id, ObjectId.GenerateNewId(), shareId, default);
+        var result = await itemRepository.UpdatePurchaser(list.Id, ObjectId.GenerateNewId(), shareId, _cancellationToken);
 
         Assert.Null(result);
     }
@@ -443,21 +444,21 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
         var listRepository = new WishListRepository(_mongoClient, _databaseName);
         var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
 
-        var list1 = await listRepository.Add("Name1", "OwnerId", default);
-        var list2 = await listRepository.Add("Name2", "OwnerId", default);
+        var list1 = await listRepository.Add("Name1", "OwnerId", _cancellationToken);
+        var list2 = await listRepository.Add("Name2", "OwnerId", _cancellationToken);
 
-        var itemId1 = await itemRepository.Add(list1.Id, "https://example1.com", default);
-        var itemId2 = await itemRepository.Add(list1.Id, "https://example2.com", default);
-        var itemId3 = await itemRepository.Add(list2.Id, "https://example3.com", default);
+        var itemId1 = await itemRepository.Add(list1.Id, "https://example1.com", _cancellationToken);
+        var itemId2 = await itemRepository.Add(list1.Id, "https://example2.com", _cancellationToken);
+        var itemId3 = await itemRepository.Add(list2.Id, "https://example3.com", _cancellationToken);
 
-        await itemRepository.UpdatePurchaser(list1.Id, itemId1.Value, ObjectId.GenerateNewId(), default);
-        await itemRepository.UpdatePurchaser(list1.Id, itemId2.Value, ObjectId.GenerateNewId(), default);
-        await itemRepository.UpdatePurchaser(list2.Id, itemId3.Value, ObjectId.GenerateNewId(), default);
+        await itemRepository.UpdatePurchaser(list1.Id, itemId1.Value, ObjectId.GenerateNewId(), _cancellationToken);
+        await itemRepository.UpdatePurchaser(list1.Id, itemId2.Value, ObjectId.GenerateNewId(), _cancellationToken);
+        await itemRepository.UpdatePurchaser(list2.Id, itemId3.Value, ObjectId.GenerateNewId(), _cancellationToken);
 
-        var newItemId1 = await itemRepository.MoveToWishList(list1.Id, itemId1.Value, list2.Id, default);
+        var newItemId1 = await itemRepository.MoveToWishList(list1.Id, itemId1.Value, list2.Id, _cancellationToken);
 
-        list1 = await listRepository.GetById(list1.Id, default);
-        list2 = await listRepository.GetById(list2.Id, default);
+        list1 = await listRepository.GetById(list1.Id, _cancellationToken);
+        list2 = await listRepository.GetById(list2.Id, _cancellationToken);
 
         Assert.NotNull(newItemId1);
         Assert.NotNull(list1);
@@ -485,15 +486,15 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
         var listRepository = new WishListRepository(_mongoClient, _databaseName);
         var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
 
-        var list1 = await listRepository.Add("Name1", "OwnerId", default);
-        var list2 = await listRepository.Add("Name2", "OwnerId", default);
+        var list1 = await listRepository.Add("Name1", "OwnerId", _cancellationToken);
+        var list2 = await listRepository.Add("Name2", "OwnerId", _cancellationToken);
 
-        var itemId1 = await itemRepository.Add(list1.Id, "https://example1.com", default);
+        var itemId1 = await itemRepository.Add(list1.Id, "https://example1.com", _cancellationToken);
 
-        var newItemId1 = await itemRepository.MoveToWishList(ObjectId.GenerateNewId(), itemId1.Value, list2.Id, default);
+        var newItemId1 = await itemRepository.MoveToWishList(ObjectId.GenerateNewId(), itemId1.Value, list2.Id, _cancellationToken);
 
-        list1 = await listRepository.GetById(list1.Id, default);
-        list2 = await listRepository.GetById(list2.Id, default);
+        list1 = await listRepository.GetById(list1.Id, _cancellationToken);
+        list2 = await listRepository.GetById(list2.Id, _cancellationToken);
 
         Assert.Null(newItemId1);
         Assert.NotNull(list1);
@@ -509,15 +510,15 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
         var listRepository = new WishListRepository(_mongoClient, _databaseName);
         var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
 
-        var list1 = await listRepository.Add("Name1", "OwnerId", default);
-        var list2 = await listRepository.Add("Name2", "OwnerId", default);
+        var list1 = await listRepository.Add("Name1", "OwnerId", _cancellationToken);
+        var list2 = await listRepository.Add("Name2", "OwnerId", _cancellationToken);
 
-        var itemId1 = await itemRepository.Add(list1.Id, "https://example1.com", default);
+        var itemId1 = await itemRepository.Add(list1.Id, "https://example1.com", _cancellationToken);
 
-        var newItemId1 = await itemRepository.MoveToWishList(list1.Id, itemId1.Value, ObjectId.GenerateNewId(), default);
+        var newItemId1 = await itemRepository.MoveToWishList(list1.Id, itemId1.Value, ObjectId.GenerateNewId(), _cancellationToken);
 
-        list1 = await listRepository.GetById(list1.Id, default);
-        list2 = await listRepository.GetById(list2.Id, default);
+        list1 = await listRepository.GetById(list1.Id, _cancellationToken);
+        list2 = await listRepository.GetById(list2.Id, _cancellationToken);
 
         Assert.Null(newItemId1);
         Assert.NotNull(list1);
@@ -533,15 +534,15 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
         var listRepository = new WishListRepository(_mongoClient, _databaseName);
         var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
 
-        var list1 = await listRepository.Add("Name1", "OwnerId", default);
-        var list2 = await listRepository.Add("Name2", "OwnerId", default);
+        var list1 = await listRepository.Add("Name1", "OwnerId", _cancellationToken);
+        var list2 = await listRepository.Add("Name2", "OwnerId", _cancellationToken);
 
-        var itemId1 = await itemRepository.Add(list1.Id, "https://example1.com", default);
+        var itemId1 = await itemRepository.Add(list1.Id, "https://example1.com", _cancellationToken);
 
-        var newItemId1 = await itemRepository.MoveToWishList(list1.Id, ObjectId.GenerateNewId(), list2.Id, default);
+        var newItemId1 = await itemRepository.MoveToWishList(list1.Id, ObjectId.GenerateNewId(), list2.Id, _cancellationToken);
 
-        list1 = await listRepository.GetById(list1.Id, default);
-        list2 = await listRepository.GetById(list2.Id, default);
+        list1 = await listRepository.GetById(list1.Id, _cancellationToken);
+        list2 = await listRepository.GetById(list2.Id, _cancellationToken);
 
         Assert.Null(newItemId1);
         Assert.NotNull(list1);
