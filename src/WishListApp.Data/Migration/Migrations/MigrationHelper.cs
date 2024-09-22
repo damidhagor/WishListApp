@@ -3,7 +3,7 @@ using WishListApp.Data.Migration.Results;
 
 namespace WishListApp.Data.Migration.Migrations;
 
-internal static class MigrationHelpers
+internal static class MigrationHelper
 {
     public static OneOf<Success, InvalidVersion, InvalidDocument> ValidateVersion(this BsonDocument document, uint supportedVersion)
     {

@@ -10,9 +10,9 @@ internal static class BsonExtensions
 
         if (!fieldValueResult.TryPickT0(out var fieldValue, out var errorResults))
         {
-            return errorResults.TryPickT0(out var invalidDocument, out var notFound)
-                ? invalidDocument
-                : notFound;
+            return errorResults.TryPickT0(out var notFound, out var invalidDocument)
+                ? notFound
+                : invalidDocument;
         }
 
         return fieldValue.IsObjectId
@@ -26,9 +26,9 @@ internal static class BsonExtensions
 
         if (!fieldValueResult.TryPickT0(out var fieldValue, out var errorResults))
         {
-            return errorResults.TryPickT0(out var invalidDocument, out var notFound)
-                ? invalidDocument
-                : notFound;
+            return errorResults.TryPickT0(out var notFound, out var invalidDocument)
+                ? notFound
+                : invalidDocument;
         }
 
         return fieldValue.IsInt64
@@ -42,17 +42,17 @@ internal static class BsonExtensions
 
         if (!fieldValueResult.TryPickT0(out var fieldValue, out var errorResults))
         {
-            return errorResults.TryPickT0(out var invalidDocument, out var notFound)
-                ? invalidDocument
-                : notFound;
+            return errorResults.TryPickT0(out var notFound, out var invalidDocument)
+                ? notFound
+                : invalidDocument;
         }
 
         return fieldValue.IsBsonArray
             ? fieldValue.AsBsonArray
-            : new InvalidDocument($"'{name}' field must be a BsonArray.");
+            : new InvalidDocument($"'{name}' field must be an Array.");
     }
 
-    private static OneOf<BsonValue, InvalidDocument, ElementNotFound> GetValueFromDocument(this BsonValue value, string name)
+    public static OneOf<BsonValue, ElementNotFound, InvalidDocument> GetValueFromDocument(this BsonValue value, string name)
     {
         if (!value.IsBsonDocument)
         {
