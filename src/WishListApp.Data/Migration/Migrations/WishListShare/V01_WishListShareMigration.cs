@@ -1,22 +1,21 @@
-﻿using WishListApp.Data.Migration.Results;
+﻿using OneOf.Types;
+using WishListApp.Data.Migration.Results;
 
 namespace WishListApp.Data.Migration.Migrations.WishListShare;
 
 internal sealed class V01_WishListShareMigration : IMigration<Models.WishListShare>
 {
-    public uint SourceVersion => 0;
+    public uint SupportedVersion => 0;
 
-    public uint TargetVersion => 1;
-
-    public MigrationResult Migrate(BsonDocument document)
+    public DocumentMigrationResult Migrate(BsonDocument document)
     {
-        var versionResult = document.ValidateVersion(SourceVersion);
+        var versionResult = document.ValidateVersion(SupportedVersion);
         if (!versionResult.TryPickT0(out var success, out var errorResults))
         {
-            return errorResults.Match<MigrationResult>(invalidVersion => invalidVersion, invalidDocument => invalidDocument);
+            return errorResults.Match<DocumentMigrationResult>(invalidVersion => invalidVersion, invalidDocument => invalidDocument);
         }
 
-        document.SetVersion(TargetVersion);
-        return new Migrated(SourceVersion, TargetVersion);
+        document.SetVersion(SupportedVersion + 1);
+        return new Success();
     }
 }

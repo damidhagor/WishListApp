@@ -5,26 +5,24 @@ namespace WishListApp.Data.Migration.Migrations.WishList;
 
 internal sealed class V01_WishListMigration : IMigration<Models.WishList>
 {
-    public uint SourceVersion => 0;
+    public uint SupportedVersion => 0;
 
-    public uint TargetVersion => 1;
-
-    public MigrationResult Migrate(BsonDocument document)
+    public DocumentMigrationResult Migrate(BsonDocument document)
     {
-        var versionResult = document.ValidateVersion(SourceVersion);
+        var versionResult = document.ValidateVersion(SupportedVersion);
         if (!versionResult.TryPickT0(out var success, out var errorResults))
         {
-            return errorResults.Match<MigrationResult>(invalidVersion => invalidVersion, invalidDocument => invalidDocument);
+            return errorResults.Match<DocumentMigrationResult>(invalidVersion => invalidVersion, invalidDocument => invalidDocument);
         }
 
         var itemsResult = document.GetArrayValue("Items");
         if (!itemsResult.TryPickT0(out var items, out var remainingResults))
         {
-            return remainingResults.Match<MigrationResult>(
+            return remainingResults.Match<DocumentMigrationResult>(
                 notFound =>
                 {
-                    document.SetVersion(TargetVersion);
-                    return new Migrated(SourceVersion, TargetVersion);
+                    document.SetVersion(SupportedVersion + 1);
+                    return new Success();
                 },
                 invalidDocument => invalidDocument);
         }
@@ -45,8 +43,8 @@ internal sealed class V01_WishListMigration : IMigration<Models.WishList>
             item.AsBsonDocument.Remove("Quantity");
         }
 
-        document.SetVersion(TargetVersion);
-        return new Migrated(SourceVersion, TargetVersion);
+        document.SetVersion(SupportedVersion + 1);
+        return new Success();
     }
 
     private static OneOf<Success, InvalidDocument> UpdatePurchaseInformation(BsonDocument item)

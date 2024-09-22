@@ -4,9 +4,7 @@ namespace WishListApp.Data.Migration.Migrations;
 
 internal interface IMigration<T>
 {
-    uint SourceVersion { get; }
+    uint SupportedVersion { get; }
 
-    uint TargetVersion { get; }
-
-    MigrationResult Migrate(BsonDocument document);
+    DocumentMigrationResult Migrate(BsonDocument document);
 }

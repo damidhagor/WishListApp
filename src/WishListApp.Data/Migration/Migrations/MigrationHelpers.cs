@@ -5,7 +5,7 @@ namespace WishListApp.Data.Migration.Migrations;
 
 internal static class MigrationHelpers
 {
-    public static OneOf<Success, InvalidSourceVersion, InvalidDocument> ValidateVersion(this BsonDocument document, uint expectedVersion)
+    public static OneOf<Success, InvalidVersion, InvalidDocument> ValidateVersion(this BsonDocument document, uint supportedVersion)
     {
         var versionResult = document.GetVersion();
         if (!versionResult.TryPickT0(out var version, out var invalidDocument))
@@ -13,8 +13,8 @@ internal static class MigrationHelpers
             return invalidDocument;
         }
 
-        return version != expectedVersion
-            ? new InvalidSourceVersion(expectedVersion, version)
+        return version != supportedVersion
+            ? new InvalidVersion(supportedVersion, version)
             : new Success();
     }
 

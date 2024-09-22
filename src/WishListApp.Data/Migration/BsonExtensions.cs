@@ -1,6 +1,6 @@
 ﻿using WishListApp.Data.Migration.Results;
 
-namespace WishListApp.Data.Migration.Migrations;
+namespace WishListApp.Data.Migration;
 
 internal static class BsonExtensions
 {
