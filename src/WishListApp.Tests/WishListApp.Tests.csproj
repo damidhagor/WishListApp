@@ -17,13 +17,19 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
+		<PackageReference Include="FluentAssertions" Version="7.0.0-alpha.4" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+		<PackageReference Include="NSubstitute" Version="5.1.0" />
+		<PackageReference Include="NSubstitute.Analyzers.CSharp" Version="1.0.17">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 		<PackageReference Include="Testcontainers.MongoDb" Version="3.10.0" />
-		<PackageReference Include="xunit.runner.visualstudio" Version="3.0.0-pre.30">
+		<PackageReference Include="xunit.runner.visualstudio" Version="3.0.0-pre.35">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="xunit.v3" Version="0.3.0-pre.18" />
+		<PackageReference Include="xunit.v3" Version="0.4.0-pre.20" />
 	</ItemGroup>
 
 	<ItemGroup>

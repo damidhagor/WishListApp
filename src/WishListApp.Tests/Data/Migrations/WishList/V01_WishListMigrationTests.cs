@@ -249,7 +249,7 @@ public sealed class V01_WishListMigrationTests
         var result = migration.Migrate(document);
 
         Assert.True(result.IsT2);
-        Assert.Equal("'Items' field must be a BsonArray.", result.AsT2.Error);
+        Assert.Equal("'Items' field must be an Array.", result.AsT2.Error);
     }
 
     [Fact]
@@ -291,7 +291,7 @@ public sealed class V01_WishListMigrationTests
         var result = migration.Migrate(document);
 
         Assert.True(result.IsT2);
-        Assert.Equal("'Purchases' field must be a BsonArray.", result.AsT2.Error);
+        Assert.Equal("'Purchases' field must be an Array.", result.AsT2.Error);
     }
 
     [Fact]

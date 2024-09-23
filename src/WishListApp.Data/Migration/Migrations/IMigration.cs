@@ -2,7 +2,7 @@
 
 namespace WishListApp.Data.Migration.Migrations;
 
-internal interface IMigration<T>
+public interface IMigration<T>
 {
     uint SupportedVersion { get; }
 
