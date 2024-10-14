@@ -20,15 +20,22 @@ internal sealed class MigrationExecutor<T>(
 
     public async Task<MigrationResult> Migrate(CancellationToken cancellationToken)
     {
+        var totalDocuments = 0L;
+        var documentsMigrated = 0L;
+
         try
         {
             var validationResult = ValidateMigrationVersions();
             if (validationResult.TryPickT1(out var invalidVersions, out _))
             {
-                return new MigrationError($"Migration versions are invalid. Version {invalidVersions.ExpectedVersion} is expected but actual version is {invalidVersions.SupportedVersion}.");
+                var message = $"Migration versions are invalid. Version {invalidVersions.ExpectedVersion} is expected but actual version is {invalidVersions.SupportedVersion}.";
+                Status = new(false, message, 0, 0);
+                return new MigrationError(message);
             }
 
-            var totalDocuments = await _collection.CountDocumentsAsync(Builders<BsonDocument>.Filter.Empty, cancellationToken: cancellationToken);
+            totalDocuments = await _collection.CountDocumentsAsync(Builders<BsonDocument>.Filter.Empty, cancellationToken: cancellationToken);
+
+            UpdateProgress(true, totalDocuments, 0);
 
             using var cursor = await _collection.FindAsync(
                 Builders<BsonDocument>.Filter.Empty,
@@ -39,30 +46,34 @@ internal sealed class MigrationExecutor<T>(
                 },
                 cancellationToken);
 
-            var documentsMigrated = 0L;
             while (await cursor.MoveNextAsync(cancellationToken))
             {
                 var documents = cursor.Current.ToArray();
-                foreach (var document in documents)
+
+                var batchResult = MigrateBatch(documents);
+                if (!batchResult.TryPickT0(out var replaceOperations, out var invalidDocument))
                 {
-                    var batchResult = MigrateBatch(documents, cancellationToken);
-                    if (!batchResult.TryPickT0(out var replaceOperations, out var invalidDocument))
-                    {
-                        return new MigrationError($"The migration encountered an invalid document: {invalidDocument.Error}");
-                    }
+                    var message = $"The migration encountered an invalid document: {invalidDocument.Error}";
+                    UpdateProgress(false, totalDocuments, documentsMigrated, message);
+                    return new MigrationError(message);
+                }
 
+                if (replaceOperations.Count > 0)
+                {
                     await _collection.BulkWriteAsync(replaceOperations, cancellationToken: cancellationToken);
-
                     documentsMigrated += replaceOperations.Count;
-                    UpdateProgress(totalDocuments, documentsMigrated);
+                    UpdateProgress(true, totalDocuments, documentsMigrated);
                 }
             }
 
+            UpdateProgress(false, totalDocuments, documentsMigrated);
             return new Success();
         }
         catch (Exception ex)
         {
-            return new MigrationError($"The migration of the WishListShares collection failed: {ex.Message}");
+            var message = $"The migration of the WishListShares collection failed: {ex.Message}";
+            UpdateProgress(false, totalDocuments, documentsMigrated, message);
+            return new MigrationError(message);
         }
     }
 
@@ -79,7 +90,7 @@ internal sealed class MigrationExecutor<T>(
         return new Success();
     }
 
-    private OneOf<List<ReplaceOneModel<BsonDocument>>, InvalidDocument> MigrateBatch(BsonDocument[] documents, CancellationToken cancellationToken)
+    private OneOf<List<ReplaceOneModel<BsonDocument>>, InvalidDocument> MigrateBatch(BsonDocument[] documents)
     {
         var replaceOperations = new List<ReplaceOneModel<BsonDocument>>(documents.Length);
         foreach (var document in documents)
@@ -122,9 +133,9 @@ internal sealed class MigrationExecutor<T>(
         return replaceOperations;
     }
 
-    private void UpdateProgress(long totalDocuments, long documentsMigrated)
+    private void UpdateProgress(bool isRunning, long totalDocuments, long documentsMigrated, string? error = null)
     {
-        Status = new(true, null, totalDocuments, documentsMigrated);
-        _messenger.Send(new MigrationProgress(totalDocuments, documentsMigrated));
+        Status = new(isRunning, error, totalDocuments, documentsMigrated);
+        _messenger.Send(new MigrationProgress(isRunning, totalDocuments, documentsMigrated));
     }
 }

@@ -6,8 +6,6 @@ using NSubstitute;
 using WishListApp.Data.Accessors;
 using WishListApp.Data.Migration;
 using WishListApp.Data.Migration.Migrations;
-using WishListApp.Data.Migration.Migrations.WishList;
-using WishListApp.Data.Migration.Migrations.WishListShare;
 using WishListApp.Data.Migration.Services;
 using WishListApp.Data.Models;
 
