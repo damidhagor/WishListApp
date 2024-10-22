@@ -41,15 +41,23 @@ public partial class WishListsPage(
             return;
         }
 
-        var wishLists = await _wishListRepository.GetByOwnerId(_user.Identifier, cancellationToken);
-        var wishListsWithShares = new List<(WishList, WishListShare[])>(wishLists.Count);
-        foreach (var wishList in wishLists.OrderBy(w => w.Name))
+        try
         {
-            var shares = await _shareRepository.GetByWishListId(wishList.Id, cancellationToken);
-            wishListsWithShares.Add((wishList.ToModel(), shares.ToModels().ToArray()));
+            var wishLists = await _wishListRepository.GetByOwnerId(_user.Identifier, cancellationToken);
+            var wishListsWithShares = new List<(WishList, WishListShare[])>(wishLists.Count);
+            foreach (var wishList in wishLists.OrderBy(w => w.Name))
+            {
+                var shares = await _shareRepository.GetByWishListId(wishList.Id, cancellationToken);
+                wishListsWithShares.Add((wishList.ToModel(), shares.ToModels().ToArray()));
+            }
+
+            _wishLists = wishListsWithShares;
+        }
+        catch
+        {
+            _wishLists = [];
         }
 
-        _wishLists = wishListsWithShares;
         StateHasChanged();
     }
 
