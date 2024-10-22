@@ -1,0 +1,30 @@
+﻿@if (_migrationService.IsMigrationRunning)
+{
+    <AuthorizeView Roles="@Identity.Constants.Role_Admin">
+        <Authorized>
+            <div class="d-flex flex-column mx-auto alert alert-warning" role="alert" style="max-width: 1000px">
+                <div>
+                    <h4><i class="bi bi-exclamation-triangle"></i> Migrating!</h4>
+
+                    <div class="mt-4">
+                        @_migrationService.Status: @_migrationService.DocumentsMigrated / @_migrationService.DocumentsTotal
+
+                        <div class="progress mt-2" role="progressbar">
+                            <div class="progress-bar" style="width: @_migrationService.MigrationProgress%"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </Authorized>
+        <NotAuthorized>
+            <div class="alert alert-warning" role="alert">
+                <i class="bi bi-exclamation-triangle"></i> The page is currently in maintenance mode.
+            </div>
+        </NotAuthorized>
+    </AuthorizeView>
+}
+else
+{
+    @ChildContent
+}

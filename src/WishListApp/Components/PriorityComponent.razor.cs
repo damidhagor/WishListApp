@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 
 namespace WishListApp.Components;
+
 public partial class PriorityComponent
 {
     private int _hoveredPriority = -1;

@@ -8,6 +8,23 @@
 
                 <div class="dropdown-menu bg-dark">
                     <div class="d-flex flex-column align-items-stretch px-2 gap-2">
+                        <AuthorizeView Roles="@Identity.Constants.Role_Admin" Context="adminContext">
+                            <Authorized>
+                                <div class="d-flex flex-row @(_migrationService.IsMigrationRunning ? "d-none" : "d-show")">
+                                    <i class="bi bi-database-up me-2" />
+                                    <a class="text-body text-nowrap" href="" onclick="@(() => _migrationService.Start())">
+                                        Start Migrations
+                                    </a>
+                                </div>
+                                <div class="d-flex flex-row @(_migrationService.IsMigrationRunning ? "d-show" : "d-none")">
+                                    <i class="bi bi-database-up me-2" />
+                                    <a class="text-body text-nowrap" href="" onclick="@(() => _migrationService.Stop())">
+                                        Stop Migrations
+                                    </a>
+                                </div>
+                            </Authorized>
+                        </AuthorizeView>
+
                         <div class="d-flex flex-row">
                             <i class="bi bi-pen me-2" />
                             <a class="text-body text-nowrap" href="account/profile">

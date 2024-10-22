@@ -1,5 +1,6 @@
 using WishListApp.Components;
 using WishListApp.Data;
+using WishListApp.Data.Migration;
 using WishListApp.Identity;
 using WishListApp.ProductCrawling;
 using WishListApp.Services;
@@ -17,10 +18,13 @@ builder.Services.AddScoped<Localization.ILocalizationService, Localization.Local
 builder.Services.AddIdentity(builder.Configuration);
 
 builder.Services.AddWishListData(builder.Configuration);
+builder.Services.AddMigrationService();
+builder.Services.AddSingleton<IMigrationService, MigrationService>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddScoped<IMessenger, WeakReferenceMessenger>();
+builder.Services.AddKeyedSingleton<IMessenger, WeakReferenceMessenger>("MigrationMessenger");
 
 builder.Services.AddProductCrawler();
 

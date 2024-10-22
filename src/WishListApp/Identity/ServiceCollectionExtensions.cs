@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
@@ -43,9 +44,8 @@ internal static class ServiceCollectionExtensions
             options.TokenValidationParameters = new TokenValidationParameters
             {
                 NameClaimType = "preferred_username",
-                RoleClaimType = "roles"
+                RoleClaimType = ClaimTypes.Role
             };
-            options.GetClaimsFromUserInfoEndpoint = true;
 
             options.Events.OnRedirectToIdentityProviderForSignOut = context =>
             {

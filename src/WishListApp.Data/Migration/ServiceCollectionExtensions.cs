@@ -13,7 +13,7 @@ public static class ServiceCollectionExtensions
 
         services.AddSingleton<IMigrationExecutor<WishList>>(serviceProvider =>
         {
-            var messenger = serviceProvider.GetRequiredService<IMessenger>();
+            var messenger = serviceProvider.GetRequiredKeyedService<IMessenger>("MigrationMessenger");
             var migrations = serviceProvider.GetServices<IMigration<WishList>>();
             var mongoClient = serviceProvider.GetRequiredService<IMongoClient>();
             var collection = mongoClient.GetDatabase(MongoDBConstants.DatabaseName)
@@ -24,7 +24,7 @@ public static class ServiceCollectionExtensions
 
         services.AddSingleton<IMigrationExecutor<WishListShare>>(serviceProvider =>
         {
-            var messenger = serviceProvider.GetRequiredService<IMessenger>();
+            var messenger = serviceProvider.GetRequiredKeyedService<IMessenger>("MigrationMessenger");
             var migrations = serviceProvider.GetServices<IMigration<WishListShare>>();
             var mongoClient = serviceProvider.GetRequiredService<IMongoClient>();
             var collection = mongoClient.GetDatabase(MongoDBConstants.DatabaseName)
