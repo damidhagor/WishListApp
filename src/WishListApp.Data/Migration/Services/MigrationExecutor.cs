@@ -12,7 +12,7 @@ internal sealed class MigrationExecutor<T>(
     IMessenger messenger)
     : IMigrationExecutor<T>
 {
-    private IMessenger _messenger = messenger;
+    private readonly IMessenger _messenger = messenger;
     private readonly IMongoCollection<BsonDocument> _collection = collection;
     private readonly IMigration<T>[] _migrations = [.. migrations.OrderBy(m => m.SupportedVersion)];
 
