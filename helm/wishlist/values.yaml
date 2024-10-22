@@ -1,7 +1,7 @@
 hostname:
 mongodb:
   name: "mongodb"
-  version: "7.0.12"
+  version: "8.0.1"
   members: 3
   caConfigMapName: "selfsigned-ca"
   resources:
@@ -38,5 +38,5 @@ app:
       memory: 600Mi
 aspire:
   image: "aspire-dashboard"
-  tag: "8.1.0"
+  tag: "8.2.1"
   otlpEndpoint: "http://aspire-dashboard:4317"
