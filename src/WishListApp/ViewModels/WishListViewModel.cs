@@ -55,15 +55,17 @@ public sealed class WishListViewModel
         await ReloadWishList(cancellationToken);
     }
 
-    public async Task AddWishListItem(string url, CancellationToken cancellationToken)
+    public async Task<WishListItem?> AddWishListItem(string url, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(url))
         {
-            return;
+            return null;
         }
 
         var itemId = await _itemRepository.Add(WishList.Id, url, cancellationToken);
-        _navigationManager.NavigateTo($"/edititem?id={itemId}");
+        await ReloadWishList(cancellationToken);
+
+        return WishList.Items.FirstOrDefault(i => i.Id == itemId);
     }
 
     public async Task UpdateWishListItem(WishListItem item, CancellationToken cancellationToken)

@@ -15,6 +15,8 @@ public partial class WishListComponent(IMessenger messenger)
 
     private TextInputModalComponent _inputModal = default!;
 
+    private ItemEditModalComponent _itemEditModal = default!;
+
     private ConfirmationModalComponent _confirmationModal = default!;
 
     public void Receive(WishListUpdated message)
@@ -41,7 +43,14 @@ public partial class WishListComponent(IMessenger messenger)
         await _inputModal.Open(
             title: _localization.WishList_Add_Title,
             placeholderText: _localization.WishList_Add_Placeholder,
-            inputCallback: (url) => ViewModel.AddWishListItem(url, default));
+            inputCallback: async (url) =>
+            {
+                var item = await ViewModel.AddWishListItem(url, default);
+                if (item is not null)
+                {
+                    await _itemEditModal.Open(item);
+                }
+            });
     }
 
     private async Task DeletePurchasedWishListItems()
