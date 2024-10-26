@@ -1,32 +1,24 @@
-using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
+using WishListApp.Components.Modals.Base;
+using WishListApp.Models.Modals;
 
 namespace WishListApp.Components.Modals;
 
-public partial class SharesModalComponent(
+public partial class SharesModal(
+    IJSRuntime jsRuntime,
     IMessenger messenger,
     IWishListShareRepository shareRepository)
-    : IRecipient<WishListShareAdded>,
+    : BaseModal<SharesModalContext, None>(jsRuntime),
+      IRecipient<WishListShareAdded>,
       IRecipient<WishListShareDeleted>
 {
     private readonly IMessenger _messenger = messenger;
     private readonly IWishListShareRepository _shareRepository = shareRepository;
 
-    [CascadingParameter]
-    public WishListViewModel ViewModel { get; set; } = default!;
-
-    private ModalComponent _modal = default!;
     private List<WishListShare> _shares = [];
     private string _newShareName = "";
 
     private bool _isNewShareNameEmpty => string.IsNullOrWhiteSpace(_newShareName);
-
-    public async Task Open()
-    {
-        await _modal.Open();
-        var shares = await _shareRepository.GetByWishListId(ViewModel.WishList.Id, default);
-        _shares = shares.ToModels().ToList();
-        StateHasChanged();
-    }
 
     public void Receive(WishListShareAdded message)
     {
@@ -40,11 +32,21 @@ public partial class SharesModalComponent(
         StateHasChanged();
     }
 
-    protected override void OnInitialized() => _messenger.RegisterAll(this);
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        _messenger.RegisterAll(this);
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var shares = await _shareRepository.GetByWishListId(Context.WishListViewModel.WishList.Id, default);
+        _shares = shares.ToModels().ToList();
+    }
 
     private async Task AddNewWishListShare()
     {
-        await ViewModel.AddWishListShare(_newShareName, default);
+        await Context.WishListViewModel.AddWishListShare(_newShareName, default);
         _newShareName = "";
     }
 }

@@ -26,6 +26,8 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMessenger, WeakReferenceMessenger>();
 builder.Services.AddKeyedSingleton<IMessenger, WeakReferenceMessenger>("MigrationMessenger");
 
+builder.Services.AddScoped<IModalService, ModalService>();
+
 builder.Services.AddProductCrawler();
 
 var app = builder.Build();

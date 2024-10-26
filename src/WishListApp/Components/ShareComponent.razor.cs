@@ -1,14 +1,17 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using WishListApp.Components.Modals;
+using WishListApp.Models.Modals.Results;
+using WishListApp.Services;
 
 namespace WishListApp.Components;
 
 public partial class ShareComponent(
     IJSRuntime jsRuntime,
+    IModalService modalService,
     IAccessKeyGenerator accessKeyGenerator)
 {
     private readonly IJSRuntime _jsRuntime = jsRuntime;
+    private readonly IModalService _modalService = modalService;
     private readonly IAccessKeyGenerator _accessKeyGenerator = accessKeyGenerator;
 
     [CascadingParameter]
@@ -17,22 +20,16 @@ public partial class ShareComponent(
     [CascadingParameter]
     public WishListViewModel ViewModel { get; set; } = default!;
 
-    private ConfirmationModalComponent _modal = default!;
-
     private string Url => _accessKeyGenerator.GenerateShareUrl(Share.AccessKey);
 
     private async Task CopyShareUrlToClipboard() => await _jsRuntime.InvokeVoidAsync("navigator.clipboard.writeText", Url);
 
     private async Task DeleteShare()
     {
-        await _modal.Open(
-            message: string.Format(_localization.ShareComponent_Delete_Message, Share.Name),
-            confirmationCallback: async (confirmed) =>
-            {
-                if (confirmed)
-                {
-                    await ViewModel.DeleteWishListShare(Share, default);
-                }
-            });
+        var result = await _modalService.ShowConfirmation(string.Format(_localization.ShareComponent_Delete_Message, Share.Name));
+        if (result.IsConfirmed())
+        {
+            await ViewModel.DeleteWishListShare(Share, default);
+        }
     }
 }

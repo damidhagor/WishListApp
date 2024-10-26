@@ -1,6 +1,4 @@
-﻿@inherits ComponentBase
-
-@if (Item is not null)
+﻿@if (Item is not null)
 {
     <div class="item-grid rounded-2 overflow-hidden border border-secondary border-1">
 
@@ -43,7 +41,7 @@
                                     <i class="bi bi-pen" /> @_localization.Item_Edit
                                 </button>
 
-                                <button type="button" class="btn btn-outline-light" @onclick="OpenWishListSelectionModal">
+                                <button type="button" class="btn btn-outline-light" @onclick="MoveItem">
                                     <i class="bi bi-arrow-left-right" /> @_localization.Item_Move
                                 </button>
 
@@ -82,9 +80,5 @@
         <div class="item-grid-description p-1 overflow-y-auto border-top border-secondary border-1">
             @Item.Description
         </div>
-
-        <ItemEditModalComponent @ref="_itemEditModal" />
-        <WishListSelectionModalComponent @ref="_wishListSelectionModal" />
-        <ConfirmationModalComponent @ref="_confirmationModal" />
     </div>
 }

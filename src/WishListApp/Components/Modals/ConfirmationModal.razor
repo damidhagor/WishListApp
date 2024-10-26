@@ -1,0 +1,22 @@
+﻿@using WishListApp.Components.Modals.Base
+@using WishListApp.Models.Modals
+@using WishListApp.Models.Modals.Results
+
+@inherits BaseModal<ConfirmationModalContext, ConfirmationResult>
+
+<Modal Id="@Context.Id">
+    <ModalHeader Title="@Context.Title" ShowCloseButton="false" />
+
+    <ModalBody>
+        <h5>@Context.Message</h5>
+    </ModalBody>
+
+    <ModalFooter>
+        <button type="button" class="btn btn-primary" @ref="_confirmButton" @onclick="OnConfirm">
+            <i class="bi bi-check-lg" /> @_confirmText
+        </button>
+        <button type="button" class="btn btn-secondary" @ref="_cancelButton" @onclick="OnCancel">
+            <i class="bi bi-x-lg" /> @_cancelText
+        </button>
+    </ModalFooter>
+</Modal>

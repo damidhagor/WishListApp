@@ -1,11 +1,17 @@
 using Microsoft.AspNetCore.Components;
-using WishListApp.Components.Modals;
+using WishListApp.Models.Modals.Results;
+using WishListApp.Services;
 
 namespace WishListApp.Components;
 
-public partial class ItemComponent(NavigationManager navigationManager)
+public partial class ItemComponent(
+    NavigationManager navigationManager,
+    IModalService modalService,
+    IWishListRepository repository)
 {
     private readonly NavigationManager _navigationManager = navigationManager;
+    private readonly IModalService _modalService = modalService;
+    private readonly IWishListRepository _repository = repository;
 
     [CascadingParameter]
     public WishListItem Item { get; set; } = default!;
@@ -13,17 +19,35 @@ public partial class ItemComponent(NavigationManager navigationManager)
     [CascadingParameter]
     public WishListViewModel ViewModel { get; set; } = default!;
 
-    private ItemEditModalComponent _itemEditModal = default!;
+    private async Task OpenWishListItemEditModal()
+    {
+        var result = await _modalService.ShowWishListItemEdit(Item);
+        if (result.IsEdited())
+        {
+            await ViewModel.ReloadWishList(default);
+        }
+    }
 
-    private WishListSelectionModalComponent _wishListSelectionModal = default!;
+    private async Task MoveItem()
+    {
+        if (ViewModel.LoggedInUser is null)
+        {
+            return;
+        }
 
-    private ConfirmationModalComponent _confirmationModal = default!;
+        var lists = (await _repository.GetByOwnerId(ViewModel.LoggedInUser!.Identifier, default))
+            .Where(l => l.Id != ViewModel.WishList.Id)
+            .ToModels()
+            .ToArray();
 
-    private async Task OpenWishListItemEditModal() => await _itemEditModal.Open(Item);
+        var result = await _modalService.ShowSelectWishList(lists);
+        if (!result.TryGetList(out var list))
+        {
+            return;
+        }
 
-    private void EditWishListItem() => _navigationManager.NavigateTo($"/edititem?id={Item.Id}");
-
-    private async Task OpenWishListSelectionModal() => await _wishListSelectionModal.Open(Item);
+        await ViewModel.MoveItemToWishList(Item, list, default);
+    }
 
     private async Task ResetItemPurchase() => await ViewModel.ResetWishListItemPurchase(Item, default);
 
@@ -31,14 +55,10 @@ public partial class ItemComponent(NavigationManager navigationManager)
 
     private async Task DeleteItem()
     {
-        await _confirmationModal.Open(
-            message: _localization.Item_Delete_Message,
-            confirmationCallback: async (confirmed) =>
-            {
-                if (confirmed)
-                {
-                    await ViewModel.DeleteWishListItem(Item, default);
-                }
-            });
+        var result = await _modalService.ShowConfirmation(_localization.Item_Delete_Message);
+        if (result.IsConfirmed())
+        {
+            await ViewModel.DeleteWishListItem(Item, default);
+        }
     }
 }

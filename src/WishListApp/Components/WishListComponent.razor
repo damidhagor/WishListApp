@@ -1,6 +1,4 @@
-﻿@inherits ComponentBase
-
-@if (ViewModel?.WishList is null)
+﻿@if (ViewModel?.WishList is null)
 {
     <h1> @_localization.WishList_Unknown_Title </h1>
 
@@ -61,7 +59,7 @@ else
                                 <i class="bi bi-pen fill" /> @_localization.WishList_Settings_Rename
                             </button>
 
-                            <button type="button" class="btn btn-outline-light" @onclick="async () => await _shareModal.Open()">
+                            <button type="button" class="btn btn-outline-light" @onclick="ShowShares">
                                 <i class="bi bi-person fill" /> @_localization.WishList_Settings_Shares
                             </button>
 
@@ -96,9 +94,4 @@ else
             }
         </div>
     }
-
-    <SharesModalComponent @ref="_shareModal" />
-    <TextInputModalComponent @ref="_inputModal" />
-    <ItemEditModalComponent @ref="_itemEditModal" />
-    <ConfirmationModalComponent @ref="_confirmationModal" />
 }

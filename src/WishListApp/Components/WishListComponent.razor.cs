@@ -1,23 +1,19 @@
 using Microsoft.AspNetCore.Components;
-using WishListApp.Components.Modals;
+using WishListApp.Models.Modals.Results;
+using WishListApp.Services;
 
 namespace WishListApp.Components;
 
-public partial class WishListComponent(IMessenger messenger)
+public partial class WishListComponent(
+    IModalService modalService,
+    IMessenger messenger)
     : IRecipient<WishListUpdated>
 {
+    private readonly IModalService _modalService = modalService;
     private readonly IMessenger _messenger = messenger;
 
     [CascadingParameter]
     public WishListViewModel ViewModel { get; set; } = default!;
-
-    private SharesModalComponent _shareModal = default!;
-
-    private TextInputModalComponent _inputModal = default!;
-
-    private ItemEditModalComponent _itemEditModal = default!;
-
-    private ConfirmationModalComponent _confirmationModal = default!;
 
     public void Receive(WishListUpdated message)
     {
@@ -31,40 +27,50 @@ public partial class WishListComponent(IMessenger messenger)
 
     private async Task RenameWishList()
     {
-        await _inputModal.Open(
+        var result = await _modalService.ShowTextInput(
             title: _localization.WishList_Settings_Rename_Title,
-            initialText: ViewModel.WishList.Name,
-            inputCanBeEmpty: false,
-            inputCallback: async (name) => await ViewModel.RenameWishList(name, default));
+            initialText: ViewModel.WishList.Name);
+
+        if (result.TryGetText(out var name))
+        {
+            await ViewModel.RenameWishList(name, default);
+        }
     }
 
     private async Task AddNewWishListItem()
     {
-        await _inputModal.Open(
+        var urlResult = await _modalService.ShowTextInput(
             title: _localization.WishList_Add_Title,
-            placeholderText: _localization.WishList_Add_Placeholder,
-            inputCallback: async (url) =>
-            {
-                var item = await ViewModel.AddWishListItem(url, default);
-                if (item is not null)
-                {
-                    await _itemEditModal.Open(item);
-                }
-            });
+            placeholder: _localization.WishList_Add_Placeholder);
+
+        if (!urlResult.TryGetText(out var url))
+        {
+            return;
+        }
+
+        var item = await ViewModel.AddWishListItem(url, default);
+        if (item is null)
+        {
+            return;
+        }
+
+        var editResult = await _modalService.ShowWishListItemEdit(item);
+        if (editResult.IsEdited())
+        {
+            await ViewModel.ReloadWishList(default);
+        }
     }
 
     private async Task DeletePurchasedWishListItems()
     {
-        await _confirmationModal.Open(
-            message: _localization.WishList_DeletePurchasedItems_Message,
-            confirmationCallback: async (confirmed) =>
-            {
-                if (confirmed)
-                {
-                    await ViewModel.DeletePurchasedWishListItems(default);
-                }
-            });
+        var result = await _modalService.ShowConfirmation(_localization.WishList_DeletePurchasedItems_Message);
+        if (result.IsConfirmed())
+        {
+            await ViewModel.DeletePurchasedWishListItems(default);
+        }
     }
+
+    private async Task ShowShares() => await _modalService.ShowShares(ViewModel);
 
     private IEnumerable<WishListItem> GetFilteredWishListItems()
     {

@@ -1,0 +1,23 @@
+﻿@using WishListApp.Components.Modals.Base
+@using WishListApp.Models.Modals
+@using WishListApp.Models.Modals.Results
+
+@inherits BaseModal<EditWishListItemModalContext, EditWishListItemResult>
+
+<Modal Id="@Context.Id" Class="modal-lg" AllowFullscreen="true">
+    <ModalHeader Title="@_localization.ItemEditModal_Title" />
+
+    <ModalBody>
+        <ItemEditComponent @ref="_itemEditComponent" Item="Context.Item" />
+    </ModalBody>
+
+    <ModalFooter>
+        <LoadingButton LoadingAction="LoadProductInformation">
+            @_localization.ItemEditModal_FetchProductInformation
+        </LoadingButton>
+
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @onclick="SaveWishListItem">
+            <i class="bi bi-floppy" /> @_localization.ItemEditModal_Save
+        </button>
+    </ModalFooter>
+</Modal>

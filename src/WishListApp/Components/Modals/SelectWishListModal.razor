@@ -1,0 +1,36 @@
+﻿@using WishListApp.Components.Modals.Base
+@using WishListApp.Models.Modals
+@using WishListApp.Models.Modals.Results
+
+@inherits BaseModal<SelectWishListModalContext, SelectWishListResult>
+
+<Modal Id="@Context.Id" Class="modal-lg">
+    <ModalHeader Title="@_localization.WishListSelectionModal_Title" />
+
+    <ModalBody>
+        <div class="d-flex align-items-center">
+            <h5 class="me-4 mt-0 mb-0">@_localization.WishListSelectionModal_Label</h5>
+            <DropdownComponent T="WishListApp.Models.WishList"
+                               Items="@Context.Lists"
+                               @bind-SelectedItem="_selectedList">
+                <ItemTemplate>
+                    @context?.Name
+                </ItemTemplate>
+                <EmptySelectionTemplate>
+                    -
+                </EmptySelectionTemplate>
+            </DropdownComponent>
+        </div>
+    </ModalBody>
+
+    <ModalFooter>
+        <button type="button" class="btn btn-primary" @onclick="OnConfirm" disabled="@_isConfirmButtonDisabled">
+            <i class="bi bi-arrow-left-right" />
+            @_localization.WishListSelectionModal_Move
+        </button>
+
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            @_localization.WishListSelectionModal_Cancel
+        </button>
+    </ModalFooter>
+</Modal>

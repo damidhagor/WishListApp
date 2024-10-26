@@ -1,0 +1,19 @@
+﻿@using WishListApp.Components.Modals.Base
+@using WishListApp.Models.Modals
+@using WishListApp.Models.Modals.Results
+
+@inherits BaseModal<TextInputModalContext, TextInputResult>
+
+<Modal Id="@Context.Id">
+    <ModalHeader Title="@Context.Title" />
+
+    <ModalBody>
+        <div class="d-flex flex-row">
+            <input type="text" class="flex-grow-1 me-2" @ref="_input"
+                   placeholder="@Context.Placeholder" @bind="_text" @bind:event="oninput" @onkeydown="OnKeyDown">
+            <button type="button" class="btn btn-primary" @onclick="OnConfirm" disabled="@_isConfirmButtonDisabled">
+                <i class="bi bi-check-lg" /> @_confirmText
+            </button>
+        </div>
+    </ModalBody>
+</Modal>

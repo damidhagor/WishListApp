@@ -1,23 +1,22 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MongoDB.Bson;
-using WishListApp.Components.Modals;
+using WishListApp.Models.Modals.Results;
 using WishListApp.Services;
 
 namespace WishListApp.Components.Pages;
 
 public partial class WishListsPage(
     NavigationManager navigationManager,
+    IModalService modalService,
     IUserService userService,
     IWishListRepository wishListRepository,
     IWishListShareRepository shareRepository)
 {
     private readonly NavigationManager _navigationManager = navigationManager;
+    private readonly IModalService _modalService = modalService;
     private readonly IUserService _userService = userService;
     private readonly IWishListRepository _wishListRepository = wishListRepository;
     private readonly IWishListShareRepository _shareRepository = shareRepository;
-
-    private TextInputModalComponent _inputModal = default!;
-    private ConfirmationModalComponent _confirmationModal = default!;
 
     private WishListUser? _user;
 
@@ -63,52 +62,47 @@ public partial class WishListsPage(
 
     private async Task CreateNewWishList()
     {
-        await _inputModal.Open(
+        var result = await _modalService.ShowTextInput(
             title: _localization.WishListsPage_Add_Title,
-            placeholderText: _localization.WishListsPage_Add_Placeholder,
-            inputCallback: async (name) =>
-            {
-                if (string.IsNullOrWhiteSpace(name)
-                    || _user is null)
-                {
-                    return;
-                }
+            placeholder: _localization.WishListsPage_Add_Placeholder);
 
-                var wishList = await _wishListRepository.Add(name, _user.Identifier, default);
-                _navigationManager.NavigateTo($"wishlist?id={wishList.Id}");
-            });
+
+        if (!result.TryGetText(out var name)
+            || string.IsNullOrWhiteSpace(name)
+            || _user is null)
+        {
+            return;
+        }
+
+        var wishList = await _wishListRepository.Add(name, _user.Identifier, default);
+        _navigationManager.NavigateTo($"wishlist?id={wishList.Id}");
     }
 
     private async Task RenameWishList(WishList list)
     {
-        await _inputModal.Open(
+        var result = await _modalService.ShowTextInput(
             title: _localization.WishListsPage_Rename_Title,
             initialText: list.Name,
-            inputCanBeEmpty: false,
-            inputCallback: async (name) =>
-            {
-                if (string.IsNullOrWhiteSpace(name)
-                    || _user is null)
-                {
-                    return;
-                }
+            inputCanBeEmpty: false);
 
-                var wishList = await _wishListRepository.Rename(list.Id, name, default);
-                await LoadWishLists(default);
-            });
+        if (!result.TryGetText(out var name)
+            || string.IsNullOrWhiteSpace(name)
+            || _user is null)
+        {
+            return;
+        }
+
+        await _wishListRepository.Rename(list.Id, name, default);
+        await LoadWishLists(default);
     }
 
     private async Task DeleteWishList(ObjectId wishListId)
     {
-        await _confirmationModal.Open(
-            message: _localization.WishListsPage_Delete_Message,
-            confirmationCallback: async (confirmed) =>
-            {
-                if (confirmed)
-                {
-                    await _wishListRepository.Delete(wishListId, default);
-                    await LoadWishLists(default);
-                }
-            });
+        var result = await _modalService.ShowConfirmation(_localization.WishListsPage_Delete_Message);
+        if (result.IsConfirmed())
+        {
+            await _wishListRepository.Delete(wishListId, default);
+            await LoadWishLists(default);
+        }
     }
 }
