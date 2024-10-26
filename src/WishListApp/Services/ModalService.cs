@@ -14,13 +14,7 @@ public sealed class ModalService : IModalService
         string? title = null,
         string? confirmText = null,
         string? cancelText = null)
-        => await ShowModal(new ConfirmationModalContext
-        {
-            Title = title,
-            Message = message,
-            ConfirmText = confirmText,
-            CancelText = cancelText
-        });
+        => await ShowModal(new ConfirmationModalContext(message, title, confirmText, cancelText));
 
     public async Task<ModalResult<TextInputResult>> ShowTextInput(
         string? title = null,
@@ -28,32 +22,16 @@ public sealed class ModalService : IModalService
         string? initialText = null,
         bool inputCanBeEmpty = true,
         string? confirmText = null)
-        => await ShowModal(new TextInputModalContext
-        {
-            Title = title,
-            Placeholder = placeholder,
-            InitialText = initialText,
-            InputCanBeEmpty = inputCanBeEmpty,
-            ConfirmText = confirmText
-        });
+        => await ShowModal(new TextInputModalContext(title, placeholder, initialText, inputCanBeEmpty, confirmText));
 
     public async Task<ModalResult<None>> ShowShares(WishListViewModel viewModel)
-        => await ShowModal(new SharesModalContext
-        {
-            WishListViewModel = viewModel
-        });
+        => await ShowModal(new SharesModalContext(viewModel));
 
     public async Task<ModalResult<SelectWishListResult>> ShowSelectWishList(WishList[] lists)
-        => await ShowModal(new SelectWishListModalContext
-        {
-            Lists = lists
-        });
+        => await ShowModal(new SelectWishListModalContext(lists));
 
     public async Task<ModalResult<EditWishListItemResult>> ShowWishListItemEdit(WishListItem item)
-        => await ShowModal(new EditWishListItemModalContext
-        {
-            Item = item
-        });
+        => await ShowModal(new EditWishListItemModalContext(item));
 
     public void RegisterModalDisplay(ModalDisplay modalDisplay)
     {

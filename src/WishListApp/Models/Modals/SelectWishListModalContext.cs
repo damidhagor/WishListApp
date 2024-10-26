@@ -2,7 +2,4 @@
 
 namespace WishListApp.Models.Modals;
 
-public sealed class SelectWishListModalContext : ModalContext<SelectWishListResult>
-{
-    public required WishList[] Lists { get; init; }
-}
+public sealed record SelectWishListModalContext(WishList[] Lists) : ModalContext<SelectWishListResult>;

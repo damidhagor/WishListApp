@@ -2,7 +2,4 @@
 
 namespace WishListApp.Models.Modals;
 
-public sealed class EditWishListItemModalContext : ModalContext<EditWishListItemResult>
-{
-    public required WishListItem Item { get; init; }
-}
+public sealed record EditWishListItemModalContext(WishListItem Item) : ModalContext<EditWishListItemResult>;

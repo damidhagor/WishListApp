@@ -2,7 +2,7 @@
 
 namespace WishListApp.Models.Modals;
 
-public abstract class ModalContext<T> : IModalContext
+public abstract record ModalContext<T> : IModalContext
 {
     protected readonly TaskCompletionSource<ModalResult<T>> _tcs = new();
 
