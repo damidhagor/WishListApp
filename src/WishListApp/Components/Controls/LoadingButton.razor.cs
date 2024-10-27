@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace WishListApp.Components.Controls;
 
-public partial class LoadingButton
+public sealed partial class LoadingButton
 {
     private bool _isLoading = false;
 

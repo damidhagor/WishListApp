@@ -7,7 +7,7 @@ using WishListApp.Models.Modals.Results;
 
 namespace WishListApp.Components.Modals;
 
-public partial class TextInputModal(IJSRuntime jsRuntime)
+public sealed partial class TextInputModal(IJSRuntime jsRuntime)
     : BaseModal<TextInputModalContext, TextInputResult>(jsRuntime)
 {
     private ElementReference _input = default!;

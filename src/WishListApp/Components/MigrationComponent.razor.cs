@@ -3,7 +3,7 @@ using WishListApp.Services;
 
 namespace WishListApp.Components;
 
-public partial class MigrationComponent(
+public sealed partial class MigrationComponent(
     [FromKeyedServices("MigrationMessenger")] IMessenger messenger,
     IMigrationService migrationService)
     : IRecipient<MigrationStarted>,

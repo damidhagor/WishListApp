@@ -3,7 +3,7 @@ using WishListApp.Services;
 
 namespace WishListApp.Components.Modals;
 
-public partial class ModalDisplay(IModalService modalService) : IDisposable
+public sealed partial class ModalDisplay(IModalService modalService) : IDisposable
 {
     private readonly IModalService _modalService = modalService;
     private readonly List<IModalContext> _modals = [];

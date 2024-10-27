@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace WishListApp.Components;
 
-public partial class PriorityComponent
+public sealed partial class PriorityComponent
 {
     private int _hoveredPriority = -1;
     private int _displayedPriority => _hoveredPriority > -1 ? _hoveredPriority : Priority;

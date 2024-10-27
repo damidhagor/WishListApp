@@ -6,7 +6,7 @@ using WishListApp.Models.Modals.Results;
 
 namespace WishListApp.Components.Modals;
 
-public partial class ConfirmationModal(IJSRuntime jsRuntime)
+public sealed partial class ConfirmationModal(IJSRuntime jsRuntime)
     : BaseModal<ConfirmationModalContext, ConfirmationResult>(jsRuntime)
 {
     private ElementReference _confirmButton = default!;

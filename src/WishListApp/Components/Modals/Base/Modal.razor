@@ -5,20 +5,3 @@
         </div>
     </div>
 </div>
-
-@code {
-
-    [Parameter, EditorRequired]
-    public string Id { get; set; } = default!;
-
-    [Parameter, EditorRequired]
-    public RenderFragment ChildContent { get; set; } = default!;
-
-    [Parameter]
-    public string Class { get; set; } = "";
-
-    [Parameter]
-    public bool AllowFullscreen { get; set; }
-
-    private string _fullscreenClass => AllowFullscreen ? "modal-fullscreen-md-down" : string.Empty;
-}

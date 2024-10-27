@@ -4,7 +4,7 @@ using WishListApp.Services;
 
 namespace WishListApp.Components;
 
-public partial class ItemComponent(
+public sealed partial class ItemComponent(
     NavigationManager navigationManager,
     IModalService modalService,
     IWishListRepository repository)

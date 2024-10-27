@@ -5,7 +5,7 @@ using WishListApp.Models.Modals.Results;
 
 namespace WishListApp.Components.Modals;
 
-public partial class SelectWishListModal(IJSRuntime jsRuntime)
+public sealed partial class SelectWishListModal(IJSRuntime jsRuntime)
     : BaseModal<SelectWishListModalContext, SelectWishListResult>(jsRuntime)
 {
     private WishList? _selectedList;

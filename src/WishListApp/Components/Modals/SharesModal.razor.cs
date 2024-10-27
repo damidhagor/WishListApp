@@ -4,7 +4,7 @@ using WishListApp.Models.Modals;
 
 namespace WishListApp.Components.Modals;
 
-public partial class SharesModal(
+public sealed partial class SharesModal(
     IJSRuntime jsRuntime,
     IMessenger messenger,
     IWishListShareRepository shareRepository)

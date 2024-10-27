@@ -6,7 +6,7 @@ using WishListApp.Services;
 
 namespace WishListApp.Components.Modals;
 
-public partial class EditWishListItemModal(
+public sealed partial class EditWishListItemModal(
     IJSRuntime jsRuntime,
     IModalService modalService)
     : BaseModal<EditWishListItemModalContext, EditWishListItemResult>(jsRuntime)

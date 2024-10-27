@@ -5,7 +5,7 @@ using WishListApp.Services;
 
 namespace WishListApp.Identity.Components;
 
-public partial class IdentityHeader(
+public sealed partial class IdentityHeader(
     IIdentityService accountService,
     IMigrationService migrationService,
     [FromKeyedServices("MigrationMessenger")] IMessenger messenger)

@@ -4,7 +4,7 @@ using WishListApp.Services;
 
 namespace WishListApp.Components.Pages;
 
-public partial class WishListPage(
+public sealed partial class WishListPage(
     NavigationManager navigationManager,
     IMessenger messenger,
     IUserService userService,
