@@ -5,7 +5,7 @@ using WishListApp.Services;
 
 namespace WishListApp.Components;
 
-public sealed partial class ShareComponent(
+public sealed partial class ShareDisplay(
     IJSRuntime jsRuntime,
     IModalService modalService,
     IAccessKeyGenerator accessKeyGenerator)

@@ -4,7 +4,7 @@ using WishListApp.Services;
 
 namespace WishListApp.Components;
 
-public sealed partial class WishListComponent(
+public sealed partial class WishListDisplay(
     IModalService modalService,
     IMessenger messenger)
     : IRecipient<WishListUpdated>

@@ -3,7 +3,7 @@ using WishListApp.ProductCrawling.Services;
 
 namespace WishListApp.Components;
 
-public sealed partial class ItemEditComponent(
+public sealed partial class ItemEditor(
     IProductCrawlerService productCrawlerService,
     IWishListItemRepository itemRepository)
 {

@@ -63,10 +63,10 @@
 
             <div class="d-flex flex-row mt-auto">
 
-                <PriorityComponent Class=""
-                                   @bind-Priority:get="Item.Priority"
-                                   @bind-Priority:set="SetItemPriority"
-                                   IsReadonly="!ViewModel.ViewedByOwner" />
+                <PrioritySelector Class=""
+                                  @bind-Priority:get="Item.Priority"
+                                  @bind-Priority:set="SetItemPriority"
+                                  IsReadonly="!ViewModel.ViewedByOwner" />
 
                 @if (Item.Price > 0)
                 {

@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace WishListApp.Components;
 
-public sealed partial class PurchaseButtonComponent
+public sealed partial class PurchaseButton
 {
     [CascadingParameter]
     public WishListItem Item { get; set; } = default!;

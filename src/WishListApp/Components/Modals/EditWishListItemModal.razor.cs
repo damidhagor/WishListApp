@@ -12,13 +12,13 @@ public sealed partial class EditWishListItemModal(
     : BaseModal<EditWishListItemModalContext, EditWishListItemResult>(jsRuntime)
 {
     private readonly IModalService _modalService = modalService;
-    private ItemEditComponent _itemEditComponent = default!;
+    private ItemEditor _itemEditor = default!;
 
     private async Task LoadProductInformation()
     {
         try
         {
-            await _itemEditComponent.LoadProductInformation();
+            await _itemEditor.LoadProductInformation();
         }
         catch (Exception)
         {
@@ -28,7 +28,7 @@ public sealed partial class EditWishListItemModal(
 
     private async Task SaveWishListItem()
     {
-        await _itemEditComponent.SaveWishListItem();
+        await _itemEditor.SaveWishListItem();
 
         Context.SetResult(new Edited());
         await Hide();
