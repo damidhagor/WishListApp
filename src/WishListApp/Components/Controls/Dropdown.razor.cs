@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace WishListApp.Components.Controls;
 
-public sealed partial class DropdownComponent<T>
+public sealed partial class Dropdown<T>
 {
     [Parameter, EditorRequired]
     public IReadOnlyList<T> Items { get; set; } = [];

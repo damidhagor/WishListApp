@@ -10,7 +10,7 @@
     <ModalBody>
         <div class="d-flex align-items-center">
             <h5 class="me-4 mt-0 mb-0">@_localization.WishListSelectionModal_Label</h5>
-            <DropdownComponent T="WishListApp.Models.WishList"
+            <Dropdown T="WishListApp.Models.WishList"
                                Items="@Context.Lists"
                                @bind-SelectedItem="_selectedList">
                 <ItemTemplate>
@@ -19,7 +19,7 @@
                 <EmptySelectionTemplate>
                     -
                 </EmptySelectionTemplate>
-            </DropdownComponent>
+            </Dropdown>
         </div>
     </ModalBody>
 
