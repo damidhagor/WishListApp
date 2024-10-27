@@ -23,8 +23,4 @@ wishListApp.AddKeycloakReference(
     "IdentityOptions__ClientId",
     "IdentityOptions__ClientSecret");
 
-wishListApp
-    .WaitFor(keycloak)
-    .WaitFor(mongoDB);
-
 builder.Build().Run();
