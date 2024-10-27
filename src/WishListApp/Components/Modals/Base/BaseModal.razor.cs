@@ -8,9 +8,9 @@ namespace WishListApp.Components.Modals.Base;
 public abstract class BaseModal<TContext, TResult>(IJSRuntime jsRuntime) : ComponentBase, IAsyncDisposable
     where TContext : ModalContext<TResult>
 {
-    private readonly IJSRuntime _jsRuntime = jsRuntime;
     private IJSObjectReference _jsModule = default!;
     private DotNetObjectReference<BaseModal<TContext, TResult>> _modalReference = default!;
+    protected readonly IJSRuntime _jsRuntime = jsRuntime;
 
     [Parameter, EditorRequired]
     public TContext Context { get; set; } = default!;

@@ -16,6 +16,8 @@ public interface IModalService
 
     Task<ModalResult<EditWishListItemResult>> ShowWishListItemEdit(WishListItem item);
 
+    Task<ModalResult<None>> ShowError(string message, string? title = null, string? details = null, Exception? exception = null, string? confirmText = null);
+
     void RegisterModalDisplay(ModalDisplay modalDisplay);
 
     void UnregisterModalDisplay(ModalDisplay modalDisplay);

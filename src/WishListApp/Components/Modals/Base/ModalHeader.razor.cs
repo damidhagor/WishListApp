@@ -5,7 +5,7 @@ namespace WishListApp.Components.Modals.Base;
 public sealed partial class ModalHeader
 {
     [Parameter]
-    public RenderFragment? Header { get; set; }
+    public RenderFragment? ChildContent { get; set; }
 
     [Parameter]
     public string? Title { get; set; }

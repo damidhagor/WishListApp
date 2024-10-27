@@ -33,6 +33,14 @@ public sealed class ModalService : IModalService
     public async Task<ModalResult<EditWishListItemResult>> ShowWishListItemEdit(WishListItem item)
         => await ShowModal(new EditWishListItemModalContext(item));
 
+    public async Task<ModalResult<None>> ShowError(
+        string message,
+        string? title = null,
+        string? details = null,
+        Exception? exception = null,
+        string? confirmText = null)
+        => await ShowModal(new ErrorModalContext(message, title, details, exception, confirmText));
+
     public void RegisterModalDisplay(ModalDisplay modalDisplay)
     {
         lock (_lock)

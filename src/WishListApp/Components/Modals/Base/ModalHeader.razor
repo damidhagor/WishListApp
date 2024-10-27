@@ -1,9 +1,9 @@
-﻿@if (Header is not null || Title is not null || ShowCloseButton)
+﻿@if (ChildContent is not null || Title is not null || ShowCloseButton)
 {
     <div class="modal-header">
-        @if (Header is not null)
+        @if (ChildContent is not null)
         {
-            <div>@Header</div>
+            <div>@ChildContent</div>
         }
         else
         {

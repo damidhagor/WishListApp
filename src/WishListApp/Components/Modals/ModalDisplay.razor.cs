@@ -45,6 +45,7 @@ public sealed partial class ModalDisplay(IModalService modalService) : IDisposab
             SharesModalContext _ => true,
             SelectWishListModalContext _ => true,
             EditWishListItemModalContext _ => true,
+            ErrorModalContext _ => true,
             _ => false
         };
 }

@@ -19,5 +19,8 @@
         case EditWishListItemModalContext editItemContext:
             <EditWishListItemModal Context="editItemContext" AutoShow="true" OnHidden="RemoveModal" />
             break;
+        case ErrorModalContext errorContext:
+            <ErrorModal Context="errorContext" AutoShow="true" OnHidden="RemoveModal" />
+            break;
     }
 }
