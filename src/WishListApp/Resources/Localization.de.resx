@@ -339,4 +339,58 @@
   <data name="ShareComponent_CopyLink" xml:space="preserve">
     <value>Link kopieren</value>
   </data>
+  <data name="Error_ListReload" xml:space="preserve">
+    <value>Die Wunschliste konnte nicht geladen werden.</value>
+  </data>
+  <data name="Error_ItemMove" xml:space="preserve">
+    <value>Der Eintrag konnte nicht verschoben werden.</value>
+  </data>
+  <data name="Error_ItemPurchaseReset" xml:space="preserve">
+    <value>Der Eintrag konnte nicht zurückgegeben werden.</value>
+  </data>
+  <data name="Error_ItemPrioritySet" xml:space="preserve">
+    <value>Die Priorität konnte nicht aktualisiert werden.</value>
+  </data>
+  <data name="Error_ItemDelete" xml:space="preserve">
+    <value>Der Eintrag konnte nicht gelöscht werden.</value>
+  </data>
+  <data name="Error_ProductInfoLoad" xml:space="preserve">
+    <value>Die Produktinformationen konnten nicht abgerufen werden.</value>
+  </data>
+  <data name="Error_ItemUpdate" xml:space="preserve">
+    <value>Der Eintrag konnte nicht aktualisiert werden.</value>
+  </data>
+  <data name="Error_SharesGet" xml:space="preserve">
+    <value>Die Freigaben konnten nicht geladen werden.</value>
+  </data>
+  <data name="Error_ShareAdd" xml:space="preserve">
+    <value>Die Freigabe konnte nicht gespeichert werden.</value>
+  </data>
+  <data name="Error_PurchaseUpdate" xml:space="preserve">
+    <value>Der Kaufstatus konnte nicht aktualisiert werden.</value>
+  </data>
+  <data name="Error_ShareDelete" xml:space="preserve">
+    <value>Die Freigabe konnte nicht gelöscht werden.</value>
+  </data>
+  <data name="Error_ListLoad" xml:space="preserve">
+    <value>Die Wunschliste konnte nicht geladen werden.</value>
+  </data>
+  <data name="Error_ListRename" xml:space="preserve">
+    <value>Die Wunschliste konnte nicht umbenannt werden.</value>
+  </data>
+  <data name="Error_ItemAdd" xml:space="preserve">
+    <value>Der neue Eintrag konnte nicht hinzugefügt werden.</value>
+  </data>
+  <data name="Error_ItemDeletePurchased" xml:space="preserve">
+    <value>Die gekauften Einträge konnten nicht gelöscht werden.</value>
+  </data>
+  <data name="Error_ListsLoad" xml:space="preserve">
+    <value>Die Wunschlisten konnten nicht geladen werden.</value>
+  </data>
+  <data name="Error_ListAdd" xml:space="preserve">
+    <value>Die Wunschliste konnte nicht erstellt werden.</value>
+  </data>
+  <data name="Error_ListDelete" xml:space="preserve">
+    <value>Die Wunschliste konnte nicht gelöscht werden.</value>
+  </data>
 </root>

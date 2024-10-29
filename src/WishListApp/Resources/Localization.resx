@@ -339,4 +339,58 @@
   <data name="ShareComponent_CopyLink" xml:space="preserve">
     <value>Copy Link</value>
   </data>
+  <data name="Error_ListReload" xml:space="preserve">
+    <value>Reloading wish list failed.</value>
+  </data>
+  <data name="Error_ItemMove" xml:space="preserve">
+    <value>Moving the wish list item failed.</value>
+  </data>
+  <data name="Error_ItemPurchaseReset" xml:space="preserve">
+    <value>Resetting the purchase failed.</value>
+  </data>
+  <data name="Error_ItemPrioritySet" xml:space="preserve">
+    <value>Updating the item priority failed.</value>
+  </data>
+  <data name="Error_ItemDelete" xml:space="preserve">
+    <value>Deleting the item failed.</value>
+  </data>
+  <data name="Error_ProductInfoLoad" xml:space="preserve">
+    <value>Loading product information failed.</value>
+  </data>
+  <data name="Error_ItemUpdate" xml:space="preserve">
+    <value>Updating the item failed.</value>
+  </data>
+  <data name="Error_SharesGet" xml:space="preserve">
+    <value>Getting the shares failed.</value>
+  </data>
+  <data name="Error_ShareAdd" xml:space="preserve">
+    <value>Saving the new share failed.</value>
+  </data>
+  <data name="Error_PurchaseUpdate" xml:space="preserve">
+    <value>Updating the purchase failed.</value>
+  </data>
+  <data name="Error_ShareDelete" xml:space="preserve">
+    <value>Deleting the share failed.</value>
+  </data>
+  <data name="Error_ListLoad" xml:space="preserve">
+    <value>Loading the wish list failed.</value>
+  </data>
+  <data name="Error_ListRename" xml:space="preserve">
+    <value>Renaming the wish list failed.</value>
+  </data>
+  <data name="Error_ItemAdd" xml:space="preserve">
+    <value>The new item could not be added.</value>
+  </data>
+  <data name="Error_ItemDeletePurchased" xml:space="preserve">
+    <value>Deleting the purchased items failed.</value>
+  </data>
+  <data name="Error_ListsLoad" xml:space="preserve">
+    <value>Loading the wish lists failed.</value>
+  </data>
+  <data name="Error_ListAdd" xml:space="preserve">
+    <value>Creating the wish list failed.</value>
+  </data>
+  <data name="Error_ListDelete" xml:space="preserve">
+    <value>Deleting the wish list failed.</value>
+  </data>
 </root>

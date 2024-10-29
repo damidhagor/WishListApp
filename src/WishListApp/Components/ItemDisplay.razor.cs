@@ -5,11 +5,9 @@ using WishListApp.Services;
 namespace WishListApp.Components;
 
 public sealed partial class ItemDisplay(
-    NavigationManager navigationManager,
     IModalService modalService,
     IWishListRepository repository)
 {
-    private readonly NavigationManager _navigationManager = navigationManager;
     private readonly IModalService _modalService = modalService;
     private readonly IWishListRepository _repository = repository;
 
@@ -24,7 +22,14 @@ public sealed partial class ItemDisplay(
         var result = await _modalService.ShowWishListItemEdit(Item);
         if (result.IsEdited())
         {
-            await ViewModel.ReloadWishList(default);
+            try
+            {
+                await ViewModel.ReloadWishList(default);
+            }
+            catch (Exception e)
+            {
+                await _modalService.ShowError(_localization.Error_ListReload, exception: e);
+            }
         }
     }
 
@@ -35,30 +40,64 @@ public sealed partial class ItemDisplay(
             return;
         }
 
-        var lists = (await _repository.GetByOwnerId(ViewModel.LoggedInUser!.Identifier, default))
-            .Where(l => l.Id != ViewModel.WishList.Id)
-            .ToModels()
-            .ToArray();
-
-        var result = await _modalService.ShowSelectWishList(lists);
-        if (!result.TryGetList(out var list))
+        try
         {
-            return;
-        }
+            var lists = (await _repository.GetByOwnerId(ViewModel.LoggedInUser!.Identifier, default))
+                .Where(l => l.Id != ViewModel.WishList.Id)
+                .ToModels()
+                .ToArray();
 
-        await ViewModel.MoveItemToWishList(Item, list, default);
+            var result = await _modalService.ShowSelectWishList(lists);
+            if (!result.TryGetList(out var list))
+            {
+                return;
+            }
+
+            await ViewModel.MoveItemToWishList(Item, list, default);
+        }
+        catch (Exception e)
+        {
+            await _modalService.ShowError(_localization.Error_ItemMove, exception: e);
+        }
     }
 
-    private async Task ResetItemPurchase() => await ViewModel.ResetWishListItemPurchase(Item, default);
+    private async Task ResetItemPurchase()
+    {
+        try
+        {
+            await ViewModel.ResetWishListItemPurchase(Item, default);
+        }
+        catch (Exception e)
+        {
+            await _modalService.ShowError(_localization.Error_ItemPurchaseReset, exception: e);
+        }
+    }
 
-    private async Task SetItemPriority(int priority) => await ViewModel.SetWishListItemPriority(Item, priority, default);
+    private async Task SetItemPriority(int priority)
+    {
+        try
+        {
+            await ViewModel.SetWishListItemPriority(Item, priority, default);
+        }
+        catch (Exception e)
+        {
+            await _modalService.ShowError(_localization.Error_ItemPrioritySet, exception: e);
+        }
+    }
 
     private async Task DeleteItem()
     {
-        var result = await _modalService.ShowConfirmation(_localization.Item_Delete_Message);
-        if (result.IsConfirmed())
+        try
         {
-            await ViewModel.DeleteWishListItem(Item, default);
+            var result = await _modalService.ShowConfirmation(_localization.Item_Delete_Message);
+            if (result.IsConfirmed())
+            {
+                await ViewModel.DeleteWishListItem(Item, default);
+            }
+        }
+        catch (Exception e)
+        {
+            await _modalService.ShowError(_localization.Error_ItemDelete, exception: e);
         }
     }
 }

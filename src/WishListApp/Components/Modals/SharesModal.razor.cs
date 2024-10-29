@@ -1,18 +1,21 @@
 using Microsoft.JSInterop;
 using WishListApp.Components.Modals.Base;
 using WishListApp.Models.Modals;
+using WishListApp.Services;
 
 namespace WishListApp.Components.Modals;
 
 public sealed partial class SharesModal(
     IJSRuntime jsRuntime,
     IMessenger messenger,
+    IModalService modalService,
     IWishListShareRepository shareRepository)
     : BaseModal<SharesModalContext, None>(jsRuntime),
       IRecipient<WishListShareAdded>,
       IRecipient<WishListShareDeleted>
 {
     private readonly IMessenger _messenger = messenger;
+    private readonly IModalService _modalService = modalService;
     private readonly IWishListShareRepository _shareRepository = shareRepository;
 
     private List<WishListShare> _shares = [];
@@ -40,13 +43,27 @@ public sealed partial class SharesModal(
 
     protected override async Task OnParametersSetAsync()
     {
-        var shares = await _shareRepository.GetByWishListId(Context.WishListViewModel.WishList.Id, default);
-        _shares = shares.ToModels().ToList();
+        try
+        {
+            var shares = await _shareRepository.GetByWishListId(Context.WishListViewModel.WishList.Id, default);
+            _shares = shares.ToModels().ToList();
+        }
+        catch (Exception e)
+        {
+            await _modalService.ShowError(_localization.Error_SharesGet, exception: e);
+        }
     }
 
     private async Task AddNewWishListShare()
     {
-        await Context.WishListViewModel.AddWishListShare(_newShareName, default);
-        _newShareName = "";
+        try
+        {
+            await Context.WishListViewModel.AddWishListShare(_newShareName, default);
+            _newShareName = "";
+        }
+        catch (Exception e)
+        {
+            await _modalService.ShowError(_localization.Error_ShareAdd, exception: e);
+        }
     }
 }

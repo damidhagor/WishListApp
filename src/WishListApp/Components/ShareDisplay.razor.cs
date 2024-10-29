@@ -26,10 +26,17 @@ public sealed partial class ShareDisplay(
 
     private async Task DeleteShare()
     {
-        var result = await _modalService.ShowConfirmation(string.Format(_localization.ShareComponent_Delete_Message, Share.Name));
-        if (result.IsConfirmed())
+        try
         {
-            await ViewModel.DeleteWishListShare(Share, default);
+            var result = await _modalService.ShowConfirmation(string.Format(_localization.ShareComponent_Delete_Message, Share.Name));
+            if (result.IsConfirmed())
+            {
+                await ViewModel.DeleteWishListShare(Share, default);
+            }
+        }
+        catch (Exception e)
+        {
+            await _modalService.ShowError(_localization.Error_ShareDelete, exception: e);
         }
     }
 }

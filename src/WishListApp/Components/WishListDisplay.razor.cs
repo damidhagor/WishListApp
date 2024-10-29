@@ -27,46 +27,67 @@ public sealed partial class WishListDisplay(
 
     private async Task RenameWishList()
     {
-        var result = await _modalService.ShowTextInput(
-            title: _localization.WishList_Settings_Rename_Title,
-            initialText: ViewModel.WishList.Name);
-
-        if (result.TryGetText(out var name))
+        try
         {
-            await ViewModel.RenameWishList(name, default);
+            var result = await _modalService.ShowTextInput(
+                title: _localization.WishList_Settings_Rename_Title,
+                initialText: ViewModel.WishList.Name);
+
+            if (result.TryGetText(out var name))
+            {
+                await ViewModel.RenameWishList(name, default);
+            }
+        }
+        catch (Exception e)
+        {
+            await _modalService.ShowError(_localization.Error_ListRename, exception: e);
         }
     }
 
     private async Task AddNewWishListItem()
     {
-        var urlResult = await _modalService.ShowTextInput(
-            title: _localization.WishList_Add_Title,
-            placeholder: _localization.WishList_Add_Placeholder);
-
-        if (!urlResult.TryGetText(out var url))
+        try
         {
-            return;
+            var urlResult = await _modalService.ShowTextInput(
+                title: _localization.WishList_Add_Title,
+                placeholder: _localization.WishList_Add_Placeholder);
+
+            if (!urlResult.TryGetText(out var url))
+            {
+                return;
+            }
+
+            var item = await ViewModel.AddWishListItem(url, default);
+            if (item is null)
+            {
+                return;
+            }
+
+            var editResult = await _modalService.ShowWishListItemEdit(item);
+            if (editResult.IsEdited())
+            {
+                await ViewModel.ReloadWishList(default);
+            }
         }
-
-        var item = await ViewModel.AddWishListItem(url, default);
-        if (item is null)
+        catch (Exception e)
         {
-            return;
-        }
-
-        var editResult = await _modalService.ShowWishListItemEdit(item);
-        if (editResult.IsEdited())
-        {
-            await ViewModel.ReloadWishList(default);
+            await _modalService.ShowError(_localization.Error_ItemAdd, exception: e);
         }
     }
 
     private async Task DeletePurchasedWishListItems()
     {
-        var result = await _modalService.ShowConfirmation(_localization.WishList_DeletePurchasedItems_Message);
-        if (result.IsConfirmed())
+        try
         {
-            await ViewModel.DeletePurchasedWishListItems(default);
+            var result = await _modalService.ShowConfirmation(_localization.WishList_DeletePurchasedItems_Message);
+            if (result.IsConfirmed())
+            {
+                await ViewModel.DeletePurchasedWishListItems(default);
+            }
+        }
+        catch (Exception e)
+        {
+            await _modalService.ShowError(_localization.Error_ItemDeletePurchased, exception: e);
         }
     }
 

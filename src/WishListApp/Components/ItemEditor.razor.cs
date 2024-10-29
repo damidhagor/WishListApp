@@ -1,12 +1,15 @@
 using Microsoft.AspNetCore.Components;
 using WishListApp.ProductCrawling.Services;
+using WishListApp.Services;
 
 namespace WishListApp.Components;
 
 public sealed partial class ItemEditor(
+    IModalService modalService,
     IProductCrawlerService productCrawlerService,
     IWishListItemRepository itemRepository)
 {
+    private readonly IModalService _modalService = modalService;
     private readonly IProductCrawlerService _productCrawlerService = productCrawlerService;
     private readonly IWishListItemRepository _itemRepository = itemRepository;
 
@@ -41,36 +44,52 @@ public sealed partial class ItemEditor(
             return;
         }
 
-        var info = await _productCrawlerService.CrawlProduct(new Uri(Item.Url), default);
-        _imageUrl = string.IsNullOrWhiteSpace(info.ImageUrl) ? _imageUrl : info.ImageUrl;
-        _siteName = string.IsNullOrWhiteSpace(info.SiteName) ? _siteName : info.SiteName;
-        _name = string.IsNullOrWhiteSpace(info.Title) ? _name : info.Title;
-        _description = string.IsNullOrWhiteSpace(info.Description) ? _description : info.Description;
-        _price = info.Price ?? _price;
-        _currency = string.IsNullOrWhiteSpace(info.Currency) ? _currency : info.Currency;
+        try
+        {
+            var info = await _productCrawlerService.CrawlProduct(new Uri(Item.Url), default);
+            _imageUrl = string.IsNullOrWhiteSpace(info.ImageUrl) ? _imageUrl : info.ImageUrl;
+            _siteName = string.IsNullOrWhiteSpace(info.SiteName) ? _siteName : info.SiteName;
+            _name = string.IsNullOrWhiteSpace(info.Title) ? _name : info.Title;
+            _description = string.IsNullOrWhiteSpace(info.Description) ? _description : info.Description;
+            _price = info.Price ?? _price;
+            _currency = string.IsNullOrWhiteSpace(info.Currency) ? _currency : info.Currency;
 
-        StateHasChanged();
+            StateHasChanged();
+        }
+        catch (Exception e)
+        {
+            await _modalService.ShowError(_localization.Error_ProductInfoLoad, exception: e);
+        }
     }
 
-    public async Task SaveWishListItem()
+    public async Task<bool> SaveWishListItem()
     {
         if (Item is null)
         {
-            return;
+            return false;
         }
 
-        var updatedItem = Item with
+        try
         {
-            ImageUrl = _imageUrl,
-            SiteName = _siteName,
-            Name = _name,
-            Description = _description,
-            Note = _note,
-            Price = _price,
-            Currency = _currency,
-            Priority = _priority
-        };
+            var updatedItem = Item with
+            {
+                ImageUrl = _imageUrl,
+                SiteName = _siteName,
+                Name = _name,
+                Description = _description,
+                Note = _note,
+                Price = _price,
+                Currency = _currency,
+                Priority = _priority
+            };
 
-        await _itemRepository.Update(updatedItem.WishListId, updatedItem.ToDataModel(), default);
+            await _itemRepository.Update(updatedItem.WishListId, updatedItem.ToDataModel(), default);
+            return true;
+        }
+        catch (Exception e)
+        {
+            await _modalService.ShowError(_localization.Error_ItemUpdate, exception: e);
+            return false;
+        }
     }
 }

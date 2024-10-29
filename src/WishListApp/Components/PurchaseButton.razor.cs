@@ -1,9 +1,12 @@
 using Microsoft.AspNetCore.Components;
+using WishListApp.Services;
 
 namespace WishListApp.Components;
 
-public sealed partial class PurchaseButton
+public sealed partial class PurchaseButton(IModalService modalService)
 {
+    private readonly IModalService _modalService = modalService;
+
     [CascadingParameter]
     public WishListItem Item { get; set; } = default!;
 
@@ -31,13 +34,20 @@ public sealed partial class PurchaseButton
 
     private async Task ChangePurchase()
     {
-        if (Item.IsPurchasedByShare(ViewModel.LoggedInShare?.Id))
+        try
         {
-            await ViewModel.ResetWishListItemPurchase(Item, default);
+            if (Item.IsPurchasedByShare(ViewModel.LoggedInShare?.Id))
+            {
+                await ViewModel.ResetWishListItemPurchase(Item, default);
+            }
+            else if (!Item.IsPurchased)
+            {
+                await ViewModel.MarkWishListItemAsPurchased(Item, default);
+            }
         }
-        else if (!Item.IsPurchased)
+        catch (Exception e)
         {
-            await ViewModel.MarkWishListItemAsPurchased(Item, default);
+            await _modalService.ShowError(_localization.Error_PurchaseUpdate, exception: e);
         }
     }
 }

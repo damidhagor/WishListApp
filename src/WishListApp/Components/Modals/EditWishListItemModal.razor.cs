@@ -14,17 +14,7 @@ public sealed partial class EditWishListItemModal(
     private readonly IModalService _modalService = modalService;
     private ItemEditor _itemEditor = default!;
 
-    private async Task LoadProductInformation()
-    {
-        try
-        {
-            await _itemEditor.LoadProductInformation();
-        }
-        catch (Exception)
-        {
-
-        }
-    }
+    private async Task LoadProductInformation() => await _itemEditor.LoadProductInformation();
 
     private async Task SaveWishListItem()
     {

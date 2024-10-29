@@ -52,8 +52,9 @@ public sealed partial class WishListsPage(
 
             _wishLists = wishListsWithShares;
         }
-        catch
+        catch (Exception e)
         {
+            await _modalService.ShowError(_localization.Error_ListsLoad, exception: e);
             _wishLists = [];
         }
 
@@ -74,8 +75,15 @@ public sealed partial class WishListsPage(
             return;
         }
 
-        var wishList = await _wishListRepository.Add(name, _user.Identifier, default);
-        _navigationManager.NavigateTo($"wishlist?id={wishList.Id}");
+        try
+        {
+            var wishList = await _wishListRepository.Add(name, _user.Identifier, default);
+            _navigationManager.NavigateTo($"wishlist?id={wishList.Id}");
+        }
+        catch (Exception e)
+        {
+            await _modalService.ShowError(_localization.Error_ListAdd, exception: e);
+        }
     }
 
     private async Task RenameWishList(WishList list)
@@ -92,8 +100,15 @@ public sealed partial class WishListsPage(
             return;
         }
 
-        await _wishListRepository.Rename(list.Id, name, default);
-        await LoadWishLists(default);
+        try
+        {
+            await _wishListRepository.Rename(list.Id, name, default);
+            await LoadWishLists(default);
+        }
+        catch (Exception e)
+        {
+            await _modalService.ShowError(_localization.Error_ListRename, exception: e);
+        }
     }
 
     private async Task DeleteWishList(ObjectId wishListId)
@@ -101,8 +116,15 @@ public sealed partial class WishListsPage(
         var result = await _modalService.ShowConfirmation(_localization.WishListsPage_Delete_Message);
         if (result.IsConfirmed())
         {
-            await _wishListRepository.Delete(wishListId, default);
-            await LoadWishLists(default);
+            try
+            {
+                await _wishListRepository.Delete(wishListId, default);
+                await LoadWishLists(default);
+            }
+            catch (Exception e)
+            {
+                await _modalService.ShowError(_localization.Error_ListDelete, exception: e);
+            }
         }
     }
 }
