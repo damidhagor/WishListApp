@@ -1,5 +1,5 @@
+using BlazorDialogs.Services;
 using Microsoft.AspNetCore.Components;
-using WishListApp.Services;
 
 namespace WishListApp.Components;
 

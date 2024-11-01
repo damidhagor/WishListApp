@@ -1,7 +1,7 @@
+using BlazorDialogs.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using WishListApp.Models.Modals.Results;
-using WishListApp.Services;
 
 namespace WishListApp.Components;
 

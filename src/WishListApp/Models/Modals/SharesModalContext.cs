@@ -1,3 +1,12 @@
-﻿namespace WishListApp.Models.Modals;
+﻿using BlazorDialogs.Models.Contexts;
+using BlazorDialogs.Models.Results;
+using WishListApp.Components.Modals;
 
-public sealed record SharesModalContext(WishListViewModel WishListViewModel) : ModalContext<None>;
+namespace WishListApp.Models.Modals;
+
+public sealed record SharesModalContext(WishListViewModel WishListViewModel) : BaseModalContext<None>
+{
+    private static Type _modalType = typeof(SharesModal);
+
+    public override Type ModalType => _modalType;
+}

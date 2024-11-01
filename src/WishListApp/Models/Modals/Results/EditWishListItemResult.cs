@@ -1,4 +1,5 @@
-﻿using OneOf;
+﻿using BlazorDialogs.Models.Results;
+using OneOf;
 
 namespace WishListApp.Models.Modals.Results;
 

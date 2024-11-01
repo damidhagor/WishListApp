@@ -1,4 +1,4 @@
-﻿using WishListApp.SourceGeneration.LocalizationServiceGenerator;
+﻿using BlazorSourceGeneration.LocalizationServiceGenerator;
 
 namespace WishListApp.Resources;
 

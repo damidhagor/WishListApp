@@ -13,19 +13,17 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\WishListApp.SourceGeneration\WishListApp.SourceGeneration.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
+		<ProjectReference Include="..\WishListApp.Data\WishListApp.Data.csproj" />
+		<ProjectReference Include="..\WishListApp.ProductCrawling\WishListApp.ProductCrawling.csproj" />
+		<ProjectReference Include="..\WishListApp.ServiceDefaults\WishListApp.ServiceDefaults.csproj" />
+		<ProjectReference Include="..\shared\BlazorLibraries\src\BlazorDialogs\BlazorDialogs.csproj" />
+		<ProjectReference Include="..\shared\BlazorLibraries\src\BlazorSourceGeneration\BlazorSourceGeneration.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Diagnostics" Version="8.3.2" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="9.0.0-rc.1.24452.1" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="..\WishListApp.Data\WishListApp.Data.csproj" />
-		<ProjectReference Include="..\WishListApp.ProductCrawling\WishListApp.ProductCrawling.csproj" />
-		<ProjectReference Include="..\WishListApp.ServiceDefaults\WishListApp.ServiceDefaults.csproj" />
 	</ItemGroup>
 
 </Project>

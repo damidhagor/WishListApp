@@ -1,0 +1,3 @@
+[submodule "src/shared/BlazorLibraries"]
+	path = src/shared/BlazorLibraries
+	url = https://github.com/damidhagor/BlazorLibraries.git
