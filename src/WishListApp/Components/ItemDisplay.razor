@@ -1,4 +1,4 @@
-﻿@if (Item is not null)
+@if (Item is not null)
 {
     <div class="item-grid rounded-2 overflow-hidden border border-secondary border-1">
 
@@ -21,7 +21,7 @@
             <div class="d-flex flex-row overflow-y-hidden">
 
                 <div class="fs-5">
-                    <a href="@Item.Url" target="_blank">@Item.NameOrUrl</a>
+                    <a href="@Item.Url" target="_blank" style="word-break: break-all" >@Item.NameOrUrl</a>
                     <span class="text-nowrap">@(string.IsNullOrWhiteSpace(Item.SiteName) ? "" : $"({Item.SiteName})")</span>
                 </div>
 
