@@ -1,4 +1,4 @@
-using WishListApp.AppHost.Keycloak;
+﻿using WishListApp.AppHost.Keycloak;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
@@ -10,7 +10,7 @@ var mongoDB = builder
 
 var wishListApp = builder
     .AddProject<Projects.WishListApp>("wishlistapp")
-    .WithReference(mongoDB, "MongoDB");
+    .WithReference(mongoDB);
 
 wishListApp.WithEnvironment("ApplicationUrl", wishListApp.GetEndpoint("http"));
 

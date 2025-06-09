@@ -8,15 +8,14 @@ namespace WishListApp.Tests.Data;
 [Collection("MongoDb")]
 public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
 {
-    private readonly IMongoClient _mongoClient = mongoDbFixture.GetMongoClient();
-    private readonly string _databaseName = Guid.NewGuid().ToString();
+    private readonly IMongoDatabase _database = mongoDbFixture.GetMongoClient().GetDatabase(Guid.NewGuid().ToString());
     private readonly CancellationToken _cancellationToken = TestContext.Current.CancellationToken;
 
     [Fact]
     public async Task Add_New()
     {
-        var listRepository = new WishListRepository(_mongoClient, _databaseName);
-        var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
+        var listRepository = new WishListRepository(_database);
+        var itemRepository = new WishListItemRepository(_database);
 
         var url = "https://example.com";
 
@@ -50,8 +49,8 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task Add_AllowDuplicate()
     {
-        var listRepository = new WishListRepository(_mongoClient, _databaseName);
-        var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
+        var listRepository = new WishListRepository(_database);
+        var itemRepository = new WishListItemRepository(_database);
 
         var url = "https://example.com";
 
@@ -75,8 +74,8 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task Add_NotFound()
     {
-        var listRepository = new WishListRepository(_mongoClient, _databaseName);
-        var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
+        var listRepository = new WishListRepository(_database);
+        var itemRepository = new WishListItemRepository(_database);
 
         var url = "https://example.com";
 
@@ -90,8 +89,8 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task Delete_Found()
     {
-        var listRepository = new WishListRepository(_mongoClient, _databaseName);
-        var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
+        var listRepository = new WishListRepository(_database);
+        var itemRepository = new WishListItemRepository(_database);
 
         var list1 = await listRepository.Add("Name1", "OwnerId", _cancellationToken);
         var list2 = await listRepository.Add("Name2", "OwnerId", _cancellationToken);
@@ -117,8 +116,8 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task Delete_WishListNotFound()
     {
-        var listRepository = new WishListRepository(_mongoClient, _databaseName);
-        var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
+        var listRepository = new WishListRepository(_database);
+        var itemRepository = new WishListItemRepository(_database);
 
         var list = await listRepository.Add("Name", "OwnerId", _cancellationToken);
         var itemId = await itemRepository.Add(list.Id, "https://example.com", _cancellationToken);
@@ -131,8 +130,8 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task Delete_ItemNotFound()
     {
-        var listRepository = new WishListRepository(_mongoClient, _databaseName);
-        var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
+        var listRepository = new WishListRepository(_database);
+        var itemRepository = new WishListItemRepository(_database);
 
         var list = await listRepository.Add("Name", "OwnerId", _cancellationToken);
         var itemId = await itemRepository.Add(list.Id, "https://example.com", _cancellationToken);
@@ -146,8 +145,8 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task DeletePurchasedItems_SingleQuantity()
     {
-        var listRepository = new WishListRepository(_mongoClient, _databaseName);
-        var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
+        var listRepository = new WishListRepository(_database);
+        var itemRepository = new WishListItemRepository(_database);
 
         var list1 = await listRepository.Add("Name1", "OwnerId", _cancellationToken);
         var list2 = await listRepository.Add("Name2", "OwnerId", _cancellationToken);
@@ -179,8 +178,8 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task DeletePurchasedItems_WishListNotFound()
     {
-        var listRepository = new WishListRepository(_mongoClient, _databaseName);
-        var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
+        var listRepository = new WishListRepository(_database);
+        var itemRepository = new WishListItemRepository(_database);
 
         var list = await listRepository.Add("Name1", "OwnerId", _cancellationToken);
 
@@ -196,8 +195,8 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task Update_Found()
     {
-        var listRepository = new WishListRepository(_mongoClient, _databaseName);
-        var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
+        var listRepository = new WishListRepository(_database);
+        var itemRepository = new WishListItemRepository(_database);
 
         var newImageUrl = "https://newexample.com";
         var newSiteName = "SiteName2";
@@ -266,8 +265,8 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task Update_WishListNotFound()
     {
-        var listRepository = new WishListRepository(_mongoClient, _databaseName);
-        var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
+        var listRepository = new WishListRepository(_database);
+        var itemRepository = new WishListItemRepository(_database);
 
         var list = await listRepository.Add("Name1", "OwnerId", _cancellationToken);
 
@@ -287,8 +286,8 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task UpdatePriority_Found()
     {
-        var listRepository = new WishListRepository(_mongoClient, _databaseName);
-        var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
+        var listRepository = new WishListRepository(_database);
+        var itemRepository = new WishListItemRepository(_database);
 
         var newPriority = 3;
 
@@ -321,8 +320,8 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task UpdatePriority_WishListNotFound()
     {
-        var listRepository = new WishListRepository(_mongoClient, _databaseName);
-        var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
+        var listRepository = new WishListRepository(_database);
+        var itemRepository = new WishListItemRepository(_database);
 
         var list = await listRepository.Add("Name1", "OwnerId", _cancellationToken);
 
@@ -336,8 +335,8 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task UpdatePurchaser_Set()
     {
-        var listRepository = new WishListRepository(_mongoClient, _databaseName);
-        var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
+        var listRepository = new WishListRepository(_database);
+        var itemRepository = new WishListItemRepository(_database);
 
         var shareId = ObjectId.GenerateNewId();
 
@@ -370,8 +369,8 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task UpdatePurchaser_Reset()
     {
-        var listRepository = new WishListRepository(_mongoClient, _databaseName);
-        var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
+        var listRepository = new WishListRepository(_database);
+        var itemRepository = new WishListItemRepository(_database);
 
         var shareId = ObjectId.GenerateNewId();
 
@@ -409,8 +408,8 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task UpdatePurchaser_WishListNotFound()
     {
-        var listRepository = new WishListRepository(_mongoClient, _databaseName);
-        var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
+        var listRepository = new WishListRepository(_database);
+        var itemRepository = new WishListItemRepository(_database);
 
         var shareId = ObjectId.GenerateNewId();
 
@@ -425,8 +424,8 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task UpdatePurchaser_ItemNotFound()
     {
-        var listRepository = new WishListRepository(_mongoClient, _databaseName);
-        var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
+        var listRepository = new WishListRepository(_database);
+        var itemRepository = new WishListItemRepository(_database);
 
         var shareId = ObjectId.GenerateNewId();
 
@@ -441,8 +440,8 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task MoveToWishList_Moved()
     {
-        var listRepository = new WishListRepository(_mongoClient, _databaseName);
-        var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
+        var listRepository = new WishListRepository(_database);
+        var itemRepository = new WishListItemRepository(_database);
 
         var list1 = await listRepository.Add("Name1", "OwnerId", _cancellationToken);
         var list2 = await listRepository.Add("Name2", "OwnerId", _cancellationToken);
@@ -483,8 +482,8 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task MoveToWishList_OldWishListNotFound()
     {
-        var listRepository = new WishListRepository(_mongoClient, _databaseName);
-        var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
+        var listRepository = new WishListRepository(_database);
+        var itemRepository = new WishListItemRepository(_database);
 
         var list1 = await listRepository.Add("Name1", "OwnerId", _cancellationToken);
         var list2 = await listRepository.Add("Name2", "OwnerId", _cancellationToken);
@@ -507,8 +506,8 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task MoveToWishList_NewWishListNotFound()
     {
-        var listRepository = new WishListRepository(_mongoClient, _databaseName);
-        var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
+        var listRepository = new WishListRepository(_database);
+        var itemRepository = new WishListItemRepository(_database);
 
         var list1 = await listRepository.Add("Name1", "OwnerId", _cancellationToken);
         var list2 = await listRepository.Add("Name2", "OwnerId", _cancellationToken);
@@ -531,8 +530,8 @@ public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task MoveToWishList_ItemNotFound()
     {
-        var listRepository = new WishListRepository(_mongoClient, _databaseName);
-        var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
+        var listRepository = new WishListRepository(_database);
+        var itemRepository = new WishListItemRepository(_database);
 
         var list1 = await listRepository.Add("Name1", "OwnerId", _cancellationToken);
         var list2 = await listRepository.Add("Name2", "OwnerId", _cancellationToken);

@@ -8,14 +8,13 @@ namespace WishListApp.Tests.Data;
 [Collection("MongoDb")]
 public sealed class WishListShareRepositoryTests(MongoDbFixture mongoDbFixture)
 {
-    private readonly IMongoClient _mongoClient = mongoDbFixture.GetMongoClient();
-    private readonly string _databaseName = Guid.NewGuid().ToString();
+    private readonly IMongoDatabase _database = mongoDbFixture.GetMongoClient().GetDatabase(Guid.NewGuid().ToString());
     private readonly CancellationToken _cancellationToken = TestContext.Current.CancellationToken;
 
     [Fact]
     public async Task Add_New()
     {
-        var repository = new WishListShareRepository(_mongoClient, _databaseName);
+        var repository = new WishListShareRepository(_database);
 
         var listId = ObjectId.GenerateNewId();
         var name = "Share";
@@ -33,7 +32,7 @@ public sealed class WishListShareRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task Add_AllowDuplicate()
     {
-        var repository = new WishListShareRepository(_mongoClient, _databaseName);
+        var repository = new WishListShareRepository(_database);
 
         var listId = ObjectId.GenerateNewId();
         var name = "Share";
@@ -50,7 +49,7 @@ public sealed class WishListShareRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task GetById_Found()
     {
-        var repository = new WishListShareRepository(_mongoClient, _databaseName);
+        var repository = new WishListShareRepository(_database);
 
         var share1 = await repository.Add(ObjectId.GenerateNewId(), "Name1", "AccessKey1", _cancellationToken);
         var share2 = await repository.Add(ObjectId.GenerateNewId(), "Name2", "AccessKey2", _cancellationToken);
@@ -64,7 +63,7 @@ public sealed class WishListShareRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task GetById_NotFound()
     {
-        var repository = new WishListShareRepository(_mongoClient, _databaseName);
+        var repository = new WishListShareRepository(_database);
 
         var share = await repository.Add(ObjectId.GenerateNewId(), "Name1", "AccessKey1", _cancellationToken);
 
@@ -76,7 +75,7 @@ public sealed class WishListShareRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task GetByAccessKey_Found()
     {
-        var repository = new WishListShareRepository(_mongoClient, _databaseName);
+        var repository = new WishListShareRepository(_database);
 
         var accessKey1 = "AccessKey1";
         var accessKey2 = "AccessKey2";
@@ -94,7 +93,7 @@ public sealed class WishListShareRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task GetByAccessKey_NotFound()
     {
-        var repository = new WishListShareRepository(_mongoClient, _databaseName);
+        var repository = new WishListShareRepository(_database);
 
         var accessKey = "AccessKey";
 
@@ -108,7 +107,7 @@ public sealed class WishListShareRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task GetByWishListId_Found()
     {
-        var repository = new WishListShareRepository(_mongoClient, _databaseName);
+        var repository = new WishListShareRepository(_database);
 
         var listId1 = ObjectId.GenerateNewId();
         var listId2 = ObjectId.GenerateNewId();
@@ -130,7 +129,7 @@ public sealed class WishListShareRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task GetByWishListId_NotFound()
     {
-        var repository = new WishListShareRepository(_mongoClient, _databaseName);
+        var repository = new WishListShareRepository(_database);
 
         var listId = ObjectId.GenerateNewId();
 
@@ -144,7 +143,7 @@ public sealed class WishListShareRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task Delete_Found()
     {
-        var repository = new WishListShareRepository(_mongoClient, _databaseName);
+        var repository = new WishListShareRepository(_database);
 
         var share1 = await repository.Add(ObjectId.GenerateNewId(), "Name", "AccessKey", _cancellationToken);
         var share2 = await repository.Add(ObjectId.GenerateNewId(), "Name", "AccessKey", _cancellationToken);
@@ -161,7 +160,7 @@ public sealed class WishListShareRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task Delete_NotFound()
     {
-        var repository = new WishListShareRepository(_mongoClient, _databaseName);
+        var repository = new WishListShareRepository(_database);
 
         var share = await repository.Add(ObjectId.GenerateNewId(), "Name", "AccessKey", _cancellationToken);
 

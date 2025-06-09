@@ -11,27 +11,37 @@ public static class ServiceCollectionExtensions
         services.AddWishListMigrations();
         services.AddWishListShareMigrations();
 
-        services.AddSingleton<IMigrationExecutor<WishList>>(serviceProvider =>
-        {
-            var messenger = serviceProvider.GetRequiredKeyedService<IMessenger>("MigrationMessenger");
-            var migrations = serviceProvider.GetServices<IMigration<WishList>>();
-            var mongoClient = serviceProvider.GetRequiredService<IMongoClient>();
-            var collection = mongoClient.GetDatabase(MongoDBConstants.DatabaseName)
-                .GetCollection<BsonDocument>(MongoDBConstants.WishListsCollectionName);
+        services.AddSingleton<IMigrationExecutor<WishList>>(
+            serviceProvider =>
+            {
+                var databaseName = serviceProvider
+                    .GetRequiredService<IConfiguration>()
+                    .GetValue<string>("MongoDBDatabaseName");
 
-            return new MigrationExecutor<WishList>(collection, migrations, messenger);
-        });
+                var messenger = serviceProvider.GetRequiredKeyedService<IMessenger>("MigrationMessenger");
+                var migrations = serviceProvider.GetServices<IMigration<WishList>>();
+                var mongoClient = serviceProvider.GetRequiredService<IMongoClient>();
+                var collection = mongoClient.GetDatabase(databaseName)
+                    .GetCollection<BsonDocument>(MongoDBConstants.WishListsCollectionName);
 
-        services.AddSingleton<IMigrationExecutor<WishListShare>>(serviceProvider =>
-        {
-            var messenger = serviceProvider.GetRequiredKeyedService<IMessenger>("MigrationMessenger");
-            var migrations = serviceProvider.GetServices<IMigration<WishListShare>>();
-            var mongoClient = serviceProvider.GetRequiredService<IMongoClient>();
-            var collection = mongoClient.GetDatabase(MongoDBConstants.DatabaseName)
-                .GetCollection<BsonDocument>(MongoDBConstants.SharesCollectionName);
+                return new MigrationExecutor<WishList>(collection, migrations, messenger);
+            });
 
-            return new MigrationExecutor<WishListShare>(collection, migrations, messenger);
-        });
+        services.AddSingleton<IMigrationExecutor<WishListShare>>(
+            serviceProvider =>
+            {
+                var databaseName = serviceProvider
+                    .GetRequiredService<IConfiguration>()
+                    .GetValue<string>("MongoDBDatabaseName");
+
+                var messenger = serviceProvider.GetRequiredKeyedService<IMessenger>("MigrationMessenger");
+                var migrations = serviceProvider.GetServices<IMigration<WishListShare>>();
+                var mongoClient = serviceProvider.GetRequiredService<IMongoClient>();
+                var collection = mongoClient.GetDatabase(databaseName)
+                    .GetCollection<BsonDocument>(MongoDBConstants.SharesCollectionName);
+
+                return new MigrationExecutor<WishListShare>(collection, migrations, messenger);
+            });
 
         return services;
     }

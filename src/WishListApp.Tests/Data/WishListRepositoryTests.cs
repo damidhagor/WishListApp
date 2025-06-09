@@ -8,14 +8,13 @@ namespace WishListApp.Tests.Data;
 [Collection("MongoDb")]
 public sealed class WishListRepositoryTests(MongoDbFixture mongoDbFixture)
 {
-    private readonly IMongoClient _mongoClient = mongoDbFixture.GetMongoClient();
-    private readonly string _databaseName = Guid.NewGuid().ToString();
+    private readonly IMongoDatabase _database = mongoDbFixture.GetMongoClient().GetDatabase(Guid.NewGuid().ToString());
     private readonly CancellationToken _cancellationToken = TestContext.Current.CancellationToken;
 
     [Fact]
     public async Task Add_New()
     {
-        var repository = new WishListRepository(_mongoClient, _databaseName);
+        var repository = new WishListRepository(_database);
         var name = "Name";
         var ownerId = "OwnerId";
 
@@ -31,7 +30,7 @@ public sealed class WishListRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task Add_AllowDuplicate()
     {
-        var repository = new WishListRepository(_mongoClient, _databaseName);
+        var repository = new WishListRepository(_database);
         var name = "Name";
         var ownerId = "OwnerId";
 
@@ -46,7 +45,7 @@ public sealed class WishListRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task GetById_Found()
     {
-        var repository = new WishListRepository(_mongoClient, _databaseName);
+        var repository = new WishListRepository(_database);
 
         var name1 = "Name1";
         var name2 = "Name2";
@@ -63,7 +62,7 @@ public sealed class WishListRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task GetById_NotFound()
     {
-        var repository = new WishListRepository(_mongoClient, _databaseName);
+        var repository = new WishListRepository(_database);
 
         var list = await repository.Add("Name", "OwnerId", _cancellationToken);
 
@@ -75,7 +74,7 @@ public sealed class WishListRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task GetByOwnerId_Found()
     {
-        var repository = new WishListRepository(_mongoClient, _databaseName);
+        var repository = new WishListRepository(_database);
 
         var ownerId1 = "OwnerId1";
         var ownerId2 = "OwnerId2";
@@ -97,7 +96,7 @@ public sealed class WishListRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task GetByOwnerId_NotFound()
     {
-        var repository = new WishListRepository(_mongoClient, _databaseName);
+        var repository = new WishListRepository(_database);
 
         var ownerId = "OwnerId";
 
@@ -111,8 +110,8 @@ public sealed class WishListRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task GetByItemId_Found()
     {
-        var listRepository = new WishListRepository(_mongoClient, _databaseName);
-        var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
+        var listRepository = new WishListRepository(_database);
+        var itemRepository = new WishListItemRepository(_database);
 
         var list1 = await listRepository.Add("Name1", "OwnerId", _cancellationToken);
         var list2 = await listRepository.Add("Name2", "OwnerId", _cancellationToken);
@@ -131,8 +130,8 @@ public sealed class WishListRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task GetByItemId_NotFound()
     {
-        var listRepository = new WishListRepository(_mongoClient, _databaseName);
-        var itemRepository = new WishListItemRepository(_mongoClient, _databaseName);
+        var listRepository = new WishListRepository(_database);
+        var itemRepository = new WishListItemRepository(_database);
 
         var list = await listRepository.Add("Name", "OwnerId", _cancellationToken);
 
@@ -146,7 +145,7 @@ public sealed class WishListRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task Rename_Found()
     {
-        var repository = new WishListRepository(_mongoClient, _databaseName);
+        var repository = new WishListRepository(_database);
         var oldName = "Name";
         var newName = "Name1";
 
@@ -164,7 +163,7 @@ public sealed class WishListRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task Rename_NotFound()
     {
-        var repository = new WishListRepository(_mongoClient, _databaseName);
+        var repository = new WishListRepository(_database);
 
         var oldName = "Name1";
         var newName = "Name2";
@@ -182,7 +181,7 @@ public sealed class WishListRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task Delete_Found()
     {
-        var repository = new WishListRepository(_mongoClient, _databaseName);
+        var repository = new WishListRepository(_database);
 
         var list1 = await repository.Add("Name", "OwnerId", _cancellationToken);
         var list2 = await repository.Add("Name", "OwnerId", _cancellationToken);
@@ -203,7 +202,7 @@ public sealed class WishListRepositoryTests(MongoDbFixture mongoDbFixture)
     [Fact]
     public async Task Delete_NotFound()
     {
-        var repository = new WishListRepository(_mongoClient, _databaseName);
+        var repository = new WishListRepository(_database);
 
         var list = await repository.Add("Name", "OwnerId", _cancellationToken);
 

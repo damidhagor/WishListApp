@@ -1,4 +1,4 @@
-using WishListApp.Components;
+﻿using WishListApp.Components;
 using WishListApp.Data;
 using WishListApp.Data.Migration;
 using WishListApp.Identity;
@@ -17,7 +17,7 @@ builder.Services.AddScoped<Localization.ILocalizationService, Localization.Local
 
 builder.Services.AddIdentity(builder.Configuration);
 
-builder.Services.AddWishListData(builder.Configuration);
+builder.AddWishListData(builder.Configuration);
 builder.Services.AddMigrationService();
 builder.Services.AddSingleton<IMigrationService, MigrationService>();
 

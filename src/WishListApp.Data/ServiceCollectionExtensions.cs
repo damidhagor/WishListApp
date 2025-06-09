@@ -1,26 +1,57 @@
-﻿using MongoDB.Driver.Core.Extensions.DiagnosticSources;
+﻿using Microsoft.Extensions.Hosting;
 
 namespace WishListApp.Data;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddWishListData(this IServiceCollection services, IConfiguration configuration, Action<MongoClientSettings>? configure = null)
+    public static IHostApplicationBuilder AddWishListData(this IHostApplicationBuilder builder, IConfiguration configuration, Action<MongoClientSettings>? configure = null)
     {
-        var connectionString = configuration.GetConnectionString("MongoDB");
-        var mongoSettings = MongoClientSettings.FromConnectionString(connectionString);
+        builder.AddMongoDBClient("mongodb", configureClientSettings: configure);
 
-        configure?.Invoke(mongoSettings);
+        builder.Services.AddTransient<IAccessKeyGenerator, AccessKeyGenerator>();
 
-        var mongoClient = new MongoClient(mongoSettings);
+        builder.Services.AddScoped<IWishListRepository>(
+            serviceProvider =>
+            {
+                var databaseName = serviceProvider
+                    .GetRequiredService<IConfiguration>()
+                    .GetValue<string>("MongoDBDatabaseName");
 
-        services.AddSingleton<IMongoClient>(mongoClient);
+                var database = serviceProvider
+                    .GetRequiredService<IMongoClient>()
+                    .GetDatabase(databaseName);
 
-        services.AddTransient<IAccessKeyGenerator, AccessKeyGenerator>();
+                return new WishListRepository(database);
+            });
 
-        services.AddScoped<IWishListRepository, WishListRepository>();
-        services.AddScoped<IWishListItemRepository, WishListItemRepository>();
-        services.AddScoped<IWishListShareRepository, WishListShareRepository>();
+        builder.Services.AddScoped<IWishListItemRepository>(
+            serviceProvider =>
+            {
+                var databaseName = serviceProvider
+                    .GetRequiredService<IConfiguration>()
+                    .GetValue<string>("MongoDBDatabaseName");
 
-        return services;
+                var database = serviceProvider
+                    .GetRequiredService<IMongoClient>()
+                    .GetDatabase(databaseName);
+
+                return new WishListItemRepository(database);
+            });
+
+        builder.Services.AddScoped<IWishListShareRepository>(
+            serviceProvider =>
+            {
+                var databaseName = serviceProvider
+                    .GetRequiredService<IConfiguration>()
+                    .GetValue<string>("MongoDBDatabaseName");
+
+                var database = serviceProvider
+                    .GetRequiredService<IMongoClient>()
+                    .GetDatabase(databaseName);
+
+                return new WishListShareRepository(database);
+            });
+
+        return builder;
     }
 }
