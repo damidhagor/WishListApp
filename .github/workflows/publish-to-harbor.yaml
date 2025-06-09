@@ -23,18 +23,20 @@ jobs:
         fi
     - name: Checkout Repository
       uses: actions/checkout@v4
+      with:
+        submodules: 'recursive'
     - name: Harbor Login
       uses: docker/login-action@v3.0.0
       with:
-        registry: harbor.damidhagor.de
+        registry: ${{ secrets.HARBOR_URL }}
         username: ${{ secrets.HARBOR_USERNAME }}
         password: ${{ secrets.HARBOR_ACCESS_TOKEN }}
     - name: Build and Push Docker Image
       uses: docker/build-push-action@v5.0.0
       with:
-        context: "{{defaultContext}}:src"
-        file: WishListApp/Dockerfile
-        tags: harbor.damidhagor.de/wishlist/wishlist-app:${{ steps.version.outputs.version }}
+        context: "{{defaultContext}}"
+        file: src/WishListApp/Dockerfile
+        tags: ${{ secrets.HARBOR_URL }}/wishlist/wishlist-app:${{ steps.version.outputs.version }}
         push: true
         
   publish-helm-chart:
@@ -57,8 +59,8 @@ jobs:
     - name: Helm Setup
       uses: azure/setup-helm@v4
     - name: Helm Login
-      run: helm registry login harbor.damidhagor.de -u ${{ secrets.HARBOR_USERNAME }} -p ${{ secrets.HARBOR_ACCESS_TOKEN }}
+      run: helm registry login ${{ secrets.HARBOR_URL }} -u ${{ secrets.HARBOR_USERNAME }} -p ${{ secrets.HARBOR_ACCESS_TOKEN }}
     - name: Helm Package
       run: helm package helm/wishlist --app-version "${{ steps.version.outputs.version }}"
     - name: Helm Push
-      run: ls -la && helm push wishlist-*.tgz oci://harbor.damidhagor.de/wishlist
+      run: ls -la && helm push wishlist-*.tgz oci://${{ secrets.HARBOR_URL }}/wishlist
