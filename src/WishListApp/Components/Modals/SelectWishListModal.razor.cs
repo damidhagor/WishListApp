@@ -1,4 +1,4 @@
-using BlazorDialogs.Components.Modals.Base;
+﻿using BlazorDialogs.Components.Modals.Base;
 using Microsoft.JSInterop;
 using WishListApp.Models.Modals;
 using WishListApp.Models.Modals.Results;
@@ -25,7 +25,6 @@ public sealed partial class SelectWishListModal(IJSRuntime jsRuntime)
             return;
         }
 
-        Context.SetResult(new Selected(_selectedList));
-        await Hide();
+        await Close(new Selected(_selectedList));
     }
 }

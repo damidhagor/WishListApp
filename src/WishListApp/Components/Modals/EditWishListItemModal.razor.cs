@@ -1,4 +1,4 @@
-using BlazorDialogs.Components.Modals.Base;
+﻿using BlazorDialogs.Components.Modals.Base;
 using BlazorDialogs.Services;
 using Microsoft.JSInterop;
 using WishListApp.Models.Modals;
@@ -19,8 +19,6 @@ public sealed partial class EditWishListItemModal(
     private async Task SaveWishListItem()
     {
         await _itemEditor.SaveWishListItem();
-
-        Context.SetResult(new Edited());
-        await Hide();
+        await Close(new Edited());
     }
 }
