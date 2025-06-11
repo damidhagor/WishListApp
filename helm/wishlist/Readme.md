@@ -48,9 +48,9 @@ stringData:
 - Create a ``values.yaml`` file with the following content:
 
 ```yaml
-hostname: <The hostname of the app (required)>
+hostname: <The hostname of the app>
 app:
-  tag: "1.1.5-preview"
+  tag: "1.1.5"
 aspire:
   tag: "9.3.0"
 ```
@@ -60,5 +60,6 @@ aspire:
 - Install or upgrade the chart and provide the ``values.yaml`` file created earlier:
 
 ```bash
-helm install <RELEASE_NAME> oci://harbor.damidhagor.de/wishlist/wishlist -n <NAMESPACE> --values=<VALUES>.yaml --version <VERSION>
+helm registry login harbor.damidhagor.de
+helm install wishlist oci://harbor.damidhagor.de/wishlist/wishlist -n <NAMESPACE> --values=<VALUES>.yaml --version 1.5.0
 ```
