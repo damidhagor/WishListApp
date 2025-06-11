@@ -1,42 +1,9 @@
-hostname:
-mongodb:
-  name: "mongodb"
-  version: "8.0.1"
-  members: 3
-  caConfigMapName: "selfsigned-ca"
-  resources:
-    mongod:
-      requests:
-        cpu: 50m
-        memory: 150Mi
-      limits:
-        cpu: 200m
-        memory: 500Mi
-    mongodbAgent:
-      requests:
-        cpu: 50m
-        memory: 50M
-      limits:
-        cpu: 200m
-        memory: 200M
-    mongodbAgentReadinessProbe:
-      requests:
-        cpu: 5m
-        memory: 50Mi
-      limits:
-        cpu: 100m
-        memory: 100Mi
+﻿hostname: ""
 app:
-  image: harbor.damidhagor.de/wishlist/wishlist-app
-  tag: "latest"
-  resources:
-    requests:
-      cpu: 200m
-      memory: 300Mi
-    limits:
-      cpu: 500m
-      memory: 600Mi
+  image: "harbor.damidhagor.de/wishlist/wishlist-app"
+  tag: "1.1.5"
+  resources: null
 aspire:
   image: "aspire-dashboard"
-  tag: "8.2.1"
+  tag: "9.3.0"
   otlpEndpoint: "http://aspire-dashboard:4317"

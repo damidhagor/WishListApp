@@ -25,15 +25,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{CB9078C7-59B9-4732-96F6-2399F31C9A97}"
 	ProjectSection(SolutionItems) = preProject
 		..\helm\wishlist\templates\app-deployment.yaml = ..\helm\wishlist\templates\app-deployment.yaml
-		..\helm\wishlist\templates\app-ingress.yaml = ..\helm\wishlist\templates\app-ingress.yaml
 		..\helm\wishlist\templates\app-service.yaml = ..\helm\wishlist\templates\app-service.yaml
+		..\helm\wishlist\templates\app-gateway.yaml = ..\helm\wishlist\templates\app-gateway.yaml
 		..\helm\wishlist\templates\aspire-dashboard-deployment.yaml = ..\helm\wishlist\templates\aspire-dashboard-deployment.yaml
 		..\helm\wishlist\templates\aspire-dashboard-service.yaml = ..\helm\wishlist\templates\aspire-dashboard-service.yaml
-		..\helm\wishlist\templates\mongodb-certificate.yaml = ..\helm\wishlist\templates\mongodb-certificate.yaml
-		..\helm\wishlist\templates\mongodb-manifest.yaml = ..\helm\wishlist\templates\mongodb-manifest.yaml
-		..\helm\wishlist\templates\mongodb-role-binding.yaml = ..\helm\wishlist\templates\mongodb-role-binding.yaml
-		..\helm\wishlist\templates\mongodb-role.yaml = ..\helm\wishlist\templates\mongodb-role.yaml
-		..\helm\wishlist\templates\mongodb-service-account.yaml = ..\helm\wishlist\templates\mongodb-service-account.yaml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WishListApp.ServiceDefaults", "WishListApp.ServiceDefaults\WishListApp.ServiceDefaults.csproj", "{89055BFC-16D0-4CC1-82FC-5614B3C79DD1}"

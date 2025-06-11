@@ -1,4 +1,4 @@
-apiVersion: apps/v1
+﻿apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: wishlist-app
@@ -19,54 +19,47 @@ spec:
           image: "{{ .Values.app.image }}:{{ .Values.app.tag }}"
           imagePullPolicy: IfNotPresent
           env:
-            - name: ConnectionStrings__MongoDB
+            - name: ConnectionStrings__mongodb
               valueFrom:
                 secretKeyRef:
-                  name: mongodb-admin-wishlist-app
-                  key: connectionString.standardSrv
+                  name: wishlist-app
+                  key: mongodbConnectionString
+            - name: MongoDBDatabaseName
+              valueFrom:
+                secretKeyRef:
+                  name: wishlist-app
+                  key: mongodbDatabaseName
             - name: ApplicationUrl
               value: "https://{{ .Values.hostname }}"
             - name: IdentityOptions__Authority
               valueFrom:
                 secretKeyRef:
-                  name: app-secret
-                  key: identity-authority
+                  name: wishlist-app
+                  key: oidcAuthority
             - name: IdentityOptions__ClientId
               valueFrom:
                 secretKeyRef:
-                    name: app-secret
-                    key: identity-client-id
+                    name: wishlist-app
+                    key: oidcClientId
             - name: IdentityOptions__ClientSecret
               valueFrom:
                 secretKeyRef:
-                    name: app-secret
-                    key: identity-client-secret
+                    name: wishlist-app
+                    key: oidcClientSecret
             - name: IdentityOptions__Scopes
               valueFrom:
                 secretKeyRef:
-                    name: app-secret
-                    key: identity-scopes
+                    name: wishlist-app
+                    key: oidcScopes
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
               value: "{{ .Values.aspire.otlpEndpoint }}"
             - name: OTEL_EXPORTER_OTLP_API_KEY
               valueFrom:
                 secretKeyRef:
-                    name: aspire
-                    key: api-key
-          volumeMounts:
-            - name: selfsigned-ca
-              mountPath: /etc/ssl/certs/ca.crt
-              subPath: ca.crt
-          resources:
-            requests:
-              cpu: {{ .Values.app.resources.requests.cpu }}
-              memory: {{ .Values.app.resources.requests.memory }}
-            limits:
-              cpu: {{ .Values.app.resources.limits.cpu }}
-              memory: {{ .Values.app.resources.limits.memory }}
-      volumes:
-        - name: selfsigned-ca
-          configMap:
-            name: selfsigned-ca
+                    name: aspire-dashboard
+                    key: apikey
+          {{- if .Values.app.resources }}
+          resources: {{ .Values.app.resources | toYaml | nindent 12 }}
+          {{- end }}
       imagePullSecrets:
         - name: harbor

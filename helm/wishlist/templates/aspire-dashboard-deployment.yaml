@@ -1,4 +1,4 @@
-apiVersion: apps/v1
+﻿apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: aspire-dashboard
@@ -24,12 +24,7 @@ spec:
             - name: DASHBOARD__OTLP__AUTHMODE
               value: ApiKey
             - name: DASHBOARD__OTLP__PRIMARYAPIKEY
-              value: "{{ .Values.aspire.apiKey }}"
-            - name: DASHBOARD__OTLP__PRIMARYAPIKEY
               valueFrom:
                 secretKeyRef:
-                    name: aspire
-                    key: api-key
-          ports:
-            - containerPort: 18888
-            - containerPort: 4317
+                    name: aspire-dashboard
+                    key: apikey
