@@ -27,7 +27,7 @@ metadata:
 type: Opaque
 stringData:
   mongodbConnectionString: ""
-  mongodbDatabaseName": ""
+  mongodbDatabaseName: ""
   oidcAuthority: ""
   oidcClientId: ""
   oidcClientSecret: ""
