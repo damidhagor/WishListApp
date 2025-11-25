@@ -5,40 +5,46 @@ namespace WishListApp.Data.Migration.Migrations;
 
 internal static class MigrationHelper
 {
-    public static OneOf<Success, InvalidVersion, InvalidDocument> ValidateVersion(this BsonDocument document, uint supportedVersion)
+    extension(BsonDocument document)
     {
-        var versionResult = document.GetVersion();
-        if (!versionResult.TryPickT0(out var version, out var invalidDocument))
+        public OneOf<Success, InvalidVersion, InvalidDocument> ValidateVersion(uint supportedVersion)
         {
-            return invalidDocument;
-        }
-
-        return version != supportedVersion
-            ? new InvalidVersion(supportedVersion, version)
-            : new Success();
-    }
-
-    public static OneOf<uint, InvalidDocument> GetVersion(this BsonValue value)
-    {
-        var versionResult = value.GetInt64Value("Version");
-
-        if (!versionResult.TryPickT0(out var versionValue, out var errorResults))
-        {
-            if (errorResults.TryPickT1(out var invalidDocument, out var notFound))
+            var versionResult = document.GetVersion();
+            if (!versionResult.TryPickT0(out var version, out var invalidDocument))
             {
                 return invalidDocument;
             }
 
-            return 0u;
+            return version != supportedVersion
+                ? new InvalidVersion(supportedVersion, version)
+                : new Success();
         }
 
-        return versionValue >= 0
-            ? (uint)versionValue
-            : new InvalidDocument("'Version' field must be a positive integer.");
+        public void SetVersion(uint version)
+        {
+            document["Version"] = version;
+        }
     }
 
-    public static void SetVersion(this BsonDocument document, uint version)
+    extension(BsonValue value)
     {
-        document["Version"] = version;
+        public OneOf<uint, InvalidDocument> GetVersion()
+        {
+            var versionResult = value.GetInt64Value("Version");
+
+            if (!versionResult.TryPickT0(out var versionValue, out var errorResults))
+            {
+                if (errorResults.TryPickT1(out var invalidDocument, out var notFound))
+                {
+                    return invalidDocument;
+                }
+
+                return 0u;
+            }
+
+            return versionValue >= 0
+                ? (uint)versionValue
+                : new InvalidDocument("'Version' field must be a positive integer.");
+        }
     }
 }
