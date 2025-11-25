@@ -11,7 +11,7 @@ using WishListApp.Tests.Fixtures.MongoDb;
 
 namespace WishListApp.Tests.Data.MigrationExecutor;
 
-[Collection("MongoDb")]
+[Collection(typeof(MongoDbCollection))]
 public sealed class MigrateTests(MongoDbFixture mongoDbFixture)
 {
     private readonly IMongoClient _mongoClient = mongoDbFixture.GetMongoClient();

@@ -7,7 +7,7 @@ public sealed class MongoDbFixture : IAsyncLifetime
 {
     private readonly MongoDbContainer _mongoDbContainer =
         new MongoDbBuilder()
-            .WithImage("mongo:7.0.12")
+            .WithImage("mongo:8")
             .Build();
 
     public IMongoClient GetMongoClient()
