@@ -1,41 +1,41 @@
-﻿@using BlazorDialogs.Components.Modals.Base
-@using BlazorDialogs.Models.Results
+﻿@using Shared.Blazor.Dialogs.Components.Modals.Base
+@using Shared.Blazor.Dialogs.Models.Results
 @using WishListApp.Models.Modals
 @using WishListApp.Models.Modals.Results
 
 @inherits BaseModal<SharesModalContext, None>
 
 <Modal Id="@Context.Id" AllowFullscreen="true" Class="modal-lg">
-    <ModalHeader Title="@_localization.SharesModal_Title" />
+	<ModalHeader Title="@_localization.SharesModal_Title" />
 
-    <ModalBody>
-        @if (_shares.Count == 0)
-        {
-            <h3 class="m-2 ms-4">
-                <i class="bi bi-exclamation-circle" />
-                @_localization.SharesModal_Empty
-                <i class="bi bi-exclamation-circle" />
-            </h3>
-        }
-        else
-        {
-            <div class="d-flex flex-column gap-2 m-4">
-                @foreach (var share in _shares.OrderBy(s => s.Name))
-                {
-                    <CascadingValue Value="Context.WishListViewModel">
-                        <CascadingValue Value="share">
-                            <ShareDisplay />
-                        </CascadingValue>
-                    </CascadingValue>
-                }
-            </div>
-        }
-    </ModalBody>
+	<ModalBody>
+		@if (_shares.Count == 0)
+		{
+			<h3 class="m-2 ms-4">
+				<i class="bi bi-exclamation-circle" />
+				@_localization.SharesModal_Empty
+				<i class="bi bi-exclamation-circle" />
+			</h3>
+		}
+		else
+		{
+			<div class="d-flex flex-column gap-2 m-4">
+				@foreach (var share in _shares.OrderBy(s => s.Name))
+				{
+					<CascadingValue Value="Context.WishListViewModel">
+						<CascadingValue Value="share">
+							<ShareDisplay />
+						</CascadingValue>
+					</CascadingValue>
+				}
+			</div>
+		}
+	</ModalBody>
 
-    <ModalFooter>
-        <input type="text" class="flex-grow-1 me-2" placeholder="@_localization.SharesModal_Add_Placeholder" @bind="@_newShareName" @bind:event="oninput">
-        <button type="button" class="btn btn-outline-primary" @onclick="AddNewWishListShare" disabled="@_isNewShareNameEmpty">
-            <i class="bi bi-plus-lg" /> @_localization.SharesModal_Add
-        </button>
-    </ModalFooter>
+	<ModalFooter>
+		<input type="text" class="flex-grow-1 me-2" placeholder="@_localization.SharesModal_Add_Placeholder" @bind="@_newShareName" @bind:event="oninput">
+		<button type="button" class="btn btn-outline-primary" @onclick="AddNewWishListShare" disabled="@_isNewShareNameEmpty">
+			<i class="bi bi-plus-lg" /> @_localization.SharesModal_Add
+		</button>
+	</ModalFooter>
 </Modal>

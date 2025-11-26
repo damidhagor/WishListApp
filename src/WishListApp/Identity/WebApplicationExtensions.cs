@@ -4,9 +4,12 @@ namespace WishListApp.Identity;
 
 internal static class WebApplicationExtensions
 {
-    public static WebApplication UseIdentity(this WebApplication app)
+    extension(WebApplication app)
     {
-        app.MapIdentityEndpoints();
-        return app;
+        public WebApplication UseIdentity()
+        {
+            app.MapIdentityEndpoints();
+            return app;
+        }
     }
 }
