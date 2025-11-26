@@ -1,0 +1,3 @@
+[submodule "src/SharedLibraries"]
+	path = src/SharedLibraries
+	url = https://github.com/damidhagor/SharedLibraries.git
