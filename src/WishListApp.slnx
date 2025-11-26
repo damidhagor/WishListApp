@@ -1,0 +1,28 @@
+<Solution>
+  <Folder Name="/helm/" />
+  <Folder Name="/helm/wishlist/">
+    <File Path="../helm/wishlist/Chart.yaml" />
+    <File Path="../helm/wishlist/Readme.md" />
+    <File Path="../helm/wishlist/values.yaml" />
+  </Folder>
+  <Folder Name="/helm/wishlist/templates/">
+    <File Path="../helm/wishlist/templates/app-deployment.yaml" />
+    <File Path="../helm/wishlist/templates/app-gateway.yaml" />
+    <File Path="../helm/wishlist/templates/app-service.yaml" />
+    <File Path="../helm/wishlist/templates/aspire-dashboard-deployment.yaml" />
+    <File Path="../helm/wishlist/templates/aspire-dashboard-service.yaml" />
+  </Folder>
+  <Folder Name="/shared/">
+    <Project Path="SharedLibraries/src/Blazor/Shared.Blazor.Dialogs/Shared.Blazor.Dialogs.csproj" />
+    <Project Path="SharedLibraries/src/Blazor/Shared.Blazor.SourceGeneration/Shared.Blazor.SourceGeneration.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+  </Folder>
+  <Project Path="WishListApp.AppHost/WishListApp.AppHost.csproj" />
+  <Project Path="WishListApp.Data/WishListApp.Data.csproj" />
+  <Project Path="WishListApp.ProductCrawling/WishListApp.ProductCrawling.csproj" />
+  <Project Path="WishListApp.ServiceDefaults/WishListApp.ServiceDefaults.csproj" />
+  <Project Path="WishListApp.Tests/WishListApp.Tests.csproj" />
+  <Project Path="WishListApp/WishListApp.csproj" />
+</Solution>
