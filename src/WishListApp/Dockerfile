@@ -15,11 +15,11 @@ COPY ["src/SharedLibraries/src/Blazor/Shared.Blazor.SourceGeneration/Shared.Blaz
 RUN dotnet restore "./WishListApp/WishListApp.csproj"
 COPY ./src .
 WORKDIR "/src/WishListApp"
-RUN dotnet build "./WishListApp.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./WishListApp.csproj" -c $BUILD_CONFIGURATION -o /app/build --no-restore
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./WishListApp.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./WishListApp.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false --no-restore
 
 FROM base AS final
 WORKDIR /app
