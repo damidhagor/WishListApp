@@ -1,20 +1,16 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Aspire.AppHost.Sdk/13.0.2">
 
-	<Sdk Name="Aspire.AppHost.Sdk" Version="9.3.0" />
-
-	<PropertyGroup>
-		<OutputType>Exe</OutputType>
-		<TargetFramework>net8.0</TargetFramework>
-		<LangVersion>preview</LangVersion>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
-		<IsAspireHost>true</IsAspireHost>
-		<UserSecretsId>76982cc9-7998-47ce-9e9a-59254c2ff74d</UserSecretsId>
-	</PropertyGroup>
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>679953be-6350-4678-83e8-611ceb0cc055</UserSecretsId>
+  </PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Aspire.Hosting.AppHost" Version="9.3.0" />
-		<PackageReference Include="Aspire.Hosting.MongoDB" Version="9.3.0" />
+		<PackageReference Include="Aspire.Hosting.AppHost" Version="13.0.2" />
+		<PackageReference Include="Aspire.Hosting.MongoDB" Version="13.0.2" />
 		<PackageReference Include="CommunityToolkit.Diagnostics" Version="8.4.0" />
 	</ItemGroup>
 

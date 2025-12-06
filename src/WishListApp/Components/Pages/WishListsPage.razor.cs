@@ -1,7 +1,6 @@
-﻿using BlazorDialogs.Services;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using MongoDB.Bson;
-using WishListApp.Models.Modals.Results;
+using Shared.Blazor.Dialogs.Services;
 using WishListApp.Services;
 
 namespace WishListApp.Components.Pages;

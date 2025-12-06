@@ -1,4 +1,3 @@
-using BlazorDialogs.Services;
 using Microsoft.AspNetCore.Components;
 
 namespace WishListApp.Components;

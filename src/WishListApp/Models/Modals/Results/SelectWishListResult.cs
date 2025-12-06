@@ -1,5 +1,5 @@
-﻿using BlazorDialogs.Models.Results;
-using OneOf;
+﻿using OneOf;
+using Shared.Blazor.Dialogs.Models.Results;
 
 namespace WishListApp.Models.Modals.Results;
 

@@ -6,24 +6,27 @@ namespace WishListApp.ProductCrawling;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddProductCrawler(this IServiceCollection services)
+    extension(IServiceCollection services)
     {
-        services.AddTransient<IParser, OpenGraphParser>();
-        services.AddTransient<IParser, AmazonParser>();
-        services.AddSingleton<IProductCrawlerService, ProductCrawlerService>();
+        public IServiceCollection AddProductCrawler()
+        {
+            services.AddTransient<IParser, OpenGraphParser>();
+            services.AddTransient<IParser, AmazonParser>();
+            services.AddSingleton<IProductCrawlerService, ProductCrawlerService>();
 
-        services.AddHttpClient(Constants.ProductCrawlerHttClientName, client =>
-        {
-            client.DefaultRequestHeaders.Add("User-Agent", Constants.CrawlerUserAgent);
-        })
-        .ConfigurePrimaryHttpMessageHandler(() =>
-        {
-            return new HttpClientHandler()
+            services.AddHttpClient(Constants.ProductCrawlerHttClientName, client =>
             {
-                AutomaticDecompression = System.Net.DecompressionMethods.All
-            };
-        });
+                client.DefaultRequestHeaders.Add("User-Agent", Constants.CrawlerUserAgent);
+            })
+            .ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                return new HttpClientHandler()
+                {
+                    AutomaticDecompression = System.Net.DecompressionMethods.All
+                };
+            });
 
-        return services;
+            return services;
+        }
     }
 }

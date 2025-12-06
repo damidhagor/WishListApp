@@ -13,8 +13,7 @@ internal sealed class ProductCrawlerService(
 {
     private readonly IHttpClientFactory _httpClientFactory = httpClientFactory;
     private readonly TimeProvider _timeProvider = timeProvider;
-    private readonly FrozenDictionary<string, IParser> _productInformationCrawlers
-        = productInformationParsers.ToFrozenDictionary(p => p.Host);
+    private readonly FrozenDictionary<string, IParser> _productInformationCrawlers = productInformationParsers.ToFrozenDictionary(p => p.Host);
     private readonly Dictionary<string, (ProductInformation ProductInformation, DateTimeOffset CreatedAt)> _cache = [];
 
     public async Task<ProductInformation> CrawlProduct(Uri url, CancellationToken cancellationToken)

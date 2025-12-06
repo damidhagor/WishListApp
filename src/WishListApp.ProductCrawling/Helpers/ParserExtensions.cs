@@ -4,46 +4,54 @@ namespace WishListApp.ProductCrawling.Helpers;
 
 internal static class ParserExtensions
 {
-    public static ReadOnlySpan<char> GetValue(this ReadOnlySpan<char> input, string startToken, string endToken)
+    extension(ReadOnlySpan<char> input)
     {
-        var valueStart = input.IndexOf(startToken);
-        if (valueStart == -1)
+        public ReadOnlySpan<char> GetValue(string startToken, string endToken)
         {
-            return [];
+            var valueStart = input.IndexOf(startToken);
+            if (valueStart == -1)
+            {
+                return [];
+            }
+
+            valueStart += startToken.Length;
+            var valueEnd = valueStart + input[valueStart..].IndexOf(endToken);
+
+            return valueEnd == -1
+                ? []
+                : input[valueStart..valueEnd].Trim();
         }
 
-        valueStart += startToken.Length;
-        var valueEnd = valueStart + input[valueStart..].IndexOf(endToken);
-
-        return valueEnd == -1
-            ? []
-            : input[valueStart..valueEnd].Trim();
-    }
-
-    public static string? GetValueAsString(this ReadOnlySpan<char> input, string startToken, string endToken)
-    {
-        var value = input.GetValue(startToken, endToken);
-        return value.Length == 0 ? null : value.ToString();
-    }
-
-    public static decimal? ToDecimalByCurrency(this string? price, string? currency)
-    {
-        if (string.IsNullOrEmpty(price))
+        public string? GetValueAsString(string startToken, string endToken)
         {
-            return null;
+            var value = input.GetValue(startToken, endToken);
+            return value.Length == 0 ? null : value.ToString();
         }
-
-        if (currency is "EUR" || currency is "€")
-        {
-            price = price.Replace(',', '.');
-        }
-
-        return decimal.TryParse(price, CultureInfo.InvariantCulture, out var parsedPrice)
-            ? parsedPrice
-            : null;
     }
 
-    public static string? ToCurrencySymbol(this string? currency)
+    extension(string? price)
+    {
+        public decimal? ToDecimalByCurrency(string? currency)
+        {
+            if (string.IsNullOrEmpty(price))
+            {
+                return null;
+            }
+
+            if (currency is "EUR" || currency is "€")
+            {
+                price = price.Replace(',', '.');
+            }
+
+            return decimal.TryParse(price, CultureInfo.InvariantCulture, out var parsedPrice)
+                ? parsedPrice
+                : null;
+        }
+    }
+
+    extension(string? currency)
+    {
+        public string? ToCurrencySymbol()
         => currency switch
         {
             "AED" => "د.إ.",
@@ -220,4 +228,5 @@ internal static class ParserExtensions
             "Artsakh" => "դր.",
             _ => null
         };
+    }
 }

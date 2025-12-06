@@ -1,6 +1,4 @@
-﻿using WishListApp.Models;
-
-namespace WishListApp.Services;
+﻿namespace WishListApp.Services;
 
 public interface IUserService
 {

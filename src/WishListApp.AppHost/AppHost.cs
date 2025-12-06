@@ -1,18 +1,18 @@
-﻿using WishListApp.AppHost.Keycloak;
+using WishListApp.AppHost.Keycloak;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
-var mongoDB = builder
-    .AddMongoDB("mongodb")
-    .WithDataVolume("mongodb-volume")
+var mongodb = builder
+    .AddMongoDB("wishlist-mongodb")
+    .WithDataVolume("wishlist-mongodb-volume")
     .WithOtlpExporter()
-    .WithMongoExpress();
+    .WithMongoExpress(containerName: "wishlist-mongodb-express");
 
 var wishListApp = builder
     .AddProject<Projects.WishListApp>("wishlistapp")
-    .WithReference(mongoDB);
-
-wishListApp.WithEnvironment("ApplicationUrl", wishListApp.GetEndpoint("http"));
+    .WithEnvironment(ctx => ctx.EnvironmentVariables["ApplicationUrl"] = ((IResourceWithEndpoints)ctx.Resource).GetEndpoint("http"))
+    .WithReference(mongodb, "mongodb")
+    .WaitFor(mongodb);
 
 var keycloak = builder.AddKeycloak(port: 8888)
     .WithClientReference(wishListApp);

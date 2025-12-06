@@ -1,6 +1,7 @@
-﻿global using BlazorDialogs.Extensions;
-global using CommunityToolkit.Diagnostics;
+﻿global using CommunityToolkit.Diagnostics;
 global using CommunityToolkit.Mvvm.Messaging;
+global using Shared.Blazor.Dialogs.Extensions;
+global using Shared.Blazor.Dialogs.Services;
 global using WishListApp.Data.Repositories;
 global using WishListApp.Data.Services;
 global using WishListApp.Extensions;
