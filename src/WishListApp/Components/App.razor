@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
 
 <head>
@@ -10,11 +10,11 @@
 	<link rel="stylesheet" href="app.css" />
 	<link rel="stylesheet" href="WishListApp.styles.css" />
 	<link rel="icon" type="image/png" href="favicon.png" />
-	<HeadOutlet @rendermode="InteractiveServer" />
+	<HeadOutlet @rendermode="new InteractiveServerRenderMode(false)" />
 </head>
 
 <body>
-	<Routes @rendermode="InteractiveServer" />
+	<Routes @rendermode="new InteractiveServerRenderMode(false)" />
 
 	<script src="_framework/blazor.web.js"></script>
 	<script src="bootstrap/bootstrap.bundle.min.js"></script>
