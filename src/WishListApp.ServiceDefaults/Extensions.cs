@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry;
+using OpenTelemetry.Exporter;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
@@ -34,6 +35,12 @@ public static class Extensions
 
     public static TBuilder ConfigureOpenTelemetry<TBuilder>(this TBuilder builder, string serviceName) where TBuilder : IHostApplicationBuilder
     {
+        var apiKey = builder.Configuration["OTEL_EXPORTER_OTLP_API_KEY"];
+        if (!string.IsNullOrWhiteSpace(apiKey))
+        {
+            builder.Services.Configure<OtlpExporterOptions>(o => o.Headers = $"x-otlp-api-key={apiKey}");
+        }
+
         builder.Logging.AddOpenTelemetry(logging =>
         {
             logging.IncludeFormattedMessage = true;
