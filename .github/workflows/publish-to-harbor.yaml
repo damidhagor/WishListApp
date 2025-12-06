@@ -43,7 +43,7 @@ jobs:
         context: "{{defaultContext}}"
         file: src/WishListApp/Dockerfile
         platforms: ${{ inputs.platforms }}
-        tags: ghcr.io/wishlist/wishlist-app:${{ inputs.version }}
+        tags: ghcr.io/${{ github.actor }}/wishlist-app:${{ inputs.version }}
         push: true
         
   publish-helm-chart:
@@ -71,4 +71,4 @@ jobs:
       run: helm package helm/wishlist --app-version "${{ inputs.version }}"
 
     - name: Helm Push
-      run: helm push wishlist-*.tgz oci://ghcr.io/wishlist
+      run: helm push wishlist-*.tgz oci://ghcr.io/${{ github.actor }}
