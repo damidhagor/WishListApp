@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     
     permissions:
+      contents: read
       packages: write
 
     steps:
@@ -46,6 +47,7 @@ jobs:
     needs: [build-wishlist-app]
     
     permissions:
+      contents: read
       packages: write
 
     steps:
