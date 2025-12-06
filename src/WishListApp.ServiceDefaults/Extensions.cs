@@ -3,8 +3,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging;
-using OpenTelemetry.Exporter;
-using OpenTelemetry.Logs;
+using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
@@ -13,7 +12,10 @@ namespace Microsoft.Extensions.Hosting;
 
 public static class Extensions
 {
-    public static IHostApplicationBuilder AddServiceDefaults(this IHostApplicationBuilder builder, string serviceName)
+    private const string HealthEndpointPath = "/health";
+    private const string AlivenessEndpointPath = "/alive";
+
+    public static TBuilder AddServiceDefaults<TBuilder>(this TBuilder builder, string serviceName) where TBuilder : IHostApplicationBuilder
     {
         builder.ConfigureOpenTelemetry(serviceName);
 
@@ -27,23 +29,11 @@ public static class Extensions
             http.AddServiceDiscovery();
         });
 
-        // Uncomment the following to restrict the allowed schemes for service discovery.
-        // builder.Services.Configure<ServiceDiscoveryOptions>(options =>
-        // {
-        //     options.AllowedSchemes = ["https"];
-        // });
-
         return builder;
     }
 
-    public static IHostApplicationBuilder ConfigureOpenTelemetry(this IHostApplicationBuilder builder, string serviceName)
+    public static TBuilder ConfigureOpenTelemetry<TBuilder>(this TBuilder builder, string serviceName) where TBuilder : IHostApplicationBuilder
     {
-        var apiKey = builder.Configuration["OTEL_EXPORTER_OTLP_API_KEY"];
-        if (!string.IsNullOrWhiteSpace(apiKey))
-        {
-            builder.Services.Configure<OtlpExporterOptions>(o => o.Headers = $"x-otlp-api-key={apiKey}");
-        }
-
         builder.Logging.AddOpenTelemetry(logging =>
         {
             logging.IncludeFormattedMessage = true;
@@ -63,12 +53,13 @@ public static class Extensions
             })
             .WithTracing(tracing =>
             {
-                if (builder.Environment.IsDevelopment())
-                {
-                    tracing.SetSampler(new AlwaysOnSampler());
-                }
-
-                tracing.AddAspNetCoreInstrumentation()
+                tracing.AddSource(builder.Environment.ApplicationName)
+                    .AddAspNetCoreInstrumentation(tracing =>
+                        // Exclude health check requests from tracing
+                        tracing.Filter = context =>
+                            !context.Request.Path.StartsWithSegments(HealthEndpointPath)
+                            && !context.Request.Path.StartsWithSegments(AlivenessEndpointPath)
+                    )
                     //.AddGrpcClientInstrumentation()
                     .AddHttpClientInstrumentation()
                     .AddSource("MongoDB.Driver.Core.Extensions.DiagnosticSources");
@@ -79,24 +70,20 @@ public static class Extensions
         return builder;
     }
 
-    private static IHostApplicationBuilder AddOpenTelemetryExporters(this IHostApplicationBuilder builder)
+    private static TBuilder AddOpenTelemetryExporters<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
     {
         var useOtlpExporter = !string.IsNullOrWhiteSpace(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
 
         if (useOtlpExporter)
         {
-            builder.Services.Configure<OpenTelemetryLoggerOptions>(logging => logging.AddOtlpExporter());
-            builder.Services.ConfigureOpenTelemetryMeterProvider(metrics => metrics.AddOtlpExporter());
-            builder.Services.ConfigureOpenTelemetryTracerProvider(tracing => tracing.AddOtlpExporter());
+            builder.Services.AddOpenTelemetry().UseOtlpExporter();
         }
 
-        builder.Services.AddOpenTelemetry()
-           .WithMetrics(metrics => metrics.AddPrometheusExporter());
 
         return builder;
     }
 
-    public static IHostApplicationBuilder AddDefaultHealthChecks(this IHostApplicationBuilder builder)
+    public static TBuilder AddDefaultHealthChecks<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
     {
         builder.Services.AddHealthChecks()
             .AddCheck("self", () => HealthCheckResult.Healthy(), ["live"]);
@@ -106,13 +93,11 @@ public static class Extensions
 
     public static WebApplication MapDefaultEndpoints(this WebApplication app)
     {
-        app.MapPrometheusScrapingEndpoint();
-
         if (app.Environment.IsDevelopment())
         {
-            app.MapHealthChecks("/health");
+            app.MapHealthChecks(HealthEndpointPath);
 
-            app.MapHealthChecks("/alive", new HealthCheckOptions
+            app.MapHealthChecks(AlivenessEndpointPath, new HealthCheckOptions
             {
                 Predicate = r => r.Tags.Contains("live")
             });
