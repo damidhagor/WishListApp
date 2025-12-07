@@ -37,7 +37,7 @@ jobs:
     - name: Publish and push Docker image
       run: |
         dotnet publish src/WishListApp \
-          /t:PublishContainer \
+          -t PublishContainer \
           -p ContainerFamily=noble-chiseled-extra \
           -p ContainerRegistry=ghcr.io \
           -p ContainerRepository=${{ github.actor }}/wishlist-app \
