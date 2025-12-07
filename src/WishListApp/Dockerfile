@@ -3,7 +3,7 @@ USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
 
-FROM mcr.microsoft.com/dotnet/sdk:10.0-noble AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0-noble AS publish
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["src/WishListApp/WishListApp.csproj", "WishListApp/"]
@@ -15,10 +15,6 @@ COPY ["src/SharedLibraries/src/Blazor/Shared.Blazor.SourceGeneration/Shared.Blaz
 RUN dotnet restore "./WishListApp/WishListApp.csproj"
 COPY ./src .
 WORKDIR "/src/WishListApp"
-RUN dotnet build "./WishListApp.csproj" -c $BUILD_CONFIGURATION -o /app/build --no-restore
-
-FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./WishListApp.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false --no-restore
 
 FROM base AS final
