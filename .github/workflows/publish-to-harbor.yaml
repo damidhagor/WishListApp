@@ -39,7 +39,13 @@ jobs:
 
     - name: Publish and push Docker image
       run: |
-        dotnet publish src/WishListApp /t:PublishContainer -p ContainerBaseImage=mcr.microsoft.com/dotnet/aspnet:10.0-noble-chiseled-extra -p RuntimeIdentifiers="${{ inputs.platforms }}" -p ContainerRuntimeIdentifiers="${{ inputs.platforms }}" -p ContainerRegistry=ghcr.io -p ContainerRepository=${{ github.actor }}/wishlist-app -p ContainerImageTag=${{ inputs.version }} -v d
+        dotnet publish src/WishListApp \
+          /t:PublishContainer \
+          -p ContainerBaseImage=mcr.microsoft.com/dotnet/aspnet:10.0-noble-chiseled-extra \
+          -p ContainerRegistry=ghcr.io \
+          -p ContainerRepository=${{ github.actor }}/wishlist-app \
+          -p ContainerImageTag=${{ inputs.version }} \
+          -v d
         
   publish-helm-chart:
     runs-on: ubuntu-latest

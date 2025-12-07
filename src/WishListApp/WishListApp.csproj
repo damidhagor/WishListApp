@@ -5,6 +5,8 @@
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<UserSecretsId>3f27ba78-b92b-4585-8ae0-cf6fc01cfa93</UserSecretsId>
+		<RuntimeIdentifiers>linux-x64;linux-arm64</RuntimeIdentifiers>
+		<ContainerRuntimeIdentifiers>linux-x64;linux-arm64</ContainerRuntimeIdentifiers>
 	</PropertyGroup>
 
 	<PropertyGroup>
