@@ -1,4 +1,4 @@
-name: Publish To Harbor
+name: Publish To Docker Registry
 
 on:
   workflow_dispatch:
@@ -6,10 +6,6 @@ on:
       version:
         description: 'The semantic version of the application'
         required: true
-      platforms:
-        description: 'The Docker platforms to build'
-        required: true
-        default: 'linux/amd64;linux/arm64'
 
 jobs:
   build-wishlist-app:
@@ -41,11 +37,10 @@ jobs:
       run: |
         dotnet publish src/WishListApp \
           /t:PublishContainer \
-          -p ContainerBaseImage=mcr.microsoft.com/dotnet/aspnet:10.0-noble-chiseled-extra \
+          -p ContainerFamily=noble-chiseled-extra \
           -p ContainerRegistry=ghcr.io \
           -p ContainerRepository=${{ github.actor }}/wishlist-app \
-          -p ContainerImageTag=${{ inputs.version }} \
-          -v d
+          -p ContainerImageTag=${{ inputs.version }}
         
   publish-helm-chart:
     runs-on: ubuntu-latest
