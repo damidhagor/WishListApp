@@ -9,7 +9,7 @@ on:
       platforms:
         description: 'The Docker platforms to build'
         required: true
-        default: 'linux/amd64,linux/arm64'
+        default: 'linux/amd64;linux/arm64'
 
 jobs:
   build-wishlist-app:
@@ -42,7 +42,7 @@ jobs:
         dotnet publish src/WishListApp \
           /t:PublishContainer \
           /p:ContainerBaseImage=mcr.microsoft.com/dotnet/aspnet:10.0-noble-chiseled-extra \
-          /p:ContainerRuntimeIdentifiers='${{ inputs.platforms }}' \
+          /p:ContainerRuntimeIdentifiers=${{ inputs.platforms }} \
           /p:ContainerRegistry=ghcr.io \
           /p:ContainerRepository=${{ github.actor }}/wishlist-app \
           /p:ContainerImageTag=${{ inputs.version }} \
