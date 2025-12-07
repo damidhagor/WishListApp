@@ -1,9 +1,6 @@
-﻿hostname: ""
+hostname: ""
+otlpEndpoint: "http://aspire-dashboard:4317"
 app:
-  image: "harbor.damidhagor.de/wishlist/wishlist-app"
+  image: "ghcr.io/damidhagor/wishlist-app"
   tag: "1.1.5"
   resources: null
-aspire:
-  image: "aspire-dashboard"
-  tag: "9.3.0"
-  otlpEndpoint: "http://aspire-dashboard:4317"

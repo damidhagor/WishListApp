@@ -9,8 +9,6 @@
     <File Path="../helm/wishlist/templates/app-deployment.yaml" />
     <File Path="../helm/wishlist/templates/app-gateway.yaml" />
     <File Path="../helm/wishlist/templates/app-service.yaml" />
-    <File Path="../helm/wishlist/templates/aspire-dashboard-deployment.yaml" />
-    <File Path="../helm/wishlist/templates/aspire-dashboard-service.yaml" />
   </Folder>
   <Folder Name="/shared/">
     <Project Path="SharedLibraries/src/Blazor/Shared.Blazor.Dialogs/Shared.Blazor.Dialogs.csproj" />

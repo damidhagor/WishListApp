@@ -1,4 +1,4 @@
-﻿apiVersion: apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: wishlist-app
@@ -51,13 +51,10 @@ spec:
                 secretKeyRef:
                     name: wishlist-app
                     key: oidcScopes
+            {{- if .Values.otlpEndpoint }}
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
-              value: "{{ .Values.aspire.otlpEndpoint }}"
-            - name: OTEL_EXPORTER_OTLP_API_KEY
-              valueFrom:
-                secretKeyRef:
-                    name: aspire-dashboard
-                    key: apikey
+              value: "{{ .Values.otlpEndpoint }}"
+            {{- end }}
           {{- if .Values.app.resources }}
           resources: {{ .Values.app.resources | toYaml | nindent 12 }}
           {{- end }}
