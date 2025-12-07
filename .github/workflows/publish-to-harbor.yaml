@@ -18,6 +18,7 @@ jobs:
     permissions:
       contents: read
       packages: write
+      attestations: write
 
     steps:
     - name: Checkout Repository
@@ -38,6 +39,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build and Push Docker Image
+      id: push
       uses: docker/build-push-action@v5.0.0
       with:
         context: "{{defaultContext}}"
@@ -45,6 +47,13 @@ jobs:
         platforms: ${{ inputs.platforms }}
         tags: ghcr.io/${{ github.actor }}/wishlist-app:${{ inputs.version }}
         push: true
+
+    - name: Generate artifact attestation
+      uses: actions/attest-build-provenance@v3
+      with:
+        subject-name: ghcr.io/${{ github.actor }}/wishlist-app
+        subject-digest: ${{ steps.push.outputs.digest }}
+        push-to-registry: true
         
   publish-helm-chart:
     runs-on: ubuntu-latest
