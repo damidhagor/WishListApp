@@ -1,6 +1,7 @@
 hostname: ""
-otlpEndpoint: "http://aspire-dashboard:4317"
+otlpEndpoint: null
 app:
   image: "ghcr.io/damidhagor/wishlist-app"
-  tag: "1.1.5"
+  tag: "1.2.0"
+  imagePullSecrets: null
   resources: null

@@ -58,5 +58,7 @@ spec:
           {{- if .Values.app.resources }}
           resources: {{ .Values.app.resources | toYaml | nindent 12 }}
           {{- end }}
+      {{- if .Values.app.imagePullSecrets }}
       imagePullSecrets:
-        - name: ghcr
+        - name: {{ .Values.app.imagePullSecrets }}
+      {{- end }}
