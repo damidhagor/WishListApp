@@ -16,6 +16,7 @@
   </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
+    <File Path="global.json" />
   </Folder>
   <Project Path="WishListApp.AppHost/WishListApp.AppHost.csproj" />
   <Project Path="WishListApp.Data/WishListApp.Data.csproj" />
