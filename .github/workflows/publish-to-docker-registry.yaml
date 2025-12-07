@@ -1,7 +1,6 @@
 name: Publish To Docker Registry
 
 on:
-  pull_request:
   workflow_dispatch:
     inputs:
       version:
