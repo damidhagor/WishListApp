@@ -1,6 +1,6 @@
-﻿using BlazorSourceGeneration.LocalizationServiceGenerator;
+﻿using Shared.Blazor.SourceGeneration.LocalizationServiceGenerator;
 
 namespace WishListApp.Resources;
 
 [LocalizationService("Localization.resx")]
-public sealed partial class Localization { }
+public sealed partial class Localization;

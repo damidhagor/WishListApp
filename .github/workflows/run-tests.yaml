@@ -1,24 +1,25 @@
-﻿name: Run Tests
+name: Run Tests
 
-on: [push]
-
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         submodules: 'recursive'
+
     - name: Setup dotnet
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v5
       with:
-        dotnet-version: 10.x.x
-    - name: Build App
-      run: dotnet build src/WishListApp
-    - name: Build Tests
-      run: dotnet build src/WishListApp.Tests
+        global-json-file: src/global.json
+        
     - name: Test
-      run: dotnet test src/WishListApp.Tests
+      run: dotnet test src/
       

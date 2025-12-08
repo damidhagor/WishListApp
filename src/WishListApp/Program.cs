@@ -15,9 +15,9 @@ builder.AddServiceDefaults("wishlist-app");
 builder.Services.AddLocalization();
 builder.Services.AddScoped<Localization.ILocalizationService, Localization.LocalizationService>();
 
-builder.Services.AddIdentity(builder.Configuration);
+builder.AddIdentity();
 
-builder.AddWishListData(builder.Configuration);
+builder.AddWishListData();
 builder.Services.AddMigrationService();
 builder.Services.AddSingleton<IMigrationService, MigrationService>();
 

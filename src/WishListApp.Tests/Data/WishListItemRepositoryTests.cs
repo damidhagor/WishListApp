@@ -5,7 +5,7 @@ using WishListApp.Tests.Fixtures.MongoDb;
 
 namespace WishListApp.Tests.Data;
 
-[Collection("MongoDb")]
+[Collection(typeof(MongoDbCollection))]
 public sealed class WishListItemRepositoryTests(MongoDbFixture mongoDbFixture)
 {
     private readonly IMongoDatabase _database = mongoDbFixture.GetMongoClient().GetDatabase(Guid.NewGuid().ToString());

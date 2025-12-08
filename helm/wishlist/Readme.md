@@ -1,4 +1,4 @@
-﻿# Wishlist App Helm Chart
+# Wishlist App Helm Chart
 
 This is a helm chart for the Wishlist App.
 
@@ -10,13 +10,7 @@ This is a helm chart for the Wishlist App.
 kubectl create namespace <NAMESPACE>
 ```
 
-- Create the Harbor secret in the namespace:
-
-```bash
-kubectl create secret docker-registry harbor --docker-server=harbor.damidhagor.de --docker-username=<USERNAME> --docker-password=<PASSWORD> -n <NAMESPACE>
-```
-
-- Create the following secrets in this namespace with the needed values before installing the chart:
+- Create the following secret in this namespace with the needed values before installing the chart:
 
 ```yaml
 apiVersion: v1
@@ -34,32 +28,14 @@ stringData:
   oidcScopes: "[\"openid\", \"profile\", \"email\", \"offline_access\"]"
 ```
 
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: aspire-dashboard
-  namespace: <NAMESPACE>
-type: Opaque
-stringData:
-  apikey: ""
-```
-
 - Create a ``values.yaml`` file with the following content:
 
 ```yaml
 hostname: <The hostname of the app>
-app:
-  tag: "1.1.5"
-aspire:
-  tag: "9.3.0"
 ```
-
-	Only the ``hostname`` value is required. The other values are optional.
 
 - Install or upgrade the chart and provide the ``values.yaml`` file created earlier:
 
 ```bash
-helm registry login harbor.damidhagor.de
-helm install wishlist oci://harbor.damidhagor.de/wishlist/wishlist -n <NAMESPACE> --values=<VALUES>.yaml --version 1.5.0
+helm install wishlist oci://ghcr.io/damidhagor/wishlist -n <NAMESPACE> --values=<VALUES>.yaml --version 1.6.0
 ```

@@ -1,6 +1,5 @@
-﻿using BlazorDialogs.Components.Modals.Base;
-using BlazorDialogs.Services;
-using Microsoft.JSInterop;
+﻿using Microsoft.JSInterop;
+using Shared.Blazor.Dialogs.Components.Modals.Base;
 using WishListApp.Models.Modals;
 using WishListApp.Models.Modals.Results;
 
