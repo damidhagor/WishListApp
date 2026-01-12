@@ -1,7 +1,0 @@
-hostname: ""
-otlpEndpoint: null
-app:
-  image: "ghcr.io/damidhagor/wishlist-app"
-  tag: "1.2.0"
-  imagePullSecrets: null
-  resources: null

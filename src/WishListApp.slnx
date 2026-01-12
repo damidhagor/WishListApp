@@ -1,15 +1,4 @@
 <Solution>
-  <Folder Name="/helm/" />
-  <Folder Name="/helm/wishlist/">
-    <File Path="../helm/wishlist/Chart.yaml" />
-    <File Path="../helm/wishlist/Readme.md" />
-    <File Path="../helm/wishlist/values.yaml" />
-  </Folder>
-  <Folder Name="/helm/wishlist/templates/">
-    <File Path="../helm/wishlist/templates/app-deployment.yaml" />
-    <File Path="../helm/wishlist/templates/app-gateway.yaml" />
-    <File Path="../helm/wishlist/templates/app-service.yaml" />
-  </Folder>
   <Folder Name="/shared/">
     <Project Path="SharedLibraries/src/Blazor/Shared.Blazor.Dialogs/Shared.Blazor.Dialogs.csproj" />
     <Project Path="SharedLibraries/src/Blazor/Shared.Blazor.SourceGeneration/Shared.Blazor.SourceGeneration.csproj" />
