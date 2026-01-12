@@ -1,4 +1,4 @@
-﻿using WishListApp.Components;
+using WishListApp.Components;
 using WishListApp.Data;
 using WishListApp.Data.Migration;
 using WishListApp.Identity;
@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-builder.AddServiceDefaults("wishlist-app");
+builder.AddServiceDefaults();
 
 builder.Services.AddLocalization();
 builder.Services.AddScoped<Localization.ILocalizationService, Localization.LocalizationService>();
