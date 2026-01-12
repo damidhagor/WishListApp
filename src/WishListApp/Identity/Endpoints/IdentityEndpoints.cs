@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Mvc;
@@ -46,6 +46,6 @@ public static class IdentityEndpoints
         HttpContext httpContext)
     {
         Guard.IsNotNull(identityOptions.Value);
-        httpContext.Response.Redirect($"{identityOptions.Value.Authority}/account");
+        httpContext.Response.Redirect(identityOptions.Value.ProfileUrl);
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace WishListApp.Identity;
+namespace WishListApp.Identity;
 
 public sealed class IdentityOptions
 {
@@ -11,4 +11,6 @@ public sealed class IdentityOptions
     public string[] Scopes { get; set; } = [];
 
     public bool RequireHttpsMetadata { get; set; } = true;
+
+    public string ProfileUrl { get; set; } = "";
 }
